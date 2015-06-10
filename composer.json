@@ -6,7 +6,8 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.1.*"
+        "laravel/framework": "5.1.*",
+        "doctrine/dbal": "^2.6@dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
