@@ -4,10 +4,17 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
+    "repositories": [
+      {
+        "type": "vcs",
+        "url": "https://github.com/sroutier/Theme"
+      }
+    ],
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
-        "doctrine/dbal": "^2.6@dev"
+        "doctrine/dbal": "^2.6@dev",
+        "yaap/theme": "dev-laravel-5.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

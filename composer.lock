@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b0666c2d86022ae9f13bc180068da853",
+    "hash": "2d0188eecc68dd33e974676c9a3c34fe",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -2148,6 +2148,44 @@
                 "environment"
             ],
             "time": "2015-05-30 15:59:26"
+        },
+        {
+            "name": "yaap/theme",
+            "version": "dev-laravel-5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sroutier/Theme.git",
+                "reference": "4666be627e6f82d8cfc6c54b546c1bbf99d550d9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sroutier/Theme/zipball/4666be627e6f82d8cfc6c54b546c1bbf99d550d9",
+                "reference": "4666be627e6f82d8cfc6c54b546c1bbf99d550d9",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "5.1.*",
+                "php": ">=5.5.9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "YAAP\\Theme": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Biluk Andrey",
+                    "email": "biluk.a@newway.com.ua"
+                }
+            ],
+            "support": {
+                "source": "https://github.com/sroutier/Theme/tree/laravel-5.1"
+            },
+            "time": "2015-06-11 03:06:29"
         }
     ],
     "packages-dev": [
@@ -3385,7 +3423,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "doctrine/dbal": 20
+        "doctrine/dbal": 20,
+        "yaap/theme": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

@@ -144,6 +144,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        YAAP\Theme\ThemeServiceProvider::class,
     ],
 
     /*
@@ -192,6 +193,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
+        'Theme'     => YAAP\Theme\Facades\Theme::class,
     ],
 
 ];
