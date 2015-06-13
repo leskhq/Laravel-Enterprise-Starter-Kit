@@ -16,7 +16,7 @@ class ThemeSelector
      */
     public function handle($request, Closure $next)
     {
-        Theme::init('default');
+        Theme::init(env('DEFAULT_THEME', 'default'));
 
         return $next($request);
     }
