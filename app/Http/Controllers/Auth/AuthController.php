@@ -6,6 +6,9 @@ use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Http\Request;
+
+use Auth;
 
 class AuthController extends Controller
 {
@@ -41,7 +44,9 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
+            'first_name' => 'required|min:3|max:255',
+            'last_name' => 'required|min:3|max:255',
+            'username' => 'required|min:3|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
         ]);
@@ -56,9 +61,63 @@ class AuthController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'username' => $data['username'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
     }
+
+    /**
+     * Handle a login request to the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function postLogin(Request $request)
+    {
+
+        $this->validate($request, [
+            'username' => 'required|min:3|max:255', 'password' => 'required',
+        ]);
+
+        $credentials = $request->only('username', 'password');
+
+        if (Auth::attempt($credentials, $request->has('remember'))) {
+            return redirect()->intended($this->redirectPath());
+        }
+
+        return redirect($this->loginPath())
+            ->withInput($request->only('username', 'remember'))
+            ->withErrors([
+                'username' => $this->getFailedLoginMessage(),
+            ]);
+    }
+
+    /**
+     * Show the application login form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getLogin()
+    {
+        $page_title = "Login";
+
+        return view('auth.login', compact('page_title'));
+    }
+
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getRegister()
+    {
+        $page_title = "Register";
+
+        return view('auth.register', compact('page_title'));
+    }
+
+
 }

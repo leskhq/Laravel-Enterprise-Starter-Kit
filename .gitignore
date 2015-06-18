@@ -19,6 +19,7 @@ config/ide-helper.php
 _ide_helper.php
 ideconfig
 _ide_helper*
+.phpstorm.meta.php
 
 #     Logs      #
 #################

@@ -14,7 +14,10 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
         "doctrine/dbal": "^2.6@dev",
-        "yaap/theme": "dev-laravel-5.1"
+        "laravelcollective/html": "~5.0",
+        "yaap/theme": "dev-laravel-5.1",
+        "barryvdh/laravel-ide-helper": "^2.0@dev",
+        "barryvdh/laravel-debugbar": "^2.0@dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -42,6 +45,7 @@
         ],
         "post-update-cmd": [
             "php artisan clear-compiled",
+          "php artisan ide-helper:generate",
             "php artisan optimize"
         ],
         "post-root-package-install": [

@@ -29,4 +29,18 @@ class PasswordController extends Controller
     {
         $this->middleware('guest');
     }
+
+    /**
+     * Display the form to request a password reset link.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getEmail()
+    {
+        $page_title = "Recover password";
+
+        return view('auth.password', compact('page_title'));
+    }
+
+
 }
