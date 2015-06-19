@@ -33,3 +33,7 @@ Route::get('/', 'HomeController@index');
 Route::get('home', ['as' => 'home', 'uses' => 'HomeController@index']);
 
 Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
+Route::get('flashsuccess', ['as' => 'flash_test_success', 'uses' => 'FlashTestController@success']);
+Route::get('flashinfo', ['as' => 'flash_test_info', 'uses' => 'FlashTestController@info']);
+Route::get('flashwarning', ['as' => 'flash_test_warning', 'uses' => 'FlashTestController@warning']);
+Route::get('flasherror', ['as' => 'flash_test_error', 'uses' => 'FlashTestController@error']);

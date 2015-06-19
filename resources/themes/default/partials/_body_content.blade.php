@@ -23,6 +23,10 @@
         <!-- Main content -->
         <section class="content">
 
+            <div class="box-body">
+                @include('flash::message')
+            </div>
+
             <!-- Your Page Content Here -->
             @yield('content')
 

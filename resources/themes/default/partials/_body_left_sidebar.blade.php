@@ -38,8 +38,10 @@
             <li class="treeview">
                 <a href="#"><i class='fa fa-link'></i> <span>Multilevel</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a href="#">Link in level 2</a></li>
-                    <li><a href="#">Link in level 2</a></li>
+                    <li><a href="{{ route('flash_test_success') }}"><i class='fa fa-check'>  </i> Success flash</a></li>
+                    <li><a href="{{ route('flash_test_info')    }}"><i class='fa fa-info'>   </i> Info flash   </a></li>
+                    <li><a href="{{ route('flash_test_warning') }}"><i class='fa fa-warning'></i> Warning flash</a></li>
+                    <li><a href="{{ route('flash_test_error')   }}"><i class='fa fa-ban'>    </i> Error flash  </a></li>
                 </ul>
             </li>
         </ul><!-- /.sidebar-menu -->
