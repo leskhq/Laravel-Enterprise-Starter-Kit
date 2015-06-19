@@ -148,6 +148,7 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
         Collective\Html\HtmlServiceProvider::class,
+        Laracasts\Flash\FlashServiceProvider::class,
 
         YAAP\Theme\ThemeServiceProvider::class,
     ],
@@ -202,6 +203,7 @@ return [
         'Html'      => Collective\Html\HtmlFacade::class,
 
         'Debugbar'  => Barryvdh\Debugbar\Facade::class,
+        'Flash'     => Laracasts\Flash\Flash::class,
 
         'Theme'     => YAAP\Theme\Facades\Theme::class,
     ],
