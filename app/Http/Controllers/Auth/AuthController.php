@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
 
 use Auth;
+use Flash;
 
 class AuthController extends Controller
 {
@@ -60,13 +61,17 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'username' => $data['username'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+
+        Flash::success("Welcome" . $user->first_name . ", your user has been created");
+
+        return $user;
     }
 
     /**
@@ -79,12 +84,14 @@ class AuthController extends Controller
     {
 
         $this->validate($request, [
-            'username' => 'required|min:3|max:255', 'password' => 'required',
+            'username' => 'required|min:3|max:255',
+            'password' => 'required',
         ]);
 
         $credentials = $request->only('username', 'password');
 
         if (Auth::attempt($credentials, $request->has('remember'))) {
+            Flash::success("Welcome " . Auth::user()->first_name);
             return redirect()->intended($this->redirectPath());
         }
 

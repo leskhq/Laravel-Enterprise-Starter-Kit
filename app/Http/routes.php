@@ -27,13 +27,19 @@ Route::post('password/email', 'Auth\PasswordController@postEmail');
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 
+Route::get('faust', ['as' => 'faust', 'uses' => function(){
+    return view('faust');
+}]);
 
-// Application routes...
-Route::get('/', 'HomeController@index');
-Route::get('home', ['as' => 'home', 'uses' => 'HomeController@index']);
 
-Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
+// Template tests and demo routes
 Route::get('flashsuccess', ['as' => 'flash_test_success', 'uses' => 'FlashTestController@success']);
 Route::get('flashinfo', ['as' => 'flash_test_info', 'uses' => 'FlashTestController@info']);
 Route::get('flashwarning', ['as' => 'flash_test_warning', 'uses' => 'FlashTestController@warning']);
 Route::get('flasherror', ['as' => 'flash_test_error', 'uses' => 'FlashTestController@error']);
+
+// Application routes...
+Route::get('/', 'HomeController@index');
+Route::get('home', ['as' => 'home', 'uses' => 'HomeController@index']);
+Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
+

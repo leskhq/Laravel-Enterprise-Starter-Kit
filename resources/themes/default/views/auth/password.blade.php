@@ -1,24 +1,22 @@
 @extends('layouts.dialog')
 
 @section('content')
-
-    <div class="container">
-
-        <form class="form-signin" method="POST" action="/auth/password">
+    <p class="login-box-msg">Enter your email to reset your password</p>
+        <form class="form-signin" method="POST" action="/auth/login" >
             {!! csrf_field() !!}
 
-            <h2 class="form-signin-heading">Enter your email address</h2>
-
-            <label for="email" class="sr-only">Email address</label>
-            <input type="email" id="email" name="email" class="form-control" placeholder="Email address" value="{{ old('email') }}" required autofocus>
-
-            <div class="btn-toolbar btn-group-lg" role="toolbar" style="margin-top: 10px;">
-                <button class="btn btn-primary pull-left" type="submit">Reset password</button>
+            <div class="form-group has-feedback">
+                <input type="email" id="email" name="email" class="form-control" placeholder="Email" required autofocus/>
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
-
+            <div class="row">
+                <div class="col-xs-4">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">Reset</button>
+                </div><!-- /.col -->
+            </div>
         </form>
 
-    </div> <!-- /container -->
+        {!! link_to_route('login', 'Sign in', [], ['class' => "text-center"]) !!}<br>
+        {!! link_to_route('register', 'Register a new membership', [], ['class' => "text-center"]) !!}
 
 @endsection
-
