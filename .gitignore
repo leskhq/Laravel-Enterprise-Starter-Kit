@@ -4,6 +4,10 @@
 .env
 storage/
 
+# Test/Dev pages #
+##################
+public/phpinfo.php
+
 # NodeJS #
 ##########
 node_modules/
