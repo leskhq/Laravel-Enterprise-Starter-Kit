@@ -146,11 +146,10 @@ return [
 
         Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-
         Collective\Html\HtmlServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
-
         YAAP\Theme\ThemeServiceProvider::class,
+        Zizaco\Entrust\EntrustServiceProvider::class,
     ],
 
     /*
@@ -199,13 +198,12 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
-        'Form'      => Collective\Html\FormFacade::class,
-        'Html'      => Collective\Html\HtmlFacade::class,
-
-        'Debugbar'  => Barryvdh\Debugbar\Facade::class,
-        'Flash'     => Laracasts\Flash\Flash::class,
-
-        'Theme'     => YAAP\Theme\Facades\Theme::class,
+        'Form'       => Collective\Html\FormFacade::class,
+        'Html'       => Collective\Html\HtmlFacade::class,
+        'Debugbar'   => Barryvdh\Debugbar\Facade::class,
+        'Flash'      => Laracasts\Flash\Flash::class,
+        'Theme'      => YAAP\Theme\Facades\Theme::class,
+        'Entrust'    => Zizaco\Entrust\EntrustFacade::class,
     ],
 
 ];

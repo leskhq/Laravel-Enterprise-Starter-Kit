@@ -16,6 +16,7 @@ class ThemeSelector
      */
     public function handle($request, Closure $next)
     {
+        // TODO: Get theme from user settings or system setting, or env or default....
         Theme::init(env('DEFAULT_THEME', 'default'));
 
         return $next($request);

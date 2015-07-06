@@ -36,16 +36,47 @@ class WalledGarden
      */
     public function handle($request, Closure $next)
     {
+        $exempt = false;
 
         $walled_garden = env('WALLED_GARDEN', false);
         $authenticated = $this->auth->check();
 
+        // TODO: Get these arrays from config.
+        $exemptionPath = [
+            '/',                'home',                             'faust',
+            'auth/login',       'auth/register',
+            'password/email',   'password/reset',
+            '_debugbar/open',   '_debugbar/assets/stylesheets',    '_debugbar/assets/javascript',
+        ];
+        $exemptionsRegEx = [
+            '/password\/reset\/.*/',
+                            ];
+
         // Redirect to the login page if the user is not authenticated and the site
-        // is configured as a walled garden, except if the request is already going
-        // to the login page.
-        if ( $walled_garden && !$authenticated && !$request->is('auth/login') )
+        // is configured as a walled garden, except if the request is going to a page
+        // or route that is exempt from authentication.
+        if ( $walled_garden && !$authenticated )
         {
-            return redirect()->guest('auth/login');
+            $requestURI  = $request->getUri();
+            $requestPath = $request->path();
+
+            foreach ($exemptionPath as $exPath) {
+                if ($exPath == $requestPath) {
+                    $exempt = true;
+                    break;
+                }
+            }
+            if (!$exempt) {
+                foreach ($exemptionsRegEx as $regEx) {
+                    if (preg_match($regEx, $requestPath)) {
+                        $exempt = true;
+                        break;
+                    }
+                }
+            }
+            if (!$exempt) {
+                return redirect()->guest('auth/login');
+            }
         }
 
         // Otherwise just continue on.
