@@ -25,6 +25,7 @@
 
             <div class="box-body">
                 @include('flash::message')
+                @include('partials._errors')
             </div>
 
             <!-- Your Page Content Here -->

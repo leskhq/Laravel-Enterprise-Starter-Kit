@@ -20,7 +20,6 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\VerifyCsrfToken::class,
         \App\Http\Middleware\ThemeSelector::class,
         \App\Http\Middleware\WalledGarden::class,
-
     ];
 
     /**
@@ -32,5 +31,6 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'authorize' => \App\Http\Middleware\AuthorizeRoute::class,
     ];
 }

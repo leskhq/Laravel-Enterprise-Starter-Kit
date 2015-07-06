@@ -21,6 +21,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Head -->
     @include('partials._head')
 
+    <!-- Optional header section  -->
+    @section('head_extra')
+    @show
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -32,8 +36,5 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <!-- Body -->
   @include('partials._body')
-
-  <!-- Footer -->
-  @include('partials._footer')
 
 </html>
