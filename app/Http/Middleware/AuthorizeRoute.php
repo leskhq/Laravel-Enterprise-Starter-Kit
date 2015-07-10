@@ -83,7 +83,12 @@ class AuthorizeRoute
             }
             else {
                 // Get application route based on info from Laravel route.
-                $appRoute = AppRoute::ofMethod($method)->ofActionName($actionName)->ofPath($path)->with('permission')->first();
+                $appRoute = AppRoute::ofMethod($method)
+                                    ->ofActionName($actionName)
+                                    ->ofPath($path)
+                                    ->enabled()
+                                    ->with('permission')
+                                    ->first();
                 // If found, proceed with authorization
                 if ( isset($appRoute) ) {
 

@@ -48,4 +48,14 @@ class Route extends Model
         return $query->where('path', $path);
     }
 
+    public function scopeEnabled($query)
+    {
+        return $query->where('enabled', true);
+    }
+
+    public function scopeDisabled($query)
+    {
+        return $query->where('enabled', false);
+    }
+
 }

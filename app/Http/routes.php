@@ -54,12 +54,15 @@ Route::group(['middleware' => 'authorize'], function () {
         Route::get('permissions/{permissionId}/confirm-delete', array('as' => 'admin.permissions.confirm-delete', 'uses' => 'PermissionsController@getModalDelete'));
         Route::get('permissions/{permissionId}/delete', array('as' => 'admin.permissions.delete', 'uses' => 'PermissionsController@destroy'));
 
-//        Route::get('routes', ['as' => 'admin.routes.index', 'uses' => 'RoutesController@index']);
-        Route::get('routes/load', ['as' => 'admin.routes.load', 'uses' => 'RoutesController@load']);
-        Route::post('routes/save', ['as' => 'admin.routes.save', 'uses' => 'RoutesController@save']);
+        Route::get( 'routes/load', ['as' => 'admin.routes.load', 'uses' => 'RoutesController@load']);
+        Route::post('routes/enableSelected', ['as' => 'admin.routes.enable-selected', 'uses' => 'RoutesController@enableSelected']);
+        Route::post('routes/disableSelected', ['as' => 'admin.routes.disable-selected', 'uses' => 'RoutesController@disableSelected']);
+        Route::post('routes/savePerms', ['as' => 'admin.routes.save-perms', 'uses' => 'RoutesController@savePerms']);
         Route::resource('routes', 'RoutesController');
-        Route::get('routes/{routeId}/confirm-delete', array('as' => 'admin.routes.confirm-delete', 'uses' => 'RoutesController@getModalDelete'));
-        Route::get('routes/{routeId}/delete', array('as' => 'admin.routes.delete', 'uses' => 'RoutesController@destroy'));
+        Route::get( 'routes/{routeId}/confirm-delete', array('as' => 'admin.routes.confirm-delete', 'uses' => 'RoutesController@getModalDelete'));
+        Route::get( 'routes/{routeId}/delete', array('as' => 'admin.routes.delete', 'uses' => 'RoutesController@destroy'));
+        Route::get( 'routes/{routeId}/enable',  ['as' => 'admin.routes.enable',  'uses' => 'RoutesController@enable']);
+        Route::get( 'routes/{routeId}/disable', ['as' => 'admin.routes.disable', 'uses' => 'RoutesController@disable']);
 
     });
 

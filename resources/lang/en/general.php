@@ -3,13 +3,16 @@
 return [
 
     'button'              => [
-        'cancel'    => 'Cancel',
-        'close'     => 'Close',
-        'create'    => 'Create',
-        'delete'    => 'Delete',
-        'edit'      => 'Edit',
-        'ok'        => 'OK',
-        'update'    => 'Update',
+        'cancel'            => 'Cancel',
+        'close'             => 'Close',
+        'create'            => 'Create',
+        'delete'            => 'Delete',
+        'edit'              => 'Edit',
+        'ok'                => 'OK',
+        'update'            => 'Update',
+        'enable'            => 'Enable',
+        'disable'           => 'Disable',
+        'toggle-select'     => 'Toggle checkboxes',
     ],
 
 
@@ -29,6 +32,7 @@ return [
         '403-explanation'       => 'The page or function that you tried to access is forbidden. The authorities have been contacted!',
         '404-explanation'       => 'The page or function that you are looking for could not be located. Try to go back to the previous page or select a new one.',
         '500-explanation'       => 'A serious problem occurred on the server, we will look at it ASAP and rectify the situation.',
+        'error-proc-command'    => 'Error processing command: :cmd',
     ],
 
 ];
