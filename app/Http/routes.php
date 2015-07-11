@@ -50,9 +50,13 @@ Route::group(['middleware' => 'authorize'], function () {
         Route::get('roles/{roleId}/delete', array('as' => 'admin.roles.delete', 'uses' => 'RolesController@destroy'));
 
         Route::get('permissions/generate', ['as' => 'admin.permissions.generate', 'uses' => 'PermissionsController@generate']);
+        Route::post('permissions/enableSelected', ['as' => 'admin.permissions.enable-selected', 'uses' => 'PermissionsController@enableSelected']);
+        Route::post('permissions/disableSelected', ['as' => 'admin.permissions.disable-selected', 'uses' => 'PermissionsController@disableSelected']);
         Route::resource('permissions', 'PermissionsController');
         Route::get('permissions/{permissionId}/confirm-delete', array('as' => 'admin.permissions.confirm-delete', 'uses' => 'PermissionsController@getModalDelete'));
         Route::get('permissions/{permissionId}/delete', array('as' => 'admin.permissions.delete', 'uses' => 'PermissionsController@destroy'));
+        Route::get( 'permissions/{permissionId}/enable',  ['as' => 'admin.permissions.enable',  'uses' => 'PermissionsController@enable']);
+        Route::get( 'permissions/{permissionId}/disable', ['as' => 'admin.permissions.disable', 'uses' => 'PermissionsController@disable']);
 
         Route::get( 'routes/load', ['as' => 'admin.routes.load', 'uses' => 'RoutesController@load']);
         Route::post('routes/enableSelected', ['as' => 'admin.routes.enable-selected', 'uses' => 'RoutesController@enableSelected']);

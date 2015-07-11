@@ -109,7 +109,7 @@ class AuthorizeRoute
                         elseif ( !$guest && isset($user) && 'basic-authenticated' == $appRoute->permission->name ) {
                             $authorized = true;
                         }
-                        // The user has the role required by the route.
+                        // The user has the permission required by the route.
                         elseif ( !$guest && isset($user) && $user->can($appRoute->permission->name) ) {
                             $authorized = true;
                         }
