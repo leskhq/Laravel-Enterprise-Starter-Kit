@@ -41,11 +41,11 @@
                             <table style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>
+                                        <th style="text-align: center">
                                             <a class="btn" href="#" onclick="toggleCheckbox(); return false;" title="{{ trans('general.button.toggle-select') }}">
                                                 <i class="fa fa-check-square-o"></i>
                                             </a>
-                                        </th>
+                                        <th style="text-align: center">
                                         <th>{{ trans('admin/routes/general.columns.permission') }}</th>
                                         <th>{{ trans('admin/routes/general.columns.method') }}</th>
                                         <th>{{ trans('admin/routes/general.columns.path') }}</th>
@@ -56,11 +56,11 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>
+                                        <th style="text-align: center">
                                             <a class="btn" href="#" onclick="toggleCheckbox(); return false;" title="{{ trans('general.button.toggle-select') }}">
                                                 <i class="fa fa-check-square-o"></i>
                                             </a>
-                                        </th>
+                                        <th style="text-align: center">
                                         <th>{{ trans('admin/routes/general.columns.permission') }}</th>
                                         <th>{{ trans('admin/routes/general.columns.method') }}</th>
                                         <th>{{ trans('admin/routes/general.columns.path') }}</th>
@@ -93,7 +93,6 @@
 
                                                 <a href="{!! route('admin.routes.confirm-delete', $route->id) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><i class="fa fa-trash-o"></i></a>
                                             </td>
-
                                         </tr>
                                     @endforeach
                                 </tbody>

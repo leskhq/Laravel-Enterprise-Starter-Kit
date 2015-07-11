@@ -12,6 +12,8 @@ return [
         'no-permission-changed-detected'    => 'No permission change detected.',
         'global-enabled'                    => 'Selected routes enabled.',
         'global-disabled'                   => 'Selected routes disabled.',
+        'enabled'                           => 'Routes enabled.',
+        'disabled'                          => 'Routes disabled.',
         'no-route-selected'                 => 'No route selected.',
     ],
 

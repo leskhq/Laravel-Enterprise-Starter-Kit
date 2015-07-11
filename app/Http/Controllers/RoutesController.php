@@ -179,6 +179,8 @@ class RoutesController extends Controller {
         $route->enabled = true;
         $route->save();
 
+        Flash::success(trans('admin/routes/general.status.enabled'));
+
         return redirect('/admin/routes');
     }
 
@@ -191,6 +193,8 @@ class RoutesController extends Controller {
         $route = $this->route->find($id);
         $route->enabled = false;
         $route->save();
+
+        Flash::success(trans('admin/routes/general.status.disabled'));
 
         return redirect('/admin/routes');
     }
