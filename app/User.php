@@ -103,6 +103,23 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
+     * @return bool
+     */
+    public function canBeDisabled()
+    {
+        // Protect the root user from being disabled.
+        if ('root' == $this->username) {
+            return false;
+        }
+        // Prevent user from disabling his own account.
+        if ( Auth::check() && (Auth::user()->id == $this->id) ) {
+            return false;
+        }
+        // Otherwise
+        return true;
+    }
+
+    /**
      *
      * Force the user to have the given role.
      *

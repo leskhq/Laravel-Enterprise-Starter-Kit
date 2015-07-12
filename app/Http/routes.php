@@ -41,9 +41,14 @@ Route::group(['middleware' => 'authorize'], function () {
     // Site administration section
     Route::group(['prefix' => 'admin'], function () {
         // TODO: manually specify all needed routes instead of using Route::resource(...)
+
+        Route::post('users/enableSelected', ['as' => 'admin.users.enable-selected', 'uses' => 'UsersController@enableSelected']);
+        Route::post('users/disableSelected', ['as' => 'admin.users.disable-selected', 'uses' => 'UsersController@disableSelected']);
         Route::resource('users', 'UsersController');
         Route::get('users/{userId}/confirm-delete', array('as' => 'admin.users.confirm-delete', 'uses' => 'UsersController@getModalDelete'));
         Route::get('users/{userId}/delete', array('as' => 'admin.users.delete', 'uses' => 'UsersController@destroy'));
+        Route::get( 'users/{userId}/enable',  ['as' => 'admin.users.enable',  'uses' => 'UsersController@enable']);
+        Route::get( 'users/{userId}/disable', ['as' => 'admin.users.disable', 'uses' => 'UsersController@disable']);
 
         Route::post('roles/enableSelected', ['as' => 'admin.roles.enable-selected', 'uses' => 'RolesController@enableSelected']);
         Route::post('roles/disableSelected', ['as' => 'admin.roles.disable-selected', 'uses' => 'RolesController@disableSelected']);
