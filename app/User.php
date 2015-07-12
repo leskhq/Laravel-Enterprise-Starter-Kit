@@ -8,14 +8,17 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Zizaco\Entrust\Traits\EntrustUserTrait as EntrustUserTrait;
-//use App\Repositories\RoleRepository as Role;
+use App\models\Permission;
 use App\models\Role;
 use Auth;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
     use Authenticatable, CanResetPassword;
-    use EntrustUserTrait;
+    use EntrustUserTrait {
+        can as traitCan;
+        hasRole as traitHasRole;
+    }
 
     /**
      * The database table used by the model.
@@ -99,23 +102,22 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return true;
     }
 
-//    /**
-//     * @param Role $role
-//     * @return bool
-//     */
-//    public function hasRole($name)
-//    {
-//        // role 'users' is always checked.
-//        if ('users' === $role->name) {
-//            return true;
-//        }
-//        // Return true if the user is a member of the given role.
-//        if ( $this->roles()->where('id', $role->id)->first() ) {
-//            return true;
-//        }
-//        // Otherwise
-//        return false;
-//    }
+    /**
+     * @return bool
+     */
+    public function canBeDisabled()
+    {
+        // Protect the root user from being disabled.
+        if ('root' == $this->username) {
+            return false;
+        }
+        // Prevent user from disabling his own account.
+        if ( Auth::check() && (Auth::user()->id == $this->id) ) {
+            return false;
+        }
+        // Otherwise
+        return true;
+    }
 
     /**
      *
@@ -132,5 +134,85 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             $this->roles()->attach($roleToForce->id);
         }
     }
+
+    /**
+     * Code copy of EntrustUserTrait::hasRole(...) with the one addition to check if a role
+     * is enabled before returning true.
+     *
+     * @param $name
+     * @param bool $requireAll
+     * @return bool
+     */
+    public function hasRole($name, $requireAll = false)
+    {
+        if (is_array($name)) {
+            foreach ($name as $roleName) {
+                $hasRole = $this->hasRole($roleName);
+
+                if ($hasRole && !$requireAll) {
+                    return true;
+                } elseif (!$hasRole && $requireAll) {
+                    return false;
+                }
+            }
+
+            // If we've made it this far and $requireAll is FALSE, then NONE of the roles were found
+            // If we've made it this far and $requireAll is TRUE, then ALL of the roles were found.
+            // Return the value of $requireAll;
+            return $requireAll;
+        } else {
+            foreach ($this->roles as $role) {
+                if ( ($role->enabled) && ($role->name == $name) ) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Code copy of EntrustUserTrait::can(...) with the one addition to check if a role
+     * is enabled first the check if a permission is also enabled before
+     * returning true.
+     *
+     * @param $permission
+     * @param bool $requireAll
+     * @return bool
+     */
+    public function can($permission, $requireAll = false)
+    {
+        if (is_array($permission)) {
+            foreach ($permission as $permName) {
+                $hasPerm = $this->can($permName);
+
+                if ($hasPerm && !$requireAll) {
+                    return true;
+                } elseif (!$hasPerm && $requireAll) {
+                    return false;
+                }
+            }
+
+            // If we've made it this far and $requireAll is FALSE, then NONE of the perms were found
+            // If we've made it this far and $requireAll is TRUE, then ALL of the perms were found.
+            // Return the value of $requireAll;
+            return $requireAll;
+        } else {
+            foreach ($this->roles as $role) {
+                if ($role->enabled) {
+                    // Validate against the Permission table
+                    foreach ($role->perms as $perm) {
+                        if ( ($perm->enabled) && ($perm->name == $permission) ) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+
 
 }

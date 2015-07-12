@@ -2,14 +2,21 @@
 return [
 
     'status'              => [
-        'created'              => 'User successfully created',
-        'updated'              => 'User successfully updated',
-        'deleted'              => 'User successfully deleted',
+        'created'                   => 'User successfully created',
+        'updated'                   => 'User successfully updated',
+        'deleted'                   => 'User successfully deleted',
+        'global-enabled'            => 'Selected users enabled.',
+        'global-disabled'           => 'Selected users disabled.',
+        'enabled'                   => 'User enabled.',
+        'disabled'                  => 'User disabled.',
+        'no-user-selected'          => 'No user selected.',
     ],
 
     'error'               => [
-        'cant-be-edited'    => 'User cannot be edited',
-        'cant-be-deleted'   => 'User cannot be deleted',
+        'cant-be-edited'                => 'User cannot be edited',
+        'cant-be-deleted'               => 'User cannot be deleted',
+        'cant-be-disabled'              => 'User cannot be disabled',
+        'login-failed-user-disabled'    => 'That account has been disabled.',
     ],
 
     'page'              => [

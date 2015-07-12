@@ -170,6 +170,36 @@ class RoutesController extends Controller {
     }
 
     /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function enable($id)
+    {
+        $route = $this->route->find($id);
+        $route->enabled = true;
+        $route->save();
+
+        Flash::success(trans('admin/routes/general.status.enabled'));
+
+        return redirect('/admin/routes');
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function disable($id)
+    {
+        $route = $this->route->find($id);
+        $route->enabled = false;
+        $route->save();
+
+        Flash::success(trans('admin/routes/general.status.disabled'));
+
+        return redirect('/admin/routes');
+    }
+
+    /**
      * @return \Illuminate\View\View
      */
     public function load()
@@ -222,10 +252,8 @@ class RoutesController extends Controller {
     /**
      * @return \Illuminate\View\View
      */
-    public function save(Request $request)
+    public function savePerms(Request $request)
     {
-//        $input = $request->all();
-
         $chkRoute = $request->input('chkRoute');
         $globalPerm_id = $request->input('globalPerm');
         $perms = $request->input('perms');
@@ -253,6 +281,54 @@ class RoutesController extends Controller {
         else
         {
             Flash::warning(trans('admin/routes/general.status.no-permission-changed-detected'));
+        }
+        return redirect('/admin/routes');
+    }
+
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function enableSelected(Request $request)
+    {
+        $chkRoute = $request->input('chkRoute');
+
+        if (isset($chkRoute))
+        {
+            foreach ($chkRoute as $route_id)
+            {
+                $route = $this->route->find($route_id);
+                $route->enabled = true;
+                $route->save();
+            }
+            Flash::success(trans('admin/routes/general.status.global-enabled'));
+        }
+        else
+        {
+            Flash::warning(trans('admin/routes/general.status.no-route-selected'));
+        }
+        return redirect('/admin/routes');
+    }
+
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function disableSelected(Request $request)
+    {
+        $chkRoute = $request->input('chkRoute');
+
+        if (isset($chkRoute))
+        {
+            foreach ($chkRoute as $route_id)
+            {
+                $route = $this->route->find($route_id);
+                $route->enabled = false;
+                $route->save();
+            }
+            Flash::success(trans('admin/routes/general.status.global-disabled'));
+        }
+        else
+        {
+            Flash::warning(trans('admin/routes/general.status.no-route-selected'));
         }
         return redirect('/admin/routes');
     }

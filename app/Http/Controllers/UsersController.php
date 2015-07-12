@@ -2,6 +2,7 @@
 
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Http\Request;
 use App\Repositories\Criteria\User\UsersWithRoles;
 use App\Repositories\Criteria\User\UsersByUsernamesAscending;
 use App\Repositories\UserRepository as User;
@@ -211,5 +212,98 @@ class UsersController extends Controller {
 
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function enable($id)
+    {
+        $user = $this->user->find($id);
+        $user->enabled = true;
+        $user->save();
+
+        Flash::success(trans('admin/users/general.status.enabled'));
+
+        return redirect('/admin/users');
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function disable($id)
+    {
+        $user = $this->user->find($id);
+
+        if (!$user->canBeDisabled())
+        {
+            Flash::error(trans('admin/users/general.error.cant-be-disabled'));
+        }
+        else
+        {
+            $user->enabled = false;
+            $user->save();
+            Flash::success(trans('admin/users/general.status.disabled'));
+        }
+
+        return redirect('/admin/users');
+    }
+
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function enableSelected(Request $request)
+    {
+        $chkUsers = $request->input('chkUser');
+
+        if (isset($chkUsers))
+        {
+            foreach ($chkUsers as $user_id)
+            {
+                $user = $this->user->find($user_id);
+                $user->enabled = true;
+                $user->save();
+            }
+            Flash::success(trans('admin/users/general.status.global-enabled'));
+        }
+        else
+        {
+            Flash::warning(trans('admin/users/general.status.no-user-selected'));
+        }
+        return redirect('/admin/users');
+    }
+
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function disableSelected(Request $request)
+    {
+        //TODO: Protect 'root'
+
+        $chkUsers = $request->input('chkUser');
+
+        if (isset($chkUsers))
+        {
+            foreach ($chkUsers as $user_id)
+            {
+                $user = $this->user->find($user_id);
+                if (!$user->canBeDisabled())
+                {
+                    Flash::error(trans('admin/users/general.error.cant-be-disabled'));
+                }
+                else
+                {
+                    $user->enabled = false;
+                    $user->save();
+                }
+            }
+            Flash::success(trans('admin/users/general.status.global-disabled'));
+        }
+        else
+        {
+            Flash::warning(trans('admin/users/general.status.no-user-selected'));
+        }
+        return redirect('/admin/users');
+    }
 
 }

@@ -190,4 +190,86 @@ class RolesController extends Controller {
 
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function enable($id)
+    {
+        $role = $this->role->find($id);
+        $role->enabled = true;
+        $role->save();
+
+        Flash::success(trans('admin/roles/general.status.enabled'));
+
+        return redirect('/admin/roles');
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function disable($id)
+    {
+        //TODO: Should we protect 'admins', 'users'??
+
+        $role = $this->role->find($id);
+        $role->enabled = false;
+        $role->save();
+
+        Flash::success(trans('admin/roles/general.status.disabled'));
+
+        return redirect('/admin/roles');
+    }
+
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function enableSelected(Request $request)
+    {
+        $chkRoles = $request->input('chkRole');
+
+        if (isset($chkRoles))
+        {
+            foreach ($chkRoles as $role_id)
+            {
+                $role = $this->role->find($role_id);
+                $role->enabled = true;
+                $role->save();
+            }
+            Flash::success(trans('admin/roles/general.status.global-enabled'));
+        }
+        else
+        {
+            Flash::warning(trans('admin/roles/general.status.no-role-selected'));
+        }
+        return redirect('/admin/roles');
+    }
+
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function disableSelected(Request $request)
+    {
+        //TODO: Should we protect 'admins', 'users'??
+
+        $chkRoles = $request->input('chkRole');
+
+        if (isset($chkRoles))
+        {
+            foreach ($chkRoles as $role_id)
+            {
+                $role = $this->role->find($role_id);
+                $role->enabled = false;
+                $role->save();
+            }
+            Flash::success(trans('admin/roles/general.status.global-disabled'));
+        }
+        else
+        {
+            Flash::warning(trans('admin/roles/general.status.no-role-selected'));
+        }
+        return redirect('/admin/roles');
+    }
+
 }

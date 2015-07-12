@@ -3,10 +3,15 @@
 return [
 
     'status'              => [
-        'created'              => 'Permission successfully created',
-        'updated'              => 'Permission successfully updated',
-        'deleted'              => 'Permission successfully deleted',
-        'generated'            => 'Successfully generated :number permissions from routes.',
+        'created'                   => 'Permission successfully created',
+        'updated'                   => 'Permission successfully updated',
+        'deleted'                   => 'Permission successfully deleted',
+        'generated'                 => 'Successfully generated :number permissions from routes.',
+        'global-enabled'            => 'Selected permissions enabled.',
+        'global-disabled'           => 'Selected permissions disabled.',
+        'enabled'                   => 'Permission enabled.',
+        'disabled'                  => 'Permission disabled.',
+        'no-perm-selected'          => 'No permission selected.',
     ],
 
     'error'               => [

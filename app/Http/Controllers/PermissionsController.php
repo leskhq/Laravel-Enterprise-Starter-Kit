@@ -89,6 +89,8 @@ class PermissionsController extends Controller {
      */
     public function edit($id)
     {
+        //TODO: Protect 'basic-authenticated', 'guest-only', 'open-to-all'
+
         $page_title = trans('admin/permissions/general.page.edit.title');
         $page_description = trans('admin/permissions/general.page.edit.description');
 
@@ -109,6 +111,8 @@ class PermissionsController extends Controller {
      */
     public function update(Request $request, $id)
     {
+        //TODO: Protect 'basic-authenticated', 'guest-only', 'open-to-all'
+
         $this->validate($request, array('name' => 'required', 'display_name' => 'required'));
 
         $permission = $this->permission->find($id);
@@ -131,6 +135,8 @@ class PermissionsController extends Controller {
      */
     public function destroy($id)
     {
+        //TODO: Protect 'basic-authenticated', 'guest-only', 'open-to-all'
+
         $permission = $this->permission->find($id);
 
         if(!$permission->isDeletable())
@@ -153,6 +159,8 @@ class PermissionsController extends Controller {
      */
     public function getModalDelete($id)
     {
+        //TODO: Protect 'basic-authenticated', 'guest-only', 'open-to-all'
+
         $error = null;
 
         $permission = $this->permission->find($id);
@@ -197,6 +205,88 @@ class PermissionsController extends Controller {
         }
 
         Flash::success( trans('admin/permissions/general.status.generated', ['number' => $cnt]) );
+        return redirect('/admin/permissions');
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function enable($id)
+    {
+        $permission = $this->permission->find($id);
+        $permission->enabled = true;
+        $permission->save();
+
+        Flash::success(trans('admin/permissions/general.status.enabled'));
+
+        return redirect('/admin/permissions');
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function disable($id)
+    {
+        //TODO: Should we protect 'basic-authenticated', 'guest-only', 'open-to-all'??
+
+        $permission = $this->permission->find($id);
+        $permission->enabled = false;
+        $permission->save();
+
+        Flash::success(trans('admin/permissions/general.status.disabled'));
+
+        return redirect('/admin/permissions');
+    }
+
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function enableSelected(Request $request)
+    {
+        $chkPerms = $request->input('chkPerm');
+
+        if (isset($chkPerms))
+        {
+            foreach ($chkPerms as $perm_id)
+            {
+                $permission = $this->permission->find($perm_id);
+                $permission->enabled = true;
+                $permission->save();
+            }
+            Flash::success(trans('admin/permissions/general.status.global-enabled'));
+        }
+        else
+        {
+            Flash::warning(trans('admin/permissions/general.status.no-perm-selected'));
+        }
+        return redirect('/admin/permissions');
+    }
+
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function disableSelected(Request $request)
+    {
+        //TODO: Should we protect 'basic-authenticated', 'guest-only', 'open-to-all'??
+
+        $chkPerms = $request->input('chkPerm');
+
+        if (isset($chkPerms))
+        {
+            foreach ($chkPerms as $perm_id)
+            {
+                $permission = $this->permission->find($perm_id);
+                $permission->enabled = false;
+                $permission->save();
+            }
+            Flash::success(trans('admin/permissions/general.status.global-disabled'));
+        }
+        else
+        {
+            Flash::warning(trans('admin/permissions/general.status.no-perm-selected'));
+        }
         return redirect('/admin/permissions');
     }
 

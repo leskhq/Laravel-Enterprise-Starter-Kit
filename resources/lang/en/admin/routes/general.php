@@ -8,8 +8,13 @@ return [
         'deleted'                           => 'Route successfully deleted',
         'loaded'                            => 'Successfully loaded :number routes from application.',
         'indiv-perms-assigned'              => 'Individual routes permission assignment saved.',
-        'global-perms-assigned'             => 'Global routes permission assignment saved.',
+        'global-perms-assigned'             => 'Selected routes permission assignment saved.',
         'no-permission-changed-detected'    => 'No permission change detected.',
+        'global-enabled'                    => 'Selected routes enabled.',
+        'global-disabled'                   => 'Selected routes disabled.',
+        'enabled'                           => 'Routes enabled.',
+        'disabled'                          => 'Routes disabled.',
+        'no-route-selected'                 => 'No route selected.',
     ],
 
     'error'               => [

@@ -91,8 +91,22 @@ class AuthController extends Controller
         $credentials = $request->only('username', 'password');
 
         if (Auth::attempt($credentials, $request->has('remember'))) {
-            Flash::success("Welcome " . Auth::user()->first_name);
-            return redirect()->intended($this->redirectPath());
+
+            $user = Auth::user();
+            if ($user->enabled)
+            {
+                Flash::success("Welcome " . Auth::user()->first_name);
+                return redirect()->intended($this->redirectPath());
+            }
+            else
+            {
+                Auth::logout();
+                return redirect(route('login'))
+                    ->withInput($request->only('username', 'remember'))
+                    ->withErrors([
+                        'username' => trans('admin/users/general.error.login-failed-user-disabled'),
+                    ]);
+            }
         }
 
         return redirect($this->loginPath())
