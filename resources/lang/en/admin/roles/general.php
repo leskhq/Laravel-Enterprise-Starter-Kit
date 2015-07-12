@@ -3,9 +3,14 @@
 return [
 
     'status'              => [
-        'created'              => 'Role successfully created',
-        'updated'              => 'Role successfully updated',
-        'deleted'              => 'Role successfully deleted',
+        'created'                   => 'Role successfully created',
+        'updated'                   => 'Role successfully updated',
+        'deleted'                   => 'Role successfully deleted',
+        'global-enabled'            => 'Selected roles enabled.',
+        'global-disabled'           => 'Selected roles disabled.',
+        'enabled'                   => 'Role enabled.',
+        'disabled'                  => 'Role disabled.',
+        'no-role-selected'          => 'No role selected.',
     ],
 
     'error'               => [

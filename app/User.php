@@ -15,7 +15,10 @@ use Auth;
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
     use Authenticatable, CanResetPassword;
-    use EntrustUserTrait { can as traitcan; }
+    use EntrustUserTrait {
+        can as traitCan;
+        hasRole as traitHasRole;
+    }
 
     /**
      * The database table used by the model.
@@ -116,8 +119,45 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Code copy of EntrustUserTrait::can(...) with the one addition to check if a permission
+     * Code copy of EntrustUserTrait::hasRole(...) with the one addition to check if a role
      * is enabled before returning true.
+     *
+     * @param $name
+     * @param bool $requireAll
+     * @return bool
+     */
+    public function hasRole($name, $requireAll = false)
+    {
+        if (is_array($name)) {
+            foreach ($name as $roleName) {
+                $hasRole = $this->hasRole($roleName);
+
+                if ($hasRole && !$requireAll) {
+                    return true;
+                } elseif (!$hasRole && $requireAll) {
+                    return false;
+                }
+            }
+
+            // If we've made it this far and $requireAll is FALSE, then NONE of the roles were found
+            // If we've made it this far and $requireAll is TRUE, then ALL of the roles were found.
+            // Return the value of $requireAll;
+            return $requireAll;
+        } else {
+            foreach ($this->roles as $role) {
+                if ( ($role->enabled) && ($role->name == $name) ) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Code copy of EntrustUserTrait::can(...) with the one addition to check if a role
+     * is enabled first the check if a permission is also enabled before
+     * returning true.
      *
      * @param $permission
      * @param bool $requireAll
@@ -142,10 +182,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             return $requireAll;
         } else {
             foreach ($this->roles as $role) {
-                // Validate against the Permission table
-                foreach ($role->perms as $perm) {
-                    if ( ($perm->enabled) && ($perm->name == $permission) ) {
-                        return true;
+                if ($role->enabled) {
+                    // Validate against the Permission table
+                    foreach ($role->perms as $perm) {
+                        if ( ($perm->enabled) && ($perm->name == $permission) ) {
+                            return true;
+                        }
                     }
                 }
             }
