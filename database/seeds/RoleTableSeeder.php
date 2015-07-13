@@ -15,6 +15,7 @@ class RoleTableSeeder extends Seeder
             'name' => 'admins',
             'display_name' => 'Administrators',
             'description' => 'Site administrators',
+            'enabled' => true,
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now(),
         ]);
@@ -23,6 +24,7 @@ class RoleTableSeeder extends Seeder
             'name' => 'users',
             'display_name' => 'Users',
             'description' => 'Authenticated users',
+            'enabled' => true,
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now(),
         ]);

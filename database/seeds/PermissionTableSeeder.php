@@ -15,6 +15,7 @@ class PermissionTableSeeder extends Seeder
             'name' => 'guest-only',
             'display_name' => 'Guest only access',
             'description' => 'Only guest users can access these.',
+            'enabled' => true,
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now(),
         ]);
@@ -23,6 +24,7 @@ class PermissionTableSeeder extends Seeder
             'name' => 'open-to-all',
             'display_name' => 'Open to all',
             'description' => 'Everyone can access these, even unauthenticated or guest users.',
+            'enabled' => true,
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now(),
         ]);
@@ -31,6 +33,7 @@ class PermissionTableSeeder extends Seeder
             'name' => 'basic-authenticated',
             'display_name' => 'Basic authenticated',
             'description' => 'Basic permission after being authenticated.',
+            'enabled' => true,
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now(),
         ]);
