@@ -3,7 +3,7 @@
 
 ## Description
 L51ESK, is a template project based on the [Laravel](http://laravel.com/) framework v5.1, combining a set of features 
-that can kit start any Web application for the Internet or on an Intranet. What makes this project unique, from what
+that can kick start any Web application for the Internet or on an Intranet. What makes this project unique, from what
 I have seen, are two key features, the optional LDAP & Active Directory authentication (not completed yet, but soon)
 and the dynamic authorization module. But wait there is more, keep reading...
 
