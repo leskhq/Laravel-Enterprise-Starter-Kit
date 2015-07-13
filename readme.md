@@ -17,16 +17,16 @@ I am still actively working on this, so please come back soon and often for upda
 
 
 ## Contents
-- [Features](#Features)
-- [Future](#Future)
-- [Installing](#Installing)
-- [Configuring](#Configuring)
-- [Documentation](#Documentation)
-- [Troubleshooting](#Troubleshooting)
-- [Issues](#Issues)
-- [Contributing](#Contributing)
-- [Credits & inspirations](#Credits%20%26%20inspirations)
-- [License](#License)
+- [Features](#features)
+- [Future](#future)
+- [Installing](#installing)
+- [Configuring](#configuring)
+- [Documentation](#documentation)
+- [Troubleshooting](#troubleshooting)
+- [Issues](#issues)
+- [Contributing](#contributing)
+- [Credits & inspirations](#credits--inspirations)
+- [License](#license)
 
 ## Features
 * Based on Laravel 5.1
