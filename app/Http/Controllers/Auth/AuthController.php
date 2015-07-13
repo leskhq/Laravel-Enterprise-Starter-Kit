@@ -93,7 +93,8 @@ class AuthController extends Controller
         if (Auth::attempt($credentials, $request->has('remember'))) {
 
             $user = Auth::user();
-            if ($user->enabled)
+            // Allow only if user is root or enabled.
+            if ( ('root' == $user->username) || ($user->enabled) )
             {
                 Flash::success("Welcome " . Auth::user()->first_name);
                 return redirect()->intended($this->redirectPath());
