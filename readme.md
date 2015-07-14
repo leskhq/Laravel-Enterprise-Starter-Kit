@@ -32,13 +32,19 @@ I am still actively working on this, so please come back soon and often for upda
 * Based on Laravel 5.1
 * Theme engine using [yaapis/Theme](https://github.com/yaapis/Theme).
 * Includes 3 themes based on [almasaeed2010/AdminLTE](https://github.com/almasaeed2010/AdminLTE).
-* User authentication.
-* Role based authorization using [zizaco/entrust](https://github.com/zizaco/entrust).
-    * User login.
-    * User registration.
-    * Reset forgot password.
-* Full management of users, roles & permissions.
-* Dynamic assignment of permissions to application routes with matching authorization module.
+* Custom Error pages: 
+    * 403: Forbidden access.
+    * 404: Page not found.
+    * 500: Internal server error.
+* Authentication & Authorization.
+    * User authentication using Laravel's default model and middleware.
+    * Role based authorization using [zizaco/entrust](https://github.com/zizaco/entrust).
+        * User login.
+        * User registration.
+        * Reset forgot password.
+    * Dynamic assignment of permissions to application routes with matching authorization module.
+    * Full management of users, roles, permissions & routes.
+* Optional walled garden mode.
 * Laravel [Repositories](https://github.com/Bosnadev/Repositories).
 * Flash notifications using [laracasts/flash](https://github.com/laracasts/flash).
 * Internationalization (i18n).
@@ -46,12 +52,9 @@ I am still actively working on this, so please come back soon and often for upda
 * Font-awesome v4.3.0.
 * Ionic Framework v2.0.1.
 * jQuery 2.1.4.
-* Laravel [DebugBar](https://github.com/barryvdh/laravel-debugbar).
-* Laravel [IDE Helper](https://github.com/barryvdh/laravel-ide-helper).
-* Custom Error pages: 
-    * 403: Forbidden access.
-    * 404: Page not found.
-    * 500: Internal server error.
+* Development tools
+    * Laravel [DebugBar](https://github.com/barryvdh/laravel-debugbar).
+    * Laravel [IDE Helper](https://github.com/barryvdh/laravel-ide-helper).
 
 
 ## Future
@@ -59,7 +62,7 @@ List of future feature and items that are still have to be completed, in no part
 
 * Gravatar integration.
 * Implement soft-delete for Users, Roles, Permissions and maybe even Routes.
-* Persistant notifications.
+* Persistent notifications.
 * Audit log of actions.
 * LDAP/AD integration.
 * Single sign-on for IIS and Apache.
@@ -88,7 +91,7 @@ then clone.
 
 #### Download
 To download a ZIP archive, simply got to the main repository page at of 
-[L51ESK](https://github.com/sroutier/laravel-5.1-enterprise-starter-kit) and click on the "Download ZIP" button.
+[L51ESK](https://github.com/sroutier/laravel-5.1-enterprise-starter-kit) and click on the "Download ZIP" button. 
 
 #### Clone
 Simply clone this repository on your machine using the command:
@@ -118,7 +121,7 @@ You can edit the config file with
 homestead edit
 ```
 
-Here is an example of a *Homestead.yaml*
+Here is an example of what a *Homestead.yaml* might look like for this project:
 ```
 ---
 ip: "192.168.10.10"
@@ -173,7 +176,7 @@ composer install
 
 **_Note:_** 
 
-On a production server, prior to running the composer command, you will want to deploy a copy of the file 
+On a production server, prior to running the *composer install* command, you will want to deploy a copy of the file 
 *composer.lock* from your development server, to guarantee that the exact version of the various 
 packages that you have developed on and tested gets installed. Never run the *composer update* 
 command on a production server.
@@ -223,16 +226,106 @@ To run the migration scripts run this command
  ./artisan db:seed
  ```
 
-### Done
+### First login and test
 You should now be able to launch a Web browser and see your new Web application. To log in using the *root* account
 the default password is *Password1*. Please change it ASAP.
 
 
-## Configuring
+## Authentication & Authorization
+During the installation the database seeder scripts created a few things to help get started:
+
+* The super user *root*.
+* The roles *admins* and *users*.
+* The permissions *basic-authenticated*, *guest-only* & *open-to-all*.
+
+Additionally, on a development environment a few more test users and permissions would have been created.
+
+The relationship between users, roles & permissions is relatively simple: users are assigned roles (many-to-many)
+and roles are assigned permissions (many-to-many). Users do not have permissions per se, but through roles they 
+have the ability of a given permission. For more information please refer to the documentation of the 
+[zizaco/entrust](https://github.com/zizaco/entrust) package.
+
+Where things get a little more interesting is the addition of the *Route* model. Not to be confused with the 
+[Route](http://laravel.com/api/5.1/Illuminate/Routing/Route.html) from Laravel, the *Route* model is still 
+closely related to Laravel routes. In fact *Routes* are built automatically, upon request, by inspecting 
+the Web site routing table. Initially if you navigate to the *Admin > Security > Routes* page, you will 
+be greeted with an empty table. To automatically load all routes defined within the Web site simply 
+click on the *load* button. After a short delay, the page will reload and you will be able to 
+assign any of the defined permission to each route.
+ 
+Once *Routes* are assigned a single *Permission* each and permissions are assigned to *Roles* and finally *Users* are 
+granted *Roles*, then the matching *AuthorizeRoute* middleware can authorize or block access to all routes for both 
+guest and authenticated users. This feature will probably not be used by any site user, administrator or others,
+but by the site developer(s). In fact one of the first things that I would recommend is to restrict all routes
+to the *Route* management pages to a permission given to developers only. What this feature does is make 
+the authorization process very flexible, powerful and easy to change on the fly.
+  
+Some important hard-set rules to note are:
+
+* Except when specifically stated otherwise below, routes, permissions, roles and users can be disabled.
+* Routes
+    * If a route is either not defined or not assigned any permission, it will not be accessible, except to the root 
+    user or any user granted the admins role.
+    * Routes to the controllers *AuthController* and *PasswordController* are not restricted by the *AuthorizeRoute* 
+    middleware. Otherwise users could not log in or reset their passwords.
+    * A route assigned the permission *open-to-all* will be authorize for all users, authenticated or not.
+    * A route assigned the permission *guest-only* will only be authorized for guest users, not for authenticated ones.
+    * A route assigned the permission *basic-authenticated* will be authorized for any user that has logged into the
+    system. No other permission will be required. But the same route will be denied for guest users.
+    * Failure to be authorized to access a route will redirect to the error page 403 (access denied).
+    * When loading *Routes* from the Web site routing table, all routes to the *AuthController* and *PasswordController*
+    will be skipped over. Also any route to the *DebugBar* will be skipped. If required they can be added by creating 
+    a route manually.
+    * Disabling a route prevents the route from being accessible or authorized.
+
+* Permissions
+    * The permissions *guest-only* and *basic-authenticated* cannot be edited or deleted.
+    * A permission that is assigned to a *Route* or a *Role* cannot be deleted.
+    * The permission *guest-only* cannot be assigned to any role. It is reserved for guest or un-authenticated users.
+    * The permission *basic-authenticated* for forced onto every role.
+    * The permission assignment for the role *admins* cannot be changed.
+    * Disabling a permission prevents it from granting access to any route assigned to that permissions.
+
+* Roles
+    * The roles *admins* and *users* cannot be edited or deleted
+    * The role *users* is force onto every user.
+    * Disabling a role prevent prevents the users assigned this role from getting the abilities of that role.
+
+* Users
+    * The user *root* and any user with the *admin* role are not restricted by the *AuthorizeRoute* middleware. They 
+    can go anywhere they want, even to routes that are either disabled or not defined.
+    * If a user is disabled while he is logged into and using the Web site, he will get automatically logged out the 
+    next time he tries to access a route protected by the *AuthorizeRoute* middleware.
+    * The user *root* cannot be edited or deleted.
+    * A user cannot disable or delete his own currently logged in user.
 
 
-## Documentation
+## Walled garden
+To enable to optional walled garden mode simply set the *WALLED_GARDEN* variable to *true* in the *.env* file as shown 
+below:
+````
+WALLED_GARDEN=true
+````
+By default the walled garden mode is set to off or false. When enabled all guest or un-authenticated users will be 
+redirected to the login page.
 
+## Themes
+The change the default theme, set the *DEFAULT_THEME* variable in the *.env* file:
+````
+DEFAULT_THEME=red
+````
+L51ESK comes with 3 themes: default, green and red.
+Both the red and green themes inherit much of there look from the default theme which is mostly blue and based on the 
+look of the [almasaeed2010/AdminLTE](https://github.com/almasaeed2010/AdminLTE) Web template.
+For more details on how to configure and develop your own themes refer to the documentation of the 
+[yaapis/Theme](https://github.com/yaapis/Theme) package.
+
+
+ 
+  
+  
+ 
+ 
 
 ## Troubleshooting
 More later...

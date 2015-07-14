@@ -278,8 +278,6 @@ class UsersController extends Controller {
      */
     public function disableSelected(Request $request)
     {
-        //TODO: Protect 'root'
-
         $chkUsers = $request->input('chkUser');
 
         if (isset($chkUsers))
