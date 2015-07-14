@@ -20,8 +20,10 @@ I am still actively working on this, so please come back soon and often for upda
 - [Features](#features)
 - [Future](#future)
 - [Installing](#installing)
-- [Configuring](#configuring)
-- [Documentation](#documentation)
+- [Configuration](#configuration)
+    [Authentication & Authorization](#authentication--authorization)
+    [Walled garden](#walled-garden)
+    [Themes](#themes)
 - [Troubleshooting](#troubleshooting)
 - [Issues](#issues)
 - [Contributing](#contributing)
@@ -231,7 +233,9 @@ You should now be able to launch a Web browser and see your new Web application.
 the default password is *Password1*. Please change it ASAP.
 
 
-## Authentication & Authorization
+## Configuration
+
+### Authentication & Authorization
 During the installation the database seeder scripts created a few things to help get started:
 
 * The super user *root*.
@@ -300,7 +304,7 @@ Some important hard-set rules to note are:
     * A user cannot disable or delete his own currently logged in user.
 
 
-## Walled garden
+### Walled garden
 To enable to optional walled garden mode simply set the *WALLED_GARDEN* variable to *true* in the *.env* file as shown 
 below:
 ````
@@ -309,7 +313,7 @@ WALLED_GARDEN=true
 By default the walled garden mode is set to off or false. When enabled all guest or un-authenticated users will be 
 redirected to the login page.
 
-## Themes
+### Themes
 The change the default theme, set the *DEFAULT_THEME* variable in the *.env* file:
 ````
 DEFAULT_THEME=red
