@@ -286,7 +286,7 @@ Some important hard-set rules to note are:
     * The permissions *guest-only* and *basic-authenticated* cannot be edited or deleted.
     * A permission that is assigned to a *Route* or a *Role* cannot be deleted.
     * The permission *guest-only* cannot be assigned to any role. It is reserved for guest or un-authenticated users.
-    * The permission *basic-authenticated* for forced onto every role.
+    * The permission *basic-authenticated* is forced onto every role.
     * The permission assignment for the role *admins* cannot be changed.
     * Disabling a permission prevents it from granting access to any route assigned to that permissions.
 
