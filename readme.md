@@ -116,7 +116,7 @@ For development nothing is better than [Homestead](http://laravel.com/docs/5.1/h
 using it. 
 
 If you choose to use Homestead, you will have to edit the *Homestead.yaml* config file, edit set the folder mappings and
-site mappings. Additionally I like to set the *APP_ENV* variable to *developmnet*. 
+site mappings. Additionally I like to set the *APP_ENV* variable to *development*. 
 
 You can edit the config file with
 ```
