@@ -11,8 +11,9 @@ use Zizaco\Entrust\Traits\EntrustUserTrait as EntrustUserTrait;
 use App\models\Permission;
 use App\models\Role;
 use Auth;
+use Sroutier\EloquentLDAP\Contracts\EloquentLDAPUserInterface;
 
-class User extends Model implements AuthenticatableContract, CanResetPasswordContract
+class User extends Model implements AuthenticatableContract, CanResetPasswordContract, EloquentLDAPUserInterface
 {
     use Authenticatable, CanResetPassword;
     use EntrustUserTrait {
@@ -32,7 +33,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      *
      * @var array
      */
-    protected $fillable = ['first_name', 'last_name', 'username', 'email', 'password'];
+    protected $fillable = ['first_name', 'last_name', 'username', 'email', 'password', 'auth_type'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -40,6 +41,21 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    /**
+     *
+     *
+     * @param array $attributes
+     * @param $user
+     */
+    private function assignMembership(array $attributes = [])
+    {
+        if (array_key_exists('role', $attributes) && ($attributes['role'])) {
+            $this->roles()->sync($attributes['role']);
+        } else {
+            $this->roles()->sync([]);
+        }
+    }
 
     /**
      * @return string
@@ -136,14 +152,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Code copy of EntrustUserTrait::hasRole(...) with the one addition to check if a role
-     * is enabled before returning true.
+     * Code copy of EntrustUserTrait::hasRole(...) with the one addition to,
+     * optionally, check if a role is enabled before returning true.
      *
      * @param $name
      * @param bool $requireAll
      * @return bool
      */
-    public function hasRole($name, $requireAll = false)
+    public function hasRole($name, $requireAll = false, $mustBeEnabled = true)
     {
         if (is_array($name)) {
             foreach ($name as $roleName) {
@@ -162,8 +178,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             return $requireAll;
         } else {
             foreach ($this->roles as $role) {
-                if ( ($role->enabled) && ($role->name == $name) ) {
-                    return true;
+                if ($role->name == $name) {
+                    if ( $mustBeEnabled ) {
+                        if ($role->enabled) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    } else {
+                        return true;
+                    }
                 }
             }
         }
@@ -213,6 +237,76 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return false;
     }
 
+    /**
+     * Overwrite Model::create(...) to save group membership if included,
+     * or clear it if not. Also force membership to group 'users'.
+     *
+     * @param array $attributes
+     */
+    public static function create(array $attributes = []) {
 
+        // Call original create method from parent
+        $user = parent::create($attributes);
+
+        // Assign membership(s)
+        $user->assignMembership($attributes);
+        // Force membership to group 'users'
+        $user->forceRole('users');
+
+        return $user;
+    }
+
+    /**
+     * Overwrite Model::update(...) to save group membership if included,
+     * or clear it if not. Also force membership to group 'users'.
+     *
+     * @param array $attributes
+     */
+    public function update(array $attributes = []) {
+
+        if ($attributes['first_name']) {
+            $this->first_name = $attributes['first_name'];
+        }
+        if ($attributes['last_name']) {
+            $this->last_name = $attributes['last_name'];
+        }
+        if ($attributes['username']) {
+            $this->username = $attributes['username'];
+        }
+        if ($attributes['email']) {
+            $this->email = $attributes['email'];
+        }
+        if($attributes['password'])
+        {
+            $this->password = $attributes['password'];
+        }
+        $this->save();
+
+        // Assign membership(s)
+        $this->assignMembership($attributes);
+        // Force membership to group 'users'
+        $this->forceRole('users');
+    }
+
+    /**
+     * Implements the 'isMemberOf(...)' as required by Eloquent-LDAP by using
+     * the hasRole method and ignoring the enable state of the role.
+     *
+     * @param $name
+     * @return bool
+     */
+    public function isMemberOf($name) {
+        return $this->hasRole($name, false, false);
+    }
+
+    /**
+     * Implements the 'membershipList()' method as required by Eloquent-LDAP.
+     *
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function membershipList() {
+        return $this->roles();
+    }
 
 }

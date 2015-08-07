@@ -76,17 +76,6 @@ class UsersController extends Controller {
     {
         $user = $this->user->create($request->all());
 
-        if($request->get('role'))
-        {
-            $user->roles()->sync($request->get('role'));
-        }
-        else
-        {
-            $user->roles()->sync([]);
-        }
-
-        $user->forceRole('users');
-
         Flash::success( trans('admin/users/general.status.created') ); // 'User successfully created');
 
         return redirect('/admin/users');
@@ -130,26 +119,7 @@ class UsersController extends Controller {
             abort(403);
         }
 
-        $user->first_name = $request->get('first_name');
-        $user->last_name  = $request->get('last_name');
-        $user->username   = $request->get('username');
-        $user->email      = $request->get('email');
-        if($request->get('password'))
-        {
-            $user->password = $request->get('password');
-        }
-        $user->save();
-
-        if($request->get('role'))
-        {
-            $user->roles()->sync($request->get('role'));
-        }
-        else
-        {
-            $user->roles()->sync([]);
-        }
-
-        $user->forceRole('users');
+        $user->update($request->all());
 
         Flash::success( trans('admin/users/general.status.updated') );
 
