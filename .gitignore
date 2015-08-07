@@ -4,6 +4,10 @@
 .env
 storage/
 
+# Package development #
+#######################
+packages/
+
 # Test/Dev pages #
 ##################
 public/phpinfo.php
