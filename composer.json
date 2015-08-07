@@ -1,13 +1,28 @@
 {
     "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
-    "license": "MIT",
+    "description": "A Starter project based on Laravel 5.1 with theme support, optional LDAP/AD authentication, dynamic route authorization, etc...",
+    "keywords": [
+      "framework",
+      "laravel",
+      "starter kit",
+      "template",
+      "theme",
+      "LDAP",
+      "Active Directory"
+    ],
+    "homepage": "https://github.com/sroutier/laravel-5.1-enterprise-starter-kit",
+    "license": "GPLv3",
+    "authors": [
+      {
+        "name": "Sebastien Routier",
+        "email": "sroutier@gmail.com"
+      }
+    ],
     "type": "project",
     "repositories": [
       {
         "type": "vcs",
-        "url": "https://github.com/sroutier/Theme"
+        "url": "https://github.com/sroutier/laravel-5.1-enterprise-starter-kit"
       }
     ],
     "require": {

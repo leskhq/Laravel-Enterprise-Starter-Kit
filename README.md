@@ -1,30 +1,25 @@
 # Laravel 5.1 - Enterprise starter kit (L51ESK)
 
+[![Latest Version on Packagist][ico-version]][link-packagist]
+[![Software License][ico-license]](LICENSE.md)
 
 ## Description
 L51ESK, is a template project based on the [Laravel](http://laravel.com/) framework v5.1, combining a set of features 
 that can kick start any Web application for the Internet or on an Intranet. What makes this project unique, from what
-I have seen, are two key features, the optional LDAP & Active Directory authentication (not completed yet, but soon)
-and the dynamic authorization module. But wait there is more, keep reading...
-
-
-**_Note:_** 
-
-The project is not completed just yet. As you will see in the notes below there is still a lot left to do, but I wanted 
-to release and open it up to the world as one of it's differentiating feature seemed to answer someone request 
-on [StackOverflow](http://stackoverflow.com/questions/31350993/way-to-set-a-route-in-a-php-laravel-app-as-being-restricted-for-users-with-permi). 
-I am still actively working on this, so please come back soon and often for updates with new releases and features.
-
+I have seen, are two key features: the optional Lightweight Directory Access Protocol (LDAP) & Microsoft Active 
+Directory (AD) authentication and the dynamic authorization module. But wait there is more, keep reading...
 
 ## Contents
 - [Features](#features)
-- [Future](#future)
+- [Roadmap](#roadmap)
 - [Installing](#installing)
 - [Configuration](#configuration)
     - [Authentication & Authorization](#authentication--authorization)
     - [Walled garden](#walled-garden)
     - [Themes](#themes)
 - [Troubleshooting](#troubleshooting)
+- [Change log](#change-log)
+- [Security](#security)
 - [Issues](#issues)
 - [Contributing](#contributing)
 - [Credits & inspirations](#credits--inspirations)
@@ -46,6 +41,10 @@ I am still actively working on this, so please come back soon and often for upda
         * Reset forgot password.
     * Dynamic assignment of permissions to application routes with matching authorization module.
     * Full management of users, roles, permissions & routes.
+    * Optional LDAP/AD authentication using [sroutier/eloquent-ldap](https://github.com/sroutier/eloquent-ldap), with options to:
+        * Automatically creates local account for LDAP/AD users on first login.
+        * Automatically assign to matching local roles based on LDAP/AD group membership.
+        * Refresh role assignment on login.
 * Optional walled garden mode.
 * Laravel [Repositories](https://github.com/Bosnadev/Repositories).
 * Flash notifications using [laracasts/flash](https://github.com/laracasts/flash).
@@ -57,16 +56,16 @@ I am still actively working on this, so please come back soon and often for upda
 * Development tools
     * Laravel [DebugBar](https://github.com/barryvdh/laravel-debugbar).
     * Laravel [IDE Helper](https://github.com/barryvdh/laravel-ide-helper).
+    * Laravel [Packager](https://github.com/jeroen-g/laravel-packager)
 
 
-## Future
-List of future feature and items that are still have to be completed, in no particular order, more like a brain dump:
+## Roadmap
+List of future feature and items that are still have to be completed, in no particular order:
 
 * Gravatar integration.
 * Implement soft-delete for Users, Roles, Permissions and maybe even Routes.
 * Persistent notifications.
 * Audit log of actions.
-* LDAP/AD integration.
 * Single sign-on for IIS and Apache.
 * Breadcrumb.
 * Dynamic menu based on roles/permissions.
@@ -89,7 +88,7 @@ List of future feature and items that are still have to be completed, in no part
 
 ### Acquire a copy
 There are multiple ways to acquire a copy of L51ESK. You can download a ZIP archive, clone the project and finally fork 
-then clone.
+your own repository then clone it.
 
 #### Download
 To download a ZIP archive, simply got to the main repository page at of 
@@ -251,9 +250,9 @@ have the ability of a given permission. For more information please refer to the
 
 Where things get a little more interesting is the addition of the *Route* model. Not to be confused with the 
 [Route](http://laravel.com/api/5.1/Illuminate/Routing/Route.html) from Laravel, the *Route* model is still 
-closely related to Laravel routes. In fact *Routes* are built automatically, upon request, by inspecting 
-the Web site routing table. Initially if you navigate to the *Admin > Security > Routes* page, you will 
-be greeted with an empty table. To automatically load all routes defined within the Web site simply 
+closely related to Laravel routes. In fact all *Routes* can be automatically built by inspecting the Web 
+site routing table. Initially if you navigate to the *Admin > Security > Routes* page, you will be 
+greeted with an empty table. To automatically load all routes defined within the Web site simply 
 click on the *load* button. After a short delay, the page will reload and you will be able to 
 assign any of the defined permission to each route.
  
@@ -303,9 +302,19 @@ Some important hard-set rules to note are:
     * The user *root* cannot be edited or deleted.
     * A user cannot disable or delete his own currently logged in user.
 
+### LDAP/AD authentication.
+To enable the optional LDAP/AD authentication module, set the *LDAP_ENABLED* variable to *true* in the *.env* file as shown 
+below:
+````
+LDAP_ENABLED=true
+````
+By default the LDAP/AD authentication module is set to off or false, as it requires some extra configuration on your part.
+For more information on how to configure the module, refer to documentation of the underlying package at 
+[sroutier/eloquent-ldap](https://github.com/sroutier/eloquent-ldap). Additionally, every option is explained in the config file 
+*/config/eloquent-ldap.php*.
 
 ### Walled garden
-To enable to optional walled garden mode simply set the *WALLED_GARDEN* variable to *true* in the *.env* file as shown 
+To enable the optional walled garden mode simply set the *WALLED_GARDEN* variable to *true* in the *.env* file as shown 
 below:
 ````
 WALLED_GARDEN=true
@@ -324,20 +333,18 @@ look of the [almasaeed2010/AdminLTE](https://github.com/almasaeed2010/AdminLTE) 
 For more details on how to configure and develop your own themes refer to the documentation of the 
 [yaapis/Theme](https://github.com/yaapis/Theme) package.
 
-
- 
-  
-  
- 
- 
-
 ## Troubleshooting
 More later...
+
+## Change log
+Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+
+## Security
+If you discover any security related issues, please email sroutier@gmail.com instead of using the issue tracker.
 
 ## Issues
 For the list of all current and former/closed issues see the [github issue list](https://github.com/sroutier/laravel-5.1-enterprise-starter-kit/issues).
 If you find a problem, please follow the same link and create an new issue, I will look at it and get back to you ASAP.
-
 
 ## Contributing
 I would be glad to accept your contributions if you want to participate and share. Just follow GitHub's guide on how 
@@ -348,6 +355,9 @@ your change then create a pull request after submitting your change to your repo
 It goes without saying that none of this could have been done without the great [Laravel](http://laravel.com/) 
 framework, a big thank you goes out to [Taylor Otwell](http://taylorotwell.com/) and the hundreds of volunteers 
 of the Laravel & Open Source community.
+
+I would like to thank [Jeffrey Way](https://twitter.com/jeffrey_way) for the excellent [Laracast](https://laracasts.com/)
+ a never ending source of knowledge.
 
 Additionally credit goes out to the authors of the various components and modules, noted in the sections above, used 
 as part of this project. 
@@ -363,4 +373,12 @@ These projects are similar to the L51ESK, but did not fully cover the requiremen
 * [todstoychev/Laravel5Starter](https://github.com/todstoychev/Laravel5Starter) A Laravel 5 starter project. It contains user management with roles and basic admin panel with application settings.
 
 ### License
-The L51ESK is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+The L51ESK is open-sourced software licensed under the GNU General Public License Version 3 (GPLv3). 
+Please see [License File](LICENSE.md) for more information.
+
+
+[ico-version]: https://img.shields.io/packagist/vpre/sroutier/laravel-5.1-enterprise-starter-kit.svg
+[ico-license]: https://img.shields.io/badge/licence-GPLv3-brightgreen.svg
+
+[link-packagist]: https://packagist.org/packages/sroutier/laravel-5.1-enterprise-starter-kit
+
