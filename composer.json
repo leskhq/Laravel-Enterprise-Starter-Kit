@@ -1,5 +1,5 @@
 {
-    "name": "laravel/laravel",
+    "name": "sroutier/laravel-5.1-enterprise-starter-kit",
     "description": "A Starter project based on Laravel 5.1 with theme support, optional LDAP/AD authentication, dynamic route authorization, etc...",
     "keywords": [
       "framework",
