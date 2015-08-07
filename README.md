@@ -377,7 +377,7 @@ The L51ESK is open-sourced software licensed under the GNU General Public Licens
 Please see [License File](LICENSE.md) for more information.
 
 
-[ico-version]: https://img.shields.io/packagist/vpre/sroutier/laravel-5.1-enterprise-starter-kit.svg
+[ico-version]: https://img.shields.io/badge/packagist-v1.0--dev-orange.svg
 [ico-license]: https://img.shields.io/badge/licence-GPLv3-brightgreen.svg
 
 [link-packagist]: https://packagist.org/packages/sroutier/laravel-5.1-enterprise-starter-kit
