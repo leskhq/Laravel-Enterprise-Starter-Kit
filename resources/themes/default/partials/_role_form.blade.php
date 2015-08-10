@@ -18,6 +18,16 @@
 </div>
 
 <div class="form-group">
+    {!! Form::label('options', trans('admin/roles/general.columns.options')) !!}
+    <div class="checkbox" id="options" name="options">
+        <label>
+            {!! '<input type="hidden" name="resync_on_login" value="0">' !!}
+            {!! Form::checkbox('resync_on_login', '1', $role->resync_on_login) !!} {{ trans('admin/roles/general.columns.resync_on_login') }}
+        </label>
+    </div>
+</div>
+
+<div class="form-group">
     {{ trans('admin/roles/general.columns.permissions') }}
     @foreach($perms as $perm)
         <?php

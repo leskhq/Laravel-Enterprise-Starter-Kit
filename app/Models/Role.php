@@ -7,7 +7,7 @@ class Role extends EntrustRole {
     /**
      * @var array
      */
-    protected $fillable = ['name', 'display_name', 'description'];
+    protected $fillable = ['name', 'display_name', 'description', 'resync_on_login'];
 
 
     /**

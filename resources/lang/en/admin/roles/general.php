@@ -47,6 +47,8 @@ return [
         'display_name'              =>  'Display name',
         'description'               =>  'Description',
         'permissions'               =>  'Permissions',
+        'resync_on_login'           =>  'Re-sync on login',
+        'options'                   =>  'Options',
         'users'                     =>  'Users',
         'created'                   =>  'Created',
         'updated'                   =>  'Updated',

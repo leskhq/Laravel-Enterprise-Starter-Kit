@@ -31,7 +31,16 @@
                     </div>
 
                     <div class="form-group">
-                        {{ trans('admin/roles/general.columns.permissions') }}
+                        {!! Form::label('options', trans('admin/roles/general.columns.options')) !!}
+                        <div class="checkbox" id="options" name="options">
+                            <label>
+                                {!! Form::checkbox('resync_on_login', '1', $role->resync_on_login, ['disabled']) !!} {{ trans('admin/roles/general.columns.resync_on_login') }}
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {!! Form::label('perms[]', trans('admin/roles/general.columns.permissions')) !!}
                         @foreach($perms as $perm)
                             <?php $checked = (isset($rolePerms))?in_array($perm->id, $rolePerms->lists('id')->toArray()) : false; ?>
                             <div class="checkbox">
