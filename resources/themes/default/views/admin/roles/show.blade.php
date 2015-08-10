@@ -26,7 +26,7 @@
                     </div>
 
                     <div class="form-group">
-                        {!! Form::label('description', trans('admin/users/general.columns.description')) !!}
+                        {!! Form::label('description', trans('admin/roles/general.columns.description')) !!}
                         {!! Form::text('description', null, ['class' => 'form-control', 'readonly']) !!}
                     </div>
 
