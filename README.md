@@ -53,6 +53,8 @@ Directory (AD) authentication and the dynamic authorization module. But wait the
 * Font-awesome v4.4.0.
 * Ionic Framework v2.0.1.
 * jQuery 2.1.4.
+* Select2 4.0.0
+* Select2 Bootstrap Theme v0.1.0-beta.4
 * Development tools
     * Laravel [DebugBar](https://github.com/barryvdh/laravel-debugbar).
     * Laravel [IDE Helper](https://github.com/barryvdh/laravel-ide-helper).
@@ -72,7 +74,6 @@ List of future feature and items that are still have to be completed, in no part
 * Favicon (one per theme?).
 * Settings with precedence, Application vs User settings and DB vs .env file.
 * Sortable tables.
-* Select2 for select boxes.
 * Datepicker for date fields.
 * Chart & graph engine.
 * Add comments in .env file.
