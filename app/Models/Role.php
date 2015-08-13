@@ -7,7 +7,7 @@ class Role extends EntrustRole {
     /**
      * @var array
      */
-    protected $fillable = ['name', 'display_name', 'description', 'resync_on_login'];
+    protected $fillable = ['name', 'display_name', 'description', 'resync_on_login', 'enabled'];
 
 
     /**
@@ -43,6 +43,19 @@ class Role extends EntrustRole {
     {
         // Protect the admins role from permissions changes
         if ('admins' == $this->name) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function canChangeMembership()
+    {
+        // Protect the users role from membership changes
+        if ('users' == $this->name) {
             return false;
         }
 
@@ -89,6 +102,22 @@ class Role extends EntrustRole {
             // Load the given permission and attach it to the role.
             $permToForce = Permission::where('name', $permissionName)->first();
             $this->perms()->attach($permToForce->id);
+        }
+    }
+
+    /**
+     * Save the inputted users.
+     *
+     * @param mixed $inputUsers
+     *
+     * @return void
+     */
+    public function saveUsers($inputUsers)
+    {
+        if (!empty($inputUsers)) {
+            $this->users()->sync($inputUsers);
+        } else {
+            $this->users()->detach();
         }
     }
 

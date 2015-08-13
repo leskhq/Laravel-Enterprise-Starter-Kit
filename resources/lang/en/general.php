@@ -15,6 +15,16 @@ return [
         'toggle-select'     => 'Toggle checkboxes',
     ],
 
+    'status'              => [
+        'enabled'           => 'Enabled',
+    ],
+
+    'tabs'              => [
+        'details'           => 'Details',
+        'options'           => 'Options',
+        'perms'             => 'Permissions',
+        'users'             => 'Users',
+    ],
 
     'error'              => [
         'title-403'             => 'Error 403',

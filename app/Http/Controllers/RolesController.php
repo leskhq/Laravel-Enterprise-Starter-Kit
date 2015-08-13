@@ -4,6 +4,7 @@ use App\Repositories\Criteria\Role\RolesWithPermissions;
 use App\Repositories\Criteria\Role\RolesByNamesAscending;
 use App\Repositories\RoleRepository as Role;
 use App\Repositories\PermissionRepository as Permission;
+use App\Repositories\UserRepository as User;
 use Illuminate\Http\Request;
 use Flash;
 
@@ -20,13 +21,20 @@ class RolesController extends Controller {
     private $permission;
 
     /**
-     * @param User $user
-     * @param Role $role
+     * @var User
      */
-    public function __construct(Role $role, Permission $permission)
+    private $user;
+
+    /**
+     * @param Role $role
+     * @param Permission $permission
+     * @param User $user
+     */
+    public function __construct(Role $role, Permission $permission, User $user)
     {
         $this->role = $role;
         $this->permission = $permission;
+        $this->user = $user;
     }
 
     /**
@@ -46,14 +54,19 @@ class RolesController extends Controller {
      */
     public function show($id)
     {
-        $page_title = trans('admin/roles/general.page.show.title'); // "Admin | Role | Show";
-        $page_description = trans('admin/roles/general.page.show.description'); // "Displaying role";
-
         $role = $this->role->find($id);
-        $perms = $this->permission->all();
-        $rolePerms = $role->perms();
 
-        return view('admin.roles.show', compact('role', 'perms', 'rolePerms', 'page_title', 'page_description'));
+        $page_title = trans('admin/roles/general.page.show.title'); // "Admin | Role | Show";
+        $page_description = trans('admin/roles/general.page.show.description', ['name' => $role->name]); // "Displaying role";
+
+        $perms = $this->permission->all();
+        $roleUsers = $role->users;
+        $rolePerms = $role->perms();
+        $userCollection = \App\User::take(10)->get(['id', 'first_name', 'last_name', 'username'])->lists('full_name_and_username', 'id');
+        $userList = [''=>''] + $userCollection->all();
+
+        return view('admin.roles.show', compact('role', 'perms', 'rolePerms', 'userList', 'roleUsers',
+            'page_title', 'page_description'));
     }
 
     /**
@@ -66,7 +79,10 @@ class RolesController extends Controller {
 
         $role = new \App\Models\Role();
         $perms = $this->permission->all();
-        return view('admin.roles.create', compact('role', 'perms', 'page_title', 'page_description'));
+        $userList = [];
+        $roleUsers = $role->users;
+
+        return view('admin.roles.create', compact('role', 'perms', 'userList', 'roleUsers', 'page_title', 'page_description'));
     }
 
     /**
@@ -81,8 +97,8 @@ class RolesController extends Controller {
         $role = $this->role->create($request->all());
 
         $role->savePermissions($request->get('perms'));
-
         $role->forcePermission('basic-authenticated');
+        $role->saveUsers($request->get('users'));
 
         Flash::success( trans('admin/roles/general.status.created') ); // 'Role successfully created');
 
@@ -95,10 +111,10 @@ class RolesController extends Controller {
      */
     public function edit($id)
     {
-        $page_title = trans('admin/roles/general.page.edit.title'); // "Admin | Role | Edit";
-        $page_description = trans('admin/roles/general.page.edit.description'); // "Editing role";
-
         $role = $this->role->find($id);
+
+        $page_title = trans('admin/roles/general.page.edit.title'); // "Admin | Role | Edit";
+        $page_description = trans('admin/roles/general.page.edit.description', ['name' => $role->name]); // "Editing role";
 
         if( !$role->isEditable() &&  !$role->canChangePermissions() )
         {
@@ -107,8 +123,11 @@ class RolesController extends Controller {
 
         $perms = $this->permission->all();
         $rolePerms = $role->perms();
+        $roleUsers = $role->users;
+        $userCollection = \App\User::take(10)->get(['id', 'first_name', 'last_name', 'username'])->lists('full_name_and_username', 'id');
+        $userList = [''=>''] + $userCollection->all();
 
-        return view('admin.roles.edit', compact('role', 'perms', 'rolePerms', 'page_title', 'page_description'));
+        return view('admin.roles.edit', compact('role', 'perms', 'rolePerms', 'roleUsers', 'userList', 'page_title', 'page_description'));
     }
 
     /**
@@ -133,6 +152,11 @@ class RolesController extends Controller {
         }
 
         $role->forcePermission('basic-authenticated');
+
+        if ($role->canChangeMembership())
+        {
+            $role->saveUsers($request->get('users'));
+        }
 
         Flash::success( trans('admin/roles/general.status.updated') ); // 'Role successfully updated');
 

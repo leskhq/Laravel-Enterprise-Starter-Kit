@@ -26,7 +26,7 @@ return [
         ],
         'show'              => [
             'title'             => 'Admin | Role | Show',
-            'description'       => 'Displaying role',
+            'description'       => 'Displaying role: :name',
             'section-title'     => 'Role details'
         ],
         'create'            => [
@@ -36,7 +36,7 @@ return [
         ],
         'edit'              => [
             'title'            => 'Admin | Role | Edit',
-            'description'      => 'Editing role',
+            'description'      => 'Editing role: :name',
             'section-title'    => 'Edit role'
         ],
     ],

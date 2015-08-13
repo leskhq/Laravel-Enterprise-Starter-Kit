@@ -50,7 +50,7 @@ Directory (AD) authentication and the dynamic authorization module. But wait the
 * Flash notifications using [laracasts/flash](https://github.com/laracasts/flash).
 * Internationalization (i18n).
 * Bootstrap v3.3.4.
-* Font-awesome v4.3.0.
+* Font-awesome v4.4.0.
 * Ionic Framework v2.0.1.
 * jQuery 2.1.4.
 * Development tools

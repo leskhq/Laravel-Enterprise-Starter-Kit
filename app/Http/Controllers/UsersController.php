@@ -9,6 +9,7 @@ use App\Repositories\UserRepository as User;
 use App\Repositories\RoleRepository as Role;
 use Flash;
 use Auth;
+use DB;
 
 class UsersController extends Controller {
 
@@ -273,5 +274,31 @@ class UsersController extends Controller {
         }
         return redirect('/admin/users');
     }
+
+    public function searchByName(Request $request)
+    {
+        $name = $request->input('query');
+        $users = DB::table('users')
+            ->select(DB::raw('id, first_name || " " || last_name || " (" || username || ")" as text'))
+            ->where('first_name', 'like', "%$name%")
+            ->orWhere('last_name', 'like', "%$name%")
+            ->orWhere('username', 'like', "%$name%")
+            ->get();
+        return $users;
+    }
+
+    public function listByPage(Request $request)
+    {
+        $skipNumb = $request->input('s');
+        $takeNumb = $request->input('t');
+
+        $userCollection = \App\User::skip($skipNumb)->take($takeNumb)
+            ->get(['id', 'first_name', 'last_name', 'username'])
+            ->lists('full_name_and_username', 'id');
+        $userList = $userCollection->all();
+
+        return $userList;
+    }
+
 
 }

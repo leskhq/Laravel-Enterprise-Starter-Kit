@@ -1,69 +1,116 @@
 @extends('layouts.master')
 
+@section('head_extra')
+    <!-- Select2 css -->
+    @include('partials._head_extra_select2_css')
+@endsection
+
 @section('content')
     <div class='row'>
         <div class='col-md-12'>
-            <!-- Box -->
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">{{ trans('admin/roles/general.page.show.section-title') }}</h3>
-                    <div class="box-tools pull-right">
-                        <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
-                    </div>
-                </div>
-                <div class="box-body">
+            <div class="box-body">
 
-                    {!! Form::model($role, ['route' => 'admin.roles.index', 'method' => 'GET']) !!}
+                {!! Form::model($role, ['route' => 'admin.roles.index', 'method' => 'GET']) !!}
 
-                    <div class="form-group">
-                        {!! Form::label('name', trans('admin/roles/general.columns.name')) !!}
-                        {!! Form::text('name', null, ['class' => 'form-control', 'readonly']) !!}
-                    </div>
-
-                    <div class="form-group">
-                        {!! Form::label('display_name', trans('admin/roles/general.columns.display_name')) !!}
-                        {!! Form::text('display_name', null, ['class' => 'form-control', 'readonly']) !!}
-                    </div>
-
-                    <div class="form-group">
-                        {!! Form::label('description', trans('admin/roles/general.columns.description')) !!}
-                        {!! Form::text('description', null, ['class' => 'form-control', 'readonly']) !!}
-                    </div>
-
-                    <div class="form-group">
-                        {!! Form::label('options', trans('admin/roles/general.columns.options')) !!}
-                        <div class="checkbox" id="options" name="options">
-                            <label>
-                                {!! Form::checkbox('resync_on_login', '1', $role->resync_on_login, ['disabled']) !!} {{ trans('admin/roles/general.columns.resync_on_login') }}
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        {!! Form::label('perms[]', trans('admin/roles/general.columns.permissions')) !!}
-                        @foreach($perms as $perm)
-                            <?php $checked = (isset($rolePerms))?in_array($perm->id, $rolePerms->lists('id')->toArray()) : false; ?>
-                            <div class="checkbox">
-                                <label>
-                                    {!! Form::checkbox('perms[]', $perm->id, $role->hasPerm($perm), ['disabled']) !!} {{ $perm->display_name }}
-                                </label>
+                <!-- Custom Tabs -->
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab_details" data-toggle="tab" aria-expanded="true">{!! trans('general.tabs.details') !!}</a></li>
+                        <li class=""><a href="#tab_options" data-toggle="tab" aria-expanded="false">{!! trans('general.tabs.options') !!}</a></li>
+                        <li class=""><a href="#tab_perms" data-toggle="tab" aria-expanded="false">{!! trans('general.tabs.perms') !!}</a></li>
+                        <li class=""><a href="#tab_users" data-toggle="tab" aria-expanded="false">{!! trans('general.tabs.users') !!}</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_details">
+                            <div class="form-group">
+                                {!! Form::label('name', trans('admin/roles/general.columns.name')) !!}
+                                {!! Form::text('name', null, ['class' => 'form-control', 'readonly']) !!}
                             </div>
-                        @endforeach
-                    </div>
+                            <div class="form-group">
+                                {!! Form::label('display_name', trans('admin/roles/general.columns.display_name')) !!}
+                                {!! Form::text('display_name', null, ['class' => 'form-control', 'readonly']) !!}
+                            </div>
+                            <div class="form-group">
+                                {!! Form::label('description', trans('admin/roles/general.columns.description')) !!}
+                                {!! Form::text('description', null, ['class' => 'form-control', 'readonly']) !!}
+                            </div>
+                        </div><!-- /.tab-pane -->
 
-                    <div class="form-group">
-                        {!! Form::submit(trans('general.button.close'), ['class' => 'btn btn-primary']) !!}
-                        @if ( $role->isEditable() || $role->canChangePermissions() )
-                            <a href="{!! route('admin.roles.edit', $role->id) !!}" title="{{ trans('general..button.edit') }}" class='btn btn-default'>{{ trans('general.button.edit') }}</a>
-                        @endif
-                    </div>
+                        <div class="tab-pane" id="tab_options">
+                            <div class="form-group">
+                                {!! Form::label('options', trans('admin/roles/general.columns.options')) !!}
+                                <div class="checkbox">
+                                    <label>
+                                        {!! Form::checkbox('resync_on_login', '1', $role->resync_on_login, ['disabled']) !!} {!! trans('admin/roles/general.columns.resync_on_login') !!}
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        {!! Form::checkbox('enabled', '1', $role->enabled, ['disabled']) !!} {!! trans('general.status.enabled') !!}
+                                    </label>
+                                </div>
+                            </div>
+                        </div><!-- /.tab-pane -->
 
-                    {!! Form::close() !!}
+                        <div class="tab-pane" id="tab_perms">
+                            <div class="form-group">
+                                {!! Form::label('perms[]', trans('admin/roles/general.columns.permissions')) !!}
+                                @foreach($perms as $perm)
+                                    <?php $checked = (isset($rolePerms))?in_array($perm->id, $rolePerms->lists('id')->toArray()) : false; ?>
+                                    <div class="checkbox">
+                                        <label>
+                                            {!! Form::checkbox('perms[]', $perm->id, $role->hasPerm($perm), ['disabled']) !!} {{ $perm->display_name }}
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div><!-- /.tab-pane -->
 
-                </div><!-- /.box-body -->
-            </div><!-- /.box -->
+                        <div class="tab-pane" id="tab_users">
+                            <div class="form-group">
+                                {!! Form::label('users[]', trans('admin/roles/general.columns.users')) !!}
+                                <div class="input-group select2-bootstrap-append">
+                                    {!! Form::select('user_search', $userList, null, ['class' => 'form-control', 'id' => 'user_search', 'disabled' => 'disabled',  'style' => "width: 100%"]) !!}
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button" disabled>
+                                            <span class="fa fa-plus-square"></span>
+                                        </button>
+                                        <button class="btn btn-default" type="button" disabled>
+                                            <span class="fa fa-minus-square"></span>
+                                        </button>
+                                    </span>
+                                </div>
+
+                                <div class="checkbox">
+                                    <select multiple="multiple" name="users[]" id="users" class="form-control" style="width: 100%">
+                                        @foreach($roleUsers as $user)
+                                            <option value="{!! $user->id !!}">{!! $user->full_name . " (" . $user->username . ")" !!}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div><!-- /.tab-pane -->
+
+                    </div><!-- /.tab-content -->
+                </div>
+
+                <div class="form-group">
+                    {!! Form::submit(trans('general.button.close'), ['class' => 'btn btn-primary']) !!}
+                    @if ( $role->isEditable() || $role->canChangePermissions() )
+                        <a href="{!! route('admin.roles.edit', $role->id) !!}" title="{{ trans('general..button.edit') }}" class='btn btn-default'>{{ trans('general.button.edit') }}</a>
+                    @endif
+                </div>
+
+                {!! Form::close() !!}
+
+            </div><!-- /.box-body -->
         </div><!-- /.col -->
 
     </div><!-- /.row -->
 
+@endsection
+
+@section('body_bottom')
+    <!-- Select2 js -->
+    @include('partials._head_extra_select2_js_user_search')
 @endsection
