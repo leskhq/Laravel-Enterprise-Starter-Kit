@@ -2,6 +2,7 @@
 
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Permission;
 use Illuminate\Http\Request;
 use App\Repositories\Criteria\User\UsersWithRoles;
 use App\Repositories\Criteria\User\UsersByUsernamesAscending;
@@ -19,13 +20,24 @@ class UsersController extends Controller {
     protected $user;
 
     /**
+     * @var Role
+     */
+    protected $role;
+
+    /**
+     * @var Permission
+     */
+    protected $perm;
+
+    /**
      * @param User $user
      * @param Role $role
      */
-    public function __construct(User $user, Role $role)
+    public function __construct(User $user, Role $role, Permission $perm)
     {
         $this->user = $user;
         $this->role = $role;
+        $this->perm = $perm;
     }
 
     /**
@@ -45,14 +57,18 @@ class UsersController extends Controller {
      */
     public function show($id)
     {
-        $page_title = trans('admin/users/general.page.show.title'); // "Admin | User | Show";
-        $page_description = trans('admin/users/general.page.show.description'); // "Displaying user";
-
         $user = $this->user->find($id);
-        $roles = $this->role->all();
-        $userRoles = $user->roles();
 
-        return view('admin.users.show', compact('user', 'roles', 'userRoles', 'page_title', 'page_description'));
+        $page_title = trans('admin/users/general.page.show.title'); // "Admin | User | Show";
+        $page_description = trans('admin/users/general.page.show.description', ['full_name' => $user->full_name]); // "Displaying user";
+
+        $roles = $this->role->all();
+        $userRoles = $user->roles;
+        $roleCollection = \App\Models\Role::take(10)->get(['id', 'display_name'])->lists('display_name', 'id');
+        $roleList = [''=>''] + $roleCollection->all();
+        $perms = $this->perm->all();
+
+        return view('admin.users.show', compact('user', 'roles', 'perms', 'userRoles', 'roleList', 'page_title', 'page_description'));
     }
 
     /**
@@ -63,9 +79,14 @@ class UsersController extends Controller {
         $page_title = trans('admin/users/general.page.create.title'); // "Admin | User | Create";
         $page_description = trans('admin/users/general.page.create.description'); // "Creating a new user";
 
-        $user = new \App\User();
         $roles = $this->role->all();
-        return view('admin.users.create', compact('user', 'roles', 'page_title', 'page_description'));
+        $perms = $this->perm->all();
+        $user = new \App\User();
+        $userRoles = $user->roles;
+        $roleCollection = \App\Models\Role::take(10)->get(['id', 'display_name'])->lists('display_name', 'id');
+        $roleList = [''=>''] + $roleCollection->all();
+
+        return view('admin.users.create', compact('user', 'roles', 'perms', 'roleList', 'userRoles', 'page_title', 'page_description'));
     }
 
     /**
@@ -75,7 +96,15 @@ class UsersController extends Controller {
      */
     public function store(CreateUserRequest $request)
     {
-        $user = $this->user->create($request->all());
+        $attributes = $request->all();
+
+        if ( array_key_exists('selected_roles', $attributes) ) {
+            $attributes['role'] = explode(",", $attributes['selected_roles']);
+        }
+        // Create basic user.
+        $user = $this->user->create($attributes);
+        // Run the update method to set enabled status and roles membership.
+        $user->update($attributes);
 
         Flash::success( trans('admin/users/general.status.created') ); // 'User successfully created');
 
@@ -89,11 +118,10 @@ class UsersController extends Controller {
      */
     public function edit($id)
     {
-        $page_title = trans('admin/users/general.page.edit.title'); // "Admin | User | Edit";
-        $page_description = trans('admin/users/general.page.edit.description'); // "Editing user";
-
-
         $user = $this->user->find($id);
+
+        $page_title = trans('admin/users/general.page.edit.title'); // "Admin | User | Edit";
+        $page_description = trans('admin/users/general.page.edit.description', ['full_name' => $user->full_name]); // "Editing user";
 
         if (!$user->isEditable())
         {
@@ -101,9 +129,12 @@ class UsersController extends Controller {
         }
 
         $roles = $this->role->all();
-        $userRoles = $user->roles();
+        $perms = $this->perm->all();
+        $userRoles = $user->roles;
+        $roleCollection = \App\Models\Role::take(10)->get(['id', 'display_name'])->lists('display_name', 'id');
+        $roleList = [''=>''] + $roleCollection->all();
 
-        return view('admin.users.edit', compact('user', 'roles', 'userRoles', 'page_title', 'page_description'));
+        return view('admin.users.edit', compact('user', 'roles', 'userRoles', 'roleList', 'perms', 'page_title', 'page_description'));
     }
 
     /**
@@ -120,7 +151,13 @@ class UsersController extends Controller {
             abort(403);
         }
 
-        $user->update($request->all());
+        $attributes = $request->all();
+
+        if ( array_key_exists('selected_roles', $attributes) ) {
+            $attributes['role'] = explode(",", $attributes['selected_roles']);
+        }
+
+        $user->update($attributes);
 
         Flash::success( trans('admin/users/general.status.updated') );
 

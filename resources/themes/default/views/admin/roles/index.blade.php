@@ -28,7 +28,7 @@
                     <div class="box-body">
 
                         <div class="table-responsive">
-                            <table style="width:100%">
+                            <table class="table table-hover">
                                 <thead>
                                     <tr>
                                         <th style="text-align: center">
@@ -41,8 +41,6 @@
                                         <th>{{ trans('admin/roles/general.columns.description') }}</th>
                                         <th>{{ trans('admin/roles/general.columns.permissions') }}</th>
                                         <th>{{ trans('admin/roles/general.columns.users') }}</th>
-                                        <th>{{ trans('admin/roles/general.columns.created') }}</th>
-                                        <th>{{ trans('admin/roles/general.columns.updated') }}</th>
                                         <th>{{ trans('admin/roles/general.columns.actions') }}</th>
                                     </tr>
                                 </thead>
@@ -58,8 +56,6 @@
                                         <th>{{ trans('admin/roles/general.columns.description') }}</th>
                                         <th>{{ trans('admin/roles/general.columns.permissions') }}</th>
                                         <th>{{ trans('admin/roles/general.columns.users') }}</th>
-                                        <th>{{ trans('admin/roles/general.columns.created') }}</th>
-                                        <th>{{ trans('admin/roles/general.columns.updated') }}</th>
                                         <th>{{ trans('admin/roles/general.columns.actions') }}</th>
                                     </tr>
                                 </tfoot>
@@ -72,8 +68,6 @@
                                             <td>{{ $role->description }}</td>
                                             <td>{{ $role->perms->count() }}</td>
                                             <td>{{ $role->users->count() }}</td>
-                                            <td>{{ $role->created_at->diffForHumans() }}</td>
-                                            <td>{{ $role->updated_at->diffForHumans() }}</td>
                                             <td>
                                                 @if ( $role->isEditable() || $role->canChangePermissions() )
                                                     <a href="{!! route('admin.roles.edit', $role->id) !!}" title="{{ trans('general.button.edit') }}"><i class="fa fa-pencil-square-o"></i></a>

@@ -7,6 +7,7 @@ use App\Repositories\PermissionRepository as Permission;
 use App\Repositories\UserRepository as User;
 use Illuminate\Http\Request;
 use Flash;
+use DB;
 
 class RolesController extends Controller {
 
@@ -141,9 +142,11 @@ class RolesController extends Controller {
 
         $role = $this->role->find($id);
 
+        $attributes = $request->all();
+
         if ($role->isEditable())
         {
-            $role->update($request->all());
+            $role->update($attributes);
         }
 
         if ($role->canChangePermissions())
@@ -295,5 +298,17 @@ class RolesController extends Controller {
         }
         return redirect('/admin/roles');
     }
+
+    public function searchByName(Request $request)
+    {
+        $name = $request->input('query');
+        $roles = DB::table('roles')
+            ->select(DB::raw('id, display_name || " (" || name || ")" as text'))
+            ->where('display_name', 'like', "%$name%")
+            ->orWhere('name', 'like', "%$name%")
+            ->get();
+        return $roles;
+    }
+
 
 }

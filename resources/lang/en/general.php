@@ -13,6 +13,7 @@ return [
         'enable'            => 'Enable',
         'disable'           => 'Disable',
         'toggle-select'     => 'Toggle checkboxes',
+        'remove-role'       => 'Remove role',
     ],
 
     'status'              => [
@@ -24,6 +25,7 @@ return [
         'options'           => 'Options',
         'perms'             => 'Permissions',
         'users'             => 'Users',
+        'roles'             => 'Roles',
     ],
 
     'error'              => [

@@ -53,6 +53,7 @@ return [
         'created'                   =>  'Created',
         'updated'                   =>  'Updated',
         'actions'                   =>  'Actions',
+        'enabled'                   =>  'Enabled',
     ],
 
     'button'               => [

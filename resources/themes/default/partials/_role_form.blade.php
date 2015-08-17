@@ -28,7 +28,6 @@
 
         <div class="tab-pane" id="tab_options">
             <div class="form-group">
-                {!! Form::label('options', trans('admin/roles/general.columns.options')) !!}
                 <div class="checkbox">
                     <label>
                         {!! '<input type="hidden" name="resync_on_login" value="0">' !!}
@@ -46,7 +45,6 @@
 
         <div class="tab-pane" id="tab_perms">
             <div class="form-group">
-                {!! Form::label('perms[]', trans('admin/roles/general.columns.permissions')) !!}
                 @foreach($perms as $perm)
                     <?php $disabled = ($perm->canBeAssigned()) ? '' : 'disabled'; ?>
                     <div class="checkbox">
@@ -60,7 +58,6 @@
 
         <div class="tab-pane" id="tab_users">
             <div class="form-group">
-                {!! Form::label('users[]', trans('admin/roles/general.columns.users')) !!}
                 <div class="input-group select2-bootstrap-append">
                     {!! Form::select('user_search', $userList, null, ['class' => 'form-control', 'id' => 'user_search',  'style' => "width: 100%", $membershipFixed]) !!}
                     <span class="input-group-btn">

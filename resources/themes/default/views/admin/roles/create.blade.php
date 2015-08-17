@@ -10,12 +10,12 @@
         <div class='col-md-12'>
             <div class="box-body">
 
-                {!! Form::open( ['route' => 'admin.roles.store', 'id' => 'form_create_role'] ) !!}
+                {!! Form::open( ['route' => 'admin.roles.store', 'id' => 'form_edit_role'] ) !!}
 
                 @include('partials._role_form')
 
                 <div class="form-group">
-                    {!! Form::button( trans('general.button.create'), ['class' => 'btn btn-primary', 'id' => 'btn-submit-create'] ) !!}
+                    {!! Form::button( trans('general.button.create'), ['class' => 'btn btn-primary', 'id' => 'btn-submit-edit'] ) !!}
                     <a href="{!! route('admin.roles.index') !!}" title="{{ trans('general.button.cancel') }}" class='btn btn-default'>{{ trans('general.button.cancel') }}</a>
                 </div>
 
@@ -29,19 +29,7 @@
 
 @section('body_bottom')
     <!-- Select2 js -->
-    @include('partials._head_extra_select2_js_user_search')
-
-    <script type="text/javascript">
-        $("#btn-remove-user").on("click", function () {
-            $('#users option:selected').remove();
-        });
-
-        $("#btn-submit-create").on("click", function () {
-            // Select all options.
-            $('#users option').prop('selected', true);
-            // Post form.
-            $("#form_create_role").submit();
-        });
-    </script>
+    @include('partials._body_bottom_select2_js_user_search')
+    @include('partials._body_bottom_submit_role_edit_form_js')
 
 @endsection

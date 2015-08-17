@@ -1,32 +1,35 @@
 @extends('layouts.master')
 
+@section('head_extra')
+    <!-- Select2 css -->
+    @include('partials._head_extra_select2_css')
+@endsection
+
 @section('content')
     <div class='row'>
         <div class='col-md-12'>
-            <!-- Box -->
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">{{ trans('admin/users/general.page.create.section-title') }}</h3>
-                    <div class="box-tools pull-right">
-                        <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
-                    </div>
+            <div class="box-body">
+
+                {!! Form::open( ['route' => 'admin.users.store', 'id' => 'form_edit_user'] ) !!}
+
+                @include('partials._user_form')
+
+                <div class="form-group">
+                    {!! Form::button( trans('general.button.create'), ['class' => 'btn btn-primary', 'id' => 'btn-submit-edit'] ) !!}
+                    <a href="{!! route('admin.users.index') !!}" title="{{ trans('general.button.cancel') }}" class='btn btn-default'>{{ trans('general.button.cancel') }}</a>
                 </div>
-                <div class="box-body">
 
-                    {!! Form::open( ['route' => 'admin.users.store'] ) !!}
+                {!! Form::close() !!}
 
-                    @include('partials._user_form')
-
-                    <div class="form-group">
-                        {!! Form::submit( trans('general.button.create'), ['class' => 'btn btn-primary'] ) !!}
-                        <a href="{!! route('admin.users.index') !!}" title="{{ trans('general.button.cancel') }}" class='btn btn-default'>{{ trans('general.button.cancel') }}</a>
-                    </div>
-
-                    {!! Form::close() !!}
-
-                </div><!-- /.box-body -->
-            </div><!-- /.box -->
+            </div><!-- /.box-body -->
         </div><!-- /.col -->
 
     </div><!-- /.row -->
+@endsection
+
+@section('body_bottom')
+    <!-- Select2 js -->
+    @include('partials._body_bottom_select2_js_role_search')
+    @include('partials._body_bottom_submit_user_edit_form_js')
+
 @endsection

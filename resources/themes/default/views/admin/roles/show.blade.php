@@ -38,7 +38,6 @@
 
                         <div class="tab-pane" id="tab_options">
                             <div class="form-group">
-                                {!! Form::label('options', trans('admin/roles/general.columns.options')) !!}
                                 <div class="checkbox">
                                     <label>
                                         {!! Form::checkbox('resync_on_login', '1', $role->resync_on_login, ['disabled']) !!} {!! trans('admin/roles/general.columns.resync_on_login') !!}
@@ -54,7 +53,6 @@
 
                         <div class="tab-pane" id="tab_perms">
                             <div class="form-group">
-                                {!! Form::label('perms[]', trans('admin/roles/general.columns.permissions')) !!}
                                 @foreach($perms as $perm)
                                     <?php $checked = (isset($rolePerms))?in_array($perm->id, $rolePerms->lists('id')->toArray()) : false; ?>
                                     <div class="checkbox">
@@ -68,27 +66,44 @@
 
                         <div class="tab-pane" id="tab_users">
                             <div class="form-group">
-                                {!! Form::label('users[]', trans('admin/roles/general.columns.users')) !!}
                                 <div class="input-group select2-bootstrap-append">
                                     {!! Form::select('user_search', $userList, null, ['class' => 'form-control', 'id' => 'user_search', 'disabled' => 'disabled',  'style' => "width: 100%"]) !!}
                                     <span class="input-group-btn">
                                         <button class="btn btn-default" type="button" disabled>
                                             <span class="fa fa-plus-square"></span>
                                         </button>
-                                        <button class="btn btn-default" type="button" disabled>
-                                            <span class="fa fa-minus-square"></span>
-                                        </button>
                                     </span>
                                 </div>
 
-                                <div class="checkbox">
-                                    <select multiple="multiple" name="users[]" id="users" class="form-control" style="width: 100%">
+                                <div class="box-body table-responsive no-padding">
+                                    <table class="table table-hover">
+                                        <tbody>
+                                        <tr>
+                                            <th>{!! trans('admin/users/general.columns.name')  !!}</th>
+                                            <th>{!! trans('admin/users/general.columns.username')  !!}</th>
+                                            <th>{!! trans('admin/users/general.columns.enabled')  !!}</th>
+                                            <th style="text-align: right">{!! trans('admin/users/general.columns.actions')  !!}</th>
+                                        </tr>
                                         @foreach($roleUsers as $user)
-                                            <option value="{!! $user->id !!}">{!! $user->full_name . " (" . $user->username . ")" !!}</option>
+                                            <tr>
+                                                <td>{!! link_to_route('admin.users.show', $user->full_name, [$user->id], []) !!}</td>
+                                                <td>{!! link_to_route('admin.users.show', $user->username, [$user->id], []) !!}</td>
+                                                <td>
+                                                    @if($user->enabled)
+                                                        <i class="fa fa-check text-green"></i>
+                                                    @else
+                                                        <i class="fa fa-close text-red"></i>
+                                                    @endif
+                                                </td>
+                                                <td style="text-align: right">
+                                                    <i class="fa fa-trash-o text-muted"></i>
+                                                </td>
+                                            </tr>
                                         @endforeach
-                                    </select>
-                                </div>
-                            </div>
+                                        </tbody>
+                                    </table>
+                                </div><!-- /.table-responsive -->
+                            </div><!-- /.form-group -->
                         </div><!-- /.tab-pane -->
 
                     </div><!-- /.tab-content -->
@@ -112,5 +127,5 @@
 
 @section('body_bottom')
     <!-- Select2 js -->
-    @include('partials._head_extra_select2_js_user_search')
+    @include('partials._body_bottom_select2_js_user_search')
 @endsection

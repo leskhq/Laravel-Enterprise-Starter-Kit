@@ -27,7 +27,7 @@ return [
         ],
         'show'              => [
             'title'             => 'Admin | User | Show',
-            'description'       => 'Displaying user',
+            'description'       => 'Displaying user: :full_name',
             'section-title'     => 'User details'
         ],
         'create'            => [
@@ -37,7 +37,7 @@ return [
         ],
         'edit'              => [
             'title'            => 'Admin | User | Edit',
-            'description'      => 'Editing user',
+            'description'      => 'Editing user: :full_name',
             'section-title'    => 'Edit user'
         ],
     ],
@@ -55,6 +55,8 @@ return [
         'created'                   =>  'Created',
         'updated'                   =>  'Updated',
         'actions'                   =>  'Actions',
+        'effective'                 =>  'Effective',
+        'enabled'                   =>  'Enabled',
     ],
 
     'button'               => [

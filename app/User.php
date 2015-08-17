@@ -33,7 +33,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      *
      * @var array
      */
-    protected $fillable = ['first_name', 'last_name', 'username', 'email', 'password', 'auth_type'];
+    protected $fillable = ['first_name', 'last_name', 'username', 'email', 'password', 'auth_type', 'enabled'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -272,21 +272,23 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function update(array $attributes = []) {
 
-        if ($attributes['first_name']) {
+        if ( array_key_exists('first_name', $attributes) ) {
             $this->first_name = $attributes['first_name'];
         }
-        if ($attributes['last_name']) {
+        if ( array_key_exists('last_name', $attributes) ) {
             $this->last_name = $attributes['last_name'];
         }
-        if ($attributes['username']) {
+        if ( array_key_exists('username', $attributes) ) {
             $this->username = $attributes['username'];
         }
-        if ($attributes['email']) {
+        if ( array_key_exists('email', $attributes) ) {
             $this->email = $attributes['email'];
         }
-        if($attributes['password'])
-        {
+        if( array_key_exists('password', $attributes) ) {
             $this->password = $attributes['password'];
+        }
+        if( array_key_exists('enabled', $attributes) ) {
+            $this->enabled = $attributes['enabled'];
         }
         $this->save();
 

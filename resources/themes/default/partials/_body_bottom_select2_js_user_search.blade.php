@@ -26,9 +26,10 @@
         tags: true
     });
 
-    $("#btn-add-user").on("click", function () {
-        var selectedText  = $('#user_search :selected').text();
-        var selectedValue = $('#user_search').val();
+    $("#btn-add-role").on("click", function () {
+        var selectedText  = $('#role_search :selected').text();
+        var selectedValue = $('#role_search').val();
+
 
         // Add selected item only if not already in list.
         if ( $("#users option[value='" + selectedValue + "']").length == 0 ){
