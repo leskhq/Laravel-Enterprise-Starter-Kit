@@ -18,7 +18,7 @@ class CreateRoutesTable extends Migration
             $table->string('method');
             $table->string('path');
             $table->string('action_name');
-            $table->integer('permission_id')->unsigned()->default(0);
+            $table->unsignedInteger('permission_id')->nullable()->default(0);
             $table->timestamps();
 
             // TODO: Test if deleting a permission sets the permissions_id field to null.
