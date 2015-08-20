@@ -37,7 +37,9 @@ desired effect
             </div>
         </div>
     </div>
-    <script>$(function () {$('body').on('hidden.bs.modal', '.modal', function () {$(this).removeData('bs.modal');});});</script>
 
+
+    <!-- Application JS-->
+    <script href="{{ asset(elixir('js/all.js')) }}"></script>
 
 </body>

@@ -3,6 +3,7 @@
 @section('head_extra')
     <!-- Select2 css -->
     @include('partials._head_extra_select2_css')
+
 @endsection
 
 @section('content')
@@ -53,14 +54,16 @@
 
                         <div class="tab-pane" id="tab_perms">
                             <div class="form-group">
-                                @foreach($perms as $perm)
-                                    <?php $checked = (isset($rolePerms))?in_array($perm->id, $rolePerms->lists('id')->toArray()) : false; ?>
-                                    <div class="checkbox">
-                                        <label>
-                                            {!! Form::checkbox('perms[]', $perm->id, $role->hasPerm($perm), ['disabled']) !!} {{ $perm->display_name }}
-                                        </label>
-                                    </div>
-                                @endforeach
+                                <div class="col-4">
+                                    @foreach($perms as $perm)
+                                        <?php $checked = (isset($rolePerms))?in_array($perm->id, $rolePerms->lists('id')->toArray()) : false; ?>
+                                        <div class="checkbox">
+                                            <label>
+                                                {!! Form::checkbox('perms[]', $perm->id, $role->hasPerm($perm), ['disabled']) !!} {{ $perm->display_name }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
                         </div><!-- /.tab-pane -->
 

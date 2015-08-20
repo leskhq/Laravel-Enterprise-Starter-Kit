@@ -45,14 +45,16 @@
 
         <div class="tab-pane" id="tab_perms">
             <div class="form-group">
-                @foreach($perms as $perm)
-                    <?php $disabled = ($perm->canBeAssigned()) ? '' : 'disabled'; ?>
-                    <div class="checkbox">
-                        <label>
-                            {!! Form::checkbox('perms[]', $perm->id, $role->hasPerm($perm), ( \App\Models\Permission::isForced($perm) || (!$perm->canBeAssigned()) )? ['disabled'] : null ) !!} {{ $perm->display_name }}
-                        </label>
-                    </div>
-                @endforeach
+                <div class="col-4">
+                    @foreach($perms as $perm)
+                        <?php $disabled = ($perm->canBeAssigned()) ? '' : 'disabled'; ?>
+                        <div class="checkbox">
+                            <label>
+                                {!! Form::checkbox('perms[]', $perm->id, $role->hasPerm($perm), ( \App\Models\Permission::isForced($perm) || (!$perm->canBeAssigned()) )? ['disabled'] : null ) !!} {{ $perm->display_name }}
+                            </label>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div><!-- /.tab-pane -->
 

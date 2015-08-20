@@ -13,10 +13,18 @@ Directory (AD) authentication and the dynamic authorization module. But wait the
 - [Features](#features)
 - [Roadmap](#roadmap)
 - [Installing](#installing)
+    - [Acquire a copy](#acquire-a-copy)
+    - [Homestead](#homestead)
+    - [Fetch dependencies](#fetch-dependencies)
+    - [Basic configuration](#basic-configuration)
+    - [Migration](#migration)
+    - [First login and test](#first-login-and-test)
 - [Configuration](#configuration)
     - [Authentication & Authorization](#authentication--authorization)
     - [Walled garden](#walled-garden)
     - [Themes](#themes)
+- [Deploying to Production](#deploying-to-production)
+    - [Combine and minimize](#combine-and-minimize)
 - [Troubleshooting](#troubleshooting)
 - [Change log](#change-log)
 - [Security](#security)
@@ -49,6 +57,7 @@ Directory (AD) authentication and the dynamic authorization module. But wait the
 * Laravel [Repositories](https://github.com/Bosnadev/Repositories).
 * Flash notifications using [laracasts/flash](https://github.com/laracasts/flash).
 * Internationalization (i18n).
+* Gulp and Elixir ready to compile and minimize Sass & CoffeeScript.
 * Bootstrap v3.3.4.
 * Font-awesome v4.4.0.
 * Ionic Framework v2.0.1.
@@ -170,6 +179,8 @@ cd projects/shared/l51esk
 
 
 ### Fetch dependencies
+
+#### Composer
 Fetch all dependencies using *composer* by issuing the following command:
 
 ```
@@ -183,6 +194,12 @@ On a production server, prior to running the *composer install* command, you wil
 packages that you have developed on and tested gets installed. Never run the *composer update* 
 command on a production server.
 
+#### Node.js
+Fetch all dependencies for Node.js using *npm* by using the following command:
+
+```
+npm install
+```
 
 ### Basic configuration
 
@@ -333,6 +350,19 @@ Both the red and green themes inherit much of there look from the default theme 
 look of the [almasaeed2010/AdminLTE](https://github.com/almasaeed2010/AdminLTE) Web template.
 For more details on how to configure and develop your own themes refer to the documentation of the 
 [yaapis/Theme](https://github.com/yaapis/Theme) package.
+
+## Deploying to production
+Before deploying to a production or live server, you should take care of a few tasks.
+
+### Combine and minimize
+Although not required, it may be helpful to combine and minimize both the CSS and JS files. Add any CSS and JS file
+that you may have added to the *styles* and *scripts* command (respectively) in the *gulpfile.js* and run the 
+*gulp* command with the *--production* command line parameter to trigger the minimization process, as shown 
+below:
+
+```
+gulp --production
+```
 
 ## Troubleshooting
 More later...
