@@ -26,22 +26,28 @@
         tags: true
     });
 
-    $("#btn-add-role").on("click", function () {
-        var selectedText  = $('#role_search :selected').text();
-        var selectedValue = $('#role_search').val();
+    $("#btn-add-user").on("click", function () {
+        // Get text.
+        var selectedText  = $('#user_search :selected').text();
+        // Get ID.
+        var selectedValue = $('#user_search').val();
+        // Build URL based on route and replace "{user}" with ID.
+        var urlShowUser = '{!! route("admin.users.show") !!}'.replace('%7Busers%7D', selectedValue);
 
+        // Build table cells.
+        var idCell     = '<td class="hidden">' + selectedValue + '</td>';
+        var nameCel    = '<td>' + '<a href="' + urlShowUser + '">' + selectedText + '</a>' + '</td>';
+        var descCel    = '<td></td>';
+        var enabledCel = '<td></td>';
+        var actionCel  = '<td style="text-align: right"><a class="btn-remove-user" href="#" title="{{ trans('general.button.remove-user') }}"><i class="fa fa-trash-o"></i></a></td>';
 
         // Add selected item only if not already in list.
-        if ( $("#users option[value='" + selectedValue + "']").length == 0 ){
-            $('#users').append($('<option>', {
-                value: selectedValue,
-                text: selectedText
-            }));
+        if ( $('#tbl-users tr > td:contains(' + selectedValue + ')').length == 0 ) {
+            $('#tbl-users > tbody:last-child').append('<tr>' + idCell + nameCel + descCel + enabledCel + actionCel + '</tr>');
         }
     });
 
-    $("#btn-remove-user").on("click", function () {
-        $('#users option:selected').remove();
+    $('body').on('click', 'a.btn-remove-user', function() {
+        $(this).parent().parent().remove();
     });
-
 </script>

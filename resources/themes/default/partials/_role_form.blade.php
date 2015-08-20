@@ -60,25 +60,47 @@
 
         <div class="tab-pane" id="tab_users">
             <div class="form-group">
+                {!! Form::hidden('selected_users', null, [ 'id' => 'selected_users']) !!}
                 <div class="input-group select2-bootstrap-append">
                     {!! Form::select('user_search', $userList, null, ['class' => 'form-control', 'id' => 'user_search',  'style' => "width: 100%", $membershipFixed]) !!}
                     <span class="input-group-btn">
                         <button class="btn btn-default" id="btn-add-user" type="button" {!! $membershipFixed !!}>
                             <span class="fa fa-plus-square"></span>
                         </button>
-                        <button class="btn btn-default" id="btn-remove-user" type="button" {!! $membershipFixed !!}>
-                            <span class="fa fa-minus-square"></span>
-                        </button>
                     </span>
                 </div>
 
-                <div class="checkbox">
-                    <select multiple="multiple" name="users[]" id="users" class="form-control" style="width: 100%"  {!! $membershipFixed !!}>
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover" id="tbl-users">
+                        <tbody>
+                        <tr>
+                            <th class="hidden">{!! trans('admin/users/general.columns.id')  !!}</th>
+                            <th>{!! trans('admin/users/general.columns.name')  !!}</th>
+                            <th>{!! trans('admin/users/general.columns.username')  !!}</th>
+                            <th>{!! trans('admin/users/general.columns.enabled')  !!}</th>
+                            <th style="text-align: right">{!! trans('admin/users/general.columns.actions')  !!}</th>
+                        </tr>
                         @foreach($roleUsers as $user)
-                            <option value="{!! $user->id !!}">{!! $user->full_name . " (" . $user->username . ")" !!}</option>
+                            <tr>
+                                <td class="hidden">{!! $user->id !!}</td>
+                                <td>{!! link_to_route('admin.users.show', $user->full_name, [$user->id], []) !!}</td>
+                                <td>{!! link_to_route('admin.users.show', $user->username, [$user->id], []) !!}</td>
+                                <td>
+                                    @if($user->enabled)
+                                        <i class="fa fa-check text-green"></i>
+                                    @else
+                                        <i class="fa fa-close text-red"></i>
+                                    @endif
+                                </td>
+                                <td style="text-align: right">
+                                    <a class="btn-remove-user" href="#" title="{{ trans('general.button.remove-user') }}"><i class="fa fa-trash-o"></i></a>
+                                </td>
+                            </tr>
                         @endforeach
-                    </select>
-                </div>
+                        </tbody>
+                    </table>
+                </div><!-- /.table-responsive -->
+
             </div>
         </div><!-- /.tab-pane -->
 

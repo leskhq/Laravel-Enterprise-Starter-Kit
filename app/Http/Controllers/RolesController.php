@@ -95,11 +95,16 @@ class RolesController extends Controller {
 
         $this->validate($request, array('name' => 'required|unique:roles', 'display_name' => 'required'));
 
-        $role = $this->role->create($request->all());
+        $attributes = $request->all();
+
+        if ( array_key_exists('selected_users', $attributes) ) {
+            $attributes['users'] = explode(",", $attributes['selected_users']);
+        }
+        $role = $this->role->create($attributes);
 
         $role->savePermissions($request->get('perms'));
         $role->forcePermission('basic-authenticated');
-        $role->saveUsers($request->get('users'));
+        $role->saveUsers($attributes['users']);
 
         Flash::success( trans('admin/roles/general.status.created') ); // 'Role successfully created');
 
@@ -144,6 +149,12 @@ class RolesController extends Controller {
 
         $attributes = $request->all();
 
+        if ( array_key_exists('selected_users', $attributes) ) {
+            $attributes['users'] = explode(",", $attributes['selected_users']);
+        } else {
+            $attributes['users'] = [];
+        }
+
         if ($role->isEditable())
         {
             $role->update($attributes);
@@ -158,7 +169,7 @@ class RolesController extends Controller {
 
         if ($role->canChangeMembership())
         {
-            $role->saveUsers($request->get('users'));
+            $role->saveUsers($attributes['users']);
         }
 
         Flash::success( trans('admin/roles/general.status.updated') ); // 'Role successfully updated');
