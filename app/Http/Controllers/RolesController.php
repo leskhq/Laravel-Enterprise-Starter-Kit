@@ -61,13 +61,10 @@ class RolesController extends Controller {
         $page_description = trans('admin/roles/general.page.show.description', ['name' => $role->name]); // "Displaying role";
 
         $perms = $this->permission->all();
-        $roleUsers = $role->users;
-        $rolePerms = $role->perms();
-        $userCollection = \App\User::take(10)->get(['id', 'first_name', 'last_name', 'username'])->lists('full_name_and_username', 'id');
-        $userList = [''=>''] + $userCollection->all();
+//        $userCollection = \App\User::take(10)->get(['id', 'first_name', 'last_name', 'username'])->lists('full_name_and_username', 'id');
+//        $userList = [''=>''] + $userCollection->all();
 
-        return view('admin.roles.show', compact('role', 'perms', 'rolePerms', 'userList', 'roleUsers',
-            'page_title', 'page_description'));
+        return view('admin.roles.show', compact('role', 'perms', 'page_title', 'page_description'));
     }
 
     /**
@@ -80,10 +77,8 @@ class RolesController extends Controller {
 
         $role = new \App\Models\Role();
         $perms = $this->permission->all();
-        $userList = [];
-        $roleUsers = $role->users;
 
-        return view('admin.roles.create', compact('role', 'perms', 'userList', 'roleUsers', 'page_title', 'page_description'));
+        return view('admin.roles.create', compact('role', 'perms', 'page_title', 'page_description'));
     }
 
     /**
@@ -128,12 +123,11 @@ class RolesController extends Controller {
         }
 
         $perms = $this->permission->all();
-        $rolePerms = $role->perms();
-        $roleUsers = $role->users;
-        $userCollection = \App\User::take(10)->get(['id', 'first_name', 'last_name', 'username'])->lists('full_name_and_username', 'id');
-        $userList = [''=>''] + $userCollection->all();
+//        $rolePerms = $role->perms();
+//        $userCollection = \App\User::take(10)->get(['id', 'first_name', 'last_name', 'username'])->lists('full_name_and_username', 'id');
+//        $userList = [''=>''] + $userCollection->all();
 
-        return view('admin.roles.edit', compact('role', 'perms', 'rolePerms', 'roleUsers', 'userList', 'page_title', 'page_description'));
+        return view('admin.roles.edit', compact('role', 'perms', 'page_title', 'page_description'));
     }
 
     /**
@@ -310,6 +304,10 @@ class RolesController extends Controller {
         return redirect('/admin/roles');
     }
 
+    /**
+     * @param Request $request
+     * @return array|static[]
+     */
     public function searchByName(Request $request)
     {
         $name = $request->input('query');

@@ -56,7 +56,6 @@
                             <div class="form-group">
                                 <div class="col-4">
                                     @foreach($perms as $perm)
-                                        <?php $checked = (isset($rolePerms))?in_array($perm->id, $rolePerms->lists('id')->toArray()) : false; ?>
                                         <div class="checkbox">
                                             <label>
                                                 {!! Form::checkbox('perms[]', $perm->id, $role->hasPerm($perm), ['disabled']) !!} {{ $perm->display_name }}
@@ -70,7 +69,7 @@
                         <div class="tab-pane" id="tab_users">
                             <div class="form-group">
                                 <div class="input-group select2-bootstrap-append">
-                                    {!! Form::select('user_search', $userList, null, ['class' => 'form-control', 'id' => 'user_search', 'disabled' => 'disabled',  'style' => "width: 100%"]) !!}
+                                    {!! Form::select('user_search', [], null, ['class' => 'form-control', 'id' => 'user_search', 'disabled' => 'disabled',  'style' => "width: 100%"]) !!}
                                     <span class="input-group-btn">
                                         <button class="btn btn-default" type="button" disabled>
                                             <span class="fa fa-plus-square"></span>
@@ -87,7 +86,7 @@
                                             <th>{!! trans('admin/users/general.columns.enabled')  !!}</th>
                                             <th style="text-align: right">{!! trans('admin/users/general.columns.actions')  !!}</th>
                                         </tr>
-                                        @foreach($roleUsers as $user)
+                                        @foreach($role->users as $user)
                                             <tr>
                                                 <td>{!! link_to_route('admin.users.show', $user->full_name, [$user->id], []) !!}</td>
                                                 <td>{!! link_to_route('admin.users.show', $user->username, [$user->id], []) !!}</td>
