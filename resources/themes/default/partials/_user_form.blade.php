@@ -56,7 +56,7 @@
             <div class="form-group">
                 {!! Form::hidden('selected_roles', null, [ 'id' => 'selected_roles']) !!}
                 <div class="input-group select2-bootstrap-append">
-                    {!! Form::select('role_search', $roleList, null, ['class' => 'form-control', 'id' => 'role_search',  'style' => "width: 100%"]) !!}
+                    {!! Form::select('role_search', [], null, ['class' => 'form-control', 'id' => 'role_search',  'style' => "width: 100%"]) !!}
                     <span class="input-group-btn">
                         <button class="btn btn-default"  id="btn-add-role" type="button">
                             <span class="fa fa-plus-square"></span>
@@ -73,7 +73,7 @@
                             <th>{!! trans('admin/roles/general.columns.enabled')  !!}</th>
                             <th style="text-align: right">{!! trans('admin/roles/general.columns.actions')  !!}</th>
                         </tr>
-                        @foreach($userRoles as $role)
+                        @foreach($user->roles as $role)
                             <tr>
                                 <td class="hidden">{!! $role->id !!}</td>
                                 <td>{!! link_to_route('admin.roles.show', $role->display_name, [$role->id], []) !!}</td>
