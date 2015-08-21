@@ -115,7 +115,7 @@
                 <div class="form-group">
                     {!! Form::submit(trans('general.button.close'), ['class' => 'btn btn-primary']) !!}
                     @if ( $role->isEditable() || $role->canChangePermissions() )
-                        <a href="{!! route('admin.roles.edit', $role->id) !!}" title="{{ trans('general..button.edit') }}" class='btn btn-default'>{{ trans('general.button.edit') }}</a>
+                        <a href="{!! route('admin.roles.edit', $role->id) !!}" title="{{ trans('general.button.edit') }}" class='btn btn-default'>{{ trans('general.button.edit') }}</a>
                     @endif
                 </div>
 
