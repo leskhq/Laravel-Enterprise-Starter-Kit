@@ -72,7 +72,6 @@
                                             <td>{!! link_to_route('admin.permissions.show', $perm->description, [$perm->id], []) !!}</td>
                                             <td>{{ $perm->routes->count() }}</td>
                                             <td>{{ $perm->roles->count() }}</td>
-                                            <td>{{ $perm->created_at->diffForHumans() }}</td>
                                             <td>
                                                 @if ( $perm->isEditable() )
                                                     <a href="{!! route('admin.permissions.edit', $perm->id) !!}" title="{{ trans('general.button.edit') }}"><i class="fa fa-pencil-square-o"></i></a>
