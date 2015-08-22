@@ -46,14 +46,12 @@ class PermissionsController extends Controller {
      */
     public function show($id)
     {
-        $page_title = trans('admin/permissions/general.page.show.title');
-        $page_description = trans('admin/permissions/general.page.show.description');
-
         $perm = $this->permission->find($id);
-        $permRoles = $perm->roles();
-        $permRoutes = $perm->routes();
 
-        return view('admin.permissions.show', compact('perm', 'permRoles', 'permRoutes', 'page_title', 'page_description'));
+        $page_title = trans('admin/permissions/general.page.show.title');
+        $page_description = trans('admin/permissions/general.page.show.description', ['name' => $perm->name]); // "Displaying permission";
+
+        return view('admin.permissions.show', compact('perm', 'page_title', 'page_description'));
     }
 
     /**
@@ -64,7 +62,9 @@ class PermissionsController extends Controller {
         $page_title = trans('admin/permissions/general.page.create.title');
         $page_description = trans('admin/permissions/general.page.create.description');
 
-        return view('admin.permissions.create', compact('perms', 'page_title', 'page_description'));
+        $perm = new \App\Models\Permission();
+
+        return view('admin.permissions.create', compact('perm', 'page_title', 'page_description'));
 
     }
 
@@ -76,7 +76,17 @@ class PermissionsController extends Controller {
     {
         $this->validate($request, array('name' => 'required|unique:permissions', 'display_name' => 'required'));
 
-        $this->permission->create($request->all());
+        $attributes = $request->all();
+        if ( array_key_exists('selected_routes', $attributes) ) {
+            $attributes['routes'] = explode(",", $attributes['selected_routes']);
+        }
+        if ( array_key_exists('selected_roles', $attributes) ) {
+            $attributes['roles'] = explode(",", $attributes['selected_roles']);
+        }
+
+        $perm = $this->permission->create($attributes);
+        $perm->assignRoutes($attributes);
+        $perm->assignRoles($attributes);
 
         Flash::success( trans('admin/permissions/general.status.created') );
 
@@ -91,17 +101,17 @@ class PermissionsController extends Controller {
     {
         //TODO: Protect 'basic-authenticated', 'guest-only', 'open-to-all'
 
+        $perm = $this->permission->find($id);
+
         $page_title = trans('admin/permissions/general.page.edit.title');
-        $page_description = trans('admin/permissions/general.page.edit.description');
+        $page_description = trans('admin/permissions/general.page.edit.description', ['name' => $perm->name]); // "Editing permission";
 
-        $permission = $this->permission->find($id);
-
-        if(!$permission->isEditable())
+        if(!$perm->isEditable())
         {
             abort(403);
         }
 
-        return view('admin.permissions.edit', compact('permission', 'page_title', 'page_description'));
+        return view('admin.permissions.edit', compact('perm', 'page_title', 'page_description'));
     }
 
     /**
@@ -115,14 +125,24 @@ class PermissionsController extends Controller {
 
         $this->validate($request, array('name' => 'required', 'display_name' => 'required'));
 
-        $permission = $this->permission->find($id);
+        $perm = $this->permission->find($id);
 
-        if(!$permission->isEditable())
+        if(!$perm->isEditable())
         {
             abort(403);
         }
 
-        $permission->update($request->all());
+        $attributes = $request->all();
+        if ( array_key_exists('selected_routes', $attributes) ) {
+            $attributes['routes'] = explode(",", $attributes['selected_routes']);
+        }
+        if ( array_key_exists('selected_roles', $attributes) ) {
+            $attributes['roles'] = explode(",", $attributes['selected_roles']);
+        }
+
+        $perm->update($request->all());
+        $perm->assignRoutes($attributes);
+        $perm->assignRoles($attributes);
 
         Flash::success( trans('admin/permissions/general.status.updated') );
 

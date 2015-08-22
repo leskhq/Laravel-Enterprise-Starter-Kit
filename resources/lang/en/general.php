@@ -26,6 +26,7 @@ return [
         'perms'             => 'Permissions',
         'users'             => 'Users',
         'roles'             => 'Roles',
+        'routes'            => 'Routes',
     ],
 
     'error'              => [

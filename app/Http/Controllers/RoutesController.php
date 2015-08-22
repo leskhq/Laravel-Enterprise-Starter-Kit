@@ -333,4 +333,20 @@ class RoutesController extends Controller {
         return redirect('/admin/routes');
     }
 
+    /**
+     * @param Request $request
+     * @return array|static[]
+     */
+    public function searchByName(Request $request)
+    {
+        $name = $request->input('query');
+        $roles = DB::table('routes')
+            ->select(DB::raw('id, method || " " || path || " (" || name || ") [" || action_name || "]" as text'))
+            ->where('name', 'like', "%$name%")
+            ->orWhere('path', 'like', "%$name%")
+            ->orWhere('action_name', 'like', "%$name%")
+            ->get();
+        return $roles;
+    }
+
 }

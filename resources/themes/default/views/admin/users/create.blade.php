@@ -30,6 +30,6 @@
 @section('body_bottom')
     <!-- Select2 js -->
     @include('partials._body_bottom_select2_js_role_search')
+    <!-- form submit -->
     @include('partials._body_bottom_submit_user_edit_form_js')
-
 @endsection

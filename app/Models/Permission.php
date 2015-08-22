@@ -7,7 +7,7 @@ class Permission extends EntrustPermission {
     /**
      * @var array
      */
-    protected $fillable = ['name', 'display_name', 'description'];
+    protected $fillable = ['name', 'display_name', 'description', 'enabled'];
 
 
     public function routes()
@@ -114,5 +114,51 @@ class Permission extends EntrustPermission {
         return false;
     }
 
+    /**
+     *
+     *
+     * @param array $attributes
+     * @param $user
+     */
+    public function assignRoutes(array $attributes = [])
+    {
+        if (array_key_exists('routes', $attributes) && ($attributes['routes'])) {
+            $this->clearRouteAssociation();
 
+            foreach($attributes['routes'] as $id) {
+                $route = \App\Models\Route::find($id);
+                $this->routes()->save($route);
+            }
+        } else {
+            $this->clearRouteAssociation();
+        }
+    }
+
+    /**
+     *
+     *
+     * @param array $attributes
+     * @param $user
+     */
+    public function assignRoles(array $attributes = [])
+    {
+        if (array_key_exists('roles', $attributes) && ($attributes['roles'])) {
+            $this->roles()->sync($attributes['roles']);
+        } else {
+            $this->roles()->sync([]);
+        }
+    }
+
+    /**
+     *
+     */
+    public function clearRouteAssociation()
+    {
+        foreach ($this->routes as $route) {
+            $route->permission()->dissociate();
+//            $route->dissociate();
+            $route->save();
+        }
+        $this->save();
+    }
 }

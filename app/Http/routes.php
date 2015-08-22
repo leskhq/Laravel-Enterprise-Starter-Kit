@@ -74,6 +74,7 @@ Route::group(['middleware' => 'authorize'], function () {
         Route::post('routes/enableSelected',           ['as' => 'admin.routes.enable-selected',  'uses' => 'RoutesController@enableSelected']);
         Route::post('routes/disableSelected',          ['as' => 'admin.routes.disable-selected', 'uses' => 'RoutesController@disableSelected']);
         Route::post('routes/savePerms',                ['as' => 'admin.routes.save-perms',       'uses' => 'RoutesController@savePerms']);
+        Route::get( 'routes/search',                   ['as' => 'admin.routes.search',           'uses' => 'RoutesController@searchByName']);
         Route::resource('routes', 'RoutesController');
         Route::get( 'routes/{routeId}/confirm-delete', ['as' => 'admin.routes.confirm-delete',   'uses' => 'RoutesController@getModalDelete']);
         Route::get( 'routes/{routeId}/delete',         ['as' => 'admin.routes.delete',           'uses' => 'RoutesController@destroy']);

@@ -32,7 +32,7 @@
                     <div class="box-body">
 
                         <div class="table-responsive">
-                            <table style="width:100%">
+                            <table class="table table-hover">
                                 <thead>
                                     <tr>
                                         <th style="text-align: center">
@@ -41,9 +41,10 @@
                                             </a>
                                         </th>
                                         <th>{{ trans('admin/permissions/general.columns.name') }}</th>
+                                        <th>{{ trans('admin/permissions/general.columns.display_name') }}</th>
+                                        <th>{{ trans('admin/permissions/general.columns.description') }}</th>
                                         <th>{{ trans('admin/permissions/general.columns.routes') }}</th>
                                         <th>{{ trans('admin/permissions/general.columns.roles') }}</th>
-                                        <th>{{ trans('admin/permissions/general.columns.created') }}</th>
                                         <th>{{ trans('admin/permissions/general.columns.actions') }}</th>
                                     </tr>
                                 </thead>
@@ -55,9 +56,10 @@
                                             </a>
                                         </th>
                                         <th>{{ trans('admin/permissions/general.columns.name') }}</th>
+                                        <th>{{ trans('admin/permissions/general.columns.display_name') }}</th>
+                                        <th>{{ trans('admin/permissions/general.columns.description') }}</th>
                                         <th>{{ trans('admin/permissions/general.columns.routes') }}</th>
                                         <th>{{ trans('admin/permissions/general.columns.roles') }}</th>
-                                        <th>{{ trans('admin/permissions/general.columns.created') }}</th>
                                         <th>{{ trans('admin/permissions/general.columns.actions') }}</th>
                                     </tr>
                                 </tfoot>
@@ -66,6 +68,8 @@
                                         <tr>
                                             <td align="center">{!! Form::checkbox('chkPerm[]', $perm->id); !!}</td>
                                             <td>{!! link_to_route('admin.permissions.show', $perm->name, [$perm->id], []) !!}</td>
+                                            <td>{!! link_to_route('admin.permissions.show', $perm->display_name, [$perm->id], []) !!}</td>
+                                            <td>{!! link_to_route('admin.permissions.show', $perm->description, [$perm->id], []) !!}</td>
                                             <td>{{ $perm->routes->count() }}</td>
                                             <td>{{ $perm->roles->count() }}</td>
                                             <td>{{ $perm->created_at->diffForHumans() }}</td>

@@ -22,13 +22,13 @@ return [
 
     'page'              => [
         'index'              => [
-            'title'             => 'Admin | permissions',
+            'title'             => 'Admin | Permissions',
             'description'       => 'List of permissions',
             'table-title'       => 'Permission list',
         ],
         'show'              => [
             'title'             => 'Admin | Permission | Show',
-            'description'       => 'Displaying permission',
+            'description'       => 'Displaying permission: :name',
             'section-title'     => 'Permission details'
         ],
         'create'            => [
@@ -38,7 +38,7 @@ return [
         ],
         'edit'              => [
             'title'            => 'Admin | Permission | Edit',
-            'description'      => 'Editing permission',
+            'description'      => 'Editing permission: :name',
             'section-title'    => 'Edit permission'
         ],
     ],
