@@ -27,24 +27,51 @@
     });
 
     $("#btn-add-user").on("click", function () {
-        // Get text.
-        var selectedText  = $('#user_search :selected').text();
+        var userName, userFullname, userEnabled, userStatus, idCell, fullnameCel, nameCel, enabledCel, actionCel;
         // Get ID.
-        var selectedValue = $('#user_search').val();
+        var userID = $('#user_search').val();
         // Build URL based on route and replace "{user}" with ID.
-        var urlShowUser = '{!! route("admin.users.show") !!}'.replace('%7Busers%7D', selectedValue);
+        var urlShowUser = '{!! route("admin.users.show") !!}'.replace('%7Busers%7D', userID);
+        // Capture CSRF token from meta header.
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        // Build table cells.
-        var idCell     = '<td class="hidden">' + selectedValue + '</td>';
-        var nameCel    = '<td>' + '<a href="' + urlShowUser + '">' + selectedText + '</a>' + '</td>';
-        var descCel    = '<td></td>';
-        var enabledCel = '<td></td>';
-        var actionCel  = '<td style="text-align: right"><a class="btn-remove-user" href="#" title="{{ trans('general.button.remove-user') }}"><i class="fa fa-trash-o"></i></a></td>';
+        // Parse table values based on selected text.
+        $.ajax({
+            url: '{!! route("admin.users.get-info") !!}',
+            type: 'POST',
+            data: {
+                _token: CSRF_TOKEN,
+                id: userID
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                console.log(data);
+                userName = data['username'];
+                userFullname = data['full_name'];
+                userEnabled = data['enabled'];
 
-        // Add selected item only if not already in list.
-        if ( $('#tbl-users tr > td:contains(' + selectedValue + ')').length == 0 ) {
-            $('#tbl-users > tbody:last-child').append('<tr>' + idCell + nameCel + descCel + enabledCel + actionCel + '</tr>');
-        }
+                if(1 == userEnabled) {
+                    userStatus = '<i class="fa fa-check text-green"></i>';
+                }
+                else {
+                    userStatus = '<i class="fa fa-close text-red"></i>';
+                }
+
+                // Build table cells.
+                idCell     = '<td class="hidden" rowname="id">' + userID + '</td>';
+                fullnameCel    = '<td>' + '<a href="' + urlShowUser + '">' + userFullname + '</a>' + '</td>';
+                nameCel    = '<td>' + '<a href="' + urlShowUser + '">' + userName + '</a>' + '</td>';
+                enabledCel = '<td>' + userStatus + '</td>';
+                actionCel  = '<td style="text-align: right"><a class="btn-remove-user" href="#" title="{{ trans('general.button.remove-user') }}"><i class="fa fa-trash-o deletable"></i></a></td>';
+
+                // Add selected item only if not already in list.
+                if ( $('#tbl-users tr > td[rowname="id"]:contains(' + userID + ')').length == 0 ) {
+                    $('#tbl-users > tbody:last-child').append('<tr>' + idCell + fullnameCel + nameCel + enabledCel + actionCel + '</tr>');
+                }
+
+            }
+        });
+
     });
 
     $('body').on('click', 'a.btn-remove-user', function() {

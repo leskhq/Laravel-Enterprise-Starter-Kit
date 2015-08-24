@@ -51,7 +51,7 @@
                     <table class="table table-hover" id="tbl-routes">
                         <tbody>
                         <tr>
-                            <th class="hidden">{!! trans('admin/routes/general.columns.id')  !!}</th>
+                            <th class="hidden" rowname="id">{!! trans('admin/routes/general.columns.id')  !!}</th>
                             <th>{!! trans('admin/routes/general.columns.method')  !!}</th>
                             <th>{!! trans('admin/routes/general.columns.path')  !!}</th>
                             <th>{!! trans('admin/routes/general.columns.enabled')  !!}</th>
@@ -59,7 +59,7 @@
                         </tr>
                         @foreach($perm->routes as $route)
                             <tr>
-                                <td class="hidden">{!! $route->id !!}</td>
+                                <td class="hidden" rowname="id">{!! $route->id !!}</td>
                                 <td>{!! link_to_route('admin.routes.show', $route->method, [$route->id], []) !!}</td>
                                 <td>{!! link_to_route('admin.routes.show', $route->path, [$route->id], []) !!}</td>
                                 <td>
@@ -70,7 +70,7 @@
                                     @endif
                                 </td>
                                 <td style="text-align: right">
-                                    <a class="btn-remove-route" href="#" title="{{ trans('general.button.remove-route') }}"><i class="fa fa-trash-o"></i></a>
+                                    <a class="btn-remove-route" href="#" title="{{ trans('general.button.remove-route') }}"><i class="fa fa-trash-o deletable"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -96,7 +96,7 @@
                     <table class="table table-hover" id="tbl-roles">
                         <tbody>
                         <tr>
-                            <th class="hidden">{!! trans('admin/roles/general.columns.id')  !!}</th>
+                            <th class="hidden" rowname="id">{!! trans('admin/roles/general.columns.id')  !!}</th>
                             <th>{!! trans('admin/roles/general.columns.name')  !!}</th>
                             <th>{!! trans('admin/roles/general.columns.description')  !!}</th>
                             <th>{!! trans('admin/roles/general.columns.enabled')  !!}</th>
@@ -104,7 +104,7 @@
                         </tr>
                         @foreach($perm->roles as $role)
                             <tr>
-                                <td class="hidden">{!! $role->id !!}</td>
+                                <td class="hidden" rowname="id">{!! $role->id !!}</td>
                                 <td>{!! link_to_route('admin.roles.show', $role->name, [$role->id], []) !!}</td>
                                 <td>{!! link_to_route('admin.roles.show', $role->description, [$role->id], []) !!}</td>
                                 <td>
@@ -115,7 +115,7 @@
                                     @endif
                                 </td>
                                 <td style="text-align: right">
-                                    <a class="btn-remove-role" href="#" title="{{ trans('general.button.remove-role') }}"><i class="fa fa-trash-o"></i></a>
+                                    <a class="btn-remove-role" href="#" title="{{ trans('general.button.remove-role') }}"><i class="fa fa-trash-o deletable"></i></a>
                                 </td>
                             </tr>
                         @endforeach

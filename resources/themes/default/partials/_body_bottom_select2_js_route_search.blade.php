@@ -27,24 +27,51 @@
     });
 
     $("#btn-add-route").on("click", function () {
-        // Get text.
-        var selectedText  = $('#route_search :selected').text();
+        var routeMethod, routePath, routeEnabled, routeStatus, idCell, methodCel, pathCel, enabledCel, actionCel;
         // Get ID.
-        var selectedValue = $('#route_search').val();
+        var routeID = $('#route_search').val();
         // Build URL based on route and replace "{route}" with ID.
-        var urlShowRoute = '{!! route("admin.routes.show") !!}'.replace('%7Broutes%7D', selectedValue);
+        var urlShowRoute = '{!! route("admin.routes.show") !!}'.replace('%7Broutes%7D', routeID);
+        // Capture CSRF token from meta header.
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-        // Build table cells.
-        var idCell     = '<td class="hidden">' + selectedValue + '</td>';
-        var nameCel    = '<td>' + '<a href="' + urlShowRoute + '">' + selectedText + '</a>' + '</td>';
-        var descCel    = '<td></td>';
-        var enabledCel = '<td></td>';
-        var actionCel  = '<td style="text-align: right"><a class="btn-remove-route" href="#" title="{{ trans('general.button.remove-route') }}"><i class="fa fa-trash-o"></i></a></td>';
+        // Parse table values based on selected text.
+        $.ajax({
+            url: '{!! route("admin.routes.get-info") !!}',
+            type: 'POST',
+            data: {
+                _token: CSRF_TOKEN,
+                id: routeID
+            },
+            dataType: 'JSON',
+            success: function (data) {
+//                console.log(data);
+                routeMethod  = data['method'];
+                routePath    = data['path'];
+                routeEnabled = data['enabled'];
 
-        // Add selected item only if not already in list.
-        if ( $('#tbl-routes tr > td:contains(' + selectedValue + ')').length == 0 ) {
-            $('#tbl-routes > tbody:last-child').append('<tr>' + idCell + nameCel + descCel + enabledCel + actionCel + '</tr>');
-        }
+                if(1 == routeEnabled) {
+                    routeStatus = '<i class="fa fa-check text-green"></i>';
+                }
+                else {
+                    routeStatus = '<i class="fa fa-close text-red"></i>';
+                }
+
+                // Build table cells.
+                idCell     = '<td class="hidden" rowname="id">' + routeID + '</td>';
+                methodCel    = '<td>' + '<a href="' + urlShowRoute + '">' + routeMethod + '</a>' + '</td>';
+                pathCel    = '<td>' + '<a href="' + urlShowRoute + '">' + routePath + '</a>' + '</td>';
+                enabledCel = '<td>' + routeStatus + '</td>';
+                actionCel  = '<td style="text-align: right"><a class="btn-remove-route" href="#" title="{{ trans('general.button.remove-route') }}"><i class="fa fa-trash-o deletable"></i></a></td>';
+
+                // Add selected item only if not already in list.
+                if ( $('#tbl-routes tr > td[rowname="id"]:contains(' + routeID + ')').length == 0 ) {
+                    $('#tbl-routes > tbody:last-child').append('<tr>' + idCell + methodCel + pathCel + enabledCel + actionCel + '</tr>');
+                }
+
+            }
+        });
+
     });
 
     $('body').on('click', 'a.btn-remove-route', function() {

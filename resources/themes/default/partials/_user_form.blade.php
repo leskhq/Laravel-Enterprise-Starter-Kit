@@ -67,7 +67,7 @@
                     <table class="table table-hover" id="tbl-roles">
                         <tbody>
                         <tr>
-                            <th class="hidden">{!! trans('admin/roles/general.columns.id')  !!}</th>
+                            <th class="hidden" rowname="id">{!! trans('admin/roles/general.columns.id')  !!}</th>
                             <th>{!! trans('admin/roles/general.columns.name')  !!}</th>
                             <th>{!! trans('admin/roles/general.columns.description')  !!}</th>
                             <th>{!! trans('admin/roles/general.columns.enabled')  !!}</th>
@@ -75,7 +75,7 @@
                         </tr>
                         @foreach($user->roles as $role)
                             <tr>
-                                <td class="hidden">{!! $role->id !!}</td>
+                                <td class="hidden" rowname="id">{!! $role->id !!}</td>
                                 <td>{!! link_to_route('admin.roles.show', $role->display_name, [$role->id], []) !!}</td>
                                 <td>{!! link_to_route('admin.roles.show', $role->description, [$role->id], []) !!}</td>
                                 <td>
@@ -86,7 +86,7 @@
                                     @endif
                                 </td>
                                 <td style="text-align: right">
-                                    <a class="btn-remove-role" href="#" title="{{ trans('general.button.remove-role') }}"><i class="fa fa-trash-o"></i></a>
+                                    <a class="btn-remove-role" href="#" title="{{ trans('general.button.remove-role') }}"><i class="fa fa-trash-o deletable"></i></a>
                                 </td>
                             </tr>
                         @endforeach
