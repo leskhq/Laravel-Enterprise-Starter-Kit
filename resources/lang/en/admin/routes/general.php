@@ -60,7 +60,10 @@ return [
     ],
 
     'action'               => [
-        'load-routes'           => 'Load routes',
+        'load-routes'           => 'Load routes from Laravel routes table',
+        'create'                => 'Create new route',
+        'enable-selected'       => 'Enable selected route',
+        'diable-selected'       => 'Disable selected route',
         'save-perms-assignment' => 'Save permission assignments',
     ],
 
