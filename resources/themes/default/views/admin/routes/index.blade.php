@@ -1,5 +1,10 @@
 @extends('layouts.master')
 
+@section('head_extra')
+    <!-- Select2 css -->
+    @include('partials._head_extra_select2_css')
+@endsection
+
 @section('content')
     <div class='row'>
         <div class='col-md-12'>
@@ -17,19 +22,19 @@
                             <i class="fa fa-refresh"></i>
                         </a>
                         &nbsp;
-                        <a class="btn btn-default btn-sm" href="#" onclick="document.forms['frmRouteList'].action = '{!! route('admin.routes.enable-selected') !!}';  document.forms['frmRouteList'].submit(); return false;" title="{{ trans('general.button.enable') }}">
+                        <a class="btn btn-default btn-sm" href="#" onclick="document.forms['frmRouteList'].action = '{{ route('admin.routes.enable-selected') }}';  document.forms['frmRouteList'].submit(); return false;" title="{{ trans('admin/routes/general.action.enable-selected') }}">
                             <i class="fa fa-check-circle-o"></i>
                         </a>
                         &nbsp;
-                        <a class="btn btn-default btn-sm" href="#" onclick="document.forms['frmRouteList'].action = '{!! route('admin.routes.disable-selected') !!}';  document.forms['frmRouteList'].submit(); return false;" title="{{ trans('general.button.disable') }}">
+                        <a class="btn btn-default btn-sm" href="#" onclick="document.forms['frmRouteList'].action = '{{ route('admin.routes.disable-selected') }}';  document.forms['frmRouteList'].submit(); return false;" title="{{ trans('admin/routes/general.action.disable-selected') }}">
                             <i class="fa fa-ban"></i>
                         </a>
                         &nbsp;
-                        <a class="btn btn-default btn-sm" href="#" onclick="document.forms['frmRouteList'].action = '{!! route('admin.routes.save-perms') !!}';  document.forms['frmRouteList'].submit(); return false;" title="{{ trans('admin/routes/general.action.save-perms-assignment') }}">
+                        <a class="btn btn-default btn-sm" href="#" onclick="document.forms['frmRouteList'].action = '{{ route('admin.routes.save-perms') }}';  document.forms['frmRouteList'].submit(); return false;" title="{{ trans('admin/routes/general.action.save-perms-assignment') }}">
                             <i class="fa fa-floppy-o"></i>
                         </a>
                         &nbsp;
-                        {!! Form::select( 'globalPerm', $perms, '', [ 'style' => 'max-width:150px;'] ) !!}
+                        {!! Form::select( 'globalPerm', $perms, '', [ 'style' => 'max-width:150px;', 'id' => 'select-global-perm', 'class' => 'select-global-perm'] ) !!}
 
                         <div class="box-tools pull-right">
                             <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
@@ -38,19 +43,17 @@
                     <div class="box-body">
 
                         <div class="table-responsive">
-                            <table style="width:100%">
+                            <table class="table table-hover">
                                 <thead>
                                     <tr>
                                         <th style="text-align: center">
                                             <a class="btn" href="#" onclick="toggleCheckbox(); return false;" title="{{ trans('general.button.toggle-select') }}">
                                                 <i class="fa fa-check-square-o"></i>
                                             </a>
-                                        <th style="text-align: center">
                                         <th>{{ trans('admin/routes/general.columns.permission') }}</th>
                                         <th>{{ trans('admin/routes/general.columns.method') }}</th>
                                         <th>{{ trans('admin/routes/general.columns.path') }}</th>
                                         <th>{{ trans('admin/routes/general.columns.name') }}</th>
-                                        <th>{{ trans('admin/routes/general.columns.action_name') }}</th>
                                         <th>{{ trans('admin/routes/general.columns.actions') }}</th>
                                     </tr>
                                 </thead>
@@ -60,12 +63,10 @@
                                             <a class="btn" href="#" onclick="toggleCheckbox(); return false;" title="{{ trans('general.button.toggle-select') }}">
                                                 <i class="fa fa-check-square-o"></i>
                                             </a>
-                                        <th style="text-align: center">
                                         <th>{{ trans('admin/routes/general.columns.permission') }}</th>
                                         <th>{{ trans('admin/routes/general.columns.method') }}</th>
                                         <th>{{ trans('admin/routes/general.columns.path') }}</th>
                                         <th>{{ trans('admin/routes/general.columns.name') }}</th>
-                                        <th>{{ trans('admin/routes/general.columns.action_name') }}</th>
                                         <th>{{ trans('admin/routes/general.columns.actions') }}</th>
                                     </tr>
                                 </tfoot>
@@ -73,7 +74,7 @@
                                     @foreach($routes as $route)
                                         <tr>
                                             <td align="center">{!! Form::checkbox('chkRoute[]', $route->id); !!}</td>
-                                            <td>{!! Form::select( 'perms['. $route->id .']', $perms, (isset($route->permission)?$route->permission->id:''), [ 'style' => 'max-width:150px;'] ) !!}</td>
+                                            <td>{!! Form::select( 'perms['. $route->id .']', $perms, (isset($route->permission)?$route->permission->id:''), [ 'style' => 'max-width:150px;', 'class' => 'select-perms'] ) !!}</td>
                                             <td>{!! link_to_route('admin.routes.show', $route->method, [$route->id], []) !!}</td>
                                             <td>{!! link_to_route('admin.routes.show', $route->path, [$route->id], []) !!}</td>
                                             @if ('' != $route->name)
@@ -81,17 +82,16 @@
                                             @else
                                                 <td></td>
                                             @endif
-                                            <td>{!! link_to_route('admin.routes.show', $route->action_name, [$route->id], []) !!}</td>
                                             <td>
                                                 <a href="{!! route('admin.routes.edit', $route->id) !!}" title="{{ trans('general.button.edit') }}"><i class="fa fa-pencil-square-o"></i></a>
 
                                                 @if ( $route->enabled )
-                                                    <a href="{!! route('admin.routes.disable', $route->id) !!}" title="{{ trans('general.button.disable') }}"><i class="fa fa-ban"></i></a>
+                                                    <a href="{!! route('admin.routes.disable', $route->id) !!}" title="{{ trans('general.button.disable') }}"><i class="fa fa-check-circle-o enabled"></i></a>
                                                 @else
-                                                    <a href="{!! route('admin.routes.enable', $route->id) !!}" title="{{ trans('general.button.enable') }}"><i class="fa fa-check-circle-o"></i></a>
+                                                    <a href="{!! route('admin.routes.enable', $route->id) !!}" title="{{ trans('general.button.enable') }}"><i class="fa fa-ban disabled"></i></a>
                                                 @endif
 
-                                                <a href="{!! route('admin.routes.confirm-delete', $route->id) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><i class="fa fa-trash-o"></i></a>
+                                                <a href="{!! route('admin.routes.confirm-delete', $route->id) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><i class="fa fa-trash-o deletable"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -118,6 +118,17 @@
             checkboxes[i].checked = !checkboxes[i].checked;
         }
     }
+</script>
+
+<!-- Select2 4.0.0 -->
+<script src="{{ asset ("/bower_components/admin-lte/select2/js/select2.min.js") }}" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        $(".select-global-perm").select2();
+        $(".select-perms").select2();
+    });
 </script>
 @endsection
 

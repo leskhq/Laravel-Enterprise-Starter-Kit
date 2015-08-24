@@ -76,13 +76,13 @@
                                                 @endif
 
                                                 @if ( $role->enabled )
-                                                    <a href="{!! route('admin.roles.disable', $role->id) !!}" title="{{ trans('general.button.disable') }}"><i class="fa fa-ban"></i></a>
+                                                    <a href="{!! route('admin.roles.disable', $role->id) !!}" title="{{ trans('general.button.disable') }}"><i class="fa fa-check-circle-o enabled"></i></a>
                                                 @else
-                                                    <a href="{!! route('admin.roles.enable', $role->id) !!}" title="{{ trans('general.button.enable') }}"><i class="fa fa-check-circle-o"></i></a>
+                                                    <a href="{!! route('admin.roles.enable', $role->id) !!}" title="{{ trans('general.button.enable') }}"><i class="fa fa-ban disabled"></i></a>
                                                 @endif
 
                                                 @if ( $role->isDeletable() )
-                                                    <a href="{!! route('admin.roles.confirm-delete', $role->id) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><i class="fa fa-trash-o"></i></a>
+                                                    <a href="{!! route('admin.roles.confirm-delete', $role->id) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><i class="fa fa-trash-o deletable"></i></a>
                                                 @else
                                                     <i class="fa fa-trash-o text-muted" title="{{ trans('admin/roles/general.error.cant-delete-this-role') }}"></i>
                                                 @endif

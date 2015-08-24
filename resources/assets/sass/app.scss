@@ -13,3 +13,7 @@ div.col-4 {
       -moz-column-rule: 1px dotted #ddd;
            column-rule: 1px dotted #ddd;
 }
+// Colour for Font-Awesome icons.
+i.deletable { color: red; }
+i.enabled { color: green; }
+i.disabled { color: orange; }

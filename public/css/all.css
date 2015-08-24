@@ -12,5 +12,14 @@ div.col-4 {
   -moz-column-rule: 1px dotted #ddd;
   column-rule: 1px dotted #ddd; }
 
+i.deletable {
+  color: red; }
+
+i.enabled {
+  color: green; }
+
+i.disabled {
+  color: orange; }
+
 /*# sourceMappingURL=app.css.map */
 /*# sourceMappingURL=all.css.map */

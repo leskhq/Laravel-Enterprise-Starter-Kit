@@ -40,7 +40,6 @@
                                                 <i class="fa fa-check-square-o"></i>
                                             </a>
                                         </th>
-                                        <th>{{ trans('admin/permissions/general.columns.name') }}</th>
                                         <th>{{ trans('admin/permissions/general.columns.display_name') }}</th>
                                         <th>{{ trans('admin/permissions/general.columns.description') }}</th>
                                         <th>{{ trans('admin/permissions/general.columns.routes') }}</th>
@@ -55,7 +54,6 @@
                                                 <i class="fa fa-check-square-o"></i>
                                             </a>
                                         </th>
-                                        <th>{{ trans('admin/permissions/general.columns.name') }}</th>
                                         <th>{{ trans('admin/permissions/general.columns.display_name') }}</th>
                                         <th>{{ trans('admin/permissions/general.columns.description') }}</th>
                                         <th>{{ trans('admin/permissions/general.columns.routes') }}</th>
@@ -67,7 +65,6 @@
                                     @foreach($perms as $perm)
                                         <tr>
                                             <td align="center">{!! Form::checkbox('chkPerm[]', $perm->id); !!}</td>
-                                            <td>{!! link_to_route('admin.permissions.show', $perm->name, [$perm->id], []) !!}</td>
                                             <td>{!! link_to_route('admin.permissions.show', $perm->display_name, [$perm->id], []) !!}</td>
                                             <td>{!! link_to_route('admin.permissions.show', $perm->description, [$perm->id], []) !!}</td>
                                             <td>{{ $perm->routes->count() }}</td>
@@ -80,13 +77,13 @@
                                                 @endif
 
                                                 @if ( $perm->enabled )
-                                                    <a href="{!! route('admin.permissions.disable', $perm->id) !!}" title="{{ trans('general.button.disable') }}"><i class="fa fa-ban"></i></a>
+                                                    <a href="{!! route('admin.permissions.disable', $perm->id) !!}" title="{{ trans('general.button.disable') }}"><i class="fa fa-check-circle-o enabled"></i></a>
                                                 @else
-                                                    <a href="{!! route('admin.permissions.enable', $perm->id) !!}" title="{{ trans('general.button.enable') }}"><i class="fa fa-check-circle-o"></i></a>
+                                                    <a href="{!! route('admin.permissions.enable', $perm->id) !!}" title="{{ trans('general.button.enable') }}"><i class="fa fa-ban disabled"></i></a>
                                                 @endif
 
                                                 @if ( $perm->isDeletable() )
-                                                    <a href="{!! route('admin.permissions.confirm-delete', $perm->id) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><i class="fa fa-trash-o"></i></a>
+                                                    <a href="{!! route('admin.permissions.confirm-delete', $perm->id) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><i class="fa fa-trash-o deletable"></i></a>
                                                 @else
                                                     <i class="fa fa-trash-o text-muted" title="{{ trans('admin/permissions/general.error.cant-delete-perm-in-use') }}"></i>
                                                 @endif
