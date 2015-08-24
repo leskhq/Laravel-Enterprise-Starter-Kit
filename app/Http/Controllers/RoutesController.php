@@ -349,4 +349,16 @@ class RoutesController extends Controller {
         return $roles;
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function getInfo(Request $request)
+    {
+        $id = $request->input('id');
+        $route = $this->route->find($id);
+
+        return $route;
+    }
+
 }

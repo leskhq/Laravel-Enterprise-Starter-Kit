@@ -333,5 +333,16 @@ class UsersController extends Controller {
         return $userList;
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function getInfo(Request $request)
+    {
+        $id = $request->input('id');
+        $user = $this->user->find($id);
+
+        return $user;
+    }
 
 }

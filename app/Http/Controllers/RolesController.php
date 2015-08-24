@@ -312,12 +312,24 @@ class RolesController extends Controller {
     {
         $name = $request->input('query');
         $roles = DB::table('roles')
-            ->select(DB::raw('id, display_name || " (" || name || ")" as text'))
-            ->where('display_name', 'like', "%$name%")
-            ->orWhere('name', 'like', "%$name%")
+            ->select(DB::raw('id, display_name || " (" || description || ")" as text'))
+            ->where('name', 'like', "%$name%")
+            ->orWhere('display_name', 'like', "%$name%")
+            ->orWhere('description', 'like', "%$name%")
             ->get();
         return $roles;
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function getInfo(Request $request)
+    {
+        $id = $request->input('id');
+        $role = $this->role->find($id);
+
+        return $role;
+    }
 
 }
