@@ -73,6 +73,7 @@ Directory (AD) authentication and the dynamic authorization module. But wait the
 ## Roadmap
 List of future feature and items that are still have to be completed, in no particular order:
 
+* User-based permissions.
 * Gravatar integration.
 * Implement soft-delete for Users, Roles, Permissions and maybe even Routes.
 * Persistent notifications.
