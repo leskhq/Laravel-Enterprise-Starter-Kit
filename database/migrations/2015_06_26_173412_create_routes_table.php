@@ -20,11 +20,6 @@ class CreateRoutesTable extends Migration
             $table->string('action_name');
             $table->unsignedInteger('permission_id')->nullable()->default(0);
             $table->timestamps();
-
-            // TODO: Test if deleting a permission sets the permissions_id field to null.
-            $table->foreign('permission_id')->references('id')->on('permissions')
-                ->onUpdate('cascade')->onDelete('set null');
-
         });
     }
 
