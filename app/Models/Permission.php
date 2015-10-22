@@ -1,8 +1,11 @@
 <?php namespace App\Models;
 
 use Zizaco\Entrust\EntrustPermission;
+use App\Traits\PermissionHasUsersTrait;
 
 class Permission extends EntrustPermission {
+
+    use PermissionHasUsersTrait;
 
     /**
      * @var array
@@ -56,7 +59,7 @@ class Permission extends EntrustPermission {
      */
     public function getIsUsedAttribute()
     {
-        return ($this->is_used_by_role || $this->is_used_by_route);
+        return ($this->is_used_by_role || $this->is_used_by_route || $this->is_used_by_user);
     }
 
     /**
@@ -122,7 +125,7 @@ class Permission extends EntrustPermission {
      */
     public function assignRoutes(array $attributes = [])
     {
-        if (array_key_exists('routes', $attributes) && ($attributes['routes'])) {
+        if (array_key_exists('routes', $attributes) && (is_array($attributes['routes'])) && ("" != $attributes['routes'][0])) {
             $this->clearRouteAssociation();
 
             foreach($attributes['routes'] as $id) {
@@ -142,7 +145,7 @@ class Permission extends EntrustPermission {
      */
     public function assignRoles(array $attributes = [])
     {
-        if (array_key_exists('roles', $attributes) && ($attributes['roles'])) {
+        if (array_key_exists('roles', $attributes) && (is_array($attributes['roles'])) && ("" != $attributes['roles'][0])) {
             $this->roles()->sync($attributes['roles']);
         } else {
             $this->roles()->sync([]);

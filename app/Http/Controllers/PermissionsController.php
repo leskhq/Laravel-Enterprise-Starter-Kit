@@ -121,8 +121,6 @@ class PermissionsController extends Controller {
      */
     public function update(Request $request, $id)
     {
-        //TODO: Protect 'basic-authenticated', 'guest-only', 'open-to-all'
-
         $this->validate($request, array('name' => 'required', 'display_name' => 'required'));
 
         $perm = $this->permission->find($id);

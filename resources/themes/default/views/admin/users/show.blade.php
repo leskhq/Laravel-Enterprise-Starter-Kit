@@ -52,6 +52,11 @@
                                 {!! Form::label('password_confirmation', trans('admin/users/general.columns.password_confirmation')) !!}
                                 {!! Form::password('password_confirmation', ['class' => 'form-control', 'readonly']) !!}
                             </div>
+
+                            <div class="form-group">
+                                {!! Form::label('auth_type', trans('admin/users/general.columns.type')) !!}
+                                {!! Form::text('auth_type', null, ['class' => 'form-control', 'readonly']) !!}
+                            </div>
                         </div><!-- /.tab-pane -->
 
                         <div class="tab-pane" id="tab_options">
@@ -113,11 +118,19 @@
                                         <tbody>
                                             <tr>
                                                 <th>{!! trans('admin/users/general.columns.name')  !!}</th>
+                                                <th>{!! trans('admin/users/general.columns.assigned')  !!}</th>
                                                 <th>{!! trans('admin/users/general.columns.effective')  !!}</th>
                                             </tr>
                                             @foreach($perms as $perm)
                                                 <tr>
                                                     <td>{!! link_to_route('admin.permissions.show', $perm->display_name, [$perm->id], []) !!}</td>
+                                                    <td>
+                                                        @if($user->hasPermission($perm->name))
+                                                            <i class="fa fa-check text-green"></i>
+                                                        @else
+                                                            <i class="fa fa-close text-red"></i>
+                                                        @endif
+                                                    </td>
                                                     <td>
                                                         @if($user->can($perm->name))
                                                             <i class="fa fa-check text-green"></i>

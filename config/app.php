@@ -99,6 +99,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Permission and User relationship table
+    |--------------------------------------------------------------------------
+    |
+    | This is the permission_user table used to save relationship
+    | between permissions and users to the database.
+    |
+    | See: 'config/entrust.php'
+    |
+    */
+
+    'permission_user_table' => 'permission_user',
+
+    /*
+    |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------
     |

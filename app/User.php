@@ -8,17 +8,19 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Zizaco\Entrust\Traits\EntrustUserTrait as EntrustUserTrait;
-use App\models\Permission;
-use App\models\Role;
+use App\Models\Role;
+use App\Traits\UserHasPermissionsTrait;
 use Auth;
+use Config;
 use Sroutier\EloquentLDAP\Contracts\EloquentLDAPUserInterface;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract, EloquentLDAPUserInterface
 {
     use Authenticatable, CanResetPassword;
-    use EntrustUserTrait {
-        can as traitCan;
-        hasRole as traitHasRole;
+    use EntrustUserTrait, UserHasPermissionsTrait {
+        EntrustUserTrait::hasRole as entrustUserTraitHasRole;
+        UserHasPermissionsTrait::can insteadof EntrustUserTrait;
+        UserHasPermissionsTrait::boot insteadof EntrustUserTrait;
     }
 
     /**
@@ -50,10 +52,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected $appends = ['full_name'];
 
     /**
-     *
+     * Alias to eloquent many-to-many relation's sync() method.
      *
      * @param array $attributes
-     * @param $user
      */
     private function assignMembership(array $attributes = [])
     {
@@ -61,6 +62,20 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             $this->roles()->sync($attributes['role']);
         } else {
             $this->roles()->sync([]);
+        }
+    }
+
+    /**
+     * Alias to eloquent many-to-many relation's sync() method.
+     *
+     * @param array $attributes
+     */
+    private function assignPermission(array $attributes = [])
+    {
+        if (array_key_exists('perms', $attributes) && ($attributes['perms'])) {
+            $this->permissions()->sync($attributes['perms']);
+        } else {
+            $this->permissions()->sync([]);
         }
     }
 
@@ -87,21 +102,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         $this->attributes['password'] = bcrypt($value);
     }
-
-//    // TODO: Do we need this??
-//    /**
-//     * @return mixed
-//     */
-//    public function getLevelMax()
-//    {
-//        $roles = [];
-//        foreach($this->roles as $role)
-//        {
-//            $roles[] = $role->level;
-//        }
-//
-//        return max($roles);
-//    }
 
     /**
      * @return bool
@@ -211,60 +211,27 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Code copy of EntrustUserTrait::can(...) with the one addition to check if a role
-     * is enabled first the check if a permission is also enabled before
-     * returning true.
-     *
-     * @param $permission
-     * @param bool $requireAll
-     * @return bool
-     */
-    public function can($permission, $requireAll = false)
-    {
-        if (is_array($permission)) {
-            foreach ($permission as $permName) {
-                $hasPerm = $this->can($permName);
-
-                if ($hasPerm && !$requireAll) {
-                    return true;
-                } elseif (!$hasPerm && $requireAll) {
-                    return false;
-                }
-            }
-
-            // If we've made it this far and $requireAll is FALSE, then NONE of the perms were found
-            // If we've made it this far and $requireAll is TRUE, then ALL of the perms were found.
-            // Return the value of $requireAll;
-            return $requireAll;
-        } else {
-            foreach ($this->roles as $role) {
-                if ($role->enabled) {
-                    // Validate against the Permission table
-                    foreach ($role->perms as $perm) {
-                        if ( ($perm->enabled) && ($perm->name == $permission) ) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * Overwrite Model::create(...) to save group membership if included,
      * or clear it if not. Also force membership to group 'users'.
      *
      * @param array $attributes
+     * @return User
      */
     public static function create(array $attributes = []) {
+
+        // If the auth_type is not explicitly set by the call function or module,
+        // set it to the internal value.
+        if (!array_key_exists('auth_type', $attributes) || ("" == ($attributes['auth_type'])) ) {
+            $attributes['auth_type'] = Config::get('eloquent-ldap.label_internal');
+        }
 
         // Call original create method from parent
         $user = parent::create($attributes);
 
         // Assign membership(s)
         $user->assignMembership($attributes);
+        // Assign permission(s)
+        $user->assignPermission($attributes);
         // Force membership to group 'users'
         $user->forceRole('users');
 
@@ -276,6 +243,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * or clear it if not. Also force membership to group 'users'.
      *
      * @param array $attributes
+     * @return void
      */
     public function update(array $attributes = []) {
 
@@ -301,6 +269,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
         // Assign membership(s)
         $this->assignMembership($attributes);
+        // Assign permission(s)
+        $this->assignPermission($attributes);
         // Force membership to group 'users'
         $this->forceRole('users');
     }
