@@ -95,6 +95,14 @@ List of future feature and items that are still have to be completed, in no part
 * etc...
 
 
+## Dependencies
+* [PHP](http://php.net/supported-versions.php) >= 5.5.9
+* [Composer](https://getcomposer.org/)
+* [Node.js](https://nodejs.org): An older version may come with your distribution, you may be better off to install a recent version directly from the Web site, if you can. If you must use the version shipped with your distribution or OS, check the tip reported by [thassan](https://github.com/sroutier/laravel-5.1-enterprise-starter-kit/issues/6) in the [Troubleshooting](#troubleshooting) section.
+* [npm](https://www.npmjs.com/): Should come with *Node.js* but you may have to install a separate package, really depends on your distribution and
+the method that you selected to install *Node.js*.
+* [PHP5 LDAP](http://php.net/manual/en/book.ldap.php): Binary extension for PHP, can probably be installed using 'apt' or 'yum' to match your installation of PHP.
+
 ## Installing
 
 ### Acquire a copy
@@ -182,15 +190,28 @@ cd projects/shared/l51esk
 ### Fetch dependencies
 
 #### Composer
-Fetch all dependencies using *composer* by issuing the following command:
+This project includes the file 'composer.lock'. The purpose of the 'composer.lock' file is to lock the version of the various
+packages needed by a project as this one. By using the included lock file you are sure to use the same version of those 
+packages as were used during the design. 
 
+Fetch all dependencies using *composer* by issuing one of the following commands depending on which environment your are 
+trying to configure:
+
+For a development environment use:
 ```
 composer install
 ```
 
-**_Note:_** 
+For a production environment use:
+```
+composer install --no-dev
+```
 
-On a production server, prior to running the *composer install* command, you will want to deploy a copy of the file 
+
+**_Notes:_**
+To bypass to lock on package versions runn the command *composer update*.
+
+On a production server, prior to running the *composer install* command, you will want to deploy a copy of your file 
 *composer.lock* from your development server, to guarantee that the exact version of the various 
 packages that you have developed on and tested gets installed. Never run the *composer update* 
 command on a production server.
@@ -202,6 +223,8 @@ Fetch all dependencies for Node.js using *npm* by using the following command:
 npm install
 ```
 
+**_NOTE:_**
+If the *npm install* command fails check the tip on *Node.js* in the [Troubleshooting](#troubleshooting) section.
 ### Basic configuration
 
 #### Create your *.env* file
@@ -367,7 +390,26 @@ gulp --production
 ```
 
 ## Troubleshooting
-More later...
+Below are some troubleshooting tips that we have encoutered and resolved:
+
+### Node.js
+As pointed out by [thassan](https://github.com/thassan) in [Issue 6](https://github.com/sroutier/laravel-5.1-enterprise-starter-kit/issues/6), 
+if you distribution or OS ships with an older version of Node.js the name of the executable may be 'nodejs'. In recent versions the name has 
+been changed to 'node'. This will cause some Node.js packages to fail during the installation as they expect to find the 'node' executable. 
+To resolve this issue you can either create a symbolic link from the 'nodejs' executable to 'node', or you may want to consider installing 
+a more recent version of Node.js.
+To create a symbolic link issue the command:
+```
+sudo ln -s /usr/bin/nodejs /usr/bin/node
+```
+
+Also if the installation of the Node.js packages fails with a 'ENOENT' error, you may need to create a empty file at the root of the project as 
+explained on [Stack Overflow](http://stackoverflow.com/questions/17990647/npm-install-errors-with-error-enoent-chmod). 
+To create the empty file run:
+```
+touch .npmignore
+```
+
 
 ## Change log
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
