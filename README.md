@@ -34,7 +34,7 @@ Directory (AD) authentication and the dynamic authorization module. But wait the
 - [License](#license)
 
 ## Features
-* Based on Laravel 5.1
+* Based on Laravel 5.1 LTS
 * Theme engine using [yaapis/Theme](https://github.com/yaapis/Theme).
 * Includes 3 themes based on [almasaeed2010/AdminLTE](https://github.com/almasaeed2010/AdminLTE).
 * Custom Error pages: 
@@ -47,12 +47,13 @@ Directory (AD) authentication and the dynamic authorization module. But wait the
         * User login.
         * User registration.
         * Reset forgot password.
+    * User based permissions.
     * Dynamic assignment of permissions to application routes with matching authorization module.
     * Full management of users, roles, permissions & routes.
     * Optional LDAP/AD authentication using [sroutier/eloquent-ldap](https://github.com/sroutier/eloquent-ldap), with options to:
         * Automatically creates local account for LDAP/AD users on first login.
-        * Automatically assign to matching local roles based on LDAP/AD group membership.
-        * Refresh role assignment on login.
+        * Automatic assignment of users to local roles based on matching LDAP/AD group membership.
+        * Automatically refresh role assignment on user login.
 * Optional walled garden mode.
 * Laravel [Repositories](https://github.com/Bosnadev/Repositories).
 * Flash notifications using [laracasts/flash](https://github.com/laracasts/flash).
@@ -73,7 +74,6 @@ Directory (AD) authentication and the dynamic authorization module. But wait the
 ## Roadmap
 List of future feature and items that are still have to be completed, in no particular order:
 
-* User-based permissions.
 * Gravatar integration.
 * Implement soft-delete for Users, Roles, Permissions and maybe even Routes.
 * Persistent notifications.
@@ -263,9 +263,10 @@ During the installation the database seeder scripts created a few things to help
 Additionally, on a development environment a few more test users and permissions would have been created.
 
 The relationship between users, roles & permissions is relatively simple: users are assigned roles (many-to-many)
-and roles are assigned permissions (many-to-many). Users do not have permissions per se, but through roles they 
-have the ability of a given permission. For more information please refer to the documentation of the 
-[zizaco/entrust](https://github.com/zizaco/entrust) package.
+and roles are assigned permissions (many-to-many). This enables a simple role based permission assignment system.
+For more information please refer to the documentation of the [zizaco/entrust](https://github.com/zizaco/entrust) 
+package. Also while not recommended by autorization best practices, user based permission assignment is 
+supported. Permissions can be directly assigned to individual users if needed.
 
 Where things get a little more interesting is the addition of the *Route* model. Not to be confused with the 
 [Route](http://laravel.com/api/5.1/Illuminate/Routing/Route.html) from Laravel, the *Route* model is still 
@@ -277,7 +278,7 @@ assign any of the defined permission to each route.
  
 Once *Routes* are assigned a single *Permission* each and permissions are assigned to *Roles* and finally *Users* are 
 granted *Roles*, then the matching *AuthorizeRoute* middleware can authorize or block access to all routes for both 
-guest and authenticated users. This feature will probably not be used by any site user, administrator or others,
+guest and authenticated users. This feature will probably not be used by any site user or even administrators,
 but by the site developer(s). In fact one of the first things that I would recommend is to restrict all routes
 to the *Route* management pages to a permission given to developers only. What this feature does is make 
 the authorization process very flexible, powerful and easy to change on the fly.
