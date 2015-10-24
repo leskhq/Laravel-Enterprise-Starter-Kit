@@ -208,13 +208,13 @@ composer install --no-dev
 ```
 
 
-**_Notes:_**
-To bypass to lock on package versions runn the command *composer update*.
+**_NOTE:_** To bypass to lock on package versions run the command *composer update*.
 
-On a production server, prior to running the *composer install* command, you will want to deploy a copy of your file 
+**_NOTE:_** On a production server, prior to running the *composer install* command, you will want to deploy a copy of your file 
 *composer.lock* from your development server, to guarantee that the exact version of the various 
 packages that you have developed on and tested gets installed. Never run the *composer update* 
 command on a production server.
+
 
 #### Node.js
 Fetch all dependencies for Node.js using *npm* by using the following command:
@@ -223,8 +223,7 @@ Fetch all dependencies for Node.js using *npm* by using the following command:
 npm install
 ```
 
-**_NOTE:_**
-If the *npm install* command fails check the tip on *Node.js* in the [Troubleshooting](#troubleshooting) section.
+**_NOTE:_** If the *npm install* command fails check the tip on *Node.js* in the [Troubleshooting](#troubleshooting) section.
 ### Basic configuration
 
 #### Create your *.env* file
@@ -244,9 +243,7 @@ Review and edit the *.env* file and all the files under */config*. Paying partic
 */config/database.php*. More details can be found in the [Configuring](#Configuring) and 
 [Documentation](#Documentation) section below.
 
-**_Note:_** 
-
-By default all settings are set for a development environment, You will want to review and tweak before deploying to
+**_Note:_** By default all settings are set for a development environment, You will want to review and tweak before deploying to
 Prod. 
 
 
