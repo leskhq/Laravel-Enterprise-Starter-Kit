@@ -1,7 +1,5 @@
 <?php namespace App\Http\Controllers;
 
-use App\Repositories\Criteria\Permission\PermissionsWithRoles;
-use App\Repositories\Criteria\Permission\PermissionsWithRoutes;
 use App\Repositories\Criteria\Permission\PermissionsByNamesAscending;
 use App\Repositories\PermissionRepository as Permission;
 use App\Repositories\RoleRepository as Role;
