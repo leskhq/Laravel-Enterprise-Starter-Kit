@@ -204,48 +204,9 @@ class RoutesController extends Controller {
      */
     public function load()
     {
-        $AppRoutes =  \Route::getRoutes();
+        $nbRoutesLoaded = \App\Models\Route::loadLaravelRoutes();
 
-        $cnt = 0;
-
-        foreach ($AppRoutes as $appRoute)
-        {
-            $name = $appRoute->getName();
-            $methods = $appRoute->getMethods();
-            $path = $appRoute->getPath();
-            $actionName = $appRoute->getActionName();
-
-            if (    !str_contains($actionName, 'AuthController') &&
-                    !str_contains($actionName, 'PasswordController') ) {
-                foreach ($methods as $method) {
-                    $route = null;
-
-                    if ('HEAD' !== $method                     // Skip method 'HEAD' looks to be duplicated of 'GET'
-                        && !starts_with($path, '_debugbar')
-                    )   // Skip all DebugBar routes.
-                    {
-                        // TODO: Use Repository 'findWhere' when its fixed!!
-                        //                    $route = $this->route->findWhere([
-                        //                        'method'      => $method,
-                        //                        'action_name' => $actionName,
-                        //                    ])->first();
-                        $route = \App\Models\Route::ofMethod($method)->ofActionName($actionName)->ofPath($path)->first();
-
-                        if (!isset($route)) {
-                            $cnt++;
-                            $newRoute = $this->route->create([
-                                'name' => $name,
-                                'method' => $method,
-                                'path' => $path,
-                                'action_name' => $actionName,
-                            ]);
-                        }
-                    }
-                }
-            }
-        }
-
-        Flash::success( trans('admin/routes/general.status.loaded', ['number' => $cnt]) );
+        Flash::success( trans('admin/routes/general.status.loaded', ['number' => $nbRoutesLoaded]) );
         return redirect('/admin/routes');
     }
 
