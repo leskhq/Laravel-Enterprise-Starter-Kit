@@ -7,11 +7,17 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Flash;
+use Auth;
+
+use App\Repositories\AuditRepository as Audit;
+
 class TestController extends Controller
 {
 
     public function flash_success()
     {
+        $tmp = Audit::log(Auth::user()->id, "flash_test", "Testing audit with flash success.");
+
         $page_title = "Flash test";
         $page_description = "Testing the flash mechanism with a success level";
 
