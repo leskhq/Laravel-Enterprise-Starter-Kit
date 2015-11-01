@@ -9,6 +9,7 @@ return [
         'delete'            => 'Delete',
         'edit'              => 'Edit',
         'ok'                => 'OK',
+        'replay'            => 'Replay',
         'update'            => 'Update',
         'enable'            => 'Enable',
         'enabled'           => 'Enabled',

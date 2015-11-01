@@ -52,6 +52,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected $appends = ['full_name'];
 
     /**
+     * Eloquent hook to HasMany relationship between User and Audit
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function audits()
+    {
+        return $this->hasMany('App\Models\Audit');
+    }
+
+    /**
      * Alias to eloquent many-to-many relation's sync() method.
      *
      * @param array $attributes
