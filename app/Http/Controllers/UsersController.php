@@ -178,9 +178,13 @@ class UsersController extends Controller {
         $user->username = $att['username'];
         $user->email = $att['email'];
         $user->enabled = $att['enabled'];
-        $aRoleIDs = explode(",", $att['selected_roles']);
-        $user->roles()->sync($aRoleIDs);
-        $user->permissions()->sync($att['perms']);
+        if (array_key_exists('selected_roles', $att)) {
+            $aRoleIDs = explode(",", $att['selected_roles']);
+            $user->roles()->sync($aRoleIDs);
+        }
+        if (array_key_exists('perms', $att)) {
+            $user->permissions()->sync($att['perms']);
+        }
         $user->save();
 
 
