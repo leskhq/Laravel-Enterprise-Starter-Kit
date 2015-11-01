@@ -7,11 +7,11 @@ return [
     |--------------------------------------------------------------------------
     |
     | The Audit functionality is disabled by default, to enabled it set
-    | the variable 'AUTDIT_ENABLED' to true in your '.env' file.
+    | the variable 'AUDIT_ENABLED' to true in your '.env' file.
     |
     */
 
-    'enabled' => env('AUTDIT_ENABLED', false),
+    'enabled' => env('AUDIT_ENABLED', false),
 
     /*
     |--------------------------------------------------------------------------

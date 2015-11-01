@@ -15,15 +15,20 @@ class AuditRepository extends Repository {
      **/
     public static function log($user_id, $category, $message, $action = null, Array $attributes = null){
 
-        $attJson = json_encode($attributes);
+        $audit_enabled = config('audit.enabled');
+        $audit = false;
 
-        $audit = Audit::create([
-            "user_id"   => $user_id,
-            "category"  => $category,
-            "message"   => $message,
-            "action"    => $action,
-            "data"      => $attJson,
-        ]);
+        if ($audit_enabled) {
+            $attJson = json_encode($attributes);
+
+            $audit = Audit::create([
+                "user_id"   => $user_id,
+                "category"  => $category,
+                "message"   => $message,
+                "action"    => $action,
+                "data"      => $attJson,
+            ]);
+        }
 
         return $audit;
     }
