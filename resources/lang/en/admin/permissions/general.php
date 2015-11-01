@@ -16,7 +16,7 @@ return [
 
     'error'               => [
         'cant-delete-this-permission' => 'This permission cannot be deleted',
-        'cant-delete-perm-in-use'     => 'This permission is in use',
+        'cant-delete-perm-in-use'     => 'This permission is in use or protected',
         'cant-edit-this-permission'   => 'This permission cannot be edited',
     ],
 
