@@ -51,4 +51,9 @@ return [
         'error-proc-command'    => 'Error processing command: :cmd',
     ],
 
+    'audit-log'           => [
+        'category-login'        => 'Login',
+        'msg-login-success'     => 'Successful login: :username.',
+    ],
+
 ];

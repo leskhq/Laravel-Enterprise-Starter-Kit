@@ -1,6 +1,21 @@
 <?php
 return [
 
+    'audit-log'           => [
+        'category'              => 'Users',
+        'msg-index'             => 'Accessed list of users.',
+        'msg-show'              => 'Accessed details of user: :username.',
+        'msg-store'             => 'Created new user: :username.',
+        'msg-edit'              => 'Initiated edit of user: :username.',
+        'msg-replay-edit'       => 'Initiated replay edit of user: :username.',
+        'msg-update'            => 'Submitted edit of user: :username.',
+        'msg-destroy'           => 'Deleted user: :username.',
+        'msg-enable'            => 'Enabled user: :username.',
+        'msg-disabled'          => 'Disabled user: :username.',
+        'msg-enabled-selected'  => 'Enabled multiple user.',
+        'msg-disabled-selected' => 'Disabled multiple user.',
+    ],
+
     'status'              => [
         'created'                   => 'User successfully created',
         'updated'                   => 'User successfully updated',

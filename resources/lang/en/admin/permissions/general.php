@@ -2,6 +2,21 @@
 
 return [
 
+    'audit-log'           => [
+        'category'              => 'Permissions',
+        'msg-index'             => 'Accessed list of permissions.',
+        'msg-show'              => 'Accessed details of permission: :name.',
+        'msg-store'             => 'Created new permission: :name.',
+        'msg-edit'              => 'Initiated edit of permission: :name.',
+        'msg-update'            => 'Submitted edit of permission: :name.',
+        'msg-destroy'           => 'Deleted permission: :name.',
+        'msg-generate'          => 'Triggered generation of permissions based on routes.',
+        'msg-enable'            => 'Enabled permission: :name.',
+        'msg-disabled'          => 'Disabled permission: :name.',
+        'msg-enabled-selected'  => 'Enabled multiple permissions.',
+        'msg-disabled-selected' => 'Disabled multiple permissions.',
+    ],
+
     'status'              => [
         'created'                   => 'Permission successfully created',
         'updated'                   => 'Permission successfully updated',

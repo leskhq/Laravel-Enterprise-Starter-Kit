@@ -12,6 +12,8 @@ use App\Http\Requests;
 use Flash;
 use App\Libraries\Utils;
 use DB;
+use App\Repositories\AuditRepository as Audit;
+use Auth;
 
 class RoutesController extends Controller {
 
@@ -42,6 +44,8 @@ class RoutesController extends Controller {
     {
 //        //TODO: Warn of any routes in our DB that is not used in the app.
 
+        Audit::log(Auth::user()->id, trans('admin/routes/general.audit-log.category'), trans('admin/routes/general.audit-log.msg-index'));
+
         $page_title = trans('admin/routes/general.page.index.title');
         $page_description = trans('admin/routes/general.page.index.description');
 
@@ -68,6 +72,8 @@ class RoutesController extends Controller {
 
         $route = $this->route->find($id);
 
+        Audit::log(Auth::user()->id, trans('admin/routes/general.audit-log.category'), trans('admin/routes/general.audit-log.msg-show', ['name' => $route->name]));
+
         return view('admin.routes.show', compact('route', 'page_title', 'page_description'));
     }
 
@@ -90,7 +96,11 @@ class RoutesController extends Controller {
     {
         $this->validate($request, array('method' => 'required', 'path' => 'required', 'action_name' => 'required|unique:routes'));
 
-        $this->route->create($request->all());
+        $attributes = $request->all();
+
+        Audit::log(Auth::user()->id, trans('admin/routes/general.audit-log.category'), trans('admin/routes/general.audit-log.msg-store', ['name' => $attributes['name']]));
+
+        $this->route->create($attributes);
 
         Flash::success( trans('admin/routes/general.status.created') );
 
@@ -108,6 +118,8 @@ class RoutesController extends Controller {
 
         $route = $this->route->find($id);
 
+        Audit::log(Auth::user()->id, trans('admin/routes/general.audit-log.category'), trans('admin/routes/general.audit-log.msg-edit', ['name' => $route->name]));
+
         return view('admin.routes.edit', compact('route', 'page_title', 'page_description'));
     }
 
@@ -121,6 +133,8 @@ class RoutesController extends Controller {
         $this->validate($request, array('method' => 'required', 'path' => 'required', 'action_name' => 'required|unique:routes'));
 
         $route = $this->route->find($id);
+
+        Audit::log(Auth::user()->id, trans('admin/routes/general.audit-log.category'), trans('admin/routes/general.audit-log.msg-update', ['name' => $route->name]));
 
         $route->update($request->all());
 
@@ -136,6 +150,8 @@ class RoutesController extends Controller {
     public function destroy($id)
     {
         $route = $this->route->find($id);
+
+        Audit::log(Auth::user()->id, trans('admin/routes/general.audit-log.category'), trans('admin/routes/general.audit-log.msg-destroy', ['name' => $route->name]));
 
         $this->route->delete($id);
 
@@ -176,6 +192,9 @@ class RoutesController extends Controller {
     public function enable($id)
     {
         $route = $this->route->find($id);
+
+        Audit::log(Auth::user()->id, trans('admin/routes/general.audit-log.category'), trans('admin/routes/general.audit-log.msg-enable', ['name' => $route->name]));
+
         $route->enabled = true;
         $route->save();
 
@@ -191,6 +210,9 @@ class RoutesController extends Controller {
     public function disable($id)
     {
         $route = $this->route->find($id);
+
+        Audit::log(Auth::user()->id, trans('admin/routes/general.audit-log.category'), trans('admin/routes/general.audit-log.msg-disabled', ['name' => $route->name]));
+
         $route->enabled = false;
         $route->save();
 
@@ -204,6 +226,8 @@ class RoutesController extends Controller {
      */
     public function load()
     {
+        Audit::log(Auth::user()->id, trans('admin/routes/general.audit-log.category'), trans('admin/routes/general.audit-log.msg-load'));
+
         $nbRoutesLoaded = \App\Models\Route::loadLaravelRoutes();
 
         Flash::success( trans('admin/routes/general.status.loaded', ['number' => $nbRoutesLoaded]) );
@@ -215,6 +239,10 @@ class RoutesController extends Controller {
      */
     public function savePerms(Request $request)
     {
+        $AuditAtt = $request->all();
+
+        Audit::log(Auth::user()->id, trans('admin/routes/general.audit-log.category'), trans('admin/routes/general.audit-log.msg-save-perms'), null, $AuditAtt);
+
         $chkRoute = $request->input('chkRoute');
         $globalPerm_id = $request->input('globalPerm');
         $perms = $request->input('perms');
@@ -253,6 +281,8 @@ class RoutesController extends Controller {
     {
         $chkRoute = $request->input('chkRoute');
 
+        Audit::log(Auth::user()->id, trans('admin/routes/general.audit-log.category'), trans('admin/routes/general.audit-log.msg-enabled-selected'), null, $chkRoute);
+
         if (isset($chkRoute))
         {
             foreach ($chkRoute as $route_id)
@@ -276,6 +306,8 @@ class RoutesController extends Controller {
     public function disableSelected(Request $request)
     {
         $chkRoute = $request->input('chkRoute');
+
+        Audit::log(Auth::user()->id, trans('admin/routes/general.audit-log.category'), trans('admin/routes/general.audit-log.msg-disabled-selected'), null, $chkRoute);
 
         if (isset($chkRoute))
         {

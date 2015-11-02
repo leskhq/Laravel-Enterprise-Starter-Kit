@@ -4,6 +4,7 @@ use App\Repositories\AuditRepository as Audit;
 use App\Repositories\Criteria\Audit\AuditByCreatedDateDescending;
 use App\Repositories\Criteria\Audit\AuditCreatedBefore;
 use Illuminate\Container\Container as App;
+use Auth;
 
 class AuditsController extends Controller {
 
@@ -32,6 +33,8 @@ class AuditsController extends Controller {
      */
     public function index()
     {
+        Audit::log(Auth::user()->id, trans('admin/audit/general.audit-log.category'), trans('admin/audit/general.audit-log.msg-index'));
+
         $page_title = trans('admin/audit/general.page.index.title');
         $page_description = trans('admin/audit/general.page.index.description');
         $purge_retention = config('audit.purge_retention');
@@ -43,6 +46,8 @@ class AuditsController extends Controller {
 
     public function purge()
     {
+        Audit::log(Auth::user()->id, trans('admin/audit/general.audit-log.category'), trans('admin/audit/general.audit-log.msg-purge'));
+
         $purge_retention = config('audit.purge_retention');
         $purge_date = (new \DateTime())->modify("- $purge_retention day");
         $auditsToDelete = $this->audit->pushCriteria(new AuditCreatedBefore($purge_date))->all();
@@ -60,12 +65,12 @@ class AuditsController extends Controller {
 
     public function replay($id)
     {
+        Audit::log(Auth::user()->id, trans('admin/audit/general.audit-log.category'), trans('admin/audit/general.audit-log.msg-replay', ['ID' => $id]));
+
         $audit = $this->audit->find($id);
 
         return \Redirect::route($audit->action, ["id" => $id]);
-
-        // TODO: Check that current user has permission to replay action.
-//        return \Redirect::route('admin.audit.index');
     }
 
+    // TODO: Implement function show to display more details, including data field.
 }

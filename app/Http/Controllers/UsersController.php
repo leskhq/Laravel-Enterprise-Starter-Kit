@@ -54,7 +54,7 @@ class UsersController extends Controller {
      */
     public function index()
     {
-        $tmp = Audit::log(Auth::user()->id, "Admin users", "Access list of users");
+        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-index'));
 
         $page_title = trans('admin/users/general.page.index.title'); // "Admin | Users";
         $page_description = trans('admin/users/general.page.index.description'); // "List of users";
@@ -69,6 +69,8 @@ class UsersController extends Controller {
     public function show($id)
     {
         $user = $this->user->find($id);
+
+        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-show', ['username' => $user->username]));
 
         $page_title = trans('admin/users/general.page.show.title'); // "Admin | User | Show";
         $page_description = trans('admin/users/general.page.show.description', ['full_name' => $user->full_name]); // "Displaying user";
@@ -106,6 +108,8 @@ class UsersController extends Controller {
     {
         $attributes = $request->all();
 
+        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-store', ['username' => $attributes['username']]));
+
         if ( array_key_exists('selected_roles', $attributes) ) {
             $attributes['role'] = explode(",", $attributes['selected_roles']);
         }
@@ -127,6 +131,8 @@ class UsersController extends Controller {
     public function edit($id)
     {
         $user = $this->user->find($id);
+
+        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-edit', ['username' => $user->username]));
 
         $page_title = trans('admin/users/general.page.edit.title'); // "Admin | User | Edit";
         $page_description = trans('admin/users/general.page.edit.description', ['full_name' => $user->full_name]); // "Editing user";
@@ -162,6 +168,8 @@ class UsersController extends Controller {
         // Finding the user to operate on from the id field that was populated in the
         // edit action that created this audit record.
         $user = $this->user->find($att['id']);
+
+        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-replay-edit', ['username' => $user->username]));
 
         $page_title = trans('admin/users/general.page.edit.title'); // "Admin | User | Edit";
         $page_description = trans('admin/users/general.page.edit.description', ['full_name' => $user->full_name]); // "Editing user";
@@ -246,6 +254,8 @@ class UsersController extends Controller {
             abort(403);
         }
 
+        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-destroy', ['username' => $user->username]));
+
         $this->user->delete($id);
 
         Flash::success( trans('admin/users/general.status.deleted') );
@@ -296,6 +306,9 @@ class UsersController extends Controller {
     public function enable($id)
     {
         $user = $this->user->find($id);
+
+        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-enable', ['username' => $user->username]));
+
         $user->enabled = true;
         $user->save();
 
@@ -318,6 +331,8 @@ class UsersController extends Controller {
         }
         else
         {
+            Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-disabled', ['username' => $user->username]));
+
             $user->enabled = false;
             $user->save();
             Flash::success(trans('admin/users/general.status.disabled'));
@@ -332,6 +347,8 @@ class UsersController extends Controller {
     public function enableSelected(Request $request)
     {
         $chkUsers = $request->input('chkUser');
+
+        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-enabled-selected'), null, $chkUsers);
 
         if (isset($chkUsers))
         {
@@ -356,6 +373,8 @@ class UsersController extends Controller {
     public function disableSelected(Request $request)
     {
         $chkUsers = $request->input('chkUser');
+
+        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-disabled-selected'), null, $chkUsers);
 
         if (isset($chkUsers))
         {

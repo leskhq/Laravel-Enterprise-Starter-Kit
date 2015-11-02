@@ -8,6 +8,8 @@ use App\Repositories\UserRepository as User;
 use Illuminate\Http\Request;
 use Flash;
 use DB;
+use App\Repositories\AuditRepository as Audit;
+use Auth;
 
 class RolesController extends Controller {
 
@@ -43,6 +45,8 @@ class RolesController extends Controller {
      */
     public function index()
     {
+        Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-index'));
+
         $page_title = trans('admin/roles/general.page.index.title'); // "Admin | Roles";
         $page_description = trans('admin/roles/general.page.index.description'); // "List of roles";
 
@@ -56,6 +60,8 @@ class RolesController extends Controller {
     public function show($id)
     {
         $role = $this->role->find($id);
+
+        Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-show', ['name' => $role->name]));
 
         $page_title = trans('admin/roles/general.page.show.title'); // "Admin | Role | Show";
         $page_description = trans('admin/roles/general.page.show.description', ['name' => $role->name]); // "Displaying role";
@@ -92,6 +98,8 @@ class RolesController extends Controller {
 
         $attributes = $request->all();
 
+        Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-store', ['name' => $attributes['name']]));
+
         if ( array_key_exists('selected_users', $attributes) ) {
             $attributes['users'] = explode(",", $attributes['selected_users']);
         }
@@ -113,6 +121,8 @@ class RolesController extends Controller {
     public function edit($id)
     {
         $role = $this->role->find($id);
+
+        Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-edit', ['name' => $role->name]));
 
         $page_title = trans('admin/roles/general.page.edit.title'); // "Admin | Role | Edit";
         $page_description = trans('admin/roles/general.page.edit.description', ['name' => $role->name]); // "Editing role";
@@ -140,6 +150,8 @@ class RolesController extends Controller {
         $this->validate($request, array('name' => 'required', 'display_name' => 'required'));
 
         $role = $this->role->find($id);
+
+        Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-update', ['name' => $role->name]));
 
         $attributes = $request->all();
 
@@ -183,6 +195,8 @@ class RolesController extends Controller {
         {
             abort(403);
         }
+
+        Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-destroy', ['name' => $role->name]));
 
         $this->role->delete($id);
 
@@ -229,6 +243,9 @@ class RolesController extends Controller {
     public function enable($id)
     {
         $role = $this->role->find($id);
+
+        Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-enable', ['name' => $role->name]));
+
         $role->enabled = true;
         $role->save();
 
@@ -246,6 +263,9 @@ class RolesController extends Controller {
         //TODO: Should we protect 'admins', 'users'??
 
         $role = $this->role->find($id);
+
+        Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-disabled', ['name' => $role->name]));
+
         $role->enabled = false;
         $role->save();
 
@@ -260,6 +280,8 @@ class RolesController extends Controller {
     public function enableSelected(Request $request)
     {
         $chkRoles = $request->input('chkRole');
+
+        Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-enabled-selected'), null, $chkRoles);
 
         if (isset($chkRoles))
         {
@@ -286,6 +308,8 @@ class RolesController extends Controller {
         //TODO: Should we protect 'admins', 'users'??
 
         $chkRoles = $request->input('chkRole');
+
+        Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-disabled-selected'), null, $chkRoles);
 
         if (isset($chkRoles))
         {

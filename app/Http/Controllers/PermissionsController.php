@@ -6,6 +6,8 @@ use App\Repositories\RoleRepository as Role;
 use App\Repositories\RouteRepository as Route;
 use Illuminate\Http\Request;
 use Laracasts\Flash\Flash;
+use App\Repositories\AuditRepository as Audit;
+use Auth;
 
 class PermissionsController extends Controller {
 
@@ -32,6 +34,8 @@ class PermissionsController extends Controller {
     {
         //TODO: Warn of any permission in our DB that is not used (assigned to a route) in the app.
 
+        Audit::log(Auth::user()->id, trans('admin/permissions/general.audit-log.category'), trans('admin/permissions/general.audit-log.msg-index'));
+
         $page_title = trans('admin/permissions/general.page.index.title');
         $page_description = trans('admin/permissions/general.page.index.description');
 
@@ -45,6 +49,8 @@ class PermissionsController extends Controller {
     public function show($id)
     {
         $perm = $this->permission->find($id);
+
+        Audit::log(Auth::user()->id, trans('admin/permissions/general.audit-log.category'), trans('admin/permissions/general.audit-log.msg-show', ['name' => $perm->name]));
 
         $page_title = trans('admin/permissions/general.page.show.title');
         $page_description = trans('admin/permissions/general.page.show.description', ['name' => $perm->name]); // "Displaying permission";
@@ -75,6 +81,9 @@ class PermissionsController extends Controller {
         $this->validate($request, array('name' => 'required|unique:permissions', 'display_name' => 'required'));
 
         $attributes = $request->all();
+
+        Audit::log(Auth::user()->id, trans('admin/permissions/general.audit-log.category'), trans('admin/permissions/general.audit-log.msg-store', ['name' => $attributes['name']]));
+
         if ( array_key_exists('selected_routes', $attributes) ) {
             $attributes['routes'] = explode(",", $attributes['selected_routes']);
         }
@@ -109,6 +118,8 @@ class PermissionsController extends Controller {
             abort(403);
         }
 
+        Audit::log(Auth::user()->id, trans('admin/permissions/general.audit-log.category'), trans('admin/permissions/general.audit-log.msg-edit', ['name' => $perm->name]));
+
         return view('admin.permissions.edit', compact('perm', 'page_title', 'page_description'));
     }
 
@@ -127,6 +138,8 @@ class PermissionsController extends Controller {
         {
             abort(403);
         }
+
+        Audit::log(Auth::user()->id, trans('admin/permissions/general.audit-log.category'), trans('admin/permissions/general.audit-log.msg-update', ['name' => $perm->name]));
 
         $attributes = $request->all();
         if ( array_key_exists('selected_routes', $attributes) ) {
@@ -159,6 +172,8 @@ class PermissionsController extends Controller {
         {
             abort(403);
         }
+
+        Audit::log(Auth::user()->id, trans('admin/permissions/general.audit-log.category'), trans('admin/permissions/general.audit-log.msg-destroy', ['name' => $permission->name]));
 
         $this->permission->delete($id);
 
@@ -204,6 +219,8 @@ class PermissionsController extends Controller {
      */
     public function generate()
     {
+        Audit::log(Auth::user()->id, trans('admin/permissions/general.audit-log.category'), trans('admin/permissions/general.audit-log.msg-generate'));
+
         $routes = $this->route->all();
 
         $cnt = 0;
@@ -231,6 +248,9 @@ class PermissionsController extends Controller {
     public function enable($id)
     {
         $permission = $this->permission->find($id);
+
+        Audit::log(Auth::user()->id, trans('admin/permissions/general.audit-log.category'), trans('admin/permissions/general.audit-log.msg-enable', ['name' => $permission->name]));
+
         $permission->enabled = true;
         $permission->save();
 
@@ -248,6 +268,9 @@ class PermissionsController extends Controller {
         //TODO: Should we protect 'basic-authenticated', 'guest-only', 'open-to-all'??
 
         $permission = $this->permission->find($id);
+
+        Audit::log(Auth::user()->id, trans('admin/permissions/general.audit-log.category'), trans('admin/permissions/general.audit-log.msg-disabled', ['name' => $permission->name]));
+
         $permission->enabled = false;
         $permission->save();
 
@@ -262,6 +285,8 @@ class PermissionsController extends Controller {
     public function enableSelected(Request $request)
     {
         $chkPerms = $request->input('chkPerm');
+
+        Audit::log(Auth::user()->id, trans('admin/permissions/general.audit-log.category'), trans('admin/permissions/general.audit-log.msg-enabled-selected'), null, $chkPerms);
 
         if (isset($chkPerms))
         {
@@ -288,6 +313,8 @@ class PermissionsController extends Controller {
         //TODO: Should we protect 'basic-authenticated', 'guest-only', 'open-to-all'??
 
         $chkPerms = $request->input('chkPerm');
+
+        Audit::log(Auth::user()->id, trans('admin/permissions/general.audit-log.category'), trans('admin/permissions/general.audit-log.msg-disabled-selected'), null, $chkPerms);
 
         if (isset($chkPerms))
         {

@@ -2,6 +2,13 @@
 
 return [
 
+    'audit-log'           => [
+        'category'          => 'Audit log',
+        'msg-index'         => 'Access audit log.',
+        'msg-purge'         => 'Purge old entries from audit log.',
+        'msg-replay'        => 'Trigger replay on audit log item ID #:ID.',
+    ],
+
     'status'              => [
         'purged'              => 'Audit log purged',
     ],
