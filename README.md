@@ -34,7 +34,7 @@ Directory (AD) authentication and the dynamic authorization module. But wait the
 - [License](#license)
 
 ## Features
-* Based on Laravel 5.1 LTS
+* Based on Laravel 5.1 [LTS](https://en.wikipedia.org/wiki/Long-term_support)
 * Theme engine using [yaapis/Theme](https://github.com/yaapis/Theme).
 * Includes 3 themes based on [almasaeed2010/AdminLTE](https://github.com/almasaeed2010/AdminLTE).
 * Custom Error pages: 
