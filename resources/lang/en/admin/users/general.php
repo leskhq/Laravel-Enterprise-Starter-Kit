@@ -1,6 +1,21 @@
 <?php
 return [
 
+    'audit-log'           => [
+        'category'              => 'Users',
+        'msg-index'             => 'Accessed list of users.',
+        'msg-show'              => 'Accessed details of user: :username.',
+        'msg-store'             => 'Created new user: :username.',
+        'msg-edit'              => 'Initiated edit of user: :username.',
+        'msg-replay-edit'       => 'Initiated replay edit of user: :username.',
+        'msg-update'            => 'Submitted edit of user: :username.',
+        'msg-destroy'           => 'Deleted user: :username.',
+        'msg-enable'            => 'Enabled user: :username.',
+        'msg-disabled'          => 'Disabled user: :username.',
+        'msg-enabled-selected'  => 'Enabled multiple user.',
+        'msg-disabled-selected' => 'Disabled multiple user.',
+    ],
+
     'status'              => [
         'created'                   => 'User successfully created',
         'updated'                   => 'User successfully updated',
@@ -17,6 +32,7 @@ return [
         'cant-be-deleted'               => 'User cannot be deleted',
         'cant-be-disabled'              => 'User cannot be disabled',
         'login-failed-user-disabled'    => 'That account has been disabled.',
+        'perm_not_found'                => 'Could not find permission #:id.',
     ],
 
     'page'              => [
@@ -50,8 +66,11 @@ return [
         'name'                      =>  'Name',
         'assigned'                  =>  'Assigned',
         'roles'                     =>  'Roles',
+        'roles-not-found'           =>  'Roles not found',
         'email'                     =>  'Email',
         'type'                      =>  'Type',
+        'permissions'               =>  'Permissions',
+        'permissions-not-found'     =>  'Permissions not found',
         'password'                  =>  'Password',
         'password_confirmation'     =>  'Password confirmation',
         'created'                   =>  'Created',

@@ -81,9 +81,10 @@ class Permission extends EntrustPermission {
      */
     public function isDeletable()
     {
-        // Protect the guest-only and basic-authenticated permissions from deletion.
-        if ( ('guest-only' == $this->name) ||
+        // Protect the guest-only, basic-authenticated and open-to-all permissions from deletion.
+        if ( ('guest-only'          == $this->name) ||
              ('basic-authenticated' == $this->name) ||
+             ('open-to-all'         == $this->name) ||
              ($this->is_used) ) {
             return false;
         }

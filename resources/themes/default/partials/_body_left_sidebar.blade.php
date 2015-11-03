@@ -59,6 +59,7 @@
             <li class="treeview">
                 <a href="#"><i class='fa fa-cog'></i> <span>Admin</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
+                    <li><a href="{{ route('admin.audit.index')     }}"><i class='fa fa-binoculars'> </i> Audit   </a></li>
                     <li class="treeview">
                         <a href="#"><i class='fa fa-user-secret'></i> <span>Security</span> <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">

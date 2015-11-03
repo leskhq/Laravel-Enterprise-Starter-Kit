@@ -2,6 +2,20 @@
 
 return [
 
+    'audit-log'           => [
+        'category'              => 'Roles',
+        'msg-index'             => 'Accessed list of roles.',
+        'msg-show'              => 'Accessed details of role: :name.',
+        'msg-store'             => 'Created new role: :name.',
+        'msg-edit'              => 'Initiated edit of role: :name.',
+        'msg-update'            => 'Submitted edit of role: :name.',
+        'msg-destroy'           => 'Deleted role: :name.',
+        'msg-enable'            => 'Enabled role: :name.',
+        'msg-disabled'          => 'Disabled role: :name.',
+        'msg-enabled-selected'  => 'Enabled multiple roles.',
+        'msg-disabled-selected' => 'Disabled multiple roles.',
+    ],
+
     'status'              => [
         'created'                   => 'Role successfully created',
         'updated'                   => 'Role successfully updated',

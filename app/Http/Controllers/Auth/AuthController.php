@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Auth;
 use Flash;
 
+use App\Repositories\AuditRepository as Audit;
+
 class AuthController extends Controller
 {
     /*
@@ -96,11 +98,15 @@ class AuthController extends Controller
             // Allow only if user is root or enabled.
             if ( ('root' == $user->username) || ($user->enabled) )
             {
+                Audit::log(Auth::user()->id, trans('general.audit-log.category-login'), trans('general.audit-log.msg-login-success', ['username' => $user->username]));
+
                 Flash::success("Welcome " . Auth::user()->first_name);
                 return redirect()->intended($this->redirectPath());
             }
             else
             {
+                Audit::log(null, trans('general.audit-log.category-login'), trans('general.audit-log.msg-forcing-logout', ['username' => $credentials['username']]));
+
                 Auth::logout();
                 return redirect(route('login'))
                     ->withInput($request->only('username', 'remember'))
@@ -109,6 +115,8 @@ class AuthController extends Controller
                     ]);
             }
         }
+
+        Audit::log(null, trans('general.audit-log.category-login'), trans('general.audit-log.msg-login-failed', ['username' => $credentials['username']]));
 
         return redirect($this->loginPath())
             ->withInput($request->only('username', 'remember'))

@@ -2,6 +2,22 @@
 
 return [
 
+    'audit-log'           => [
+        'category'              => 'Routes',
+        'msg-index'             => 'Accessed list of routes.',
+        'msg-show'              => 'Accessed details of route: :name.',
+        'msg-store'             => 'Created new route: :name.',
+        'msg-edit'              => 'Initiated edit of route: :name.',
+        'msg-update'            => 'Submitted edit of route: :name.',
+        'msg-destroy'           => 'Deleted route: :name.',
+        'msg-enable'            => 'Enabled route: :name.',
+        'msg-disabled'          => 'Disabled route: :name.',
+        'msg-load'              => 'Triggered loading of application routes from Laravel routes.',
+        'msg-save-perms'        => 'Assign permission to multiple routes.',
+        'msg-enabled-selected'  => 'Enabled multiple routes.',
+        'msg-disabled-selected' => 'Disabled multiple routes.',
+    ],
+
     'status'              => [
         'created'                           => 'Route successfully created',
         'updated'                           => 'Route successfully updated',

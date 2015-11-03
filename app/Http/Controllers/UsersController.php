@@ -2,12 +2,15 @@
 
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Models\Permission;
 use Illuminate\Http\Request;
 use App\Repositories\Criteria\User\UsersWithRoles;
 use App\Repositories\Criteria\User\UsersByUsernamesAscending;
+use App\Repositories\Criteria\Permission\PermissionsByNamesAscending;
+use App\Repositories\Criteria\Role\RolesByNamesAscending;
 use App\Repositories\UserRepository as User;
+use App\Repositories\PermissionRepository as Permission;
 use App\Repositories\RoleRepository as Role;
+use App\Repositories\AuditRepository as Audit;
 use Flash;
 use Auth;
 use DB;
@@ -30,14 +33,20 @@ class UsersController extends Controller {
     protected $perm;
 
     /**
+     * @var Audit
+     */
+    protected $audit;
+
+    /**
      * @param User $user
      * @param Role $role
      */
-    public function __construct(User $user, Role $role, Permission $perm)
+    public function __construct(User $user, Role $role, Permission $perm, Audit $audit)
     {
-        $this->user = $user;
-        $this->role = $role;
-        $this->perm = $perm;
+        $this->user  = $user;
+        $this->role  = $role;
+        $this->perm  = $perm;
+        $this->audit = $audit;
     }
 
     /**
@@ -45,6 +54,8 @@ class UsersController extends Controller {
      */
     public function index()
     {
+        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-index'));
+
         $page_title = trans('admin/users/general.page.index.title'); // "Admin | Users";
         $page_description = trans('admin/users/general.page.index.description'); // "List of users";
 
@@ -59,12 +70,14 @@ class UsersController extends Controller {
     {
         $user = $this->user->find($id);
 
+        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-show', ['username' => $user->username]));
+
         $page_title = trans('admin/users/general.page.show.title'); // "Admin | User | Show";
         $page_description = trans('admin/users/general.page.show.description', ['full_name' => $user->full_name]); // "Displaying user";
 
 //        $roleCollection = \App\Models\Role::take(10)->get(['id', 'display_name'])->lists('display_name', 'id');
 //        $roleList = [''=>''] + $roleCollection->all();
-        $perms = $this->perm->all();
+        $perms = $this->perm->pushCriteria(new PermissionsByNamesAscending())->all();
 
         return view('admin.users.show', compact('user', 'perms', 'page_title', 'page_description'));
     }
@@ -77,7 +90,7 @@ class UsersController extends Controller {
         $page_title = trans('admin/users/general.page.create.title'); // "Admin | User | Create";
         $page_description = trans('admin/users/general.page.create.description'); // "Creating a new user";
 
-        $perms = $this->perm->all();
+        $perms = $this->perm->pushCriteria(new PermissionsByNamesAscending())->all();
         $user = new \App\User();
 //        $userRoles = $user->roles;
 //        $roleCollection = \App\Models\Role::take(10)->get(['id', 'display_name'])->lists('display_name', 'id');
@@ -94,6 +107,8 @@ class UsersController extends Controller {
     public function store(CreateUserRequest $request)
     {
         $attributes = $request->all();
+
+        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-store', ['username' => $attributes['username']]));
 
         if ( array_key_exists('selected_roles', $attributes) ) {
             $attributes['role'] = explode(",", $attributes['selected_roles']);
@@ -117,6 +132,8 @@ class UsersController extends Controller {
     {
         $user = $this->user->find($id);
 
+        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-edit', ['username' => $user->username]));
+
         $page_title = trans('admin/users/general.page.edit.title'); // "Admin | User | Edit";
         $page_description = trans('admin/users/general.page.edit.description', ['full_name' => $user->full_name]); // "Editing user";
 
@@ -125,10 +142,109 @@ class UsersController extends Controller {
             abort(403);
         }
 
-        $roles = $this->role->all();
-        $perms = $this->perm->all();
+        $roles = $this->role->pushCriteria(new RolesByNamesAscending())->all();
+        $perms = $this->perm->pushCriteria(new PermissionsByNamesAscending())->all();
 //        $roleCollection = \App\Models\Role::take(10)->get(['id', 'display_name'])->lists('display_name', 'id');
 //        $roleList = [''=>''] + $roleCollection->all();
+
+        return view('admin.users.edit', compact('user', 'roles', 'perms', 'page_title', 'page_description'));
+    }
+
+    static public function ParseUpdateAuditLog($id)
+    {
+        $permsObj = [];
+        $permsNoFound = [];
+        $rolesObj = [];
+        $rolesNotFound = [];
+
+        $audit   = \App\Models\Audit::find($id);
+        $dataAtt = json_decode($audit->data, true);
+
+        // Lookup and load the perms that we can still find, otherwise add to an separate array.
+        if ($dataAtt['perms']) {
+            foreach($dataAtt['perms'] as $id) {
+                $perm = \App\Models\Permission::find($id);
+                if ($perm) {
+                    $permsObj[] = $perm;
+                }
+                else {
+                    $permsNoFound[] = trans('admin/users/general.error.perm_not_found', ['id' => $id]);
+                }
+            }
+        }
+        $dataAtt['permsObj'] = $permsObj;
+        $dataAtt['permsNotFound'] = $permsNoFound;
+
+        // Lookup and load the roles that we can still find, otherwise add to an separate array.
+        if ($dataAtt['selected_roles']) {
+            $aRolesIDs = explode(",", $dataAtt['selected_roles']);
+            foreach($aRolesIDs as $id) {
+                $role = \App\Models\Role::find($id);
+                if ($role) {
+                    $rolesObj[] = $role;
+                }
+                else {
+                    $rolesNotFound[] = trans('admin/users/general.error.perm_not_found', ['id' => $id]);
+                }
+            }
+        }
+        $dataAtt['rolesObj'] = $rolesObj;
+        $dataAtt['rolesNotFound'] = $rolesNotFound;
+
+        // Add the file name of the partial (blade) that will render this data.
+        $dataAtt['show_partial'] = 'admin/users/_audit_log_data_viewer_update';
+
+        return $dataAtt;
+    }
+
+    /**
+     * Loads the audit log item from the id passed in, locate the relevant user, then overwrite all current attributes
+     * of the user with the values from the audit log data field. Once the user saved, redirect to the edit page,
+     * where the operator can inspect and further edit if needed.
+     *
+     * @param $id
+     *
+     * @return \Illuminate\View\View
+     */
+    public function replayEdit($id)
+    {
+        // Loading the audit in question.
+        $audit = $this->audit->find($id);
+        // Getting the attributes from the data fields.
+        $att = json_decode($audit->data, true);
+        // Finding the user to operate on from the id field that was populated in the
+        // edit action that created this audit record.
+        $user = $this->user->find($att['id']);
+
+        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-replay-edit', ['username' => $user->username]));
+
+        $page_title = trans('admin/users/general.page.edit.title'); // "Admin | User | Edit";
+        $page_description = trans('admin/users/general.page.edit.description', ['full_name' => $user->full_name]); // "Editing user";
+
+        if (!$user->isEditable())
+        {
+            abort(403);
+        }
+
+        // Setting user attributes with values from audit log to replay the requested action.
+        // Password is not replayed.
+        $user->first_name = $att['first_name'];
+        $user->last_name = $att['last_name'];
+        $user->username = $att['username'];
+        $user->email = $att['email'];
+        $user->enabled = $att['enabled'];
+        if (array_key_exists('selected_roles', $att)) {
+            $aRoleIDs = explode(",", $att['selected_roles']);
+            $user->roles()->sync($aRoleIDs);
+        }
+        if (array_key_exists('perms', $att)) {
+            $user->permissions()->sync($att['perms']);
+        }
+        $user->save();
+
+
+        $roles = $this->role->all();
+        $perms = $this->perm->all();
 
         return view('admin.users.edit', compact('user', 'roles', 'perms', 'page_title', 'page_description'));
     }
@@ -142,12 +258,21 @@ class UsersController extends Controller {
     {
         $user = $this->user->find($id);
 
+        // Get all attribute from the request.
+        $attributes = $request->all();
+
+        // Get a copy of the attributes that we will modify to save for a replay.
+        $replayAtt = $attributes;
+        // Add the id of the current user for the replay action.
+        $replayAtt["id"] = $id;
+        // Create log entry with replay data.
+        $tmp = Audit::log( Auth::user()->id, "Admin users", "Edits users: $user->username", $replayAtt,
+            "App\Http\Controllers\UsersController::ParseUpdateAuditLog", "admin.users.replay-edit" );
+
         if (!$user->isEditable())
         {
             abort(403);
         }
-
-        $attributes = $request->all();
 
         if ( array_key_exists('selected_roles', $attributes) ) {
             $attributes['role'] = explode(",", $attributes['selected_roles']);
@@ -172,6 +297,8 @@ class UsersController extends Controller {
         {
             abort(403);
         }
+
+        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-destroy', ['username' => $user->username]));
 
         $this->user->delete($id);
 
@@ -223,6 +350,9 @@ class UsersController extends Controller {
     public function enable($id)
     {
         $user = $this->user->find($id);
+
+        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-enable', ['username' => $user->username]));
+
         $user->enabled = true;
         $user->save();
 
@@ -245,6 +375,8 @@ class UsersController extends Controller {
         }
         else
         {
+            Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-disabled', ['username' => $user->username]));
+
             $user->enabled = false;
             $user->save();
             Flash::success(trans('admin/users/general.status.disabled'));
@@ -259,6 +391,8 @@ class UsersController extends Controller {
     public function enableSelected(Request $request)
     {
         $chkUsers = $request->input('chkUser');
+
+        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-enabled-selected'), $chkUsers);
 
         if (isset($chkUsers))
         {
@@ -283,6 +417,8 @@ class UsersController extends Controller {
     public function disableSelected(Request $request)
     {
         $chkUsers = $request->input('chkUser');
+
+        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-disabled-selected'), $chkUsers);
 
         if (isset($chkUsers))
         {
