@@ -443,9 +443,9 @@ Following the example above, here is a description of how triggering a replayabl
   6. Save the user object.
   7. Redirect to the user's edit page for the operator to confirm or edit some more.
 
-!! TODO DESCRIBE SHOW AND CUSTOM PARTIAL RENDERING !!
-
-
+##### Displaying entry details and custom rendering partials
+An audit log entry that is replayable will most likely have some data attributes that make it unique and has to be processed in order to be displayed properlly. In the call to the *Audit::log()* function above that creates the replayable entry, the 5th parameter, the *data_parser*, is the fully qualified name of a function that will get called to prepare the data before returning the view displaying the details to the browser. 
+Additionaly the *data_parser* function can add to the *data* array an entry with a key of *show_partial* that points to a partial blade file that will be responsible for rendering the parsed data of the audit log entry. If no *show_partial* is specified the default behaviour is to use *var_dump()* to simply dump the value on the page.
 
 
 ## Deploying to production
