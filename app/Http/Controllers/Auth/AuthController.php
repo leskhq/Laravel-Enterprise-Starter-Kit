@@ -105,6 +105,8 @@ class AuthController extends Controller
             }
             else
             {
+                Audit::log(null, trans('general.audit-log.category-login'), trans('general.audit-log.msg-forcing-logout', ['username' => $credentials['username']]));
+
                 Auth::logout();
                 return redirect(route('login'))
                     ->withInput($request->only('username', 'remember'))
@@ -113,6 +115,8 @@ class AuthController extends Controller
                     ]);
             }
         }
+
+        Audit::log(null, trans('general.audit-log.category-login'), trans('general.audit-log.msg-login-failed', ['username' => $credentials['username']]));
 
         return redirect($this->loginPath())
             ->withInput($request->only('username', 'remember'))

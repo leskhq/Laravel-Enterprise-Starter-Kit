@@ -5,6 +5,7 @@ use App\Repositories\Criteria\Audit\AuditByCreatedDateDescending;
 use App\Repositories\Criteria\Audit\AuditCreatedBefore;
 use Illuminate\Container\Container as App;
 use Auth;
+use Illuminate\Support\Facades\View;
 
 class AuditsController extends Controller {
 
@@ -69,8 +70,44 @@ class AuditsController extends Controller {
 
         $audit = $this->audit->find($id);
 
-        return \Redirect::route($audit->action, ["id" => $id]);
+        return \Redirect::route($audit->replay_route, ["id" => $id]);
     }
 
     // TODO: Implement function show to display more details, including data field.
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function show($id)
+    {
+        $data_view = "";
+
+        $audit = $this->audit->find($id);
+
+        Audit::log(Auth::user()->id, trans('admin/audit/general.audit-log.category'), trans('admin/audit/general.audit-log.msg-show'));
+
+        $data_parser = $audit->data_parser;
+
+        $isCallable = is_callable($data_parser, true, $callable_name);
+        if ($isCallable) {
+            $dataArray = call_user_func($data_parser, $id);
+
+            $data_view_name = $dataArray['show_partial'];
+            if (($data_view_name) && (\View::exists($data_view_name))) {
+                $data_view = \View::make($data_view_name, compact('dataArray'));
+            }
+        }
+        else {
+            $dataArray = json_decode($audit->data, true);
+
+            $data_view_name = "admin/audit/_audit_log_data_viewer_default";
+            $data_view = \View::make($data_view_name, compact('dataArray'));
+        }
+
+        $page_title = trans('admin/audit/general.page.show.title');
+        $page_description = trans('admin/audit/general.page.show.description', ['name' => $audit->name]); // "Displaying audit log entry";
+
+        return view('admin.audit.show', compact('audit', 'data_view', 'page_title', 'page_description'));
+    }
+
+
 }

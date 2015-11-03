@@ -32,6 +32,7 @@ return [
         'cant-be-deleted'               => 'User cannot be deleted',
         'cant-be-disabled'              => 'User cannot be disabled',
         'login-failed-user-disabled'    => 'That account has been disabled.',
+        'perm_not_found'                => 'Could not find permission #:id.',
     ],
 
     'page'              => [
@@ -65,8 +66,11 @@ return [
         'name'                      =>  'Name',
         'assigned'                  =>  'Assigned',
         'roles'                     =>  'Roles',
+        'roles-not-found'           =>  'Roles not found',
         'email'                     =>  'Email',
         'type'                      =>  'Type',
+        'permissions'               =>  'Permissions',
+        'permissions-not-found'     =>  'Permissions not found',
         'password'                  =>  'Password',
         'password_confirmation'     =>  'Password confirmation',
         'created'                   =>  'Created',

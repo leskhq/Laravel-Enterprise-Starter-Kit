@@ -281,7 +281,7 @@ class RolesController extends Controller {
     {
         $chkRoles = $request->input('chkRole');
 
-        Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-enabled-selected'), null, $chkRoles);
+        Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-enabled-selected'), $chkRoles);
 
         if (isset($chkRoles))
         {
@@ -309,7 +309,7 @@ class RolesController extends Controller {
 
         $chkRoles = $request->input('chkRole');
 
-        Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-disabled-selected'), null, $chkRoles);
+        Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-disabled-selected'), $chkRoles);
 
         if (isset($chkRoles))
         {

@@ -9,6 +9,7 @@ return [
         'delete'            => 'Delete',
         'edit'              => 'Edit',
         'ok'                => 'OK',
+        'display'           => 'Show details',
         'replay'            => 'Replay',
         'update'            => 'Update',
         'enable'            => 'Enable',
@@ -30,6 +31,7 @@ return [
         'users'             => 'Users',
         'roles'             => 'Roles',
         'routes'            => 'Routes',
+        'data'              => 'Data',
     ],
 
     'error'              => [
@@ -54,6 +56,8 @@ return [
     'audit-log'           => [
         'category-login'        => 'Login',
         'msg-login-success'     => 'Successful login: :username.',
+        'msg-login-failed'      => 'Login failed: :username.',
+        'msg-forcing-logout'    => 'Forcing logout: :username.',
     ],
 
 ];

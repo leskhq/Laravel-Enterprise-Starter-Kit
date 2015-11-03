@@ -241,7 +241,7 @@ class RoutesController extends Controller {
     {
         $AuditAtt = $request->all();
 
-        Audit::log(Auth::user()->id, trans('admin/routes/general.audit-log.category'), trans('admin/routes/general.audit-log.msg-save-perms'), null, $AuditAtt);
+        Audit::log(Auth::user()->id, trans('admin/routes/general.audit-log.category'), trans('admin/routes/general.audit-log.msg-save-perms'), $AuditAtt);
 
         $chkRoute = $request->input('chkRoute');
         $globalPerm_id = $request->input('globalPerm');
@@ -281,7 +281,7 @@ class RoutesController extends Controller {
     {
         $chkRoute = $request->input('chkRoute');
 
-        Audit::log(Auth::user()->id, trans('admin/routes/general.audit-log.category'), trans('admin/routes/general.audit-log.msg-enabled-selected'), null, $chkRoute);
+        Audit::log(Auth::user()->id, trans('admin/routes/general.audit-log.category'), trans('admin/routes/general.audit-log.msg-enabled-selected'), $chkRoute);
 
         if (isset($chkRoute))
         {
@@ -307,7 +307,7 @@ class RoutesController extends Controller {
     {
         $chkRoute = $request->input('chkRoute');
 
-        Audit::log(Auth::user()->id, trans('admin/routes/general.audit-log.category'), trans('admin/routes/general.audit-log.msg-disabled-selected'), null, $chkRoute);
+        Audit::log(Auth::user()->id, trans('admin/routes/general.audit-log.category'), trans('admin/routes/general.audit-log.msg-disabled-selected'), $chkRoute);
 
         if (isset($chkRoute))
         {

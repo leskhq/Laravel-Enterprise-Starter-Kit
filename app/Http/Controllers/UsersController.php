@@ -150,6 +150,53 @@ class UsersController extends Controller {
         return view('admin.users.edit', compact('user', 'roles', 'perms', 'page_title', 'page_description'));
     }
 
+    static public function ParseUpdateAuditLog($id)
+    {
+        $permsObj = [];
+        $permsNoFound = [];
+        $rolesObj = [];
+        $rolesNotFound = [];
+
+        $audit   = \App\Models\Audit::find($id);
+        $dataAtt = json_decode($audit->data, true);
+
+        // Lookup and load the perms that we can still find, otherwise add to an separate array.
+        if ($dataAtt['perms']) {
+            foreach($dataAtt['perms'] as $id) {
+                $perm = \App\Models\Permission::find($id);
+                if ($perm) {
+                    $permsObj[] = $perm;
+                }
+                else {
+                    $permsNoFound[] = trans('admin/users/general.error.perm_not_found', ['id' => $id]);
+                }
+            }
+        }
+        $dataAtt['permsObj'] = $permsObj;
+        $dataAtt['permsNotFound'] = $permsNoFound;
+
+        // Lookup and load the roles that we can still find, otherwise add to an separate array.
+        if ($dataAtt['selected_roles']) {
+            $aRolesIDs = explode(",", $dataAtt['selected_roles']);
+            foreach($aRolesIDs as $id) {
+                $role = \App\Models\Role::find($id);
+                if ($role) {
+                    $rolesObj[] = $role;
+                }
+                else {
+                    $rolesNotFound[] = trans('admin/users/general.error.perm_not_found', ['id' => $id]);
+                }
+            }
+        }
+        $dataAtt['rolesObj'] = $rolesObj;
+        $dataAtt['rolesNotFound'] = $rolesNotFound;
+
+        // Add the file name of the partial (blade) that will render this data.
+        $dataAtt['show_partial'] = 'admin/users/_audit_log_data_viewer_update';
+
+        return $dataAtt;
+    }
+
     /**
      * Loads the audit log item from the id passed in, locate the relevant user, then overwrite all current attributes
      * of the user with the values from the audit log data field. Once the user saved, redirect to the edit page,
@@ -218,12 +265,9 @@ class UsersController extends Controller {
         $replayAtt = $attributes;
         // Add the id of the current user for the replay action.
         $replayAtt["id"] = $id;
-        // Overwrite passwords attributes as they are not replay-able.
-        $replayAtt['password'] = "";
-        $replayAtt['password_confirmation'] = "";
         // Create log entry with replay data.
-        $tmp = Audit::log( Auth::user()->id, "Admin users", "Edits users: $user->username",
-            "admin.users.replay-edit", $replayAtt );
+        $tmp = Audit::log( Auth::user()->id, "Admin users", "Edits users: $user->username", $replayAtt,
+            "App\Http\Controllers\UsersController::ParseUpdateAuditLog", "admin.users.replay-edit" );
 
         if (!$user->isEditable())
         {
@@ -348,7 +392,7 @@ class UsersController extends Controller {
     {
         $chkUsers = $request->input('chkUser');
 
-        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-enabled-selected'), null, $chkUsers);
+        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-enabled-selected'), $chkUsers);
 
         if (isset($chkUsers))
         {
@@ -374,7 +418,7 @@ class UsersController extends Controller {
     {
         $chkUsers = $request->input('chkUser');
 
-        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-disabled-selected'), null, $chkUsers);
+        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-disabled-selected'), $chkUsers);
 
         if (isset($chkUsers))
         {

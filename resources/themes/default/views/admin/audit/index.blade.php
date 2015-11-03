@@ -38,13 +38,14 @@
                             <tbody>
                                 @foreach($audits as $audit)
                                     <tr>
-                                        <td>{{ $audit->user->username }}</td>
+                                        <td>{{ ($audit->user) ? $audit->user->username : "N/A" }}</td>
                                         <td>{{ $audit->category }}</td>
                                         <td>{{ $audit->message }}</td>
                                         <td>{{ $audit->created_at }}</td>
                                         <td>
-                                            @if ( $audit->action )
-                                                <a href="{!! route('admin.audit.replay', $audit->id) !!}" title="{{ trans('general.button.replay') }}"><i id="action-replay" class="fa fa-refresh"></i></a>
+                                            <a href="{!! route('admin.audit.show', $audit->id) !!}" title="{{ trans('general.button.display') }}"><i id="action-show" class="fa fa-eye"></i></a>
+                                            @if ( $audit->replay_route )
+                                                <a href="{!! route('admin.audit.replay', $audit->id) !!}" title="{{ trans('general.button.replay') }}"><i id="replay" class="fa fa-refresh spin-on-hover"></i></a>
                                             @endif
                                         </td>
                                     </tr>
@@ -67,7 +68,7 @@
 @section('body_bottom')
     <!-- Add a spinner to the action replay icon while mouse is hovering. -->
     <script language="JavaScript">
-        $('.fa-refresh').hover(
+        $('.spin-on-hover').hover(
                 function () {
                     $(this).addClass('fa-spin');
                 },

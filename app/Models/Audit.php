@@ -7,7 +7,7 @@ class Audit extends Model
     /**
      * @var array
      */
-    protected $fillable = ['user_id', 'category', 'message', 'data', 'action'];
+    protected $fillable = ['user_id', 'category', 'message', 'data', 'data_parser', 'replay_route'];
 
     public function user()
     {

@@ -13,20 +13,30 @@ class AuditRepository extends Repository {
     /**
      *
      **/
-    public static function log($user_id, $category, $message, $action = null, Array $attributes = null){
+    public static function log($user_id, $category, $message, Array $attributes = null, $data_parser = null, $replay_route = null){
 
-        $audit_enabled = config('audit.enabled');
-        $audit = false;
+        $audit_enabled  = config('audit.enabled');
+        $audit          = false;
+        $attJson        = null;
 
         if ($audit_enabled) {
-            $attJson = json_encode($attributes);
+            // Remove from array attributes that we do not want to save.
+            unset($attributes['_method']);
+            unset($attributes['_token']);
+            unset($attributes['password']);
+            unset($attributes['password_confirmation']);
+
+            if ($attributes) {
+                $attJson = json_encode($attributes);
+            }
 
             $audit = Audit::create([
-                "user_id"   => $user_id,
-                "category"  => $category,
-                "message"   => $message,
-                "action"    => $action,
-                "data"      => $attJson,
+                "user_id"           => $user_id,
+                "category"          => $category,
+                "message"           => $message,
+                "data"              => $attJson,
+                "data_parser"       => $data_parser,
+                "replay_route"      => $replay_route,
             ]);
         }
 

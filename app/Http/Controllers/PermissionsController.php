@@ -286,7 +286,7 @@ class PermissionsController extends Controller {
     {
         $chkPerms = $request->input('chkPerm');
 
-        Audit::log(Auth::user()->id, trans('admin/permissions/general.audit-log.category'), trans('admin/permissions/general.audit-log.msg-enabled-selected'), null, $chkPerms);
+        Audit::log(Auth::user()->id, trans('admin/permissions/general.audit-log.category'), trans('admin/permissions/general.audit-log.msg-enabled-selected'), $chkPerms);
 
         if (isset($chkPerms))
         {
@@ -314,7 +314,7 @@ class PermissionsController extends Controller {
 
         $chkPerms = $request->input('chkPerm');
 
-        Audit::log(Auth::user()->id, trans('admin/permissions/general.audit-log.category'), trans('admin/permissions/general.audit-log.msg-disabled-selected'), null, $chkPerms);
+        Audit::log(Auth::user()->id, trans('admin/permissions/general.audit-log.category'), trans('admin/permissions/general.audit-log.msg-disabled-selected'), $chkPerms);
 
         if (isset($chkPerms))
         {

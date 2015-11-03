@@ -16,9 +16,10 @@ class CreateAuditTable extends Migration
             $table->increments('id');
             $table->string('category');
             $table->string('message');
-            $table->unsignedInteger('user_id');
-            $table->string('data')->nullable()->default("");
-            $table->string('action')->nullable()->default("");
+            $table->unsignedInteger('user_id')->nullable()->default(null);
+            $table->string('data')->nullable()->default(null);
+            $table->string('replay_route')->nullable()->default(null);
+            $table->string('data_parser')->nullable()->default(null);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
