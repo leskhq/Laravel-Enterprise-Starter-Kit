@@ -266,8 +266,9 @@ class UsersController extends Controller {
         // Add the id of the current user for the replay action.
         $replayAtt["id"] = $id;
         // Create log entry with replay data.
-        $tmp = Audit::log( Auth::user()->id, "Admin users", "Edits users: $user->username", $replayAtt,
-            "App\Http\Controllers\UsersController::ParseUpdateAuditLog", "admin.users.replay-edit" );
+        $tmp = Audit::log( Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-update', ['username' => $user->username]),
+            $replayAtt, "App\Http\Controllers\UsersController::ParseUpdateAuditLog", "admin.users.replay-edit" );
+
 
         if (!$user->isEditable())
         {
