@@ -65,9 +65,9 @@ Directory (AD) authentication and the dynamic authorization module. But wait the
 * Gulp and Elixir ready to compile and minimize Sass & CoffeeScript.
 * Bootstrap v3.3.4.
 * Font-awesome v4.4.0.
-* Ionic Framework v2.0.1.
-* jQuery 2.1.4.
-* Select2 4.0.0
+* Ionicons v2.0.1.
+* jQuery v2.1.4.
+* Select2 v4.0.0
 * Select2 Bootstrap Theme v0.1.0-beta.4
 * Development tools
     * Laravel [DebugBar](https://github.com/barryvdh/laravel-debugbar).
