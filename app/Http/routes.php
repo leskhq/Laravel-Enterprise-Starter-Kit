@@ -44,7 +44,7 @@ Route::group(['middleware' => 'authorize'], function () {
         Route::post(  'users/enableSelected',          ['as' => 'admin.users.enable-selected',  'uses' => 'UsersController@enableSelected']);
         Route::post(  'users/disableSelected',         ['as' => 'admin.users.disable-selected', 'uses' => 'UsersController@disableSelected']);
         Route::get(   'users/search',                  ['as' => 'admin.users.search',           'uses' => 'UsersController@searchByName']);
-        Route::get(   'users/list',                    ['as' => 'admin.users.search',           'uses' => 'UsersController@listByPage']);
+        Route::get(   'users/list',                    ['as' => 'admin.users.list',             'uses' => 'UsersController@listByPage']);
         Route::post(  'users/getInfo',                 ['as' => 'admin.users.get-info',         'uses' => 'UsersController@getInfo']);
         Route::post(  'users',                         ['as' => 'admin.users.store',            'uses' => 'UsersController@store']);
         Route::get(   'users',                         ['as' => 'admin.users.index',            'uses' => 'UsersController@index']);
