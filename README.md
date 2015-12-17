@@ -14,7 +14,7 @@ Directory (AD) authentication and the dynamic authorization module. But wait the
 - [Roadmap](#roadmap)
 - [Installing](#installing)
     - [Acquire a copy](#acquire-a-copy)
-    - [Homestead](#homestead)
+    - [Homestead](#homestead-optional)
     - [Fetch dependencies](#fetch-dependencies)
     - [Basic configuration](#basic-configuration)
     - [Migration](#migration)
