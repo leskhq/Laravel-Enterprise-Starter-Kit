@@ -211,7 +211,7 @@ composer install --no-dev
 ```
 
 
-**_NOTE:_** To bypass to lock on package versions run the command *composer update*.
+**_NOTE:_** To bypass the lock on package versions run the command *composer update*.
 
 **_NOTE:_** On a production server, prior to running the *composer install* command, you will want to deploy a copy of your file 
 *composer.lock* from your development server, to guarantee that the exact version of the various 
