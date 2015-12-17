@@ -241,6 +241,13 @@ Generate the unique application key:
 ./artisan key:generate
 ````
 
+#### Grant permissions to some directories. 
+Either grant permission to all users, or just to the Web Server user by making it a member of the group that owns these folders.
+````
+$ chmod -R ugo+rw storage/
+$ chmod -R ugo+rw bootstrap/cache/
+````
+
 #### Review default settings
 Review and edit the *.env* file and all the files under */config*. Paying particular attention to */config/app.php* and 
 */config/database.php*. More details can be found in the [Configuring](#Configuring) and 
