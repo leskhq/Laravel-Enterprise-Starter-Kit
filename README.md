@@ -112,18 +112,18 @@ the method that you selected to install *Node.js*.
 There are multiple ways to acquire a copy of L51ESK. You can download a ZIP archive, clone the project and finally fork 
 your own repository then clone it.
 
-#### Download
+#### Option 1: Download
 To download a ZIP archive, simply got to the main repository page at of 
 [L51ESK](https://github.com/sroutier/laravel-5.1-enterprise-starter-kit) and click on the "Download ZIP" button. 
 
-#### Clone
+#### Option 2: Clone
 Simply clone this repository on your machine using the command:
 
 ```
 git clone https://github.com/sroutier/laravel-5.1-enterprise-starter-kit.git l51esk
 ```
 
-#### Fork & Clone
+#### Option 3: Fork & Clone
 Finally the recommended method would be to first fork this repository then clone your own repository. Follow this guide
 to learn how to [fork an existing repository](https://help.github.com/articles/fork-a-repo/). Then use a command 
 similar to this to clone your own repository:
