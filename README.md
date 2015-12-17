@@ -244,8 +244,8 @@ Generate the unique application key:
 #### Grant permissions to some directories. 
 Either grant permission to all users, or just to the Web Server user by making it a member of the group that owns these folders.
 ````
-$ chmod -R ugo+rw storage/
-$ chmod -R ugo+rw bootstrap/cache/
+chmod -R ugo+rw storage/
+chmod -R ugo+rw bootstrap/cache/
 ````
 
 #### Review default settings
