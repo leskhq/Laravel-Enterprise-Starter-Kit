@@ -4,6 +4,11 @@
 .env
 storage/
 
+# Configuration testing #
+#########################
+.env.mysql
+.env.sqlite3
+
 # Package development #
 #######################
 packages/
