@@ -100,9 +100,13 @@ class RolesController extends Controller {
 
         Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-store', ['name' => $attributes['name']]));
 
-        if ( array_key_exists('selected_users', $attributes) ) {
+        if ( (array_key_exists('selected_users', $attributes)) && (!empty($attributes['selected_users'])) ) {
             $attributes['users'] = explode(",", $attributes['selected_users']);
         }
+        else {
+            $attributes['users'] = null;
+        }
+
         $role = $this->role->create($attributes);
 
         $role->savePermissions($request->get('perms'));
