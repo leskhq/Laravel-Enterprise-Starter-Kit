@@ -33,6 +33,7 @@ return [
         'cant-be-disabled'              => 'User cannot be disabled',
         'login-failed-user-disabled'    => 'That account has been disabled.',
         'perm_not_found'                => 'Could not find permission #:id.',
+        'user_not_found'                => 'Could not find user #:id.',
     ],
 
     'page'              => [

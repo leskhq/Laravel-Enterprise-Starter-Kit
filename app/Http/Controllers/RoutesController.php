@@ -6,6 +6,7 @@ use App\Repositories\PermissionRepository as Permission;
 use App\Repositories\Criteria\Route\RoutesWithPermissions;
 use App\Repositories\Criteria\Route\RoutesByPathAscending;
 use App\Repositories\Criteria\Route\RoutesByMethodAscending;
+use App\Repositories\Criteria\Route\RoutesWhereNameOrPathOrActionNameLike;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -332,14 +333,25 @@ class RoutesController extends Controller {
      */
     public function searchByName(Request $request)
     {
-        $name = $request->input('query');
-        $roles = DB::table('routes')
-            ->select(DB::raw('id, method || " " || path || " (" || name || ") [" || action_name || "]" as text'))
-            ->where('name', 'like', "%$name%")
-            ->orWhere('path', 'like', "%$name%")
-            ->orWhere('action_name', 'like', "%$name%")
-            ->get();
-        return $roles;
+        $return_arr = null;
+
+        $query = $request->input('query');
+
+        $routes = $this->route->pushCriteria(new RoutesWhereNameOrPathOrActionNameLike($query))->all();
+
+        foreach ($routes as $route) {
+            $id = $route->id;
+            $method = $route->method;
+            $path = $route->path;
+            $name = $route->name;
+            $action_name = $route->action_name;
+
+            $entry_arr = [ 'id' => $id, 'text' => "$method $path ($name) [$action_name]"];
+            $return_arr[] = $entry_arr;
+        }
+
+        return $return_arr;
+
     }
 
     /**

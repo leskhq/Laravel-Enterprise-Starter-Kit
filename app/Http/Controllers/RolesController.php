@@ -2,6 +2,7 @@
 
 use App\Repositories\Criteria\Role\RolesWithPermissions;
 use App\Repositories\Criteria\Role\RolesByNamesAscending;
+use App\Repositories\Criteria\Role\RolesWhereDisplayNameOrDescriptionLike;
 use App\Repositories\RoleRepository as Role;
 use App\Repositories\PermissionRepository as Permission;
 use App\Repositories\UserRepository as User;
@@ -338,14 +339,23 @@ class RolesController extends Controller {
      */
     public function searchByName(Request $request)
     {
-        $name = $request->input('query');
-        $roles = DB::table('roles')
-            ->select(DB::raw('id, display_name || " (" || description || ")" as text'))
-            ->where('name', 'like', "%$name%")
-            ->orWhere('display_name', 'like', "%$name%")
-            ->orWhere('description', 'like', "%$name%")
-            ->get();
-        return $roles;
+        $return_arr = null;
+
+        $query = $request->input('query');
+
+        $roles = $this->role->pushCriteria(new RolesWhereDisplayNameOrDescriptionLike($query))->all();
+
+        foreach ($roles as $role) {
+            $id = $role->id;
+            $display_name = $role->display_name;
+            $description = $role->description;
+
+            $entry_arr = [ 'id' => $id, 'text' => "$display_name ($description)"];
+            $return_arr[] = $entry_arr;
+        }
+
+        return $return_arr;
+
     }
 
     /**

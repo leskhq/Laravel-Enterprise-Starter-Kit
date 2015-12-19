@@ -2,6 +2,7 @@
 
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Repositories\Criteria\User\UsersWhereFirstNameOrLastNameOrUsernameLike;
 use Illuminate\Http\Request;
 use App\Repositories\Criteria\User\UsersWithRoles;
 use App\Repositories\Criteria\User\UsersByUsernamesAscending;
@@ -215,6 +216,11 @@ class UsersController extends Controller {
         // Finding the user to operate on from the id field that was populated in the
         // edit action that created this audit record.
         $user = $this->user->find($att['id']);
+
+        if (null == $user) {
+            Flash::warning( trans('admin/users/general.error.user_not_found', [ 'id' => $att['id'] ]) );
+            return \Redirect::route('admin.audit.index');
+        }
 
         Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-replay-edit', ['username' => $user->username]));
 
@@ -447,14 +453,23 @@ class UsersController extends Controller {
 
     public function searchByName(Request $request)
     {
-        $name = $request->input('query');
-        $users = DB::table('users')
-            ->select(DB::raw('id, first_name || " " || last_name || " (" || username || ")" as text'))
-            ->where('first_name', 'like', "%$name%")
-            ->orWhere('last_name', 'like', "%$name%")
-            ->orWhere('username', 'like', "%$name%")
-            ->get();
-        return $users;
+        $return_arr = null;
+
+        $query = $request->input('query');
+
+        $users = $this->user->pushCriteria(new UsersWhereFirstNameOrLastNameOrUsernameLike($query))->all();
+
+        foreach ($users as $user) {
+            $id = $user->id;
+            $first_name = $user->first_name;
+            $last_name = $user->last_name;
+            $username = $user->username;
+
+            $entry_arr = [ 'id' => $id, 'text' => "$first_name $last_name ($username)"];
+            $return_arr[] = $entry_arr;
+        }
+
+        return $return_arr;
     }
 
     public function listByPage(Request $request)
