@@ -167,6 +167,7 @@ return [
         YAAP\Theme\ThemeServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
         Zofe\Rapyd\RapydServiceProvider::class,
+        Baum\Providers\BaumServiceProvider::class,
     ],
 
     /*
