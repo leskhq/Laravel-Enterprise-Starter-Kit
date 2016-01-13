@@ -8,7 +8,8 @@
       "template",
       "theme",
       "LDAP",
-      "Active Directory"
+      "Active Directory",
+      "crud", "rapyd", "datatable", "form"
     ],
     "homepage": "https://github.com/sroutier/laravel-5.1-enterprise-starter-kit",
     "license": "GPLv3",
@@ -36,7 +37,10 @@
         "laracasts/flash": "~1.3",
         "zizaco/entrust": "dev-laravel-5",
         "bosnadev/repositories": "0.*",
-        "sroutier/eloquent-ldap": "^1.0@dev"
+        "sroutier/eloquent-ldap": "^1.0@dev",
+        "illuminate/support": "~5.0",
+        "intervention/image": "2.*",
+        "zofe/burp": "2.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -45,12 +49,16 @@
         "phpspec/phpspec": "~2.1",
         "jeroen-g/laravel-packager": "dev-master"
     },
+    "suggest": {
+        "baum/baum": "Allows to use the DataTree widget"
+    },
     "autoload": {
         "classmap": [
             "database"
         ],
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Zofe\\Rapyd\\": "src/"
         }
     },
     "autoload-dev": {
