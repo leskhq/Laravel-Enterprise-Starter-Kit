@@ -137,5 +137,5 @@ Route::group(['middleware' => 'authorize'], function () {
     }); // End of ACL-TEST group
 
     // rapyd demo
-    require __DIR__.'rapyd.php';
+    require __DIR__.'/rapyd.php';
 }); // end of AUTHORIZE group
