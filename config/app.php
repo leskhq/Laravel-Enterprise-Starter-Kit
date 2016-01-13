@@ -166,6 +166,7 @@ return [
         Laracasts\Flash\FlashServiceProvider::class,
         YAAP\Theme\ThemeServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
+        Zofe\Rapyd\RapydServiceProvider::class,
     ],
 
     /*
