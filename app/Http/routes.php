@@ -135,4 +135,7 @@ Route::group(['middleware' => 'authorize'], function () {
         Route::get('admins',                ['as' => 'admins',              'uses' => 'TestController@acl_test_admins']);
         Route::get('power-users',           ['as' => 'power-users',         'uses' => 'TestController@acl_test_power_users']);
     }); // End of ACL-TEST group
+
+    // rapyd demo
+    require __DIR__.'rapyd.php';
 }); // end of AUTHORIZE group
