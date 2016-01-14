@@ -61,6 +61,7 @@ Directory (AD) authentication and the dynamic authorization module. But wait the
     * Allows to hook a custom data parser and blade partial to render the "replay" data.
 * Laravel [Repositories](https://github.com/Bosnadev/Repositories).
 * Flash notifications using [laracasts/flash](https://github.com/laracasts/flash).
+* CRUD widgets, datatable, grids, forms with [rapyd-laravel](https://github.com/zofe/rapyd-laravel)
 * Internationalization (i18n).
 * Gulp and Elixir ready to compile and minimize Sass & CoffeeScript.
 * Bootstrap v3.3.4.
@@ -73,6 +74,7 @@ Directory (AD) authentication and the dynamic authorization module. But wait the
     * Laravel [DebugBar](https://github.com/barryvdh/laravel-debugbar).
     * Laravel [IDE Helper](https://github.com/barryvdh/laravel-ide-helper).
     * Laravel [Packager](https://github.com/jeroen-g/laravel-packager)
+    * [Baum](https://github.com/etrepat/baum)
 
 
 ## Roadmap
@@ -453,6 +455,16 @@ Following the example above, here is a description of how triggering a replayabl
 ##### Displaying entry details and custom rendering partials
 An audit log entry that is replayable will most likely have some data attributes that make it unique and has to be processed in order to be displayed properlly. In the call to the *Audit::log()* function above that creates the replayable entry, the 5th parameter, the *data_parser*, is the fully qualified name of a function that will get called to prepare the data before returning the view displaying the details to the browser. 
 Additionaly the *data_parser* function can add to the *data* array an entry with a key of *show_partial* that points to a partial blade file that will be responsible for rendering the parsed data of the audit log entry. If no *show_partial* is specified the default behaviour is to use *var_dump()* to simply dump the value on the page.
+
+### Rapyd demo
+To enable the demo mini sub-site that comes with [rapyd-laravel](https://github.com/zofe/rapyd-laravel) uncomment the following line at the end of the file *app/Http/rapyd.php*:
+
+```
+// Uncomment to enable the demo route.
+Route::controller('rapyd-demo', '\Zofe\Rapyd\Demo\DemoController');
+```
+
+For more information on how to use the [Rapyd CRUD and Grid](https://github.com/zofe/rapyd-laravel) feature please refer to original package notes.
 
 
 ## Deploying to production
