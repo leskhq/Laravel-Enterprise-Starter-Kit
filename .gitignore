@@ -34,6 +34,11 @@ ideconfig
 _ide_helper*
 .phpstorm.meta.php
 
+# Sublime files #
+#################
+*.sublime-project
+*.sublime-workspace
+
 #     Logs      #
 #################
 *.log
