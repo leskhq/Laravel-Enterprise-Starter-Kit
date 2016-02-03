@@ -51,9 +51,9 @@ class RoutesController extends Controller {
         $page_description = trans('admin/routes/general.page.index.description');
 
         $routes = $this->route->pushCriteria(new RoutesWithPermissions())
-                                ->pushCriteria(new RoutesByPathAscending())
-                                ->pushCriteria(new RoutesByMethodAscending())
-                                ->paginate(20);
+                              ->pushCriteria(new RoutesByPathAscending())
+                              ->pushCriteria(new RoutesByMethodAscending())
+                              ->paginate(20);
         $perms = $this->permission->all()->lists('display_name', 'id');
         $perms = $perms->toArray(0);
         array_unshift($perms, '');
@@ -95,7 +95,11 @@ class RoutesController extends Controller {
      */
     public function store(Request $request)
     {
-        $this->validate($request, array('method' => 'required', 'path' => 'required', 'action_name' => 'required|unique:routes'));
+        $this->validate($request, array(    'name'          => 'required|unique:routes',
+                                            'action_name'   => 'required',
+                                            'method'        => 'required',
+                                            'path'          => 'required'
+        ));
 
         $attributes = $request->all();
 
@@ -131,7 +135,11 @@ class RoutesController extends Controller {
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, array('method' => 'required', 'path' => 'required', 'action_name' => 'required|unique:routes'));
+        $this->validate($request, array(    'name'          => 'required|unique:routes,name,' . $id,
+                                            'action_name'   => 'required',
+                                            'method'        => 'required',
+                                            'path'          => 'required'
+        ));
 
         $route = $this->route->find($id);
 
@@ -174,15 +182,12 @@ class RoutesController extends Controller {
         $route = $this->route->find($id);
 
         $modal_title = trans('admin/routes/dialog.delete-confirm.title');
-        $modal_cancel = trans('general.button.cancel');
-        $modal_ok = trans('general.button.ok');
 
         $modal_route = route('admin.routes.delete', array('id' => $route->id));
 
         $modal_body = trans('admin/routes/dialog.delete-confirm.body', ['id' => $route->id, 'name' => $route->name]);
 
-        return view('modal_confirmation', compact('error', 'modal_route',
-            'modal_title', 'modal_body', 'modal_cancel', 'modal_ok'));
+        return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
 
     }
 

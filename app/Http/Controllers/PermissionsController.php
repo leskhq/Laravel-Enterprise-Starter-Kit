@@ -130,7 +130,9 @@ class PermissionsController extends Controller {
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, array('name' => 'required', 'display_name' => 'required'));
+        $this->validate($request, array(    'name'          => 'required|unique:permissions,name,' . $id,
+                                            'display_name'  => 'required',
+        ));
 
         $perm = $this->permission->find($id);
 
@@ -202,15 +204,12 @@ class PermissionsController extends Controller {
         }
 
         $modal_title = trans('admin/permissions/dialog.delete-confirm.title');
-        $modal_cancel = trans('general.button.cancel');
-        $modal_ok = trans('general.button.ok');
 
         $modal_route = route('admin.permissions.delete', array('id' => $permission->id));
 
         $modal_body = trans('admin/permissions/dialog.delete-confirm.body', ['id' => $permission->id, 'name' => $permission->name]);
 
-        return view('modal_confirmation', compact('error', 'modal_route',
-            'modal_title', 'modal_body', 'modal_cancel', 'modal_ok'));
+        return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
 
     }
 

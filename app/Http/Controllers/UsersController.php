@@ -107,13 +107,22 @@ class UsersController extends Controller {
      */
     public function store(CreateUserRequest $request)
     {
+        $this->validate($request, array(    'username'          => 'required|unique:users',
+                                            'email'             => 'required|unique:users',
+                                            'first_name'        => 'required',
+                                            'last_name'         => 'required',
+        ));
+
         $attributes = $request->all();
 
         Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-store', ['username' => $attributes['username']]));
 
-        if ( array_key_exists('selected_roles', $attributes) ) {
+        if ( (array_key_exists('selected_roles', $attributes)) && (!empty($attributes['selected_roles'])) ) {
             $attributes['role'] = explode(",", $attributes['selected_roles']);
+        } else {
+            $attributes['role'] = [];
         }
+
         // Create basic user.
         $user = $this->user->create($attributes);
         // Run the update method to set enabled status and roles membership.
@@ -262,10 +271,29 @@ class UsersController extends Controller {
      */
     public function update(UpdateUserRequest $request, $id)
     {
+        $this->validate($request, array(    'username'          => 'required|unique:users,username,' . $id,
+                                            'email'             => 'required|unique:users,email,' . $id,
+                                            'first_name'        => 'required',
+                                            'last_name'         => 'required',
+        ));
+
         $user = $this->user->find($id);
 
         // Get all attribute from the request.
         $attributes = $request->all();
+
+        // Fix #17 as per @sloan58
+        // Check if the password was submitted and has changed.
+        if(!\Hash::check($attributes['password'],$user->password) && $attributes['password'] != '')
+        {
+            // Password was changed, do nothing we are good.
+        }
+        else
+        {
+            // Password was not changed or was not submitted, delete attribute from array to prevent it
+            // from being set to blank.
+            unset($attributes['password']);
+        }
 
         // Get a copy of the attributes that we will modify to save for a replay.
         $replayAtt = $attributes;
@@ -281,8 +309,10 @@ class UsersController extends Controller {
             abort(403);
         }
 
-        if ( array_key_exists('selected_roles', $attributes) ) {
+        if ( (array_key_exists('selected_roles', $attributes)) && (!empty($attributes['selected_roles'])) ) {
             $attributes['role'] = explode(",", $attributes['selected_roles']);
+        } else {
+            $attributes['role'] = [];
         }
 
         $user->update($attributes);
@@ -332,8 +362,6 @@ class UsersController extends Controller {
         }
 
         $modal_title = trans('admin/users/dialog.delete-confirm.title');
-        $modal_cancel = trans('general.button.cancel');
-        $modal_ok = trans('general.button.ok');
 
         if (Auth::user()->id !== $id) {
             $user = $this->user->find($id);
@@ -345,8 +373,7 @@ class UsersController extends Controller {
         {
             $error = trans('admin/users/general.error.cant-delete-yourself');
         }
-        return view('modal_confirmation', compact('error', 'modal_route',
-            'modal_title', 'modal_body', 'modal_cancel', 'modal_ok'));
+        return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
 
     }
 

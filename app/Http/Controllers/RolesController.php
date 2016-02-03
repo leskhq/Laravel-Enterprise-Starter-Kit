@@ -95,7 +95,9 @@ class RolesController extends Controller {
     public function store(Request $request)
     {
 
-        $this->validate($request, array('name' => 'required|unique:roles', 'display_name' => 'required'));
+        $this->validate($request, array(    'name'          => 'required|unique:roles',
+                                            'display_name'  => 'required'
+        ));
 
         $attributes = $request->all();
 
@@ -152,7 +154,9 @@ class RolesController extends Controller {
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, array('name' => 'required', 'display_name' => 'required'));
+        $this->validate($request, array(    'name'          => 'required|unique:roles,name,' . $id,
+                                            'display_name'  => 'required',
+        ));
 
         $role = $this->role->find($id);
 
@@ -160,7 +164,7 @@ class RolesController extends Controller {
 
         $attributes = $request->all();
 
-        if ( array_key_exists('selected_users', $attributes) ) {
+        if ( (array_key_exists('selected_users', $attributes)) && (!empty($attributes['selected_users'])) ) {
             $attributes['users'] = explode(",", $attributes['selected_users']);
         } else {
             $attributes['users'] = [];
@@ -228,16 +232,13 @@ class RolesController extends Controller {
         }
 
         $modal_title = trans('admin/roles/dialog.delete-confirm.title');
-        $modal_cancel = trans('general.button.cancel');
-        $modal_ok = trans('general.button.ok');
 
         $role = $this->role->find($id);
         $modal_route = route('admin.roles.delete', array('id' => $role->id));
 
         $modal_body = trans('admin/roles/dialog.delete-confirm.body', ['id' => $role->id, 'name' => $role->name]);
 
-        return view('modal_confirmation', compact('error', 'modal_route',
-            'modal_title', 'modal_body', 'modal_cancel', 'modal_ok'));
+        return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
 
     }
 

@@ -10,8 +10,8 @@
     @endif
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">{{ $modal_cancel }}</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('general.button.cancel') }}</button>
     @if(!$error)
-        <a href="{{ $modal_route }}" type="button" class="btn btn-primary">{{ $modal_ok }}</a>
+        <a href="{{ $modal_route }}" type="button" class="btn btn-primary">{{ trans('general.button.ok') }}</a>
     @endif
 </div>
