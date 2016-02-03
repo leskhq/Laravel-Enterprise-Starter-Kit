@@ -5,8 +5,10 @@ return [
     'button'              => [
         'cancel'            => 'Cancel',
         'close'             => 'Close',
+        'save'              => 'Save',
         'create'            => 'Create',
         'delete'            => 'Delete',
+        'clear'             => 'Clear',
         'edit'              => 'Edit',
         'ok'                => 'OK',
         'display'           => 'Show details',

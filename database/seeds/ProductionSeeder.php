@@ -89,6 +89,12 @@ class ProductionSeeder extends Seeder
             'description'   => 'Allows a user to purge old items from the audit log.',
             'enabled'       => true,
         ]);
+        $permAdminSettings = Permission::create([
+            'name'          => 'admin-settings',
+            'display_name'  => 'Administer site settings',
+            'description'   => 'Allows a user to change site settings.',
+            'enabled'       => true,
+        ]);
 
 
         ////////////////////////////////////
@@ -110,6 +116,9 @@ class ProductionSeeder extends Seeder
         $routeAuditView = Route::where('name', 'admin.audit.index')->get()->first();
         $routeAuditView->permission()->associate($permAuditLogView);
         $routeAuditView->save();
+        $routeAuditShow = Route::where('name', 'admin.audit.show')->get()->first();
+        $routeAuditShow->permission()->associate($permAuditLogView);
+        $routeAuditShow->save();
         $routeAuditPurge = Route::where('name', 'admin.audit.purge')->get()->first();
         $routeAuditPurge->permission()->associate($permAuditPurge);
         $routeAuditPurge->save();
@@ -144,6 +153,10 @@ class ProductionSeeder extends Seeder
             $route->permission()->associate($permManageUsers);
             $route->save();
         }
+        // Associate the admin-settings permissions
+        $routeAdminSettings = Route::where('name', 'admin.settings.index')->get()->first();
+        $routeAdminSettings->permission()->associate($permAdminSettings);
+        $routeAdminSettings->save();
 
 
         ////////////////////////////////////
