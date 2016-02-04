@@ -228,7 +228,7 @@ Fetch all dependencies for Node.js using *npm* by using the following command:
 npm install
 ```
 
-**_NOTE:_** If the *npm install* command fails check the tip on *Node.js* in the [Troubleshooting](#troubleshooting) section.
+**_NOTE:_** If the *npm install* command fails or hangs, check the tip on *Node.js* in the [Troubleshooting](#troubleshooting) section.
 ### Basic configuration
 
 #### Create your *.env* file
@@ -484,6 +484,8 @@ gulp --production
 Below are some troubleshooting tips that we have encoutered and resolved:
 
 ### Node.js
+
+#### Old version
 As pointed out by [thassan](https://github.com/thassan) in [Issue 6](https://github.com/sroutier/laravel-5.1-enterprise-starter-kit/issues/6), 
 if you distribution or OS ships with an older version of Node.js the name of the executable may be 'nodejs'. In recent versions the name has 
 been changed to 'node'. This will cause some Node.js packages to fail during the installation as they expect to find the 'node' executable. 
@@ -494,13 +496,21 @@ To create a symbolic link issue the command:
 sudo ln -s /usr/bin/nodejs /usr/bin/node
 ```
 
-Also if the installation of the Node.js packages fails with a 'ENOENT' error, you may need to create a empty file at the root of the project as 
+#### ENOENT error
+If the installation of Node.js packages fails with a 'ENOENT' error, you may need to create a empty file at the root of the project as 
 explained on [Stack Overflow](http://stackoverflow.com/questions/17990647/npm-install-errors-with-error-enoent-chmod). 
 To create the empty file run:
 ```
 touch .npmignore
 ```
 
+#### Hangs
+If the installation of Node.js packages appears to hang, it may be due to a race condition that does not manifest itself when invoked
+with the ``-ddd`` after having deleted the ``node_modules`` directory at the root of the project:
+```
+rm -rf node_modules
+npm install -ddd
+```
 
 ## Change log
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
