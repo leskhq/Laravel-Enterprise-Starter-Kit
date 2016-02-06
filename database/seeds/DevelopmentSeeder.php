@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\User;
 use App\Models\Permission;
+use App\Models\Menu;
 use App\Models\Route;
 use App\Models\Role;
 
@@ -211,6 +212,318 @@ class DevelopmentSeeder extends Seeder
         $routeFlashError = Route::where('name', 'test-flash.error')->get()->first();
         $routeFlashError->permission()->associate($permTestLevelError);
         $routeFlashError->save();
+        ////////////////////////////////////
+        // Associate some permission to menu test routes
+        $routeTestMenusHome = Route::where('name', 'test-menus.home')->get()->first();
+        $routeTestMenusHome->permission()->associate($permOpenToAll);
+        $routeTestMenusHome->save();
+        //
+        $routeTestMenusOne = Route::where('name', 'test-menus.one')->get()->first();
+        $routeTestMenusOne->permission()->associate($permOpenToAll);
+        $routeTestMenusOne->save();
+        //
+        $routeTestMenusTwo = Route::where('name', 'test-menus.two')->get()->first();
+        $routeTestMenusTwo->permission()->associate($permBasicAuthenticated);
+        $routeTestMenusTwo->save();
+        //
+        $routeTestMenusTwoA = Route::where('name', 'test-menus.two-a')->get()->first();
+        $routeTestMenusTwoA->permission()->associate($permTestLevelSuccess);
+        $routeTestMenusTwoA->save();
+        //
+        $routeTestMenusTwoB = Route::where('name', 'test-menus.two-b')->get()->first();
+        $routeTestMenusTwoB->permission()->associate($permTestLevelInfo);
+        $routeTestMenusTwoB->save();
+        //
+        $routeTestMenusThree = Route::where('name', 'test-menus.three')->get()->first();
+        $routeTestMenusThree->permission()->associate($permTestLevelWarning);
+        $routeTestMenusThree->save();
+
+
+        /////////
+        // Find home menu.
+        $menuHome = Menu::where('name', 'home')->first();
+
+
+        /////////
+        // Create Test ACL menu folder
+        $menuTestACL = Menu::create([
+            'name'          => 'test-acl.home',
+            'label'         => 'Test ACL',
+            'position'      => 20,
+            'icon'          => 'fa fa-bolt',
+            'separator'     => false,
+            'url'           => '/test-acl/home',
+            'enabled'       => true,
+            'parent_id'     => $menuHome->id,          // Parent is home.
+            'route_id'      => null,
+            'permission_id' => $permOpenToAll->id,
+        ]);
+        // Create DoNotPreLoad menu
+        $menuDoNotPreLoad = Menu::create([
+            'name'          => 'test-acl.do-not-pre-load',
+            'label'         => 'Do not pre-load',
+            'position'      => 0,
+            'icon'          => 'fa fa-file',
+            'separator'     => false,
+            'url'           => '/test-acl/do-not-pre-load',
+            'enabled'       => true,
+            'parent_id'     => $menuTestACL->id,    // Parent is test-acl.home.
+            'route_id'      => null,                // No route defined for this item
+            'permission_id' => null,                // No permission specifically given.
+        ]);
+        // Create NoPerm menu
+        $menuNoPerm = Menu::create([
+            'name'          => 'test-acl.no-perm',
+            'label'         => 'No perm',
+            'position'      => 0,
+            'icon'          => 'fa fa-file',
+            'separator'     => false,
+            'url'           => '/test-acl/no-perm',
+            'enabled'       => true,
+            'parent_id'     => $menuTestACL->id,    // Parent is test-acl.home.
+            'route_id'      => null,                // No route defined for this item
+            'permission_id' => null,                // No permission specifically given.
+        ]);
+        // Create GuestOnly menu
+        $menuGuestOnly = Menu::create([
+            'name'          => 'test-acl.guest-only',
+            'label'         => 'Guest Only',
+            'position'      => 0,
+            'icon'          => 'fa fa-file',
+            'separator'     => false,
+            'url'           => null,
+            'enabled'       => true,
+            'parent_id'     => $menuTestACL->id,    // Parent is test-acl.home.
+            'route_id'      => $routeTestACLGuestOnly->id,
+            'permission_id' => null,                // Get permission from route.
+        ]);
+        // Create OpenToAll menu
+        $menuOpenToAll = Menu::create([
+            'name'          => 'test-acl.open-to-all',
+            'label'         => 'Open to all',
+            'position'      => 0,
+            'icon'          => 'fa fa-file',
+            'separator'     => false,
+            'url'           => null,
+            'enabled'       => true,
+            'parent_id'     => $menuTestACL->id,    // Parent is test-acl.home.
+            'route_id'      => $routeTestACLOpenToAll->id,
+            'permission_id' => null,                // Get permission from route.
+        ]);
+        // Create BasicAuthenticated menu
+        $menuBasicAuthenticated = Menu::create([
+            'name'          => 'test-acl.basic-authenticated',
+            'label'         => 'Basic authenticated',
+            'position'      => 0,
+            'icon'          => 'fa fa-file',
+            'separator'     => false,
+            'url'           => null,
+            'enabled'       => true,
+            'parent_id'     => $menuTestACL->id,    // Parent is test-acl.home.
+            'route_id'      => $routeTestACLBasicAuthenticated->id,
+            'permission_id' => null,                // Get permission from route.
+        ]);
+        // Create Admins menu
+        $menuAdmins = Menu::create([
+            'name'          => 'test-acl.admins',
+            'label'         => 'Admins',
+            'position'      => 0,
+            'icon'          => 'fa fa-file',
+            'separator'     => false,
+            'url'           => null,
+            'enabled'       => true,
+            'parent_id'     => $menuTestACL->id,    // Parent is test-acl.home.
+            'route_id'      => $routeTestACLAdmins->id,
+            'permission_id' => null,                // Get permission from route.
+        ]);
+        // Create PowerUsers menu
+        $menuPowerUsers = Menu::create([
+            'name'          => 'test-acl.power-users',
+            'label'         => 'Power users',
+            'position'      => 0,
+            'icon'          => 'fa fa-file',
+            'separator'     => false,
+            'url'           => '/test-acl/power-users',
+            'enabled'       => true,
+            'parent_id'     => $menuTestACL->id,    // Parent is test-acl.home.
+            'route_id'      => null,
+            'permission_id' => null,                // Get permission from route.
+        ]);
+
+
+        /////////
+        // Create Test flash menu folder
+        $menuTestFlashHome = Menu::create([
+            'name'          => 'test-flash.home',
+            'label'         => 'Test Flash',
+            'position'      => 20,
+            'icon'          => 'fa fa-bolt',
+            'separator'     => false,
+            'url'           => '/test-flash/home',
+            'enabled'       => true,
+            'parent_id'     => $menuHome->id,                // Parent is home.
+            'route_id'      => null,
+            'permission_id' => $permBasicAuthenticated->id,  // Specify basic-authenticated for url.
+        ]);
+        // Create Flash success menu
+        $menuFlashSuccess = Menu::create([
+            'name'          => 'test-flash.success',
+            'label'         => 'Flash success',
+            'position'      => 0,
+            'icon'          => 'fa fa-check fa-colour-green',
+            'separator'     => false,
+            'url'           => null,
+            'enabled'       => true,
+            'parent_id'     => $menuTestFlashHome->id,  // Parent is test-flash.home.
+            'route_id'      => $routeFlashSuccess->id,
+            'permission_id' => null,                    // Get permission from route.
+        ]);
+        // Create Flash info menu
+        $menuFlashInfo = Menu::create([
+            'name'          => 'test-flash.info',
+            'label'         => 'Flash info',
+            'position'      => 10,
+            'icon'          => 'fa fa-info fa-colour-blue',
+            'separator'     => false,
+            'url'           => null,
+            'enabled'       => true,
+            'parent_id'     => $menuTestFlashHome->id,  // Parent is test-flash.home.
+            'route_id'      => $routeFlashInfo->id,
+            'permission_id' => null,                    // Get permission from route.
+        ]);
+        // Create Flash warning menu
+        $menuFlashWarning = Menu::create([
+            'name'          => 'test-flash.warning',
+            'label'         => 'Flash warning',
+            'position'      => 20,
+            'icon'          => 'fa fa-warning fa-colour-orange',
+            'separator'     => false,
+            'url'           => null,
+            'enabled'       => true,
+            'parent_id'     => $menuTestFlashHome->id,  // Parent is test-flash.home.
+            'route_id'      => $routeFlashWarning->id,
+            'permission_id' => null,                    // Get permission from route.
+        ]);
+        // Create Flash error menu
+        $menuFlashError = Menu::create([
+            'name'          => 'test-flash.error',
+            'label'         => 'Flash error',
+            'position'      => 30,
+            'icon'          => 'fa fa-ban fa-colour-red',
+            'separator'     => false,
+            'url'           => null,
+            'enabled'       => true,
+            'parent_id'     => $menuTestFlashHome->id,  // Parent is test-flash.home.
+            'route_id'      => $routeFlashError->id,
+            'permission_id' => null,                    // Get permission from route.
+        ]);
+
+
+        /////////
+        // Create Test menu folder
+        $menuTestMenusHome = Menu::create([
+            'name'          => 'test-menus.home',
+            'label'         => 'Test Menus',
+            'position'      => 30,
+            'icon'          => 'fa fa-bolt',
+            'separator'     => false,
+            'url'           => '/test-menus/home',
+            'enabled'       => true,
+            'parent_id'     => $menuHome->id,       // Parent is home.
+            'route_id'      => null,
+            'permission_id' => $permOpenToAll->id,  // Specify open to all for url.
+        ]);
+        // Create Menu 1 menu
+        $menuTestMenusOne = Menu::create([
+            'name'          => 'test-menus.one',
+            'label'         => 'Menu One',
+            'position'      => 0,
+            'icon'          => 'fa fa-bars',
+            'separator'     => false,
+            'url'           => null,
+            'enabled'       => true,
+            'parent_id'     => $menuTestMenusHome->id,   // Parent is test-menus.home.
+            'route_id'      => $routeTestMenusOne->id,
+            'permission_id' => null,                     // Get permission from route.
+        ]);
+        // Create Menu 2 menu
+        $menuTestMenusTwo = Menu::create([
+            'name'          => 'test-menus.two',
+            'label'         => 'Menu Two',
+            'position'      => 10,
+            'icon'          => 'fa fa-bars',
+            'separator'     => false,
+            'url'           => null,
+            'enabled'       => true,
+            'parent_id'     => $menuTestMenusHome->id,   // Parent is test-menus.home.
+            'route_id'      => $routeTestMenusTwo->id,
+            'permission_id' => null,                     // Get permission from route.
+        ]);
+        // Create Menu 2a menu
+        $menuTestMenusTwo2a = Menu::create([
+            'name'          => 'test-menus.two-a',
+            'label'         => 'Menu Two A',
+            'position'      => 0,
+            'icon'          => 'fa fa-bars',
+            'separator'     => false,
+            'url'           => null,
+            'enabled'       => true,
+            'parent_id'     => $menuTestMenusTwo->id,   // Parent is test-menus.two.
+            'route_id'      => $routeTestMenusTwoA->id,
+            'permission_id' => null,                    // Get permission from route.
+        ]);
+        // Create Menu 2b menu
+        $menuTestMenusTwo2b = Menu::create([
+            'name'          => 'test-menus.two-b',
+            'label'         => 'Menu Two B',
+            'position'      => 10,
+            'icon'          => 'fa fa-bars',
+            'separator'     => false,
+            'url'           => null,
+            'enabled'       => true,
+            'parent_id'     => $menuTestMenusTwo->id,   // Parent is test-menus.two.
+            'route_id'      => $routeTestMenusTwoB->id,
+            'permission_id' => null,                    // Get permission from route.
+        ]);
+        // Create Menu 2a alias by URL
+        $menuTestMenusTwo2a = Menu::create([
+            'name'          => 'test-menus.two-a-alias-url',
+            'label'         => 'Menu Two A alias by URL',
+            'position'      => 0,
+            'icon'          => 'fa fa-bars',
+            'separator'     => false,
+            'url'           => '/test-menus/two-a',
+            'enabled'       => true,
+            'parent_id'     => $menuTestMenusTwo->id,       // Parent is test-menus.two.
+            'route_id'      => null,
+            'permission_id' => $permBasicAuthenticated->id, // Specify basic-authenticated.
+        ]);
+        // Create Menu 2a alias by ROUTE
+        $menuTestMenusTwo2a = Menu::create([
+            'name'          => 'test-menus.two-a-alias-route',
+            'label'         => 'Menu Two A alias by route',
+            'position'      => 0,
+            'icon'          => 'fa fa-bars',
+            'separator'     => false,
+            'url'           => null,
+            'enabled'       => true,
+            'parent_id'     => $menuTestMenusTwo->id,   // Parent is test-menus.two.
+            'route_id'      => Route::where('name', 'like', "test-menus.two_a")->get()->first()->id,
+            'permission_id' => null,                   // Get permission from route.
+        ]);
+        // Create Menu 3 menu
+        $menuTestMenusTwo3 = Menu::create([
+            'name'          => 'test-menus.three',
+            'label'         => 'Menu Three',
+            'position'      => 20,
+            'icon'          => 'fa fa-bars',
+            'separator'     => false,
+            'url'           => null,
+            'enabled'       => true,
+            'parent_id'     => $menuTestMenusHome->id,   // Parent is test-menus.home.
+            'route_id'      => $routeTestMenusThree->id,
+            'permission_id' => null,                     // Get permission from route.
+        ]);
 
 
     }

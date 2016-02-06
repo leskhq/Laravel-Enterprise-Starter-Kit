@@ -76,6 +76,12 @@ Route::group(['middleware' => 'authorize'], function () {
         Route::get(   'roles/{roleId}/delete',         ['as' => 'admin.roles.delete',           'uses' => 'RolesController@destroy']);
         Route::get(   'roles/{roleId}/enable',         ['as' => 'admin.roles.enable',           'uses' => 'RolesController@enable']);
         Route::get(   'roles/{roleId}/disable',        ['as' => 'admin.roles.disable',          'uses' => 'RolesController@disable']);
+        // Menu routes
+        Route::post(  'menus',                         ['as' => 'admin.menus.save',             'uses' => 'MenusController@save']);
+        Route::get(   'menus',                         ['as' => 'admin.menus.index',            'uses' => 'MenusController@index']);
+        Route::get(   'menus/getData/{menuId}',        ['as' => 'admin.menus.get-data',         'uses' => 'MenusController@getData']);
+        Route::get(   'menus/{menuId}/confirm-delete', ['as' => 'admin.menus.confirm-delete',   'uses' => 'MenusController@getModalDelete']);
+        Route::get(   'menus/{menuId}/delete',         ['as' => 'admin.menus.delete',           'uses' => 'MenusController@destroy']);
         // Permission routes
         Route::get(   'permissions/generate',                      ['as' => 'admin.permissions.generate',         'uses' => 'PermissionsController@generate']);
         Route::post(  'permissions/enableSelected',                ['as' => 'admin.permissions.enable-selected',  'uses' => 'PermissionsController@enableSelected']);
@@ -144,6 +150,15 @@ Route::group(['middleware' => 'authorize'], function () {
             Route::get('warning', ['as' => 'test-flash.warning',  'uses' => 'TestController@test_flash_warning']);
             Route::get('error',   ['as' => 'test-flash.error',    'uses' => 'TestController@test_flash_error']);
         }); // End of TEST-FLASH group
+        // TEST-MENU routes
+        Route::group(['prefix' => 'test-menus'], function () {
+            Route::get('home',     ['as' => 'test-menus.home',  'uses' => 'TestMenusController@test_menu_home']);
+            Route::get('one',      ['as' => 'test-menus.one',   'uses' => 'TestMenusController@test_menu_one']);
+            Route::get('two',      ['as' => 'test-menus.two',   'uses' => 'TestMenusController@test_menu_two']);
+            Route::get('two-a',    ['as' => 'test-menus.two-a', 'uses' => 'TestMenusController@test_menu_two_a']);
+            Route::get('two-b',    ['as' => 'test-menus.two-b', 'uses' => 'TestMenusController@test_menu_two_b']);
+            Route::get('three',    ['as' => 'test-menus.three', 'uses' => 'TestMenusController@test_menu_three']);
+        }); // End of TEST-MENU group
     } // End of if DEV environment
 
     require __DIR__.'/rapyd.php';

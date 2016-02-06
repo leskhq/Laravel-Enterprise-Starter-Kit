@@ -18,6 +18,10 @@ class Permission extends EntrustPermission {
         return $this->hasMany('App\Models\Route');
     }
 
+    public function menu()
+    {
+        return $this->hasMany('App\Models\Menu');
+    }
     /**
      * @param $roleName
      *

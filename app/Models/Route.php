@@ -15,6 +15,10 @@ class Route extends Model
     {
         return $this->belongsTo('App\Models\Permission');
     }
+    public function menus()
+    {
+        return $this->hasMany('App\Models\Menu');
+    }
 //    /**
 //     * @return string
 //     */
