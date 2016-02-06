@@ -85,8 +85,6 @@ List of future feature and items that are still have to be completed, in no part
 * Implement soft-delete for Users, Roles, Permissions and maybe even Routes.
 * Persistent notifications.
 * Single sign-on for IIS and Apache.
-* Breadcrumb.
-* Dynamic menu based on roles/permissions.
 * Favicon (one per theme?).
 * Settings with precedence, Application vs User settings and DB vs .env file.
 * Sortable tables.
