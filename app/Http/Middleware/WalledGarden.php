@@ -38,23 +38,14 @@ class WalledGarden
     {
         $exempt = false;
 
-        $walled_garden = env('WALLED_GARDEN', false);
-
-        // TODO: Get these arrays from config.
-        $exemptionPath = [
-            '/',                'home',                             'faust',
-            'auth/login',       'auth/register',
-            'password/email',   'password/reset',
-            '_debugbar/open',   '_debugbar/assets/stylesheets',    '_debugbar/assets/javascript',
-        ];
-        $exemptionsRegEx = [
-            '/password\/reset\/.*/',
-                            ];
+        $walled_garden_enabled = config('walled-garden.enabled');
+        $exemptionPath         = config('walled-garden.exemptions-path');
+        $exemptionsRegEx       = config('walled-garden.exemptions-regex');
 
         // Redirect to the login page if the user is not authenticated and the site
         // is configured as a walled garden, except if the request is going to a page
         // or route that is exempt from authentication.
-        if ( $walled_garden )
+        if ( $walled_garden_enabled )
         {
             $authenticated = $this->auth->check();
             if (!$authenticated) {
