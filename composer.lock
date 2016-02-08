@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "80e54ab5947957efd376de3d3b406062",
-    "content-hash": "53df3207bd16678b1e2e7560466f1722",
+    "hash": "abc86a8d3309a363a700d5e8c82cf5de",
+    "content-hash": "739077c7918580d41c1f6cf3f447bf06",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -707,7 +707,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/5f0dfd29ed807e4dacba0ae69c70300ded8050c3",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/625dd63568e386e11c01022c22e50adc2a8a7af6",
                 "reference": "5f0dfd29ed807e4dacba0ae69c70300ded8050c3",
                 "shasum": ""
             },
@@ -3594,6 +3594,60 @@
             "time": "2015-11-17 16:22:28"
         },
         {
+            "name": "libern/laravel-sql-logging",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/libern/laravel-sql-logging.git",
+                "reference": "b050d9ffcb9b9adc96572dfb04e6364615bb0a37"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/libern/laravel-sql-logging/zipball/b050d9ffcb9b9adc96572dfb04e6364615bb0a37",
+                "reference": "b050d9ffcb9b9adc96572dfb04e6364615bb0a37",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "5.0.x|5.1.x",
+                "monolog/monolog": "~1.11",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Libern\\SqlLogging\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Libern Lin",
+                    "email": "libernlin@gmail.com"
+                }
+            ],
+            "description": "Laravel 5 package for logging SQL queries.",
+            "keywords": [
+                "debug",
+                "debugging",
+                "laravel",
+                "log",
+                "logger",
+                "logging",
+                "queries",
+                "query",
+                "sql"
+            ],
+            "time": "2016-01-26 08:03:56"
+        },
+        {
             "name": "mockery/mockery",
             "version": "0.9.4",
             "source": {
@@ -4628,7 +4682,8 @@
         "barryvdh/laravel-debugbar": 20,
         "zizaco/entrust": 20,
         "sroutier/eloquent-ldap": 20,
-        "jeroen-g/laravel-packager": 20
+        "jeroen-g/laravel-packager": 20,
+        "libern/laravel-sql-logging": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
