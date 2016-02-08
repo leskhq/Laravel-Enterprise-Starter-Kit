@@ -69,6 +69,96 @@ class DevelopmentSeeder extends Seeder
             "auth_type"             => "internal",
             "enabled"               => true
         ]);
+        $testUserSix = User::create([
+            'username'              => 'user6',
+            'first_name'            => 'User',
+            'last_name'             => 'Six',
+            'email'                 => 'user6@email.com',
+            "password"              => "Password1",
+            "auth_type"             => "internal",
+            "enabled"               => true
+        ]);
+        $testUserSeven = User::create([
+            'username'              => 'user7',
+            'first_name'            => 'User',
+            'last_name'             => 'Seven',
+            'email'                 => 'user7@email.com',
+            "password"              => "Password1",
+            "auth_type"             => "internal",
+            "enabled"               => true
+        ]);
+        $testUserEight = User::create([
+            'username'              => 'user8',
+            'first_name'            => 'User',
+            'last_name'             => 'Eight',
+            'email'                 => 'user8@email.com',
+            "password"              => "Password1",
+            "auth_type"             => "internal",
+            "enabled"               => true
+        ]);
+        $testUserNine = User::create([
+            'username'              => 'user9',
+            'first_name'            => 'User',
+            'last_name'             => 'Nine',
+            'email'                 => 'user9@email.com',
+            "password"              => "Password1",
+            "auth_type"             => "internal",
+            "enabled"               => true
+        ]);
+        $testUserTen = User::create([
+            'username'              => 'user10',
+            'first_name'            => 'User',
+            'last_name'             => 'Ten',
+            'email'                 => 'user10@email.com',
+            "password"              => "Password1",
+            "auth_type"             => "internal",
+            "enabled"               => true
+        ]);
+        $testUserEleven = User::create([
+            'username'              => 'user11',
+            'first_name'            => 'User',
+            'last_name'             => 'Eleven',
+            'email'                 => 'user11@email.com',
+            "password"              => "Password1",
+            "auth_type"             => "internal",
+            "enabled"               => true
+        ]);
+        $testUserTwelve = User::create([
+            'username'              => 'user12',
+            'first_name'            => 'User',
+            'last_name'             => 'Twelve',
+            'email'                 => 'user12@email.com',
+            "password"              => "Password1",
+            "auth_type"             => "internal",
+            "enabled"               => true
+        ]);
+        $testUserThirteen = User::create([
+            'username'              => 'user13',
+            'first_name'            => 'User',
+            'last_name'             => 'Thirteen',
+            'email'                 => 'user13@email.com',
+            "password"              => "Password1",
+            "auth_type"             => "internal",
+            "enabled"               => true
+        ]);
+        $testUserFourteen = User::create([
+            'username'              => 'user14',
+            'first_name'            => 'User',
+            'last_name'             => 'Fourteen',
+            'email'                 => 'user14@email.com',
+            "password"              => "Password1",
+            "auth_type"             => "internal",
+            "enabled"               => true
+        ]);
+        $testUserFifteen = User::create([
+            'username'              => 'user15',
+            'first_name'            => 'User',
+            'last_name'             => 'Fifteen',
+            'email'                 => 'user15@email.com',
+            "password"              => "Password1",
+            "auth_type"             => "internal",
+            "enabled"               => true
+        ]);
 
         /////////
         // Create a few test permissions for the flash-test pages.
