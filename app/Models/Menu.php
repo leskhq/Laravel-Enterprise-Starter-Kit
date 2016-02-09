@@ -67,4 +67,18 @@ class Menu extends Model
     }
 
 
+    /**
+     * @return bool
+     */
+    public function isEditable()
+    {
+        // Protect the root menu from deletion
+        if ( ('root' == $this->name) ) {
+            return false;
+        }
+
+        return true;
+    }
+
+
 }
