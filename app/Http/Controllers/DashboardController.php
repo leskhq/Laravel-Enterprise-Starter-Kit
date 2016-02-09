@@ -47,7 +47,12 @@ class DashboardController extends Controller
                 'name' => 'Develop an Awesome Algorithm',
                 'progress' => '10',
                 'color' => 'success'
-            ]
+            ],
+            [
+                'name' => 'Analyse data',
+                'progress' => '37',
+                'color' => 'warning'
+            ],
         ];
 
         $page_title = "Dashboard";
