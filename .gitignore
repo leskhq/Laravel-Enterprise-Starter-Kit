@@ -7,6 +7,7 @@ storage/
 # Configuration testing #
 #########################
 .env.mysql
+.env.pgsql
 .env.sqlite3
 
 # Package development #
