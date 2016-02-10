@@ -9,6 +9,7 @@
  */
 
 use App\Models\Menu;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;
 use Exception;
@@ -248,15 +249,25 @@ trait MenuHandlerTrait
         if ($input instanceof Menu) {
             return $input;
         }
-        // Try to find the root object by it's ID
-        $menuItem = $this->menuRepository->find($input);
-        if ($menuItem instanceof Menu) {
-            return $menuItem;
+        // Fix #21: PostgreSQL throws an QueryException when we search a text value in a
+        // field of numerical type.
+        try {
+            // Try to find the root object by it's ID
+            $menuItem = $this->menuRepository->find($input);
+            if ($menuItem instanceof Menu) {
+                return $menuItem;
+            }
         }
-        // Try to find the root object by it's name
-        $menuItem = $this->menuRepository->findBy('name', $input);
-        if ($menuItem instanceof Menu) {
-            return $menuItem;
+        catch (QueryException $ex) {
+        }
+        try {
+            // Try to find the root object by it's name
+            $menuItem = $this->menuRepository->findBy('name', $input);
+            if ($menuItem instanceof Menu) {
+                return $menuItem;
+            }
+        }
+        catch (QueryException $ex) {
         }
 
         // Could not find the requested menu item, throwing an exception.
