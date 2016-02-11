@@ -127,8 +127,9 @@ class MenusController extends Controller {
             }
             else
             {
+                // Fix issue #23: using the wrong column name in the unique rule.
                 // validate attributes.
-                $this->validate($request, array(    'name' => 'required|unique:menus,id,' . $id,
+                $this->validate($request, array(    'name' => 'required|unique:menus,name,' . $id,
                                                     'label' => 'required',
                 ));
 
@@ -149,7 +150,7 @@ class MenusController extends Controller {
             unset($attributes['id']);
             // Validate attributes.
             $this->validate($request, array(    'name' => 'required|unique:menus',
-                'label' => 'required',
+                                                'label' => 'required',
             ));
             // Create new menu item.
             $menuItem = Menu::create($attributes);
