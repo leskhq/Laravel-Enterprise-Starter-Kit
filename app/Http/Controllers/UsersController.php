@@ -171,7 +171,7 @@ class UsersController extends Controller {
         $dataAtt = json_decode($audit->data, true);
 
         // Lookup and load the perms that we can still find, otherwise add to an separate array.
-        if ($dataAtt['perms']) {
+        if (array_key_exists('perms', $dataAtt)) {
             foreach($dataAtt['perms'] as $id) {
                 $perm = \App\Models\Permission::find($id);
                 if ($perm) {
@@ -186,7 +186,7 @@ class UsersController extends Controller {
         $dataAtt['permsNotFound'] = $permsNoFound;
 
         // Lookup and load the roles that we can still find, otherwise add to an separate array.
-        if ($dataAtt['selected_roles']) {
+        if (array_key_exists('selected_roles', $dataAtt)) {
             $aRolesIDs = explode(",", $dataAtt['selected_roles']);
             foreach($aRolesIDs as $id) {
                 $role = \App\Models\Role::find($id);
