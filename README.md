@@ -198,7 +198,7 @@ This project includes the file 'composer.lock'. The purpose of the 'composer.loc
 packages needed by a project as this one. By using the included lock file you are sure to use the same version of those 
 packages as were used during the design. 
 
-Fetch all dependencies using *composer* by issuing one of the following commands depending on which environment your are 
+Fetch all dependencies using *composer* by issuing one of the following commands depending on which environment you are 
 trying to configure:
 
 For a development environment use:
