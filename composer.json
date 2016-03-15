@@ -11,7 +11,7 @@
       "Active Directory"
     ],
     "homepage": "https://github.com/sroutier/laravel-5.1-enterprise-starter-kit",
-    "license": "GPLv3",
+    "license": "GPL-3.0",
     "authors": [
       {
         "name": "Sebastien Routier",
