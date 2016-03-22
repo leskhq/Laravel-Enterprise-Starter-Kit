@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "abc86a8d3309a363a700d5e8c82cf5de",
-    "content-hash": "739077c7918580d41c1f6cf3f447bf06",
+    "hash": "a4a4d37150630f5f17d96d9bc5e4d75d",
+    "content-hash": "ed561f93395a5a0b8e0a6a82a5d85f75",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -707,7 +707,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/625dd63568e386e11c01022c22e50adc2a8a7af6",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/61e1f860a304c3fb6961ecbec36927b5f20b71c6",
                 "reference": "5f0dfd29ed807e4dacba0ae69c70300ded8050c3",
                 "shasum": ""
             },
@@ -2100,6 +2100,60 @@
             "time": "2016-01-08 00:20:05"
         },
         {
+            "name": "sroutier/l51esk-modules",
+            "version": "v3.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sroutier/l51esk-modules.git",
+                "reference": "d8427150be9246e90a89c5ba656bacbf0122b3a5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sroutier/l51esk-modules/zipball/d8427150be9246e90a89c5ba656bacbf0122b3a5",
+                "reference": "d8427150be9246e90a89c5ba656bacbf0122b3a5",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/config": "5.1.*|5.2.*",
+                "illuminate/database": "5.1.*|5.2.*",
+                "illuminate/filesystem": "5.1.*|5.2.*",
+                "illuminate/routing": "5.1.*|5.2.*",
+                "illuminate/support": "5.1.*|5.2.*",
+                "php": ">=5.5.9"
+            },
+            "suggest": {
+                "wikimedia/composer-merge-plugin": "Allows the ability to create and merge composer.json files for your individual modules for module-specific dependency management."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Caffeinated\\Modules\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Shea Lewis",
+                    "email": "shea.lewis89@gmail.com"
+                }
+            ],
+            "description": "Laravel 5 Modules",
+            "keywords": [
+                "caffeinated",
+                "laravel",
+                "modules"
+            ],
+            "time": "2016-03-14 18:36:56"
+        },
+        {
             "name": "swiftmailer/swiftmailer",
             "version": "v5.4.1",
             "source": {
@@ -3120,7 +3174,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Zizaco/entrust/zipball/be28aa634c44551ae5187894c903094a8ce8baee",
+                "url": "https://api.github.com/repos/Zizaco/entrust/zipball/3936ecf81efe2e124998b657a7adf03106e279e6",
                 "reference": "be28aa634c44551ae5187894c903094a8ce8baee",
                 "shasum": ""
             },
@@ -3555,7 +3609,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Jeroen-G/laravel-packager/zipball/b327387efa89f6ad9741d4b631f72189e4a3e323",
+                "url": "https://api.github.com/repos/Jeroen-G/laravel-packager/zipball/ee94ea3ee4d1fce9e1074605f8ce04e7b8e12a04",
                 "reference": "b327387efa89f6ad9741d4b631f72189e4a3e323",
                 "shasum": ""
             },

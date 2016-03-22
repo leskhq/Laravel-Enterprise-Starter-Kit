@@ -19,7 +19,7 @@ class ProductionSeeder extends Seeder
     {
         ////////////////////////////////////
         // Load the routes
-        Route::loadLaravelRoutes();
+        Route::loadLaravelRoutes('.*');
         // Look for and delete route named 'do-not-load' if it exist.
         // That route is used to test the Authorization middleware and should not be loaded automatically.
         $routeToDelete = Route::where('name', 'do-not-load')->get()->first();
@@ -74,7 +74,13 @@ class ProductionSeeder extends Seeder
         $permManageRoutes = Permission::create([
             'name'          => 'manage-routes',
             'display_name'  => 'Manage routes',
-            'description'   => 'Allows a user to Manage the site routes.',
+            'description'   => 'Allows a user to manage the site routes.',
+            'enabled'       => true,
+        ]);
+        $permManageModules = Permission::create([
+            'name'          => 'manage-modules',
+            'display_name'  => 'Manage modules',
+            'description'   => 'Allows a user to manage the site modules.',
             'enabled'       => true,
         ]);
         // Create a few permissions for the admin|audit section
@@ -160,6 +166,13 @@ class ProductionSeeder extends Seeder
             $route->permission()->associate($permManageRoutes);
             $route->save();
         }
+        // Associate manage-modules permissions to routes starting with 'admin.modules.'
+        $manageModulesRoutes = Route::where('name', 'like', "admin.modules.%")->get()->all();
+        foreach ($manageModulesRoutes as $route)
+        {
+            $route->permission()->associate($permManageModules);
+            $route->save();
+        }
         // Associate manage-users permissions to routes starting with 'admin.users.'
         $manageUserRoutes = Route::where('name', 'like', "admin.users.%")->get()->all();
         foreach ($manageUserRoutes as $route)
@@ -208,6 +221,15 @@ class ProductionSeeder extends Seeder
             "enabled"       => true
         ]);
         $roleUserManagers->perms()->attach($permManageUsers->id);
+        // Create role: module-manager
+        // Assign permission manage-modules
+        $roleModuleManagers = Role::create([
+            "name"          => "module-managers",
+            "display_name"  => "Module managers",
+            "description"   => "Module managers are granted all permissions to the Admin|Modules section.",
+            "enabled"       => true
+        ]);
+        $roleModuleManagers->perms()->attach($permManageModules->id);
         // Create role: role-manager
         // Assign permission: manage-roles
         $roleRoleManagers = Role::create([
@@ -334,11 +356,24 @@ class ProductionSeeder extends Seeder
             'route_id'      => $routeAuditView->id,
             'permission_id' => null,                // Get permission from route.
         ]);
+        // Create Modules sub-menu
+        $menuModules = Menu::create([
+            'name'          => 'modules',
+            'label'         => 'Modules',
+            'position'      => 1,
+            'icon'          => 'fa fa-puzzle-piece',
+            'separator'     => false,
+            'url'           => null,                // Get URL from route.
+            'enabled'       => true,
+            'parent_id'     => $menuAdmin->id,      // Parent is admin.
+            'route_id'      => Route::where('name', 'like', "admin.modules.index")->get()->first()->id,
+            'permission_id' => null,                // Get permission from route.
+        ]);
         // Create Security container.
         $menuSecurity = Menu::create([
             'name'          => 'security',
             'label'         => 'Security',
-            'position'      => 1,
+            'position'      => 2,
             'icon'          => 'fa fa-user-secret fa-colour-red',
             'separator'     => false,
             'url'           => null,                // No url.
@@ -429,7 +464,7 @@ class ProductionSeeder extends Seeder
         $menuSettings = Menu::create([
             'name'          => 'setting',
             'label'         => 'Settings',
-            'position'      => 2,
+            'position'      => 3,
             'icon'          => 'fa fa-cogs',
             'separator'     => false,
             'url'           => null,                // Get URL from route.

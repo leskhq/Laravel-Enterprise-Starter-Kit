@@ -68,7 +68,7 @@ class Route extends Model
      *
      * @return int  The number of Laravel routes loaded.
      */
-    public static function loadLaravelRoutes()
+    public static function loadLaravelRoutes($routeNameRegEx)
     {
         $AppRoutes =  \Route::getRoutes();
 
@@ -81,33 +81,38 @@ class Route extends Model
             $path       = $appRoute->getPath();
             $actionName = $appRoute->getActionName();
 
+            // Skip AuthController and PasswordController routes, Those are always authorized.
             if (    !str_contains($actionName, 'AuthController')
                  && !str_contains($actionName, 'PasswordController') ) {
 
-                foreach ($methods as $method) {
-                    $route = null;
+                // Include only if the name matches the requested Regular Expression.
+                if (preg_match($routeNameRegEx, $name)) {
+                    foreach ($methods as $method) {
+                        $route = null;
 
-                    if (    'HEAD' !== $method                     // Skip method 'HEAD' looks to be duplicated of 'GET'
-                         && !starts_with($path, '_debugbar')   ) { // Skip all DebugBar routes.
+                        if (    'HEAD' !== $method                     // Skip method 'HEAD' looks to be duplicated of 'GET'
+                             && !starts_with($path, '_debugbar')   ) { // Skip all DebugBar routes.
 
-                        // TODO: Use Repository 'findWhere' when its fixed!!
-                        //                    $route = $this->route->findWhere([
-                        //                        'method'      => $method,
-                        //                        'action_name' => $actionName,
-                        //                    ])->first();
-                        $route = \App\Models\Route::ofMethod($method)->ofActionName($actionName)->ofPath($path)->first();
+                            // TODO: Use Repository 'findWhere' when its fixed!!
+                            //                    $route = $this->route->findWhere([
+                            //                        'method'      => $method,
+                            //                        'action_name' => $actionName,
+                            //                    ])->first();
+                            $route = \App\Models\Route::ofMethod($method)->ofActionName($actionName)->ofPath($path)->first();
 
-                        if (!isset($route)) {
-                            $cnt++;
-                            $newRoute = Route::create([
-                                'name'          => $name,
-                                'method'        => $method,
-                                'path'          => $path,
-                                'action_name'   => $actionName,
-                                'enabled'       => 1,
-                            ]);
+                            if (!isset($route)) {
+                                $cnt++;
+                                $newRoute = Route::create([
+                                    'name'          => $name,
+                                    'method'        => $method,
+                                    'path'          => $path,
+                                    'action_name'   => $actionName,
+                                    'enabled'       => 1,
+                                ]);
+                            }
                         }
                     }
+
                 }
             }
         }
