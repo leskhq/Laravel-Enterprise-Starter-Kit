@@ -4,6 +4,10 @@
 .env
 storage/
 
+# Package development #
+#######################
+/app/Modules/
+
 # Configuration testing #
 #########################
 .env.mysql

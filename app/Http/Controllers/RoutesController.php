@@ -55,8 +55,12 @@ class RoutesController extends Controller {
                               ->pushCriteria(new RoutesByMethodAscending())
                               ->paginate(20);
         $perms = $this->permission->all()->lists('display_name', 'id');
-        $perms = $perms->toArray(0);
-        array_unshift($perms, '');
+        // SR [2016-03-20] Cannot add/prepend a blank item as it reshuffles the array index.
+        // This cause the permission to not be recognized by the code building the view and
+        // matching permission with each route. From now on un-setting the permission of a
+        // few is unsupported by design.
+//        $perms = $perms->toArray(0);
+//        array_unshift($perms, '');
 
         return view('admin.routes.index', compact('routes', 'perms', 'page_title', 'page_description'));
 
@@ -234,7 +238,7 @@ class RoutesController extends Controller {
     {
         Audit::log(Auth::user()->id, trans('admin/routes/general.audit-log.category'), trans('admin/routes/general.audit-log.msg-load'));
 
-        $nbRoutesLoaded = \App\Models\Route::loadLaravelRoutes();
+        $nbRoutesLoaded = \App\Models\Route::loadLaravelRoutes('/.*/');
 
         Flash::success( trans('admin/routes/general.status.loaded', ['number' => $nbRoutesLoaded]) );
         return redirect('/admin/routes');
