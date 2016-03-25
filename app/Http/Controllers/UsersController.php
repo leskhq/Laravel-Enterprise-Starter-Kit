@@ -147,15 +147,8 @@ class UsersController extends Controller {
         $page_title = trans('admin/users/general.page.edit.title'); // "Admin | User | Edit";
         $page_description = trans('admin/users/general.page.edit.description', ['full_name' => $user->full_name]); // "Editing user";
 
-        if (!$user->isEditable())
-        {
-            abort(403);
-        }
-
         $roles = $this->role->pushCriteria(new RolesByNamesAscending())->all();
         $perms = $this->perm->pushCriteria(new PermissionsByNamesAscending())->all();
-//        $roleCollection = \App\Models\Role::take(10)->get(['id', 'display_name'])->lists('display_name', 'id');
-//        $roleList = [''=>''] + $roleCollection->all();
 
         return view('admin.users.edit', compact('user', 'roles', 'perms', 'page_title', 'page_description'));
     }
@@ -304,15 +297,22 @@ class UsersController extends Controller {
             $replayAtt, "App\Http\Controllers\UsersController::ParseUpdateAuditLog", "admin.users.replay-edit" );
 
 
-        if (!$user->isEditable())
-        {
-            abort(403);
-        }
-
         if ( (array_key_exists('selected_roles', $attributes)) && (!empty($attributes['selected_roles'])) ) {
             $attributes['role'] = explode(",", $attributes['selected_roles']);
         } else {
             $attributes['role'] = [];
+        }
+
+        if ($user->isRoot())
+        {
+            // Prevent changes to some fields for the root user.
+            unset($attributes['username']);
+            unset($attributes['first_name']);
+            unset($attributes['last_name']);
+            unset($attributes['enabled']);
+            unset($attributes['selected_roles']);
+            unset($attributes['role']);
+            unset($attributes['perms']);
         }
 
         $user->update($attributes);
