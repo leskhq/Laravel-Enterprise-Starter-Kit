@@ -11,7 +11,7 @@
       "Active Directory"
     ],
     "homepage": "https://github.com/sroutier/laravel-5.1-enterprise-starter-kit",
-    "license": "GPLv3",
+    "license": "GPL-3.0",
     "authors": [
       {
         "name": "Sebastien Routier",
@@ -38,7 +38,8 @@
         "bosnadev/repositories": "0.*",
         "sroutier/eloquent-ldap": "^1.0@dev",
         "zofe/rapyd": "2.1.*",
-        "baum/baum": "~1.1"
+        "baum/baum": "~1.1",
+        "sroutier/l51esk-modules": "^3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

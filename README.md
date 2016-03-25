@@ -1,4 +1,4 @@
-# Laravel 5.1 - Enterprise starter kit (L51ESK)
+# Laravel 5.1 - Enterprise Starter Kit (L51ESK)
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
@@ -60,6 +60,7 @@ Directory (AD) authentication and the dynamic authorization module. But wait the
 * Optional audit log of user actions.
     * Allows to "replay" some user actions.
     * Allows to hook a custom data parser and blade partial to render the "replay" data.
+* Modules with [l51esk-modules](https://github.com/sroutier/l51esk-modules)
 * Laravel [Repositories](https://github.com/Bosnadev/Repositories).
 * Flash notifications using [laracasts/flash](https://github.com/laracasts/flash).
 * CRUD widgets, datatable, grids, forms with [rapyd-laravel](https://github.com/zofe/rapyd-laravel)
@@ -198,7 +199,7 @@ This project includes the file 'composer.lock'. The purpose of the 'composer.loc
 packages needed by a project as this one. By using the included lock file you are sure to use the same version of those 
 packages as were used during the design. 
 
-Fetch all dependencies using *composer* by issuing one of the following commands depending on which environment your are 
+Fetch all dependencies using *composer* by issuing one of the following commands depending on which environment you are 
 trying to configure:
 
 For a development environment use:
@@ -440,8 +441,8 @@ Parameter info:
 The replay action feature, as the name suggest, allows to replay or repeat an action that was previously logged from the audit log. For the replay action to be available both the *attributes* and the *replay_route* parameters must be specified.
 Perhaps the best and easiest way to understand how it function is to follow a concrete example. Below I will describe how the replay action is used in the case of a user edit.
 
-##### Creating a replayable audit log entry
-1. The operator (human) click on the link to edit the entri of a user, say ID #3, the URL would look something like this *http://l51esk/admin/users/3/edit*.
+##### Creating a replay-able audit log entry
+1. The operator (human) click on the link to edit the entry of a user, say ID #3, the URL would look something like this *http://l51esk/admin/users/3/edit*.
 2. The controller *UsersController* and it's function *edit* are invoked. The *edit* function prepares the data that will be displayed and edited then pass it all the the view *admin.users.edit*. Note that in the *edit* function an audit log entry is created stating that the operator initiated the edition of the user. This is just a simple audit log entry that does not save any *attributes* or sets the *replay_route*, it is there simply for audit purposes.
 3. The view is built and returned to the operator to see in his browser.
 4. The operator makes the changes that are required and submits the form.
@@ -459,16 +460,16 @@ Perhaps the best and easiest way to understand how it function is to follow a co
             $replayAtt, "App\Http\Controllers\UsersController::ParseUpdateAuditLog", "admin.users.replay-edit" );
      ````
 
-That is it, you are done, a replayable audit log entry has been created. Note the 4th and 6th parameters. 
+That is it, you are done, a replay-able audit log entry has been created. Note the 4th and 6th parameters. 
 The 4th parameter (*replayAtt*) is the array of attributes that will be filtered to remove the session token and passwords, then converted into JSON and stored in the *data* column.
 The 6th parameter (*admin.users.replay-edit*) is the name of the Laravel route that will be invoked when a replay action is requested. 
 The 5th parameter is the fully qualified function name that will be used to parse the *data* field. That will be described in a section below on displaying entry details and custom rendering partials.
 
-##### Triggering a replayable entry
-Following the example above, here is a description of how triggering a replayable action functions:
+##### Triggering a replay-able entry
+Following the example above, here is a description of how triggering a replay-able action functions:
 
 1. The operator (human) access the audit log page at: *http://l51esk/admin/audit*
-2. Locates the replayable entry by it's spining recycling icon in the action column, and click on it.
+2. Locates the replay-able entry by it's spinning recycling icon in the action column, and click on it.
 3. The *replay* function of the *AuditsController* controller is invoked. The *replay* function locates the audit log entry from the id passed in, and redirect to the Laravel route that is store in the *replay_route*. In this case it is *admin.users.replay-edit*.
 4. The *admin.users.replay-edit* route triggers the function *replayEdit* in the *UsersController* controller, as defined in the *app\Http\routes.php* file.
 5. The *replayEdit* function perform the following:
@@ -481,18 +482,30 @@ Following the example above, here is a description of how triggering a replayabl
   7. Redirect to the user's edit page for the operator to confirm or edit some more.
 
 ##### Displaying entry details and custom rendering partials
-An audit log entry that is replayable will most likely have some data attributes that make it unique and has to be processed in order to be displayed properlly. In the call to the *Audit::log()* function above that creates the replayable entry, the 5th parameter, the *data_parser*, is the fully qualified name of a function that will get called to prepare the data before returning the view displaying the details to the browser. 
-Additionaly the *data_parser* function can add to the *data* array an entry with a key of *show_partial* that points to a partial blade file that will be responsible for rendering the parsed data of the audit log entry. If no *show_partial* is specified the default behaviour is to use *var_dump()* to simply dump the value on the page.
+An audit log entry that is replay-able will most likely have some data attributes that make it unique and has to be processed 
+in order to be displayed properly. In the call to the *Audit::log()* function above that creates the replay-able entry, the 
+5th parameter, the *data_parser*, is the fully qualified name of a function that will get called to prepare the data before 
+returning the view displaying the details to the browser. 
+Additionally the *data_parser* function can add to the *data* array an entry with a key of *show_partial* that points to 
+a partial blade file that will be responsible for rendering the parsed data of the audit log entry. If no *show_partial* is 
+specified the default behaviour is to use *var_dump()* to simply dump the value on the page.
 
 ### Rapyd demo
-To enable the demo mini sub-site that comes with [rapyd-laravel](https://github.com/zofe/rapyd-laravel) uncomment the following line at the end of the file *app/Http/rapyd.php*:
+To enable the demo mini sub-site that comes with [rapyd-laravel](https://github.com/zofe/rapyd-laravel) uncomment the 
+following line at the end of the file *app/Http/rapyd.php*:
 
 ```
 // Uncomment to enable the demo route.
 Route::controller('rapyd-demo', '\Zofe\Rapyd\Demo\DemoController');
 ```
 
-For more information on how to use the [Rapyd CRUD and Grid](https://github.com/zofe/rapyd-laravel) feature please refer to original package notes.
+For more information on how to use the [Rapyd CRUD and Grid](https://github.com/zofe/rapyd-laravel) feature please refer 
+to original package notes.
+
+### Modules
+Small features can be grouped into modules and managed, enabled and upgraded, without impacting the entire site.
+Refer to the documentation on the [l51esk-modules](https://github.com/sroutier/l51esk-modules) and look at a 
+concrete example [Module Demo](https://github.com/sroutier/l51esk-modules-test-module-1) for more details.  
 
 
 ## Deploying to production
