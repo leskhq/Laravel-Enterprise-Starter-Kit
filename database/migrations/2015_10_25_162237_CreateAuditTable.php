@@ -22,7 +22,7 @@ class CreateAuditTable extends Migration
             $table->string('data_parser')->nullable()->default(null);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+//            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
