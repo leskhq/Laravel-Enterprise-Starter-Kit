@@ -11,17 +11,29 @@
         <div class="tab-pane active" id="tab_details">
             <div class="form-group">
                 {!! Form::label('first_name', trans('admin/users/general.columns.first_name')) !!}
-                {!! Form::text('first_name', null, ['class' => 'form-control']) !!}
+                @if ( $user->isRoot() )
+                    {!! Form::text('first_name', null, ['class' => 'form-control', 'readonly']) !!}
+                @else
+                    {!! Form::text('first_name', null, ['class' => 'form-control']) !!}
+                @endif
             </div>
 
             <div class="form-group">
                 {!! Form::label('last_name', trans('admin/users/general.columns.last_name')) !!}
-                {!! Form::text('last_name', null, ['class' => 'form-control']) !!}
+                @if ( $user->isRoot() )
+                    {!! Form::text('last_name', null, ['class' => 'form-control', 'readonly']) !!}
+                @else
+                    {!! Form::text('last_name', null, ['class' => 'form-control']) !!}
+                @endif
             </div>
 
             <div class="form-group">
                 {!! Form::label('username', trans('admin/users/general.columns.username')) !!}
-                {!! Form::text('username', null, ['class' => 'form-control']) !!}
+                @if ( $user->isRoot() )
+                    {!! Form::text('username', null, ['class' => 'form-control', 'readonly']) !!}
+                @else
+                    {!! Form::text('username', null, ['class' => 'form-control']) !!}
+                @endif
             </div>
 
             <div class="form-group">
@@ -51,7 +63,11 @@
                     <label>
                         <!-- Trick to force cleared checkbox to being posted in form! It will be posted as zero unless checked then posted again as 1 and since only last one count! -->
                         {!! '<input type="hidden" name="enabled" value="0">' !!}
-                        {!! Form::checkbox('enabled', '1', $user->enabled) !!} {!! trans('general.status.enabled') !!}
+                        @if ( $user->isRoot() )
+                            {!! Form::checkbox('enabled', '1', $user->enabled, ['disabled']) !!} {!! trans('general.status.enabled') !!}
+                        @else
+                            {!! Form::checkbox('enabled', '1', $user->enabled) !!} {!! trans('general.status.enabled') !!}
+                        @endif
                     </label>
                 </div>
             </div>
@@ -61,7 +77,11 @@
             <div class="form-group">
                 {!! Form::hidden('selected_roles', null, [ 'id' => 'selected_roles']) !!}
                 <div class="input-group select2-bootstrap-append">
-                    {!! Form::select('role_search', [], null, ['class' => 'form-control', 'id' => 'role_search',  'style' => "width: 100%"]) !!}
+                    @if ( $user->isRoot() )
+                        {!! Form::select('role_search', [], null, ['class' => 'form-control', 'id' => 'role_search', 'disabled' => 'disabled',  'style' => "width: 100%"]) !!}
+                    @else
+                        {!! Form::select('role_search', [], null, ['class' => 'form-control', 'id' => 'role_search',  'style' => "width: 100%"]) !!}
+                    @endif
                     <span class="input-group-btn">
                         <button class="btn btn-default"  id="btn-add-role" type="button">
                             <span class="fa fa-plus-square"></span>
@@ -91,7 +111,11 @@
                                     @endif
                                 </td>
                                 <td style="text-align: right">
-                                    <a class="btn-remove-role" href="#" title="{{ trans('general.button.remove-role') }}"><i class="fa fa-trash-o deletable"></i></a>
+                                    @if ( $user->isRoot() )
+                                        <i class="fa fa-trash-o text-muted"></i>
+                                    @else
+                                        <a class="btn-remove-role" href="#" title="{{ trans('general.button.remove-role') }}"><i class="fa fa-trash-o deletable"></i></a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -116,7 +140,12 @@
                             <tr>
                                 <td>{!! link_to_route('admin.permissions.show', $perm->display_name, [$perm->id], []) !!}</td>
                                 <td>
-                                    {!! Form::checkbox('perms[]', $perm->id, $user->hasPermission($perm->name)) !!}
+                                    @if ( $user->isRoot() )
+                                        {!! Form::checkbox('perms[]', $perm->id, $user->hasPermission($perm->name), ['disabled']) !!}
+                                    @else
+                                        {!! Form::checkbox('perms[]', $perm->id, $user->hasPermission($perm->name)) !!}
+                                    @endif
+
                                 </td>
                                 <td>
                                     @if($user->can($perm->name))

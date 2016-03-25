@@ -116,14 +116,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * @return bool
      */
-    public function isEditable()
+    public function isRoot()
     {
         // Protect the root user from edits.
         if ('root' == $this->username) {
-            return false;
+            return true;
         }
         // Otherwise
-        return true;
+        return false;
     }
 
     /**

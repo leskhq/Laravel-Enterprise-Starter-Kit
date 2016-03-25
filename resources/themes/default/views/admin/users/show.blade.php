@@ -151,9 +151,7 @@
 
                 <div class="form-group">
                     {!! Form::submit(trans('general.button.close'), ['class' => 'btn btn-primary']) !!}
-                    @if ($user->isEditable())
-                        <a href="{!! route('admin.users.edit', $user->id) !!}" title="{{ trans('general.button.edit') }}" class='btn btn-default'>{{ trans('general.button.edit') }}</a>
-                    @endif
+                    <a href="{!! route('admin.users.edit', $user->id) !!}" title="{{ trans('general.button.edit') }}" class='btn btn-default'>{{ trans('general.button.edit') }}</a>
                 </div>
 
                 {!! Form::close() !!}

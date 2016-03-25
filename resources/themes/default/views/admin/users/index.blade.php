@@ -73,11 +73,7 @@
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->auth_type }}</td>
                                         <td>
-                                            @if ( $user->isEditable() )
-                                                <a href="{!! route('admin.users.edit', $user->id) !!}" title="{{ trans('general.button.edit') }}"><i class="fa fa-pencil-square-o"></i></a>
-                                            @else
-                                                <i class="fa fa-pencil-square-o text-muted" title="{{ trans('admin/users/general.error.cant-be-edited') }}"></i>
-                                            @endif
+                                            <a href="{!! route('admin.users.edit', $user->id) !!}" title="{{ trans('general.button.edit') }}"><i class="fa fa-pencil-square-o"></i></a>
 
                                             @if ($user->canBeDisabled())
                                                 @if ( $user->enabled )
