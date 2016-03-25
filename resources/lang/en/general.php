@@ -56,10 +56,14 @@ return [
     ],
 
     'audit-log'           => [
-        'category-login'        => 'Login',
-        'msg-login-success'     => 'Successful login: :username.',
-        'msg-login-failed'      => 'Login failed: :username.',
-        'msg-forcing-logout'    => 'Forcing logout: :username.',
+        'category-login'               => 'Login',
+        'category-register'            => 'Register',
+        'msg-login-success'            => 'Successful login: :username.',
+        'msg-login-failed'             => 'Login failed: :username.',
+        'msg-forcing-logout'           => 'Forcing logout: :username.',
+        'msg-registration-attempt'     => 'Registration: :username.',
+        'msg-account-created-login-in' => 'Registration successful, account created, login in: :username.',
+        'msg-account-created-disabled' => 'Registration successful, account created but *disabled*: :username.',
     ],
 
 ];

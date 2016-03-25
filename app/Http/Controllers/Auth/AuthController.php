@@ -71,8 +71,6 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
 
-        Flash::success("Welcome" . $user->first_name . ", your user has been created");
-
         return $user;
     }
 
@@ -149,5 +147,46 @@ class AuthController extends Controller
         return view('auth.register', compact('page_title'));
     }
 
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function postRegister(Request $request)
+    {
+        $username = "N/A";
+        if ($request->has('username')) {
+            $username = $request['username'];
+        }
+        Audit::log(null, trans('general.audit-log.category-register'), trans('general.audit-log.msg-registration-attempt', ['username' => $username]));
+
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+        $user = $this->create($request->all());
+
+        if (config('auth.enable_user_on_create')) {
+            $user->enabled = true;
+            $user->save();
+            Audit::log(null, trans('general.audit-log.category-login'), trans('general.audit-log.msg-account-created-login-in', ['username' => $user->username]));
+            Flash::success("Welcome " . $user->first_name . ", your account has been created");
+
+            Auth::login($user);
+
+            return redirect($this->redirectPath());
+        }
+        else {
+            Audit::log(null, trans('general.audit-log.category-login'), trans('general.audit-log.msg-account-created-disabled', ['username' => $user->username]));
+            Flash::success("Welcome " . $user->first_name . ", your account has been created, and will soon be enabled.");
+
+            return redirect(route('home'));
+        }
+    }
 
 }

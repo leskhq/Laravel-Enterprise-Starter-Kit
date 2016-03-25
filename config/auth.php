@@ -64,4 +64,16 @@ return [
         'expire' => 60,
     ],
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default account status
+    |--------------------------------------------------------------------------
+    |
+    | Specify if accounts are enabled as they are created when registering or
+    | if they are disabled, and waiting for an user administrator to manually
+    | enable them.
+    |
+    */
+    'enable_user_on_create' => env('AUTH_ENABLE_USER_ON_CREATE', true),
 ];

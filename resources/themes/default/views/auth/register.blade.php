@@ -18,6 +18,10 @@
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
+                <input type="text" id="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}" required/>
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
                 <input type="password" id="password" name="password" class="form-control" placeholder="Password" required/>
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
