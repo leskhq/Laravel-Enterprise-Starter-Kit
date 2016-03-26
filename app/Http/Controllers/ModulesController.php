@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Caffeinated\Modules\Facades\Module;
+use Sroutier\L51ESKModules\Facades\Module;
 use App\Repositories\AuditRepository as Audit;
 use Auth;
 use Laracasts\Flash\Flash;

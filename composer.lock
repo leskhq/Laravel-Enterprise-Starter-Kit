@@ -2101,16 +2101,16 @@
         },
         {
             "name": "sroutier/l51esk-modules",
-            "version": "v3.0.5",
+            "version": "3.0.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sroutier/l51esk-modules.git",
-                "reference": "d8427150be9246e90a89c5ba656bacbf0122b3a5"
+                "reference": "66e73740ff19730ef8d6538f545de5b0682f4930"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sroutier/l51esk-modules/zipball/d8427150be9246e90a89c5ba656bacbf0122b3a5",
-                "reference": "d8427150be9246e90a89c5ba656bacbf0122b3a5",
+                "url": "https://api.github.com/repos/sroutier/l51esk-modules/zipball/66e73740ff19730ef8d6538f545de5b0682f4930",
+                "reference": "66e73740ff19730ef8d6538f545de5b0682f4930",
                 "shasum": ""
             },
             "require": {
@@ -2132,26 +2132,30 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Caffeinated\\Modules\\": "src/"
+                    "Sroutier\\L51ESKModules\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "MIT"
+                "GPL-3.0"
             ],
             "authors": [
                 {
                     "name": "Shea Lewis",
                     "email": "shea.lewis89@gmail.com"
+                },
+                {
+                    "name": "Sebastien Routier",
+                    "email": "sroutier@gmail.com"
                 }
             ],
-            "description": "Laravel 5 Modules",
+            "description": "Module package for Laravel 5.1 enterprise starter kit",
             "keywords": [
-                "caffeinated",
+                "l51esk",
                 "laravel",
                 "modules"
             ],
-            "time": "2016-03-14 18:36:56"
+            "time": "2016-03-26 15:27:56"
         },
         {
             "name": "swiftmailer/swiftmailer",

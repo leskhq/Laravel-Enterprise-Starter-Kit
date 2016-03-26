@@ -169,7 +169,7 @@ return [
         Zizaco\Entrust\EntrustServiceProvider::class,
         Zofe\Rapyd\RapydServiceProvider::class,
         Baum\Providers\BaumServiceProvider::class,
-        Caffeinated\Modules\ModulesServiceProvider::class,
+        Sroutier\L51ESKModules\ModulesServiceProvider::class,
 
     ],
 
@@ -226,7 +226,7 @@ return [
         'Theme'       => YAAP\Theme\Facades\Theme::class,
         'Entrust'     => Zizaco\Entrust\EntrustFacade::class,
         'MenuBuilder' => App\Facades\MenuBuilderFacade::class,
-        'Module'      => Caffeinated\Modules\Facades\Module::class,
+        'Module'      => Sroutier\L51ESKModules\Facades\Module::class,
     ],
 
 ];
