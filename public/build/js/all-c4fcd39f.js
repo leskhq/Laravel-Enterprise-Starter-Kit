@@ -1,9 +1,10 @@
 // Close or remove modal div.
 $(function () {
-    $('body').on('hidden.bs.modal', '.modal', function () {
-        $(this).removeData('bs.modal');
+    $("#modal_dialog").on('hidden.bs.modal', function () {
+        $(this).data('bs.modal', null);
     });
 });
+
 (function() {
   if (typeof elvis !== "undefined" && elvis !== null) {
     alert("I knew it!");

@@ -26,7 +26,7 @@ elixir(function(mix) {
     // Combine the various JS into one.
     mix.scripts([
        //'vendor.js',
-        'close-modal.js',
+        'modal.js',
         'app.js',
     ], null, 'public/js');
 
