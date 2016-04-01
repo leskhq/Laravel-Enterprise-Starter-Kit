@@ -38,6 +38,13 @@ Route::group(['middleware' => 'authorize'], function () {
 
     // Site administration section
     Route::group(['prefix' => 'admin'], function () {
+        // Expedition routes
+        Route::get(   'expeditions',                   ['as' => 'admin.expeditions.index',      'uses' => 'ExpeditionsController@index']);
+        Route::get(   'expeditions/create',            ['as' => 'admin.expeditions.create',     'uses' => 'ExpeditionsController@create']);
+        Route::get(   'expeditions/{exId}',            ['as' => 'admin.expeditions.show',       'uses' => 'ExpeditionsController@show']);
+        Route::get(   'expeditions/{exId}/edit',       ['as' => 'admin.expeditions.edit',       'uses' => 'ExpeditionsController@edit']);
+        Route::get(   'expeditions/{exId}/confirm-delete', ['as' => 'admin.expeditions.confirm-delete', 'uses' => 'ExpeditionsController@getModalDelete']);
+        //======================================================================================================================/
         // User routes
         Route::post(  'users/enableSelected',          ['as' => 'admin.users.enable-selected',  'uses' => 'UsersController@enableSelected']);
         Route::post(  'users/disableSelected',         ['as' => 'admin.users.disable-selected', 'uses' => 'UsersController@disableSelected']);
