@@ -63,9 +63,28 @@ trait UserHasPermissionsTrait
             // Return the value of $requireAll;
             return $requireAll;
         } else {
-            foreach ($this->permissions as $perm) {
-                if ($perm->name == $name) {
-                    return true;
+            // The 'root' user is all powerful.
+            // TODO: Get super user name from config, and replace all occurrences.
+            if ('root' == $this->username) {
+                return true;
+            }
+            // Everyone has 'open-to-all'.
+            // TODO: Get 'open-to-all' role name from config, and replace all occurrences.
+            elseif ( 'open-to-all' == $name ) {
+                return true;
+            }
+            // At this stage all users are authenticated so yes...
+            elseif ( 'basic-authenticated' == $name ) {
+                return true;
+            }
+
+
+
+            else {
+                foreach ($this->permissions as $perm) {
+                    if ($perm->name == $name) {
+                        return true;
+                    }
                 }
             }
         }
@@ -101,16 +120,24 @@ trait UserHasPermissionsTrait
             // Return the value of $requireAll;
             return $requireAll;
         } else {
-            foreach ($this->roles as $role) {
-                if ($role->enabled) {
-                    // Validate against the Permission table
-                    foreach ($role->perms as $perm) {
-                        if ( ($perm->enabled) && ($perm->name == $permission) ) {
-                            return true;
+            // Users of the 'admin' role cab do it all.
+            // TODO: Get 'admins' role name from config, and replace all occurrences.
+            if ($this->hasRole('admins')) {
+                return true;
+            }
+            else {
+                foreach ($this->roles as $role) {
+                    if ($role->enabled) {
+                        // Validate against the Permission table
+                        foreach ($role->perms as $perm) {
+                            if ( ($perm->enabled) && ($perm->name == $permission) ) {
+                                return true;
+                            }
                         }
                     }
                 }
             }
+
         }
 
         return false;
