@@ -113,6 +113,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Home route name
+    |--------------------------------------------------------------------------
+    |
+    | The name of the route that requests will be redirected to when calling
+    | the 'home' or '/' route.
+    | This setting defaults to the 'welcome' route and it will be checked against
+    | the users permission before redirecting, if the user does not have the
+    | permission required to see the configured home route, the 'welcome'
+    | route will be selected.
+    |
+    */
+    'home_route' => env('APP_HOME_ROUTE', 'welcome'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------
     |
