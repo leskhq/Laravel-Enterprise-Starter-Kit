@@ -16,10 +16,12 @@ class Product extends Model
     'price',
     'agenresmi_price',
     'agenlepas_price',
-    'distributor_price',
-    'weight','perfume_id',
+    'stock',
+    'weight',
+    'perfume_id',
     'supplier_id',
-    'description'
+    'description',
+    'published'
   ];
 
   /**
@@ -33,5 +35,10 @@ class Product extends Model
 
   public function supplier() {
     return $this->belongsTo('App\Models\Supplier');
+  }
+
+  public function getSupplierName($supplier_id) {
+    $supplier = Supplier::find($supplier_id);
+    return $supplier->name;
   }
 }

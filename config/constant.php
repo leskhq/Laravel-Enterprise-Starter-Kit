@@ -19,7 +19,7 @@ return [
     "Muamalat" => "Muamalat"
   ],
 
-  'product-category' => [
+  'product-categories' => [
     '1' => 'Detergent & Pewangi',
     '2' => 'Anti Noda & Spotter',
     '3' => 'Produk Rumah Tangga',
@@ -28,6 +28,19 @@ return [
     '6' => 'Bibit Parfum',
     '7' => 'Bahan Baku',
     '8' => 'Parfum'
+  ],
+
+  'product-status' => [
+    '0' => 'Unpublished',
+    '1' => 'Published'
+  ],
+
+  'supplier-category' => [
+    '1' => 'Chemical',
+    '2' => 'Perlengkapan',
+    '3' => 'Peralatan',
+    '4' => 'Bibit Parfum',
+    '5' => 'Lain - lain'
   ],
 
 ];
