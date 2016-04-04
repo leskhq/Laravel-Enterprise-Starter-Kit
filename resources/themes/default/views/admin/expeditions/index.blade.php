@@ -11,6 +11,10 @@
           <a class="btn btn-default btn-sm" href="{!! route('admin.expeditions.create') !!}" title="{{ trans('admin/expeditions/general.button.create') }}">
               <i class="fa fa-plus-square"></i>
           </a>
+
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+          </div>
         </div>
         <div class="box-body">
           <div class="table-responsive">

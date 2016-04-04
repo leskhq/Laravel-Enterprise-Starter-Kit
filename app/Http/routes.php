@@ -40,10 +40,34 @@ Route::group(['middleware' => 'authorize'], function () {
     Route::group(['prefix' => 'admin'], function () {
         // Expedition routes
         Route::get(   'expeditions',                   ['as' => 'admin.expeditions.index',      'uses' => 'ExpeditionsController@index']);
+        Route::post(  'expeditions',                   ['as' => 'admin.expeditions.store',      'uses' => 'ExpeditionsController@store']);
         Route::get(   'expeditions/create',            ['as' => 'admin.expeditions.create',     'uses' => 'ExpeditionsController@create']);
+        Route::get(   'expeditions/search',            ['as' => 'admin.expeditions.search',     'uses' => 'ExpeditionsController@search']);
         Route::get(   'expeditions/{exId}',            ['as' => 'admin.expeditions.show',       'uses' => 'ExpeditionsController@show']);
+        Route::patch( 'expeditions/{exId}',            ['as' => 'admin.expeditions.update',     'uses' => 'ExpeditionsController@update']);
         Route::get(   'expeditions/{exId}/edit',       ['as' => 'admin.expeditions.edit',       'uses' => 'ExpeditionsController@edit']);
+        Route::get(   'expeditions/{exId}/delete',        ['as' => 'admin.expeditions.destroy',    'uses' => 'ExpeditionsController@destroy']);
         Route::get(   'expeditions/{exId}/confirm-delete', ['as' => 'admin.expeditions.confirm-delete', 'uses' => 'ExpeditionsController@getModalDelete']);
+        // Product routes
+        Route::post(  'products',                      ['as' => 'admin.products.store',      'uses' => 'ProductsController@store']);
+        Route::get(   'products/cat/{catId}',          ['as' => 'admin.products.index',      'uses' => 'ProductsController@index']);
+        Route::get(   'products/create',               ['as' => 'admin.products.create',     'uses' => 'ProductsController@create']);
+        Route::get(   'products/getInfo',              ['as' => 'admin.products.get-info',   'uses' => 'ProductsController@getInfo']);
+        Route::get(   'products/{proId}',              ['as' => 'admin.products.show',       'uses' => 'ProductsController@show']);
+        Route::patch( 'products/{proId}',              ['as' => 'admin.products.update',     'uses' => 'ProductsController@update']);
+        Route::get(   'products/{proId}/edit',         ['as' => 'admin.products.edit',       'uses' => 'ProductsController@edit']);
+        Route::get(   'products/{proId}/delete',       ['as' => 'admin.products.destroy',    'uses' => 'ProductsController@destroy']);
+        Route::get(   'products/{proId}/confirm-delete', ['as' => 'admin.products.confirm-delete', 'uses' => 'ProductsController@getModalDelete']);
+        // Supplier routes
+        Route::get(   'suppliers',                     ['as' => 'admin.suppliers.index',      'uses' => 'SuppliersController@index']);
+        Route::post(  'suppliers',                     ['as' => 'admin.suppliers.store',      'uses' => 'SuppliersController@store']);
+        Route::get(   'suppliers/create',              ['as' => 'admin.suppliers.create',     'uses' => 'SuppliersController@create']);
+        Route::get(   'suppliers/search',              ['as' => 'admin.suppliers.search',     'uses' => 'SuppliersController@search']);
+        Route::get(   'suppliers/{suppId}',            ['as' => 'admin.suppliers.show',       'uses' => 'SuppliersController@show']);
+        Route::patch( 'suppliers/{suppId}',            ['as' => 'admin.suppliers.update',     'uses' => 'SuppliersController@update']);
+        Route::get(   'suppliers/{suppId}/edit',       ['as' => 'admin.suppliers.edit',       'uses' => 'SuppliersController@edit']);
+        Route::get(   'suppliers/{suppId}/delete',     ['as' => 'admin.suppliers.destroy',    'uses' => 'SuppliersController@destroy']);
+        Route::get(   'suppliers/{suppId}/confirm-delete', ['as' => 'admin.suppliers.confirm-delete', 'uses' => 'SuppliersController@getModalDelete']);
         //======================================================================================================================/
         // User routes
         Route::post(  'users/enableSelected',          ['as' => 'admin.users.enable-selected',  'uses' => 'UsersController@enableSelected']);
@@ -63,7 +87,7 @@ Route::group(['middleware' => 'authorize'], function () {
         Route::get(   'users/{userId}/delete',         ['as' => 'admin.users.delete',           'uses' => 'UsersController@destroy']);
         Route::get(   'users/{userId}/enable',         ['as' => 'admin.users.enable',           'uses' => 'UsersController@enable']);
         Route::get(   'users/{userId}/disable',        ['as' => 'admin.users.disable',          'uses' => 'UsersController@disable']);
-        Route::get(   'users/{userId}/replayEdit',      ['as' => 'admin.users.replay-edit',      'uses' => 'UsersController@replayEdit']);
+        Route::get(   'users/{userId}/replayEdit',     ['as' => 'admin.users.replay-edit',      'uses' => 'UsersController@replayEdit']);
         // Role routes
         Route::post(  'roles/enableSelected',          ['as' => 'admin.roles.enable-selected',  'uses' => 'RolesController@enableSelected']);
         Route::post(  'roles/disableSelected',         ['as' => 'admin.roles.disable-selected', 'uses' => 'RolesController@disableSelected']);
