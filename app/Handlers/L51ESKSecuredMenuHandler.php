@@ -58,7 +58,7 @@ class L51ESKSecuredMenuHandler implements MenuHandlerInterface
     }
 
 
-    public function currentUserIsAuthorized( Menu $item)
+    public function currentUserIsAuthorized( Menu $item )
     {
         $authorized     = false;
         $perm           = null;
@@ -75,63 +75,45 @@ class L51ESKSecuredMenuHandler implements MenuHandlerInterface
             $guest      = true;
         }
 
-        // User is 'root', all is authorized.
-        // TODO: Get super user name from config, and replace all occurrences.
-        if (!$guest && isset($user) && 'root' == $user->username) {
-            $authorized = true;
-        }
-        // User has the role 'admins', all is authorized.
-        // TODO: Get 'admins' role name from config, and replace all occurrences.
-        elseif (!$guest && isset($user) && $user->hasRole('admins')) {
-            $authorized = true;
+        // Get effective permission for menu entry.
+        $route = $item->route;
+        if ($route instanceof Route) {
+            $perm = $route->permission;
         }
         else {
-            // Get effective permission for menu entry.
-            $route = $item->route;
-            if ($route instanceof Route) {
-                $perm = $route->permission;
-            }
-            else {
-                $perm = $item->permission;
-            }
+            $perm = $item->permission;
+        }
 
 
-            // Permission set for route.
-            if ( isset($perm) ) {
-                // Route is open to all.
-                // TODO: Get 'open-to-all' role name from config, and replace all occurrences.
-                if ( 'open-to-all' == $perm->name ) {
-                    $authorized = true;
-                }
-                // TODO: Get 'guest-only' role name from config, and replace all occurrences.
-                // User is guest/unauthenticated and the route is restricted to guests.
-                elseif ( $guest && 'guest-only' == $perm->name ) {
-                    $authorized = true;
-                }
-                // TODO: Get 'basic-authenticated' role name from config, and replace all occurrences.
-                // The route is available to any authenticated user.
-                elseif ( !$guest && isset($user) && ($user->enabled) && 'basic-authenticated' == $perm->name ) {
-                    $authorized = true;
-                }
-                // The user has the permission required by the route.
-                elseif ( !$guest && isset($user) && ($user->enabled) && $user->can($perm->name) ) {
-                    $authorized = true;
-                }
-                // If all checks fail.
-                else {
-                    Log::info("Authorization denied for menu [" . $item->name . "], guest [" . $guest . "], username [" . $username . "].");
-                }
+        // Permission set for route.
+        if ( isset($perm) ) {
+            // Route is open to all.
+            // TODO: Get 'open-to-all' role name from config, and replace all occurrences.
+            if ( 'open-to-all' == $perm->name ) {
+                $authorized = true;
             }
-            // If item has children it may be rendered if any of the children is rendered.
-            elseif ($item->children->count() > 0)
-            {
+            // TODO: Get 'guest-only' role name from config, and replace all occurrences.
+            // User is guest/unauthenticated and the route is restricted to guests.
+            elseif ( $guest && 'guest-only' == $perm->name ) {
+                $authorized = true;
+            }
+            // The user has the permission required by the route.
+            elseif ( !$guest && isset($user) && ($user->enabled) && $user->can($perm->name) ) {
                 $authorized = true;
             }
             // If all checks fail.
             else {
-                Log::info("Menu has no children and/or no permission set for the requested menu [" . $item->name . "], guest [" . $guest . "], username [" . $username . "].");
+                Log::info("Authorization denied for menu [" . $item->name . "], guest [" . $guest . "], username [" . $username . "].");
             }
-
+        }
+        // If item has children it may be rendered if any of the children is rendered.
+        elseif ($item->children->count() > 0)
+        {
+            $authorized = true;
+        }
+        // If all checks fail.
+        else {
+            Log::info("Menu has no children and/or no permission set for the requested menu [" . $item->name . "], guest [" . $guest . "], username [" . $username . "].");
         }
 
         return $authorized;

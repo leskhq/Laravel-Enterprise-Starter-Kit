@@ -118,6 +118,9 @@ class ProductionSeeder extends Seeder
         $routeHome = Route::where('name', 'home')->get()->first();
         $routeHome->permission()->associate($permOpenToAll);
         $routeHome->save();
+        $routeWelcome = Route::where('name', 'welcome')->get()->first();
+        $routeWelcome->permission()->associate($permOpenToAll);
+        $routeWelcome->save();
         $routeFaust = Route::where('name', 'faust')->get()->first();
         $routeFaust->permission()->associate($permOpenToAll);
         $routeFaust->save();
