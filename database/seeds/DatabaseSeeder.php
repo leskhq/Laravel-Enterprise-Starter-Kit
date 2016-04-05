@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
             $this->call('DevelopmentSeeder');
         }
 
+        $this->call('PermAndMenu');
+
         Model::reguard();
     }
 }
