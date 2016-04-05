@@ -39,6 +39,12 @@ class Product extends Model
 
   public function getSupplierName($supplier_id) {
     $supplier = Supplier::find($supplier_id);
+
+    // check if the product does not have supplier id
+    if (!$supplier) {
+      return false;
+    }
+
     return $supplier->name;
   }
 }

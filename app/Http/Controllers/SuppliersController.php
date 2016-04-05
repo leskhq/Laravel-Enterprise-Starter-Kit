@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\SupplierRepository as Supplier;
 use App\Repositories\Criteria\Supplier\SupplierWhereNameLike;
+use App\Repositories\Criteria\Supplier\SuppliersByNamesAscending;
 
 use Illuminate\Http\Request;
 
@@ -29,7 +30,7 @@ class SuppliersController extends Controller
      */
     public function index()
     {
-        $suppliers = $this->supplier->all();
+        $suppliers = $this->supplier->pushCriteria(new SuppliersByNamesAscending)->paginate(15);
 
         $page_title = trans('admin/suppliers/general.page.index.title');
         $page_description = trans('admin/suppliers/general.page.index.description');

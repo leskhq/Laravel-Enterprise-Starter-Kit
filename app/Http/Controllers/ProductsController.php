@@ -8,6 +8,7 @@ use App\Repositories\PerfumeRepository as Perfume;
 use App\Repositories\Criteria\Product\ProductWhereCategoryLike;
 use App\Repositories\Criteria\Product\ProductWhereNameLike;
 use App\Repositories\Criteria\Product\ProductOrderByColumn;
+use App\Repositories\Criteria\Product\ProductsByNamesAscending;
 
 use Illuminate\Http\Request;
 
@@ -57,7 +58,7 @@ class ProductsController extends Controller
         if ($sortBy && $orderBy) {
             $products = $this->product->pushCriteria(new ProductWhereCategoryLike($id))->pushCriteria(new ProductOrderByColumn($sortBy, $orderBy))->paginate(25);
         } else {
-            $products = $this->product->pushCriteria(new ProductWhereCategoryLike($id))->paginate(25);
+            $products = $this->product->pushCriteria(new ProductWhereCategoryLike($id))->pushCriteria(new ProductsByNamesAscending)->paginate(25);
         }
 
         $page_title = trans('admin/products/general.page.index.title');

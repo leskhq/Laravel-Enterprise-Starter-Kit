@@ -51,7 +51,7 @@
                   <td align="center">
                     {!! Form::checkbox('chkUser[]', $e->id); !!}
                   </td>
-                  <td>{!! link_to_route('admin.expeditions.show', $e->name, [$e->id], []) !!}</td>
+                  <td>{!! link_to_route('admin.expeditions.edit', $e->name, [$e->id], []) !!}</td>
                   <td>{{ $e->contact }}</td>
                   <td>{{ $e->description }}</td>
                   <td>
