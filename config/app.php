@@ -128,6 +128,30 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Long name
+    |--------------------------------------------------------------------------
+    |
+    | The long name for the application displayed on the main menu bar on the
+    | left when it is sized wide.
+    |
+    | NOTE: The long name supports HTML markup to style the name.
+    */
+    'long_name' => env('APP_LONG_NAME', '<b>Laravel 5.1 </b>ESK'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Short name
+    |--------------------------------------------------------------------------
+    |
+    | The short name for the application, display in the tab or Web browser title
+    | and on the main menu bar on the left when it is sized to a small.
+    |
+    | NOTE: The short name does not support any HTML markup.
+    */
+    'short_name' => env('APP_SHORT_NAME', 'LESK'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------
     |
@@ -136,7 +160,6 @@ return [
     | this array to grant expanded functionality to your applications.
     |
     */
-
     'providers' => [
 
         /*

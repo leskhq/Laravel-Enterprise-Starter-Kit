@@ -4,9 +4,9 @@
     <!-- Logo -->
     <a href="{{ route('home') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>L</b>ESK</span>
+        <span class="logo-mini">{{ config('app.short_name') }}</span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>Laravel 5.1 </b>ESK</span>
+        <span class="logo-lg">{!! config('app.long_name') !!}</span>
     </a>
 
     <!-- Header Navbar -->
