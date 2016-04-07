@@ -134,7 +134,7 @@ return [
     | The long name for the application displayed on the main menu bar on the
     | left when it is sized wide.
     |
-    | NOTE: The long name supports HTML markup to style the name.
+    | NOTE: The long name supports HTML markup for styling.
     */
     'long_name' => env('APP_LONG_NAME', '<b>Laravel 5.1 </b>ESK'),
 
@@ -149,6 +149,31 @@ return [
     | NOTE: The short name does not support any HTML markup.
     */
     'short_name' => env('APP_SHORT_NAME', 'LESK'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Tag line
+    |--------------------------------------------------------------------------
+    |
+    | The tag line appears at the bottom of every page on the right and can be
+    | anything you want.
+    |
+    | NOTE: The tag line supports HTML markup for styling.
+    */
+    'tag_line' => env('APP_TAG_LINE', 'Anything you want'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Copyright line
+    |--------------------------------------------------------------------------
+    |
+    | The copyright line appear at the bottom of every page on the left and is
+    | a convenient place to show a copyright notice, but it can also be
+    | anything that you want.
+    |
+    | NOTE: The tag line supports HTML markup for styling.
+    */
+    'copyright_line' => env('APP_COPYRIGHT', '<strong>Copyright &copy; 2015 <a href="#">Company</a>.</strong> All rights reserved.'),
 
     /*
     |--------------------------------------------------------------------------
