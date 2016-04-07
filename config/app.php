@@ -177,6 +177,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Allow registration
+    |--------------------------------------------------------------------------
+    |
+    | Boolean flag that allows users to register themselves, defaults to true.
+    |
+    */
+    'allow_registration' => env('APP_ALLOW_REGISTRATION', true),
+
+    /*
+    |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------
     |

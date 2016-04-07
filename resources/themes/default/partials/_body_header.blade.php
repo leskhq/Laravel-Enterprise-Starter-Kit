@@ -157,7 +157,9 @@
                     </li>
                 @else
                     <li>{!! link_to_route('login', 'Sign in') !!}</li>
-                    <li>{!! link_to_route('register', 'Register') !!}</li>
+                    @if (config('app.allow_registration'))
+                        <li>{!! link_to_route('register', 'Register') !!}</li>
+                    @endif
                 @endif
             </ul>
         </div>
