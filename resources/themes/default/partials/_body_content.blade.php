@@ -34,8 +34,10 @@
     <!-- Body Footer -->
     @include('partials._body_footer')
 
-    <!-- Body right sidebar -->
-    @include('partials._body_right_sidebar')
+    @if ( config('app.right_sidebar') )
+        <!-- Body right sidebar -->
+        @include('partials._body_right_sidebar')
+    @endif
 
 </div><!-- ./wrapper -->
 

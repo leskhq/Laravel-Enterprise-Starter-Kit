@@ -187,6 +187,46 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Notification area
+    |--------------------------------------------------------------------------
+    |
+    | Boolean flag that shows the notification area boilerplate, defaults to true.
+    |
+    */
+    'notification_area' => env('APP_NOTIFICATION_AREA', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Extended user menu
+    |--------------------------------------------------------------------------
+    |
+    | Boolean flag that shows extended user menu boilerplate, defaults to true.
+    |
+    */
+    'extended_user_menu' => env('APP_EXTENDED_USER_MENU', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | User profile link
+    |--------------------------------------------------------------------------
+    |
+    | Boolean flag that shows the user profile link boilerplate, defaults to true.
+    |
+    */
+    'user_profile_link' => env('APP_USER_PROFILE_LINK', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Right sidebar
+    |--------------------------------------------------------------------------
+    |
+    | Boolean flag that shows the right sidebar area boilerplate, defaults to true.
+    |
+    */
+    'right_sidebar' => env('APP_RIGHT_SIDEBAR', true),
+
+    /*
+    |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------
     |
