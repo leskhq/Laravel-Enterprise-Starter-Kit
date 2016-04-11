@@ -107,11 +107,7 @@ class UsersController extends Controller {
      */
     public function store(CreateUserRequest $request)
     {
-        $this->validate($request, array(    'username'          => 'required|unique:users',
-                                            'email'             => 'required|unique:users',
-                                            'first_name'        => 'required',
-                                            'last_name'         => 'required',
-        ));
+        $this->validate($request, \app\User::getCreateValidationRules());
 
         $attributes = $request->all();
 
@@ -264,11 +260,7 @@ class UsersController extends Controller {
      */
     public function update(UpdateUserRequest $request, $id)
     {
-        $this->validate($request, array(    'username'          => 'required|unique:users,username,' . $id,
-                                            'email'             => 'required|unique:users,email,' . $id,
-                                            'first_name'        => 'required',
-                                            'last_name'         => 'required',
-        ));
+        $this->validate($request, \app\User::getUpdateValidationRules($id));
 
         $user = $this->user->find($id);
 

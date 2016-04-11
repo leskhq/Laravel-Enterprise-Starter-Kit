@@ -306,4 +306,30 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->roles();
     }
 
+    /**
+     * Returns the validation rules required to create a User.
+     *
+     * @return array
+     */
+    public static function getCreateValidationRules() {
+        return array( 'username'          => 'required|unique:users',
+                      'email'             => 'required|unique:users',
+                      'first_name'        => 'required',
+                      'last_name'         => 'required',
+                    );
+    }
+
+    /**
+     * Returns the validation rules required to update a User.
+     *
+     * @return array
+     */
+    public static function getUpdateValidationRules($id) {
+        return array( 'username'          => 'required|unique:users,username,' . $id,
+                      'email'             => 'required|unique:users,email,' . $id,
+                      'first_name'        => 'required',
+                      'last_name'         => 'required',
+                    );
+    }
+
 }
