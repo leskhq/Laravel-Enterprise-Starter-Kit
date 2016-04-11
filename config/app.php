@@ -136,7 +136,7 @@ return [
     |
     | NOTE: The long name supports HTML markup for styling.
     */
-    'long_name' => env('APP_LONG_NAME', '<b>LC Web-</b>App'),
+    'long_name' => env('APP_LONG_NAME', '<b>Laravel 5.1 </b>ESK'),
 
     /*
     |--------------------------------------------------------------------------
@@ -148,7 +148,7 @@ return [
     |
     | NOTE: The short name does not support any HTML markup.
     */
-    'short_name' => env('APP_SHORT_NAME', 'LCWA'),
+    'short_name' => env('APP_SHORT_NAME', 'LESK'),
 
     /*
     |--------------------------------------------------------------------------
@@ -160,7 +160,7 @@ return [
     |
     | NOTE: The tag line supports HTML markup for styling.
     */
-    'tag_line' => env('APP_TAG_LINE', 'Laundry Cleanique Web-based application'),
+    'tag_line' => env('APP_TAG_LINE', 'Anything you want'),
 
     /*
     |--------------------------------------------------------------------------
@@ -173,7 +173,7 @@ return [
     |
     | NOTE: The tag line supports HTML markup for styling.
     */
-    'copyright_line' => env('APP_COPYRIGHT', '<strong>Copyright &copy; 2016 <a href="#">Indotech Group</a>.</strong> All rights reserved.'),
+    'copyright_line' => env('APP_COPYRIGHT', '<strong>Copyright &copy; 2015 <a href="#">Company</a>.</strong> All rights reserved.'),
 
     /*
     |--------------------------------------------------------------------------
