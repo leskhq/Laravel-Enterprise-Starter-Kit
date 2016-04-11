@@ -4,15 +4,9 @@
     <!-- Logo -->
     <a href="{{ route('home') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-<<<<<<< HEAD
-        <span class="logo-mini"><b>LC</b>WA</span>
-        <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>LC Web-</b>App</span>
-=======
         <span class="logo-mini">{{ config('app.short_name') }}</span>
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg">{!! config('app.long_name') !!}</span>
->>>>>>> refs/remotes/sroutier/master
     </a>
 
     <!-- Header Navbar -->
@@ -26,10 +20,6 @@
             <ul class="nav navbar-nav">
 
                 @if (Auth::check())
-<<<<<<< HEAD
-                
-=======
-
                     @if ( config('app.notification_area') )
                         <!-- Messages: style can be found in dropdown.less-->
                         <li class="dropdown messages-menu">
@@ -121,8 +111,6 @@
                             </ul>
                         </li>
                     @endif
-
->>>>>>> refs/remotes/sroutier/master
                     <!-- User Account Menu -->
                     <li class="dropdown user user-menu">
                         <!-- Menu Toggle Button -->
