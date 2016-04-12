@@ -20,6 +20,7 @@ return [
         'disabled'          => 'Disabled',
         'toggle-select'     => 'Toggle checkboxes',
         'remove-role'       => 'Remove role',
+        'status'            => 'Change Status',
     ],
 
     'status'              => [
