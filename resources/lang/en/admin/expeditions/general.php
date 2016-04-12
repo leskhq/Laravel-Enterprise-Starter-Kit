@@ -2,29 +2,29 @@
 return [
 
     'audit-log'           => [
-        'category'              => 'Users',
-        'msg-index'             => 'Accessed list of users.',
-        'msg-show'              => 'Accessed details of user: :username.',
-        'msg-store'             => 'Created new user: :username.',
-        'msg-edit'              => 'Initiated edit of user: :username.',
-        'msg-replay-edit'       => 'Initiated replay edit of user: :username.',
-        'msg-update'            => 'Submitted edit of user: :username.',
-        'msg-destroy'           => 'Deleted user: :username.',
-        'msg-enable'            => 'Enabled user: :username.',
-        'msg-disabled'          => 'Disabled user: :username.',
-        'msg-enabled-selected'  => 'Enabled multiple user.',
-        'msg-disabled-selected' => 'Disabled multiple user.',
+        'category'              => 'Expeditions',
+        'msg-index'             => 'Accessed list of expeditions.',
+        'msg-show'              => 'Accessed details of expedition: :name.',
+        'msg-store'             => 'Created new expedition: :name.',
+        'msg-edit'              => 'Initiated edit of expedition: :name.',
+        'msg-replay-edit'       => 'Initiated replay edit of expedition: :name.',
+        'msg-update'            => 'Submitted edit of expedition: :name.',
+        'msg-destroy'           => 'Deleted expedition: :name.',
+        'msg-enable'            => 'Enabled expedition: :name.',
+        'msg-disabled'          => 'Disabled expedition: :name.',
+        'msg-enabled-selected'  => 'Enabled multiple expedition.',
+        'msg-disabled-selected' => 'Disabled multiple expedition.',
     ],
 
     'status'              => [
         'created'                   => 'Expedition successfully created',
         'updated'                   => 'Expedition successfully updated',
         'deleted'                   => 'Expedition successfully deleted',
-        'global-enabled'            => 'Selected users enabled.',
-        'global-disabled'           => 'Selected users disabled.',
+        'global-enabled'            => 'Selected expedtions enabled.',
+        'global-disabled'           => 'Selected expedtions disabled.',
         'enabled'                   => 'Expedition enabled.',
         'disabled'                  => 'Expedition disabled.',
-        'no-user-selected'          => 'No user selected.',
+        'no-exp-selected'           => 'No expedition selected.',
     ],
 
     'error'               => [
@@ -32,8 +32,7 @@ return [
         'cant-be-deleted'               => 'Expedition cannot be deleted',
         'cant-be-disabled'              => 'Expedition cannot be disabled',
         'login-failed-user-disabled'    => 'That account has been disabled.',
-        'perm_not_found'                => 'Could not find permission #:id.',
-        'user_not_found'                => 'Could not find user #:id.',
+        'exp_not_found'                 => 'Could not find expedition #:id.',
     ],
 
     'page'              => [
@@ -77,4 +76,3 @@ return [
 
 
 ];
-

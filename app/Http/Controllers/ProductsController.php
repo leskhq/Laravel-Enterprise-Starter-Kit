@@ -95,8 +95,7 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
         $data = $request->except(['_token']);
-        $data['stock'] = 1;
-        // dd($data);
+
         $this->product->create($data);
 
         Flash::success( trans('admin/products/general.status.created') );
@@ -183,14 +182,15 @@ class ProductsController extends Controller
         $product = $this->product->find($id);
 
         $modal_title = trans('admin/products/dialog.delete-confirm.title');
-        $modal_route = route('admin.products.destroy', array('id' => $product->id));
+        $modal_route = route('admin.products.delete', array('id' => $product->id));
         $modal_body = trans('admin/products/dialog.delete-confirm.body', ['id' => $product->id, 'full_name' => $product->name]);
 
         return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
 
     }
 
-    public function getInfo(Request $request) {
+    public function getInfo(Request $request)
+    {
         $return_arr = null;
 
         $term = $request->input('term');

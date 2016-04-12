@@ -1,14 +1,15 @@
 <?php
 return [
 
-  'tipe-customer' => [
-    '1' => 'Mitra BO Lisensi',
-    '2' => 'Agen Resmi',
-    '3' => 'Agen Lepas',
-    '4' => 'Customer Biasa',
+  'customer-types' => [
+    '1' => 'Licensed BO Partner',
+    '2' => 'Official Agent',
+    '3' => 'Free Agent',
+    '4' => 'Regular Customer',
     '5' => 'Distributor',
-    '6' => 'Mitra BO Murni',
-    '7' => 'Investor'
+    '6' => 'Genuine BO Partner',
+    '7' => 'Investor',
+    '8' => 'Peserta Pelatihan'
   ],
 
   'banks' => [
@@ -20,7 +21,7 @@ return [
   ],
 
   'product-categories' => [
-    '1' => 'Detergent & Pewangi',
+    '1' => 'Detergent & Perfume',
     '2' => 'Anti Noda & Spotter',
     '3' => 'Produk Rumah Tangga',
     '4' => 'Produk Otomotif',
@@ -35,7 +36,7 @@ return [
     '1' => 'Published'
   ],
 
-  'supplier-category' => [
+  'supplier-categories' => [
     '1' => 'Chemical',
     '2' => 'Perlengkapan',
     '3' => 'Peralatan',

@@ -40,35 +40,64 @@ Route::group(['middleware' => 'authorize'], function () {
     // Site administration section
     Route::group(['prefix' => 'admin'], function () {
         // Expedition routes
-        Route::get(   'expeditions',                   ['as' => 'admin.expeditions.index',      'uses' => 'ExpeditionsController@index']);
-        Route::post(  'expeditions',                   ['as' => 'admin.expeditions.store',      'uses' => 'ExpeditionsController@store']);
-        Route::get(   'expeditions/create',            ['as' => 'admin.expeditions.create',     'uses' => 'ExpeditionsController@create']);
-        Route::get(   'expeditions/search',            ['as' => 'admin.expeditions.search',     'uses' => 'ExpeditionsController@search']);
-        Route::get(   'expeditions/{exId}',            ['as' => 'admin.expeditions.show',       'uses' => 'ExpeditionsController@show']);
-        Route::patch( 'expeditions/{exId}',            ['as' => 'admin.expeditions.update',     'uses' => 'ExpeditionsController@update']);
-        Route::get(   'expeditions/{exId}/edit',       ['as' => 'admin.expeditions.edit',       'uses' => 'ExpeditionsController@edit']);
-        Route::get(   'expeditions/{exId}/delete',        ['as' => 'admin.expeditions.destroy',    'uses' => 'ExpeditionsController@destroy']);
+        Route::get(   'expeditions',                       ['as' => 'admin.expeditions.index',          'uses' => 'ExpeditionsController@index']);
+        Route::post(  'expeditions',                       ['as' => 'admin.expeditions.store',          'uses' => 'ExpeditionsController@store']);
+        Route::get(   'expeditions/create',                ['as' => 'admin.expeditions.create',         'uses' => 'ExpeditionsController@create']);
+        Route::get(   'expeditions/search',                ['as' => 'admin.expeditions.search',         'uses' => 'ExpeditionsController@search']);
+        Route::get(   'expeditions/{exId}',                ['as' => 'admin.expeditions.show',           'uses' => 'ExpeditionsController@show']);
+        Route::patch( 'expeditions/{exId}',                ['as' => 'admin.expeditions.update',         'uses' => 'ExpeditionsController@update']);
+        Route::get(   'expeditions/{exId}/edit',           ['as' => 'admin.expeditions.edit',           'uses' => 'ExpeditionsController@edit']);
+        Route::get(   'expeditions/{exId}/delete',         ['as' => 'admin.expeditions.delete',         'uses' => 'ExpeditionsController@destroy']);
         Route::get(   'expeditions/{exId}/confirm-delete', ['as' => 'admin.expeditions.confirm-delete', 'uses' => 'ExpeditionsController@getModalDelete']);
         // Product routes
-        Route::post(  'products',                      ['as' => 'admin.products.store',      'uses' => 'ProductsController@store']);
-        Route::get(   'products/cat/{catId}',          ['as' => 'admin.products.index',      'uses' => 'ProductsController@index']);
-        Route::get(   'products/create',               ['as' => 'admin.products.create',     'uses' => 'ProductsController@create']);
-        Route::get(   'products/getInfo',              ['as' => 'admin.products.get-info',   'uses' => 'ProductsController@getInfo']);
-        Route::get(   'products/{proId}',              ['as' => 'admin.products.show',       'uses' => 'ProductsController@show']);
-        Route::patch( 'products/{proId}',              ['as' => 'admin.products.update',     'uses' => 'ProductsController@update']);
-        Route::get(   'products/{proId}/edit',         ['as' => 'admin.products.edit',       'uses' => 'ProductsController@edit']);
-        Route::get(   'products/{proId}/delete',       ['as' => 'admin.products.destroy',    'uses' => 'ProductsController@destroy']);
-        Route::get(   'products/{proId}/confirm-delete', ['as' => 'admin.products.confirm-delete', 'uses' => 'ProductsController@getModalDelete']);
+        Route::post(  'products',                          ['as' => 'admin.products.store',             'uses' => 'ProductsController@store']);
+        Route::get(   'products/create',                   ['as' => 'admin.products.create',            'uses' => 'ProductsController@create']);
+        Route::get(   'products/getInfo',                  ['as' => 'admin.products.get-info',          'uses' => 'ProductsController@getInfo']);
+        Route::patch( 'products/{proId}',                  ['as' => 'admin.products.update',            'uses' => 'ProductsController@update']);
+        Route::get(   'products/{proId}/cat',              ['as' => 'admin.products.index',             'uses' => 'ProductsController@index']);
+        Route::get(   'products/{proId}/edit',             ['as' => 'admin.products.edit',              'uses' => 'ProductsController@edit']);
+        Route::get(   'products/{proId}/delete',           ['as' => 'admin.products.delete',            'uses' => 'ProductsController@destroy']);
+        Route::get(   'products/{proId}/confirm-delete',   ['as' => 'admin.products.confirm-delete',    'uses' => 'ProductsController@getModalDelete']);
         // Supplier routes
-        Route::get(   'suppliers',                     ['as' => 'admin.suppliers.index',      'uses' => 'SuppliersController@index']);
-        Route::post(  'suppliers',                     ['as' => 'admin.suppliers.store',      'uses' => 'SuppliersController@store']);
-        Route::get(   'suppliers/create',              ['as' => 'admin.suppliers.create',     'uses' => 'SuppliersController@create']);
-        Route::get(   'suppliers/search',              ['as' => 'admin.suppliers.search',     'uses' => 'SuppliersController@search']);
-        Route::get(   'suppliers/{suppId}',            ['as' => 'admin.suppliers.show',       'uses' => 'SuppliersController@show']);
-        Route::patch( 'suppliers/{suppId}',            ['as' => 'admin.suppliers.update',     'uses' => 'SuppliersController@update']);
-        Route::get(   'suppliers/{suppId}/edit',       ['as' => 'admin.suppliers.edit',       'uses' => 'SuppliersController@edit']);
-        Route::get(   'suppliers/{suppId}/delete',     ['as' => 'admin.suppliers.destroy',    'uses' => 'SuppliersController@destroy']);
-        Route::get(   'suppliers/{suppId}/confirm-delete', ['as' => 'admin.suppliers.confirm-delete', 'uses' => 'SuppliersController@getModalDelete']);
+        Route::get(   'suppliers',                         ['as' => 'admin.suppliers.index',            'uses' => 'SuppliersController@index']);
+        Route::post(  'suppliers',                         ['as' => 'admin.suppliers.store',            'uses' => 'SuppliersController@store']);
+        Route::get(   'suppliers/create',                  ['as' => 'admin.suppliers.create',           'uses' => 'SuppliersController@create']);
+        Route::get(   'suppliers/search',                  ['as' => 'admin.suppliers.search',           'uses' => 'SuppliersController@search']);
+        Route::patch( 'suppliers/{suppId}',                ['as' => 'admin.suppliers.update',           'uses' => 'SuppliersController@update']);
+        Route::get(   'suppliers/{suppId}/edit',           ['as' => 'admin.suppliers.edit',             'uses' => 'SuppliersController@edit']);
+        Route::get(   'suppliers/{suppId}/delete',         ['as' => 'admin.suppliers.delete',           'uses' => 'SuppliersController@destroy']);
+        Route::get(   'suppliers/{suppId}/confirm-delete', ['as' => 'admin.suppliers.confirm-delete',   'uses' => 'SuppliersController@getModalDelete']);
+        // Customer routes
+        Route::post(  'customers',                         ['as' => 'admin.customers.store',            'uses' => 'CustomersController@store']);
+        Route::get(   'customers/{ccId}',                  ['as' => 'admin.customers.show',             'uses' => 'CustomersController@show']);
+        Route::patch( 'customers/{ccId}',                  ['as' => 'admin.customers.update',           'uses' => 'CustomersController@update']);
+        Route::get(   'customers/{ccId}/delete',           ['as' => 'admin.customers.delete',           'uses' => 'CustomersController@destroy']);
+        Route::get(   'customers/{ccId}/type',             ['as' => 'admin.customers.index',            'uses' => 'CustomersController@indexByType']);
+        Route::get(   'customers/{ccId}/update-status',    ['as' => 'admin.customers.update-status',    'uses' => 'CustomersController@updateStatus']);
+        Route::get(   'customers/{ccId}/confirm-delete',   ['as' => 'admin.customers.confirm-delete',   'uses' => 'CustomersController@getModalDelete']);
+        // Customer Candidate routes
+        Route::get(   'customer-candidates',                        ['as' => 'admin.customer-candidates.index',           'uses' => 'CustomerCandidatesController@index']);
+        Route::post(  'customer-candidates',                        ['as' => 'admin.customer-candidates.store',           'uses' => 'CustomerCandidatesController@store']);
+        Route::get(   'customer-candidates/create',                 ['as' => 'admin.customer-candidates.create',          'uses' => 'CustomerCandidatesController@create']);
+        Route::get(   'customer-candidates/{ccId}',                 ['as' => 'admin.customer-candidates.show',            'uses' => 'CustomerCandidatesController@show']);
+        Route::patch( 'customer-candidates/{ccId}',                 ['as' => 'admin.customer-candidates.update',          'uses' => 'CustomerCandidatesController@update']);
+        Route::get(  'customer-candidates/{ccId}/update-status',    ['as' => 'admin.customer-candidates.update-status',   'uses' => 'CustomerCandidatesController@updateStatus']);
+        Route::get(   'customer-candidates/{ccId}/confirm-delete',  ['as' => 'admin.customer-candidates.confirm-delete',  'uses' => 'CustomerCandidatesController@getModalDelete']);
+        // Customer Followup routes
+        Route::get(   'customer-followups',                         ['as' => 'admin.customer-followups.index',            'uses' => 'CustomerFollowupsController@index']);
+        Route::post(  'customer-followups',                         ['as' => 'admin.customer-followups.store',            'uses' => 'CustomerFollowupsController@store']);
+        Route::get(   'customer-followups/{ccfId}/delete',          ['as' => 'admin.customer-followups.delete',           'uses' => 'CustomerFollowupsController@destroy']);
+        Route::post(  'customer-followups/select-by-type',          ['as' => 'admin.customer-followups.select-by-type',   'uses' => 'CustomerFollowupsController@selectByType']);
+        Route::get(   'customer-followups/{ccfId}/confirm-delete',  ['as' => 'admin.customer-followups.confirm-delete',   'uses' => 'CustomerFollowupsController@getModalDelete']);
+        // Customer Candidate Followup routes
+        Route::get(   'candidate-followups',                        ['as' => 'admin.candidate-followups.index',           'uses' => 'CandidateFollowupsController@index']);
+        Route::post(  'candidate-followups',                        ['as' => 'admin.candidate-followups.store',           'uses' => 'CandidateFollowupsController@store']);
+        Route::get(   'candidate-followups/{ccfId}/delete',         ['as' => 'admin.candidate-followups.delete',          'uses' => 'CandidateFollowupsController@destroy']);
+        Route::post(  'candidate-followups/select-by-type',         ['as' => 'admin.candidate-followups.select-by-type',  'uses' => 'CandidateFollowupsController@selectByType']);
+        Route::get(   'candidate-followups/{ccfId}/confirm-delete', ['as' => 'admin.candidate-followups.confirm-delete',  'uses' => 'CandidateFollowupsController@getModalDelete']);
+        // Sale routes
+        Route::get(   'sales',                         ['as' => 'admin.sales.index',            'uses' => 'SalesController@index']);
+        // Sale Detail routes
         //======================================================================================================================/
         // User routes
         Route::post(  'users/enableSelected',          ['as' => 'admin.users.enable-selected',  'uses' => 'UsersController@enableSelected']);
@@ -157,13 +186,13 @@ Route::group(['middleware' => 'authorize'], function () {
         Route::get(   'routes/{routeId}/enable',         ['as' => 'admin.routes.enable',           'uses' => 'RoutesController@enable']);
         Route::get(   'routes/{routeId}/disable',        ['as' => 'admin.routes.disable',          'uses' => 'RoutesController@disable']);
         // Audit routes
-        Route::get( 'audit',                           ['as' => 'admin.audit.index',             'uses' => 'AuditsController@index']);
-        Route::get( 'audit/purge',                     ['as' => 'admin.audit.purge',             'uses' => 'AuditsController@purge']);
-        Route::get( 'audit/{auditId}/replay',          ['as' => 'admin.audit.replay',            'uses' => 'AuditsController@replay']);
-        Route::get( 'audit/{auditId}/show',            ['as' => 'admin.audit.show',              'uses' => 'AuditsController@show']);
+        Route::get( 'audit',                             ['as' => 'admin.audit.index',             'uses' => 'AuditsController@index']);
+        Route::get( 'audit/purge',                       ['as' => 'admin.audit.purge',             'uses' => 'AuditsController@purge']);
+        Route::get( 'audit/{auditId}/replay',            ['as' => 'admin.audit.replay',            'uses' => 'AuditsController@replay']);
+        Route::get( 'audit/{auditId}/show',              ['as' => 'admin.audit.show',              'uses' => 'AuditsController@show']);
         // Settings routes
         // TODO: Implements settings
-        Route::get('settings',                         ['as' => 'admin.settings.index',          'uses' => 'TestController@test_flash_warning']);
+        Route::get('settings',                           ['as' => 'admin.settings.index',          'uses' => 'TestController@test_flash_warning']);
 
     }); // End of ADMIN group
 
@@ -183,20 +212,20 @@ Route::group(['middleware' => 'authorize'], function () {
 
         // TEST-FLASH routes
         Route::group(['prefix' => 'test-flash'], function () {
-            Route::get('home',    ['as' => 'test-flash.home',     'uses' => 'TestController@test_flash_home']);
-            Route::get('success', ['as' => 'test-flash.success',  'uses' => 'TestController@test_flash_success']);
-            Route::get('info',    ['as' => 'test-flash.info',     'uses' => 'TestController@test_flash_info']);
-            Route::get('warning', ['as' => 'test-flash.warning',  'uses' => 'TestController@test_flash_warning']);
-            Route::get('error',   ['as' => 'test-flash.error',    'uses' => 'TestController@test_flash_error']);
+            Route::get('home',     ['as' => 'test-flash.home',     'uses' => 'TestController@test_flash_home']);
+            Route::get('success',  ['as' => 'test-flash.success',  'uses' => 'TestController@test_flash_success']);
+            Route::get('info',     ['as' => 'test-flash.info',     'uses' => 'TestController@test_flash_info']);
+            Route::get('warning',  ['as' => 'test-flash.warning',  'uses' => 'TestController@test_flash_warning']);
+            Route::get('error',    ['as' => 'test-flash.error',    'uses' => 'TestController@test_flash_error']);
         }); // End of TEST-FLASH group
         // TEST-MENU routes
         Route::group(['prefix' => 'test-menus'], function () {
-            Route::get('home',     ['as' => 'test-menus.home',  'uses' => 'TestMenusController@test_menu_home']);
-            Route::get('one',      ['as' => 'test-menus.one',   'uses' => 'TestMenusController@test_menu_one']);
-            Route::get('two',      ['as' => 'test-menus.two',   'uses' => 'TestMenusController@test_menu_two']);
-            Route::get('two-a',    ['as' => 'test-menus.two-a', 'uses' => 'TestMenusController@test_menu_two_a']);
-            Route::get('two-b',    ['as' => 'test-menus.two-b', 'uses' => 'TestMenusController@test_menu_two_b']);
-            Route::get('three',    ['as' => 'test-menus.three', 'uses' => 'TestMenusController@test_menu_three']);
+            Route::get('home',     ['as' => 'test-menus.home',     'uses' => 'TestMenusController@test_menu_home']);
+            Route::get('one',      ['as' => 'test-menus.one',      'uses' => 'TestMenusController@test_menu_one']);
+            Route::get('two',      ['as' => 'test-menus.two',      'uses' => 'TestMenusController@test_menu_two']);
+            Route::get('two-a',    ['as' => 'test-menus.two-a',    'uses' => 'TestMenusController@test_menu_two_a']);
+            Route::get('two-b',    ['as' => 'test-menus.two-b',    'uses' => 'TestMenusController@test_menu_two_b']);
+            Route::get('three',    ['as' => 'test-menus.three',    'uses' => 'TestMenusController@test_menu_three']);
         }); // End of TEST-MENU group
     } // End of if DEV environment
 

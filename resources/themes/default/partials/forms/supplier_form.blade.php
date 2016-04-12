@@ -5,7 +5,7 @@
 
 <div class="form-group">
     {!! Form::label('category', trans('admin/suppliers/general.columns.category')) !!}
-    {!! Form::select('category', config('constant.supplier-category'), null, ['class' => 'form-control']) !!}
+    {!! Form::select('category', config('constant.supplier-categories'), null, ['class' => 'form-control']) !!}
 </div>
 
 <div class="form-group">

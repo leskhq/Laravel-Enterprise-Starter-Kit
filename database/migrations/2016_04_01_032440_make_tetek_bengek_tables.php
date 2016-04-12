@@ -58,8 +58,8 @@ class MakeTetekBengekTables extends Migration
             $table->integer('odr')->nullable();
             $table->text('description')->nullable();
 
-            $table->foreign('perfume_id')->references('id')->on('perfumes');
-            $table->foreign('supplier_id')->references('id')->on('suppliers');
+            // $table->foreign('perfume_id')->references('id')->on('perfumes');
+            // $table->foreign('supplier_id')->references('id')->on('suppliers');
         });
 
         Schema::create('materials', function (Blueprint $table) {

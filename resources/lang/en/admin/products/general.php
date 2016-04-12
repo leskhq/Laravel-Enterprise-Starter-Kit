@@ -3,17 +3,17 @@ return [
 
     'audit-log'           => [
         'category'              => 'Products',
-        'msg-index'             => 'Accessed list of users.',
-        'msg-show'              => 'Accessed details of user: :username.',
-        'msg-store'             => 'Created new user: :username.',
-        'msg-edit'              => 'Initiated edit of user: :username.',
-        'msg-replay-edit'       => 'Initiated replay edit of user: :username.',
-        'msg-update'            => 'Submitted edit of user: :username.',
-        'msg-destroy'           => 'Deleted user: :username.',
-        'msg-enable'            => 'Enabled user: :username.',
-        'msg-disabled'          => 'Disabled user: :username.',
-        'msg-enabled-selected'  => 'Enabled multiple user.',
-        'msg-disabled-selected' => 'Disabled multiple user.',
+        'msg-index'             => 'Accessed list of products.',
+        'msg-show'              => 'Accessed details of product: :name.',
+        'msg-store'             => 'Created new product: :name.',
+        'msg-edit'              => 'Initiated edit of product: :name.',
+        'msg-replay-edit'       => 'Initiated replay edit of product: :name.',
+        'msg-update'            => 'Submitted edit of product: :name.',
+        'msg-destroy'           => 'Deleted product: :name.',
+        'msg-enable'            => 'Enabled product: :name.',
+        'msg-disabled'          => 'Disabled product: :name.',
+        'msg-enabled-selected'  => 'Enabled multiple product.',
+        'msg-disabled-selected' => 'Disabled multiple product.',
     ],
 
     'status'              => [
@@ -24,16 +24,15 @@ return [
         'global-disabled'           => 'Selected products disabled.',
         'enabled'                   => 'Product enabled.',
         'disabled'                  => 'Product disabled.',
-        'no-user-selected'          => 'No product selected.',
+        'no-product-selected'       => 'No product selected.',
     ],
 
     'error'               => [
-        'cant-be-edited'                => 'User cannot be edited',
-        'cant-be-deleted'               => 'User cannot be deleted',
-        'cant-be-disabled'              => 'User cannot be disabled',
+        'cant-be-edited'                => 'Product cannot be edited',
+        'cant-be-deleted'               => 'Product cannot be deleted',
+        'cant-be-disabled'              => 'Product cannot be disabled',
         'login-failed-user-disabled'    => 'That account has been disabled.',
-        'perm_not_found'                => 'Could not find permission #:id.',
-        'user_not_found'                => 'Could not find user #:id.',
+        'product_not_found'             => 'Could not find product #:id.',
     ],
 
     'page'              => [
@@ -91,4 +90,3 @@ return [
 
 
 ];
-

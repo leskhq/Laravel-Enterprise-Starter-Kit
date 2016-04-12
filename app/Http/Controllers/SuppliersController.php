@@ -60,7 +60,7 @@ class SuppliersController extends Controller
     public function store(Request $request)
     {
         $data = $request->except(['_token']);
-        
+
         $this->supplier->create($data);
 
         Flash::success( trans('admin/suppliers/general.status.created') );
@@ -105,7 +105,7 @@ class SuppliersController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->except(['_token', '_method']);
-        
+
         $this->supplier->update($data, $id);
 
         Flash::success( trans('admin/suppliers/general.status.updated') );
@@ -141,14 +141,15 @@ class SuppliersController extends Controller
         $supplier = $this->supplier->find($id);
 
         $modal_title = trans('admin/suppliers/dialog.delete-confirm.title');
-        $modal_route = route('admin.suppliers.destroy', array('id' => $supplier->id));
+        $modal_route = route('admin.suppliers.delete', array('id' => $supplier->id));
         $modal_body = trans('admin/suppliers/dialog.delete-confirm.body', ['id' => $supplier->id, 'name' => $supplier->name]);
 
         return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
 
     }
 
-    public function search(Request $request) {
+    public function search(Request $request)
+    {
         $return_arr = null;
 
         $query = $request->input('query');

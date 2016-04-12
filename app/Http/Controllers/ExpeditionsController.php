@@ -63,6 +63,7 @@ class ExpeditionsController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+
         $this->expedition->create($data);
 
         Flash::success( trans('admin/expeditions/general.status.created') );
@@ -135,19 +136,21 @@ class ExpeditionsController extends Controller
         return redirect('/admin/expeditions');
     }
 
-    public function getModalDelete($id) {
+    public function getModalDelete($id)
+    {
         $error = null;
 
         $expedition = $this->expedition->find($id);
 
         $modal_title = trans('admin/expeditions/dialog.delete-confirm.title');
-        $modal_route = route('admin.expeditions.destroy', array('id' => $expedition->id));
+        $modal_route = route('admin.expeditions.delete', array('id' => $expedition->id));
         $modal_body = trans('admin/expeditions/dialog.delete-confirm.body', ['id' => $expedition->id, 'full_name' => $expedition->name]);
 
         return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
     }
 
-    public function search(Request $request) {
+    public function search(Request $request)
+    {
         $return_arr = null;
 
         $query = $request->input('query');

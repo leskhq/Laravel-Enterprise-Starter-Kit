@@ -26,7 +26,7 @@ return [
         'global-disabled'           => 'Selected suppliers disabled.',
         'enabled'                   => 'Supplier enabled.',
         'disabled'                  => 'Supplier disabled.',
-        'no-perm-selected'          => 'No supplier selected.',
+        'no-supplier-selected'      => 'No supplier selected.',
     ],
 
     'error'               => [
