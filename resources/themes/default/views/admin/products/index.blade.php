@@ -20,37 +20,55 @@
           <div class="box-body no-padding">
               <ul class="nav nav-pills nav-stacked">
                   <li class="{{ ($id == 1) ? 'active' : '' }}">
-                      <a href="{{ URL::to('admin/products/cat/1') }}">
-                          <i class="fa fa-inbox"></i>Detergent & Pewangi
-                          <!-- <span class="label label-primary pull-right">12</span> -->
+                      <a href="{{ route('admin.products.index', 1) }}">
+                          <i class="fa fa-inbox"></i>{{ config('constant.product-categories.1') }}
+                          <span class="label label-primary pull-right">{{ Helpers::countProducts(1) }}</span>
                       </a>
                   </li>
                   <li class="{{ ($id == 2) ? 'active' : '' }}">
-                      <a href="{{ URL::to('admin/products/cat/2') }}"><i class="fa fa-sun-o"></i>Anti Noda & Spotter</a>
+                      <a href="{{ route('admin.products.index', 2) }}">
+                          <i class="fa fa-sun-o"></i>{{ config('constant.product-categories.2') }}
+                          <span class="label label-primary pull-right">{{ Helpers::countProducts(2) }}</span>
+                      </a>
                   </li>
                   <li class="{{ ($id == 3) ? 'active' : '' }}">
-                      <a href="{{ URL::to('admin/products/cat/3') }}"><i class="fa fa-cart-plus"></i>Produk Rumah Tangga</a>
+                      <a href="{{ route('admin.products.index', 3) }}">
+                          <i class="fa fa-cart-plus"></i>{{ config('constant.product-categories.3') }}
+                          <span class="label label-primary pull-right">{{ Helpers::countProducts(3) }}</span>
+                      </a>
                   </li>
                   <li class="{{ ($id == 4) ? 'active' : '' }}">
-                      <a href="{{ URL::to('admin/products/cat/4') }}">
-                          <i class="fa fa-filter"></i>Produk Otomotif
-                          <span class="label label-warning pull-right">65</span>
+                      <a href="{{ route('admin.products.index', 4) }}">
+                          <i class="fa fa-filter"></i>{{ config('constant.product-categories.4') }}
+                          <span class="label label-warning pull-right">{{ Helpers::countProducts(4) }}</span>
                       </a>
                   </li>
                   <li class="{{ ($id == 5) ? 'active' : '' }}">
-                      <a href="{{ URL::to('admin/products/cat/5') }}"><i class="fa fa-industry"></i>Perlengkapan</a>
+                      <a href="{{ route('admin.products.index', 5) }}">
+                          <i class="fa fa-industry"></i>{{ config('constant.product-categories.5') }}
+                          <span class="label label-primary pull-right">{{ Helpers::countProducts(5) }}</span>
+                      </a>
                   </li>
                   <li class="{{ ($id == 6) ? 'active' : '' }}">
-                      <a href="{{ URL::to('admin/products/cat/6') }}"><i class="fa fa-apple"></i>Bibit Parfum</a>
+                      <a href="{{ route('admin.products.index', 6) }}">
+                          <i class="fa fa-apple"></i>{{ config('constant.product-categories.6') }}
+                          <span class="label label-primary pull-right">{{ Helpers::countProducts(6) }}</span>
+                      </a>
                   </li>
                   <li class="{{ ($id == 7) ? 'active' : '' }}">
-                      <a href="{{ URL::to('admin/products/cat/7') }}"><i class="fa fa-leaf"></i>Bahan Baku</a>
+                      <a href="{{ route('admin.products.index', 7) }}">
+                          <i class="fa fa-leaf"></i>{{ config('constant.product-categories.7') }}
+                          <span class="label label-primary pull-right">{{ Helpers::countProducts(7) }}</span>
+                      </a>
                   </li>
                   <li class="{{ ($id == 8) ? 'active' : '' }}">
-                      <a href="{{ URL::to('admin/products/cat/8') }}"><i class="fa fa-fire-extinguisher"></i>Parfum</a>
+                      <a href="{{ route('admin.products.index', 8) }}">
+                          <i class="fa fa-fire-extinguisher"></i>{{ config('constant.product-categories.8') }}
+                          <span class="label label-primary pull-right">{{ Helpers::countProducts(8) }}</span>
+                      </a>
                   </li>
                   <li class="{{ ($id == 7) ? 'active' : '' }}">
-                      <a href="{{ URL::to('admin/bahan') }}"><i class="fa fa-leaf"></i>Bahan Baku Gudang</a>
+                      <a href="{{ url('admin/bahan') }}"><i class="fa fa-leaf"></i>Bahan Baku Gudang</a>
                   </li>
               </ul>
           </div><!-- /.box-body -->
@@ -180,17 +198,16 @@
                       <tbody>
                       @foreach($products as $p)
                           <tr>
-                              <td class=""><a href="{{route('admin.products.edit', $p->id)}}">{{$p->name}}</a></td>
-                              <td class="">{{ Helpers::reggo($p->hpp) }}</td>
-                              <td class="">{{ Helpers::reggo($p->agenresmi_price) }}</td>
-                              <td class="">{{ Helpers::reggo($p->agenlepas_price) }}</td>
-                              <td class="">{{ Helpers::reggo($p->price) }}</td>
+                              <td>{!! link_to_route('admin.products.edit', $p->name, $p->id) !!}</a></td>
+                              <td>{{ Helpers::reggo($p->hpp) }}</td>
+                              <td>{{ Helpers::reggo($p->agenresmi_price) }}</td>
+                              <td>{{ Helpers::reggo($p->agenlepas_price) }}</td>
+                              <td>{{ Helpers::reggo($p->price) }}</td>
                               <td>
                                   {{-- {{ Form::select('stok', $stok, $p->stok, ['class'=>'form-control input-sm stok', 'id'=>$p->id, 'data-token'=>csrf_token()]) }} --}}
-                                  {{$p->stock}}
+                                  {{ $p->stock }}
                               </td>
                               <td>
-                                  <a href="{!! route('admin.products.edit', $p->id) !!}" title="{{ trans('general.button.edit') }}"><i class="fa fa-pencil-square-o"></i></a>
                                   <a href="{!! route('admin.products.confirm-delete', $p->id) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><i class="fa fa-trash-o deletable"></i></a>
                               </td>
                           </tr>

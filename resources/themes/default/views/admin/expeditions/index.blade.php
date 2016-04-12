@@ -55,7 +55,6 @@
                   <td>{{ $e->contact }}</td>
                   <td>{{ $e->description }}</td>
                   <td>
-                    <a href="{!! route('admin.expeditions.edit', $e->id) !!}" title="{{ trans('general.button.edit') }}"><i class="fa fa-pencil-square-o"></i></a>
                     <a href="{!! route('admin.expeditions.confirm-delete', $e->id) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><i class="fa fa-trash-o deletable"></i></a>
                   </td>
                 </tr>
