@@ -84,7 +84,7 @@ class PermAndMenu extends Seeder
         }
 
         // get all the Customer routes
-        $routeCustomers = Route::where('name', 'admin.customers.'.'%')->get();
+        $routeCustomers = Route::where('name', 'like', 'admin.customers.'.'%')->get();
         // assign the manage customers perms to each customer routes
         foreach ($routeCustomers as $key => $value) {
             $value->permission()->associate($permManageCustomers);
@@ -94,7 +94,7 @@ class PermAndMenu extends Seeder
         $routeCustomerCandidateIndex  = Route::where('name', 'admin.customer-candidates.index')->first();
         $routeCustomerCandidateCreate = Route::where('name', 'admin.customer-candidates.create')->first();
         // get all the customer candidate routes
-        $routeCustomerCandidates = Route::where('name', 'admin.customer-candidates.'.'%')->get();
+        $routeCustomerCandidates = Route::where('name', 'like', 'admin.customer-candidates.'.'%')->get();
         // assign the manage customers perms to each customer candidate routes
         foreach ($routeCustomerCandidates as $key => $value) {
             $value->permission()->associate($permManageCustomers);
@@ -103,7 +103,7 @@ class PermAndMenu extends Seeder
 
         $routeCustomerFollowupIndex = Route::where('name', 'admin.customer-followups.index')->first();
         // get all the customer followup routes
-        $routeCustomerFollowups = Route::where('name', 'admin.customer-followups.'.'%')->get();
+        $routeCustomerFollowups = Route::where('name', 'like', 'admin.customer-followups.'.'%')->get();
         // assign the manage customers perms to each customer followup routes
         foreach ($routeCustomerFollowups as $key => $value) {
             $value->permission()->associate($permManageCustomers);
@@ -112,7 +112,7 @@ class PermAndMenu extends Seeder
 
         $routeCandidateFollowupIndex = Route::where('name', 'admin.candidate-followups.index')->first();
         // get all the customer candidate followup routes
-        $routeCandidateFollowups = Route::where('name', 'admin.candidate-followups.'.'%')->get();
+        $routeCandidateFollowups = Route::where('name', 'like', 'admin.candidate-followups.'.'%')->get();
         // assign the manage candidate followup perms to each customer candidate followup routes
         foreach ($routeCandidateFollowups as $key => $value) {
             $value->permission()->associate($permManageCustomers);
@@ -123,7 +123,7 @@ class PermAndMenu extends Seeder
         $routeSalesIndex  = Route::where('name', 'admin.sales.index')->first();
         $routeSalesReport = Route::where('name', 'admin.sales.report')->first();
         // get all the sale routes
-        $routeSales = Route::where('name', 'admin.sales.'.'%')->get();
+        $routeSales = Route::where('name', 'like', 'admin.sales.'.'%')->get();
         // assign the manage sale perms to each sale routes
         foreach ($routeSales as $key => $value) {
             $value->permission()->associate($permManageSales);
@@ -171,7 +171,7 @@ class PermAndMenu extends Seeder
             'route_id'      => $routeSupplierIndex->id,     // Route to supplier index
             'permission_id' => null,                        // Get permission from route.
         ]);
-        
+
         // create the customers menu parent_id
         $menuCustomersParent = Menu::create([
             'name'          => 'customers',
