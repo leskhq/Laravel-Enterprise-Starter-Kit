@@ -31,7 +31,7 @@
 @if( isset($product) )
 <div class="form-group">
   {!! Form::label('supplier_id', trans('admin/products/general.columns.supplier_id')) !!}
-  {!! Form::text('supplier_id', $product->getSupplierName($product->supplier_id), ['class'=>'form-control', 'disabled']) !!}
+  {!! Form::text('supplier_id', $product->supplier->name, ['class'=>'form-control', 'disabled']) !!}
 </div>
 @else
 <div class="input-group select2-bootstrap-append">

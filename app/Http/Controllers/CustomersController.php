@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\CustomerRepository as Customer;
 use App\Repositories\Criteria\Customer\CustomerByCreatedDescending;
 use App\Repositories\Criteria\Customer\CustomerWithFollowup;
+use App\Repositories\Criteria\Customer\CustomerWhereNameLike;
 
 use Illuminate\Http\Request;
 
@@ -166,5 +167,35 @@ class CustomersController extends Controller
         Flash::success( trans('admin/customers/general.status.updated') );
 
         return redirect()->route('admin.customers.index', $customer->type);
+    }
+
+    public function search(Request $request) {
+      $return_arr = null;
+
+      $query = $request->input('term');
+
+      $customers = $this->customer->pushCriteria(new CustomerWhereNameLike($query))->all();
+
+      foreach ($customers as $c) {
+        $id              = $c->id;
+        $name            = $c->name;
+        $address         = $c->address;
+        $laundry_address = $c->laundry_address;
+        $phone           = $c->phone;
+        $type            = $c->type;
+
+        $entry_arr = [
+          'id'              => $id,
+          'text'            => $name,
+          'value'           => $name,
+          'type'            => $type,
+          'phone'           => $phone,
+          'address'         => $address,
+          'laundry_address' => $laundry_address
+        ];
+        $return_arr[] = $entry_arr;
+      }
+
+      return $return_arr;
     }
 }

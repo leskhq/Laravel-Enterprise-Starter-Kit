@@ -9,6 +9,8 @@ use App\Repositories\Criteria\Product\ProductWhereCategoryLike;
 use App\Repositories\Criteria\Product\ProductWhereNameLike;
 use App\Repositories\Criteria\Product\ProductOrderByColumn;
 use App\Repositories\Criteria\Product\ProductsByNamesAscending;
+use App\Repositories\Criteria\Product\PerfumeWhereNameLike;
+use App\Repositories\Criteria\Product\ProductsWithSuppliers;
 
 use Illuminate\Http\Request;
 
@@ -100,7 +102,7 @@ class ProductsController extends Controller
 
         Flash::success( trans('admin/products/general.status.created') );
 
-        return redirect()->route('admin.products.index', 1);
+        return redirect()->route('admin.products.index', $data['category']);
     }
 
     /**
@@ -122,7 +124,7 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        $product = $this->product->find($id);
+        $product = $this->product->pushCriteria(new ProductsWithSuppliers())->find($id);
 
         $perfumes = [];
 
@@ -151,7 +153,7 @@ class ProductsController extends Controller
 
         Flash::success( trans('admin/products/general.status.updated') );
 
-        return redirect()->route('admin.products.index', 1);
+        return redirect()->route('admin.products.index', $data['category']);
     }
 
     /**
@@ -206,5 +208,56 @@ class ProductsController extends Controller
         }
 
         return $return_arr;
+    }
+
+    public function search(Request $request) {
+        $return_arr = null;
+
+        $query      = $request->input('term');
+
+        $products   = $this->product->pushCriteria(new ProductWhereNameLike($query))->all();
+
+        foreach ($products as $product) {
+            $id              = $product->id;
+            $name            = $product->name;
+            $price           = $product->price;
+            $agenresmi_price = $product->agenresmi_price;
+            $agenlepas_price = $product->agenlepas_price;
+            $weight          = $product->weight;
+
+            $entry_arr = [
+                'id'              => $id,
+                'value'           => $name,
+                'price'           => $price,
+                'agenresmi_price' => $agenresmi_price,
+                'agenlepas_price' => $agenlepas_price,
+                'weight'          => $weight
+            ];
+            $return_arr[] = $entry_arr;
+        }
+
+        return response()->json($return_arr);
+    }
+
+    public function aromaSearch(Request $request) {
+        $return_arr = null;
+
+        $query      = $request->input('term');
+
+        $perfumes   = $this->perfume->pushCriteria(new PerfumeWhereNameLike($query))->all();
+
+        foreach ($perfumes as $perfume) {
+            $id              = $perfume->id;
+            $name            = $perfume->name;
+
+            $entry_arr = [
+              'id'              => $id,
+              'value'           => $name
+            ];
+
+            $return_arr[] = $entry_arr;
+        }
+
+        return response()->json($return_arr);
     }
 }

@@ -1,0 +1,99 @@
+body {
+	font:					12px Verdana, Arial, Helvetica, sans-serif;
+
+}
+#wrap{
+	width:20cm;
+	margin:0 auto;
+}
+h1 {
+	font:					15px Verdana, Arial, Helvetica, sans-serif;
+	font-weight:			bold;
+}
+table {
+	border-collapse:		collapse;
+	border-spacing:			0px;
+	padding:				0px;
+	margin:					0px;
+}
+th {
+	font:					11px Verdana, Arial, Helvetica, sans-serif;
+	font-weight:			bold;
+	padding:				0px;
+	margin:					0px;
+	text-align: left;
+}
+tr {
+	height:					16px;
+	}
+td {
+	font:					11px Verdana, Arial, Helvetica, sans-serif;
+	padding:				0px;
+	margin:					0px;
+	padding-left:	        3px;
+	padding-right:	        3px
+	}
+#td_list_header{
+	border-top: 1px solid black;
+	font-weight:			bold;
+	background-color:		#999999;
+	text-align:				center
+	}
+#td_list_content{
+	vertical-align:top
+	}
+td.bodered, th.bodered {
+	border:					1px #000000 solid;
+	padding-left: 			3px;
+	}
+tr.separator {
+	height:					2px;
+}
+br.page {
+	page-break-after: always;
+}
+table#allset {
+	border-collapse:collapse;
+	width:100%;
+}
+.trhead td{
+	font-weight:bold;
+	text-align:center;
+}
+.orchid{
+	float:left;
+}.kiri{
+	float:left;
+	width:25%;
+	padding: 4px;
+}.kanan{
+	float:right;
+	width:30%;
+}.tengah{
+	float:left;
+	width:20%;
+	padding: 4px;
+}
+#mitra{
+	border: 1px #000000 solid;
+	margin-left: 60px;
+    padding: 4px;
+	text-transform: uppercase;
+	width: 15%;
+}#ekspedisi{
+	border: 1px #000000 solid;
+    padding: 4px;
+	text-transform: uppercase;
+	text-align: center;
+}
+#ket{
+	margin: 12px 3px 1px 1px;
+}#keterangan{
+	width: 75%;
+}
+.clearboth {
+    clear:both;
+}
+#ketnya {
+  width: 70%;
+}

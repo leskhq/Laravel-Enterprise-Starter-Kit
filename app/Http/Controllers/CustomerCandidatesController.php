@@ -85,7 +85,7 @@ class CustomerCandidatesController extends Controller
 
         Flash::success( trans('admin/customer-candidates/general.status.created') );
 
-        return redirect()->route('admin.customer-candidates.index');
+        return redirect('/admin/customer-candidates');
     }
 
     /**
@@ -162,7 +162,7 @@ class CustomerCandidatesController extends Controller
 
         Flash::success( trans('admin/customer-candidates/general.status.updated') );
 
-        return redirect()->route('admin.customer-candidates.index');
+        return redirect('/admin/customer-candidates');
     }
 
     /**

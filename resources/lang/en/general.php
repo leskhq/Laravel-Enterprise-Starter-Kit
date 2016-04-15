@@ -35,6 +35,8 @@ return [
         'roles'             => 'Roles',
         'routes'            => 'Routes',
         'data'              => 'Data',
+        'customers'         => 'Customers',
+        'items'             => 'Items'
     ],
 
     'error'              => [

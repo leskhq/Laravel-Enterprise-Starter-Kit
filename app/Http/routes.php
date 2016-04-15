@@ -52,7 +52,9 @@ Route::group(['middleware' => 'authorize'], function () {
         // Product routes
         Route::post(  'products',                          ['as' => 'admin.products.store',             'uses' => 'ProductsController@store']);
         Route::get(   'products/create',                   ['as' => 'admin.products.create',            'uses' => 'ProductsController@create']);
+        Route::get(   'products/search',                   ['as' => 'admin.products.search',            'uses' => 'ProductsController@search']);
         Route::get(   'products/getInfo',                  ['as' => 'admin.products.get-info',          'uses' => 'ProductsController@getInfo']);
+        Route::get(   'products/aromaSearch',              ['as' => 'admin.products.aroma-search',      'uses' => 'ProductsController@aromaSearch']);
         Route::patch( 'products/{proId}',                  ['as' => 'admin.products.update',            'uses' => 'ProductsController@update']);
         Route::get(   'products/{proId}/cat',              ['as' => 'admin.products.index',             'uses' => 'ProductsController@index']);
         Route::get(   'products/{proId}/edit',             ['as' => 'admin.products.edit',              'uses' => 'ProductsController@edit']);
@@ -69,6 +71,7 @@ Route::group(['middleware' => 'authorize'], function () {
         Route::get(   'suppliers/{suppId}/confirm-delete', ['as' => 'admin.suppliers.confirm-delete',   'uses' => 'SuppliersController@getModalDelete']);
         // Customer routes
         Route::post(  'customers',                         ['as' => 'admin.customers.store',            'uses' => 'CustomersController@store']);
+        Route::get(   'customers/search',                  ['as' => 'admin.customers.search',           'uses' => 'CustomersController@search']);
         Route::get(   'customers/{ccId}',                  ['as' => 'admin.customers.show',             'uses' => 'CustomersController@show']);
         Route::patch( 'customers/{ccId}',                  ['as' => 'admin.customers.update',           'uses' => 'CustomersController@update']);
         Route::get(   'customers/{ccId}/delete',           ['as' => 'admin.customers.delete',           'uses' => 'CustomersController@destroy']);
@@ -97,6 +100,19 @@ Route::group(['middleware' => 'authorize'], function () {
         Route::get(   'candidate-followups/{ccfId}/confirm-delete', ['as' => 'admin.candidate-followups.confirm-delete',  'uses' => 'CandidateFollowupsController@getModalDelete']);
         // Sale routes
         Route::get(   'sales',                         ['as' => 'admin.sales.index',            'uses' => 'SalesController@index']);
+        Route::post(  'sales',                         ['as' => 'admin.sales.store',            'uses' => 'SalesController@store']);
+        Route::get(   'sales/create',                  ['as' => 'admin.sales.create',           'uses' => 'SalesController@create']);
+        Route::get(   'sales/report',                  ['as' => 'admin.sales.report',           'uses' => 'SalesController@report']);
+        Route::post(  'sales/export',                  ['as' => 'admin.sales.export',           'uses' => 'SalesController@export']);
+        Route::post(  'sales/getReportData',           ['as' => 'admin.sales.get-report-data',  'uses' => 'SalesController@getReportData']);
+        Route::post(  'sales/select-by-status',        ['as' => 'admin.sales.select-by-status', 'uses' => 'SalesController@selectByStatus']);
+        Route::get(   'sales/{sId}',                   ['as' => 'admin.sales.show',             'uses' => 'SalesController@show']);
+        Route::patch( 'sales/{sId}',                   ['as' => 'admin.sales.update',           'uses' => 'SalesController@update']);
+        Route::get(   'sales/{sId}/edit',              ['as' => 'admin.sales.edit',             'uses' => 'SalesController@edit']);
+        Route::get(   'sales/{sId}/print',             ['as' => 'admin.sales.print',            'uses' => 'SalesController@print']);
+        Route::get(   'sales/{sId}/delete',            ['as' => 'admin.sales.delete',           'uses' => 'SalesController@destroy']);
+        Route::post(  'sales/{sId}/update-status',     ['as' => 'admin.sales.update-status',    'uses' => 'SalesController@updateStatus']);
+        Route::get(   'sales/{sId}/confirm-delete',    ['as' => 'admin.sales.confirm-delete',   'uses' => 'SalesController@getModalDelete']);
         // Sale Detail routes
         //======================================================================================================================/
         // User routes

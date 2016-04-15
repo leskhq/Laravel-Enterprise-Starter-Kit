@@ -16,7 +16,7 @@
                 <div class="box-body box-profile">
                     <img class="profile-user-img img-responsive img-circle" src="{{ asset("/bower_components/admin-lte/dist/img/generic_user_160x160.jpg") }}" alt="User profile picture">
                     <h3 class="profile-username text-center">{{ $customer->name }}</h3>
-                    <p class="text-muted text-center">{{ Helpers::getCustomerTypeDisplayName($customer->type) }}</p>
+                    <p class="text-muted text-center">{{ $customer->getCustomerTypeDisplayName() }}</p>
 
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">

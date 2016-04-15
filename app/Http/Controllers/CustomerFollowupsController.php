@@ -117,7 +117,7 @@ class CustomerFollowupsController extends Controller
 
         Flash::success( trans('admin/customers/followup.status.deleted') );
 
-        return redirect()->route('admin.customer-followups.index');
+        return redirect()->back();
     }
 
     /**
@@ -136,7 +136,7 @@ class CustomerFollowupsController extends Controller
 
         $modal_route = route('admin.customer-followups.delete', array('id' => $customerFollowup->id));
 
-        $modal_body = trans('admin/customers/followup-dialog.delete-confirm.body', ['id' => $customerFollowup->id, 'full_name' => $customerFollowup->customer_id]);
+        $modal_body = trans('admin/customers/followup-dialog.delete-confirm.body', ['id' => $customerFollowup->id, 'full_name' => $customerFollowup->customer->name]);
 
         return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
 

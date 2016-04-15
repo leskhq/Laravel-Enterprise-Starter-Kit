@@ -65,7 +65,7 @@ class SuppliersController extends Controller
 
         Flash::success( trans('admin/suppliers/general.status.created') );
 
-        return redirect()->route('admin.suppliers.index');
+        return redirect('/admin/suppliers');
     }
 
     /**
@@ -110,7 +110,7 @@ class SuppliersController extends Controller
 
         Flash::success( trans('admin/suppliers/general.status.updated') );
 
-        return redirect()->route('admin.suppliers.index');
+        return redirect('/admin/suppliers');
     }
 
     /**
@@ -125,7 +125,7 @@ class SuppliersController extends Controller
 
         Flash::success( trans('admin/suppliers/general.status.deleted') );
 
-        return redirect()->route('admin.suppliers.index');
+        return redirect('/admin/suppliers');
     }
 
     /**

@@ -139,7 +139,7 @@ class CandidateFollowupsController extends Controller
 
         $modal_route = route('admin.candidate-followups.delete', array('id' => $candidateFollowup->id));
 
-        $modal_body = trans('admin/customer-candidates/followup-dialog.delete-confirm.body', ['id' => $candidateFollowup->id, 'full_name' => $candidateFollowup->customer_candidate_id]);
+        $modal_body = trans('admin/customer-candidates/followup-dialog.delete-confirm.body', ['id' => $candidateFollowup->id, 'full_name' => $candidateFollowup->customerCandidate->name]);
 
         return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
 

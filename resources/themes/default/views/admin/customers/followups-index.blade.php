@@ -3,6 +3,8 @@
 @section('head_extra')
     <!-- Select2 css -->
     @include('partials._head_extra_select2_css')
+    <!-- NProgress 0.2.0  -->
+    <link rel="stylesheet" href="{{ asset('/bower_components/nprogress/nprogress.css') }}" media="screen" charset="utf-8">
 @endsection
 
 @section('content')
@@ -61,7 +63,7 @@
                                     {!! Form::checkbox('chkUser[]', $cf->id); !!}
                                   </td>
                                   <td>{!! link_to_route('admin.customers.show', $cf->customer->name, $cf->customer->id) !!}</td>
-                                  <td>{{ Helpers::getCustomerTypeDisplayName($cf->customer->type) }}</td>
+                                  <td>{{ $cf->customer->getCustomerTypeDisplayName() }}</td>
                                   <td>{{ $cf->customer->phone }}</td>
                                   <td>{{ $cf->customer->address }}</td>
                                   <td>
@@ -92,6 +94,8 @@
 
     <!-- Select2 4.0.0 -->
     <script src="{{ asset ("/bower_components/admin-lte/select2/js/select2.min.js") }}" type="text/javascript"></script>
+    <!-- NProgress 0.2.0  -->
+    <script src="{{ asset('/bower_components/nprogress/nprogress.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
 
@@ -100,7 +104,7 @@
 
             $('#search').click(function(event) {
               event.preventDefault();
-
+              NProgress.start();
               var query = $(".select-customer-type").val();
               var token = $(".select-customer-type").attr('_token');
 
@@ -113,6 +117,7 @@
                     console.log(query);
                     $( "#content" ).empty();
                     $( "#content" ).append( data );
+                    NProgress.done();
                 }
               });
               //window.open( SERVER +'penjualans/export/'+status+'/'+mulai+'/'+slesai);

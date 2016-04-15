@@ -54,7 +54,7 @@
                               <tr>
                                 <td align="center">{!! Form::checkbox('chkPerm[]', $s->id); !!}</td>
                                 <td>{!! link_to_route('admin.suppliers.edit', $s->name, $s->id) !!}</td>
-                                <td>{{ $s->getCategoryDisplayName($s->category) }}</td>
+                                <td>{{ $s->getCategoryDisplayName() }}</td>
                                 <td>{{ $s->contact }}</td>
                                 <td>{{ $s->address }}</td>
                                 <td>{{ $s->description }}</td>

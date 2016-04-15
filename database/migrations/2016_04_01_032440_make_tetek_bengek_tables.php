@@ -72,7 +72,7 @@ class MakeTetekBengekTables extends Migration
             $table->increments('id')->unsigned();
             $table->string('name');
             $table->string('bank_name');
-            $table->integer('bill_number');
+            $table->integer('account_number');
 
             $table->timestamps();
         });

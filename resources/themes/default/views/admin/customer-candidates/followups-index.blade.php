@@ -3,6 +3,8 @@
 @section('head_extra')
     <!-- Select2 css -->
     @include('partials._head_extra_select2_css')
+    <!-- NProgress 0.2.0  -->
+    <link rel="stylesheet" href="{{ asset('/bower_components/nprogress/nprogress.css') }}" media="screen" charset="utf-8">
 @endsection
 
 @section('content')
@@ -34,7 +36,7 @@
                                       </a>
                                   </th>
                                   <th>{{ trans('admin/customer-candidates/general.columns.name') }}</th>
-                                  <th>{{ trans('admin/customer-candidates/general.columns.status') }}</th>
+                                  <th>{{ trans('admin/customer-candidates/general.columns.type') }}</th>
                                   <th>{{ trans('admin/customer-candidates/general.columns.phone') }}</th>
                                   <th>{{ trans('admin/customer-candidates/general.columns.address') }}</th>
                                   <th>{{ trans('admin/customer-candidates/general.columns.actions') }}</th>
@@ -48,7 +50,7 @@
                                       </a>
                                   </th>
                                   <th>{{ trans('admin/customer-candidates/general.columns.name') }}</th>
-                                  <th>{{ trans('admin/customer-candidates/general.columns.status') }}</th>
+                                  <th>{{ trans('admin/customer-candidates/general.columns.type') }}</th>
                                   <th>{{ trans('admin/customer-candidates/general.columns.phone') }}</th>
                                   <th>{{ trans('admin/customer-candidates/general.columns.address') }}</th>
                                   <th>{{ trans('admin/customer-candidates/general.columns.actions') }}</th>
@@ -92,6 +94,8 @@
 
     <!-- Select2 4.0.0 -->
     <script src="{{ asset ("/bower_components/admin-lte/select2/js/select2.min.js") }}" type="text/javascript"></script>
+    <!-- NProgress 0.2.0  -->
+    <script src="{{ asset('/bower_components/nprogress/nprogress.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
 
@@ -99,22 +103,23 @@
             $(".select-candidate-type").select2();
 
             $('#search').click(function(event) {
-              event.preventDefault();
+                event.preventDefault();
+                NProgress.start();
+                var query = $(".select-candidate-type").val();
+                var token = $(".select-candidate-type").attr('_token');
 
-              var query = $(".select-candidate-type").val();
-              var token = $(".select-candidate-type").attr('_token');
-
-              $.ajax({
-                url : "candidate-followups/select-by-type",
-                data: ({query : query, _token : token}),
-                type : 'POST',
-                dataType : 'html',
-                success: function(data){
-                    $( "#content" ).empty();
-                    $( "#content" ).append( data );
-                }
-              });
-              //window.open( SERVER +'penjualans/export/'+status+'/'+mulai+'/'+slesai);
+                $.ajax({
+                    url : "candidate-followups/select-by-type",
+                    data: ({query : query, _token : token}),
+                    type : 'POST',
+                    dataType : 'html',
+                    success: function(data){
+                        $( "#content" ).empty();
+                        $( "#content" ).append( data );
+                        NProgress.done();
+                    }
+                });
+                //window.open( SERVER +'penjualans/export/'+status+'/'+mulai+'/'+slesai);
             });
         });
     </script>

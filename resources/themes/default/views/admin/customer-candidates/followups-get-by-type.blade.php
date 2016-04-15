@@ -4,7 +4,7 @@
         {!! Form::checkbox('chkUser[]', $cf->id); !!}
       </td>
       <td>{!! link_to_route('admin.customer-candidates.show', $cf->name, $cf->id) !!}</td>
-      <td>{{ $cf->type }}</td>
+      <td>{{ Helpers::getCustomerTypeDisplayName($cf->type) }}</td>
       <td>{{ $cf->phone }}</td>
       <td>{{ $cf->address }}</td>
       <td>

@@ -18,7 +18,7 @@
         </section>
 
         <!-- Main content -->
-        <section class="content">
+        <section class="{{ Route::currentRouteName() == 'admin.sales.show' ? 'invoice' : 'content' }}">
 
             <div class="box-body">
                 @include('flash::message')
@@ -40,4 +40,3 @@
     @endif
 
 </div><!-- ./wrapper -->
-

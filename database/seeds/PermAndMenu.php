@@ -47,6 +47,12 @@ class PermAndMenu extends Seeder
             'description'  => 'Allows a user to manage the site customers and the simmilar features.',
             'enabled'      => true,
         ]);
+        $permManageSales = Permission::create([
+            'name'         => 'manage-sales',
+            'display_name' => 'Manage sales',
+            'description'  => 'Allows a user to manage the site sales and the simmilar features.',
+            'enabled'      => true,
+        ]);
 
         ////////////////////////////////////
         // Associate permission to routes
@@ -107,9 +113,20 @@ class PermAndMenu extends Seeder
         $routeCandidateFollowupIndex = Route::where('name', 'admin.candidate-followups.index')->first();
         // get all the customer candidate followup routes
         $routeCandidateFollowups = Route::where('name', 'admin.candidate-followups.'.'%')->get();
-        // assign the manage customers perms to each customer candidate followup routes
+        // assign the manage candidate followup perms to each customer candidate followup routes
         foreach ($routeCandidateFollowups as $key => $value) {
             $value->permission()->associate($permManageCustomers);
+            $value->save();
+        }
+
+        $routeSalesCreate = Route::where('name', 'admin.sales.create')->first();
+        $routeSalesIndex  = Route::where('name', 'admin.sales.index')->first();
+        $routeSalesReport = Route::where('name', 'admin.sales.report')->first();
+        // get all the sale routes
+        $routeSales = Route::where('name', 'admin.sales.'.'%')->get();
+        // assign the manage sale perms to each sale routes
+        foreach ($routeSales as $key => $value) {
+            $value->permission()->associate($permManageSales);
             $value->save();
         }
 
@@ -140,7 +157,7 @@ class PermAndMenu extends Seeder
             'enabled'       => true,
             'parent_id'     => $menuHome->id,            // Parent is home
             'route_id'      => null,
-            'permission_id' => $permManageProducts->id,  // add the perm since we are not using the route
+            'permission_id' => $permManageProducts->id,  // add the perm since we are not assign any route
         ]);
         $menuSuppliers = Menu::create([
             'name'          => 'suppliers',
@@ -154,6 +171,7 @@ class PermAndMenu extends Seeder
             'route_id'      => $routeSupplierIndex->id,     // Route to supplier index
             'permission_id' => null,                        // Get permission from route.
         ]);
+        
         // create the customers menu parent_id
         $menuCustomersParent = Menu::create([
             'name'          => 'customers',
@@ -278,6 +296,58 @@ class PermAndMenu extends Seeder
             'parent_id'     => $menuCustomersParent->id,            // Parent is customers
             'route_id'      => $routeCandidateFollowupIndex->id,    // Route to customer candidate followup index
             'permission_id' => null,                                // Get permission from route
+        ]);
+
+        $menuSalesParent = Menu::create([
+            'name'          => 'sales-parent',
+            'label'         => 'Sales',
+            'position'      => 1,
+            'icon'          => 'fa fa-money text-purple',
+            'separator'     => false,
+            'url'           => null,
+            'enabled'       => true,
+            'parent_id'     => $menuHome->id,                   // Parent itself
+            'route_id'      => null,                            // null, since it's a parent menu
+            'permission_id' => null,
+        ]);
+
+        $menuSalesCreate = Menu::create([
+            'name'          => 'create-sale',
+            'label'         => 'Create New Sale',
+            'position'      => 0,
+            'icon'          => 'fa fa-plus text-light-green',
+            'separator'     => false,
+            'url'           => null,
+            'enabled'       => true,
+            'parent_id'     => $menuSalesParent->id,        // Parent sales
+            'route_id'      => $routeSalesCreate->id,       // Route to sales create
+            'permission_id' => null,
+        ]);
+
+        $menuSalesIndex = Menu::create([
+            'name'          => 'sales',
+            'label'         => 'Sales Index',
+            'position'      => 1,
+            'icon'          => 'fa fa-bars text-aqua',
+            'separator'     => false,
+            'url'           => null,
+            'enabled'       => true,
+            'parent_id'     => $menuSalesParent->id,        // Parent sales
+            'route_id'      => $routeSalesIndex->id,       // Route to sales index
+            'permission_id' => null,
+        ]);
+
+        $menuSalesReport = Menu::create([
+            'name'          => 'sales-report',
+            'label'         => 'Sales Report',
+            'position'      => 1,
+            'icon'          => 'fa fa-line-chart text-red',
+            'separator'     => false,
+            'url'           => null,
+            'enabled'       => true,
+            'parent_id'     => $menuSalesParent->id,        // Parent sales
+            'route_id'      => $routeSalesReport->id,       // Route to sales report
+            'permission_id' => null,
         ]);
     }
 }

@@ -18,26 +18,34 @@ class Utils {
         }
     }
 
-    public static function getCustomerTypeDisplayName($id) {
-        if ( $id == 1 ) {
-            return 'Mitra BO Lisensi';
-        } elseif ( $id == 2 ) {
-            return 'Agen Resmi';
-        } elseif ( $id == 3 ) {
-            return 'Agen Lepas';
-        } elseif ( $id == 4 ) {
-            return 'Customer Biasa';
-        } elseif ( $id == 5 ) {
+    public static function getCustomerTypeDisplayName($type) {
+        if ( $type == 1 ) {
+            return 'Licensed BO Partner';
+        } elseif ( $type == 2 ) {
+            return 'Official Agent';
+        } elseif ( $type == 3 ) {
+            return 'Free Agent';
+        } elseif ( $type == 4 ) {
+            return 'Regular Customer';
+        } elseif ( $type == 5 ) {
             return 'Distributor';
-        } elseif ( $id == 6 ) {
-            return 'Mitra BO Murni';
-        } elseif ( $id == 7 ) {
+        } elseif ( $type == 6 ) {
+            return 'Genuine BO Partner';
+        } elseif ( $type == 7 ) {
             return 'Investor';
-        } elseif ( $id == 8 ) {
-            return 'Peserta Pelatihan';
+        } elseif ( $type == 8 ) {
+            return 'Trainee';
         } else {
             return 'unknown';
         }
+    }
+
+    public static function date($date) {
+        if ($date != 000-00-00 && $date != null) {
+            $dt = \Carbon\Carbon::parse($date);
+            return $dt->format('d F');
+        }
+        return false;
     }
 
     public static function reggo($price){

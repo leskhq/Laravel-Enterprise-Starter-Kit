@@ -9,7 +9,7 @@ return [
     '5' => 'Distributor',
     '6' => 'Genuine BO Partner',
     '7' => 'Investor',
-    '8' => 'Peserta Pelatihan'
+    '8' => 'Trainee'
   ],
 
   'banks' => [
@@ -34,6 +34,15 @@ return [
   'product-status' => [
     '0' => 'Unpublished',
     '1' => 'Published'
+  ],
+
+  'sale-status' => [
+      '1' => 'New',
+      '2' => 'Release',
+      '3' => 'Ready Hold',
+      '4' => 'Ready Ship',
+      '5' => 'Shipped',
+      '6' => 'Pending'
   ],
 
   'supplier-categories' => [

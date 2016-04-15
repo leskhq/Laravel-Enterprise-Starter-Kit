@@ -118,7 +118,7 @@ class ExpeditionsController extends Controller
 
         Flash::success( trans('admin/expeditions/general.status.updated') );
 
-        return redirect()->route('admin.expeditions.show', $id);
+        return redirect('/admin/expeditions');
     }
 
     /**
@@ -153,15 +153,15 @@ class ExpeditionsController extends Controller
     {
         $return_arr = null;
 
-        $query = $request->input('query');
+        $query = $request->input('term');
 
         $expeditions = $this->expedition->pushCriteria(new ExpeditionWhereNameLike($query))->all();
 
         foreach ($expeditions as $e) {
-            $id = $e->id;
+            $id   = $e->id;
             $name = $e->name;
 
-            $entry_arr = [ 'id' => $id, 'text' => $name];
+            $entry_arr    = ['value' => $name];
             $return_arr[] = $entry_arr;
         }
 
