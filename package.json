@@ -3,8 +3,5 @@
   "devDependencies": {
     "gulp": "~3.9.0",
     "laravel-elixir": "^1.0.0"
-  },
-  "dependencies": {
-    "nprogress": "^0.2.0"
   }
 }
