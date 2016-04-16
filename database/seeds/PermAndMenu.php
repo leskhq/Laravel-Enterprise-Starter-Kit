@@ -265,7 +265,7 @@ class PermAndMenu extends Seeder
             'name'          => 'customer-candidates',
             'label'         => 'Customer Candidates',
             'position'      => 9,
-            'icon'          => 'fa fa-user text-light-green',
+            'icon'          => 'fa fa-user text-green',
             'separator'     => false,
             'url'           => null,
             'enabled'       => true,
