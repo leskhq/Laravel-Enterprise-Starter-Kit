@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call('LCSeeder');
 
-        $this->call('LCBasicUsers')
+        $this->call('LCBasicUsers');
 
         Model::reguard();
     }
