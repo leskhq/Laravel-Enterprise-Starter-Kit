@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-use App\Models\User;
+use App\User;
 use App\Models\Role;
 use App\Models\Permission;
 
