@@ -34,7 +34,7 @@ class HomeController extends Controller
 
     public function index() {
 
-        $homeRouteName = 'welcome';
+        $homeRouteName = 'login';
 
         try {
 
