@@ -5,8 +5,9 @@ use Illuminate\Database\Seeder;
 use App\Models\Permission;
 use App\Models\Menu;
 use App\Models\Route;
+use App\Models\Role;
 
-class PermAndMenu extends Seeder
+class LCSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -53,6 +54,13 @@ class PermAndMenu extends Seeder
             'description'  => 'Allows a user to manage the site sales and the simmilar features.',
             'enabled'      => true,
         ]);
+
+        $permUpdateStatus = Permission::create([
+            'name'         => 'update sale status',
+            'display_name' => 'Update Sale Status',
+            'description'  => 'Allows a user to update the sale status.',
+            'enabled'      => true,
+            ]);
 
         ////////////////////////////////////
         // Associate permission to routes
@@ -119,16 +127,72 @@ class PermAndMenu extends Seeder
             $value->save();
         }
 
-        $routeSalesCreate = Route::where('name', 'admin.sales.create')->first();
-        $routeSalesIndex  = Route::where('name', 'admin.sales.index')->first();
-        $routeSalesReport = Route::where('name', 'admin.sales.report')->first();
+        $routeSalesUpdateStatus = Route::where('name', 'admin.sales.update-status')->first();
+        $routeSalesUpdateStatus->permission()->associate($permUpdateStatus);
+        $routeSalesUpdateStatus->save();
         // get all the sale routes
         $routeSales = Route::where('name', 'like', 'admin.sales.'.'%')->get();
         // assign the manage sale perms to each sale routes
         foreach ($routeSales as $key => $value) {
-            $value->permission()->associate($permManageSales);
-            $value->save();
+            if ($value->name != 'admin.sales.update-status') {
+                $value->permission()->associate($permManageSales);
+                $value->save();
+            }
         }
+
+        ////////////////////////////////////
+        // Create laundry cleanique set roles
+        $roleSecretaries = Role::create([
+            "name"          => "secretaries",
+            "display_name"  => "Secretaries",
+            "description"   => "Secretaries are granted all permissions to the Admin|Sales section",
+            "enabled"       => true
+            ]);
+        $roleSecretaries->perms()->attach($permManageSales->id);
+        $roleSecretaries->perms()->attach($permUpdateStatus->id);
+
+        $roleMarketings = Role::create([
+            "name"          => "marketings",
+            "display_name"  => "Marketings",
+            "description"   => "Marketings are granted all permissions to the Admin|Customers, Followup section",
+            "enabled"       => true
+            ]);
+        $roleMarketings->perms()->attach($permManageCustomers->id);
+
+        $rolePurcashings = Role::create([
+            "name"          => "purcashings",
+            "display_name"  => "Purcashings",
+            "description"   => "Purcashings are granted all permissions to the Admin|Suppliers, Expeditions section",
+            "enabled"       => true
+            ]);
+        $rolePurcashings->perms()->attach($permManageSuppliers->id);
+        $rolePurcashings->perms()->attach($permManageExpeditions->id);
+
+        $roleProductions = Role::create([
+            "name"          => "productions",
+            "display_name"  => "Productions",
+            "description"   => "Productions are granted all permissions to the Admin|Products and some Sales section",
+            "enabled"       => true
+            ]);
+        $roleProductions->perms()->attach($permManageProducts->id);
+        $roleProductions->perms()->attach($permUpdateStatus->id);
+        
+        $roleOperationals = Role::create([
+            "name"          => "operationals",
+            "display_name"  => "Operationals",
+            "description"   => "Operationals are granted all permissions to the Admin|Customers, Outlets section",
+            "enabled"       => true
+            ]);
+        $roleOperationals->perms()->attach($permManageCustomers->id);
+        // TODO : add permission to manage the outlets section
+
+        $roleHrga = Role::create([
+            "name"          => "hrga",
+            "display_name"  => "HRGA",
+            "description"   => "HRGA are granted all permissions to the Admin|Employes section",
+            "enabled"       => true
+            ]);
+        // TODO : add permission to manage the empoloyes section
 
         ////////////////////////////////////
         // Get the parent menu
@@ -320,7 +384,7 @@ class PermAndMenu extends Seeder
             'url'           => null,
             'enabled'       => true,
             'parent_id'     => $menuSalesParent->id,        // Parent sales
-            'route_id'      => $routeSalesCreate->id,       // Route to sales create
+            'route_id'      => Route::where('name', 'admin.sales.create')->first()->id,       // Route to sales create
             'permission_id' => null,
         ]);
 
@@ -333,7 +397,7 @@ class PermAndMenu extends Seeder
             'url'           => null,
             'enabled'       => true,
             'parent_id'     => $menuSalesParent->id,        // Parent sales
-            'route_id'      => $routeSalesIndex->id,       // Route to sales index
+            'route_id'      => Route::where('name', 'admin.sales.index')->first()->id,       // Route to sales index
             'permission_id' => null,
         ]);
 
@@ -346,7 +410,7 @@ class PermAndMenu extends Seeder
             'url'           => null,
             'enabled'       => true,
             'parent_id'     => $menuSalesParent->id,        // Parent sales
-            'route_id'      => $routeSalesReport->id,       // Route to sales report
+            'route_id'      => Route::where('name', 'admin.sales.report')->first()->id,       // Route to sales report
             'permission_id' => null,
         ]);
     }

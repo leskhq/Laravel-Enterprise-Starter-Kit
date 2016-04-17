@@ -21,7 +21,9 @@ class DatabaseSeeder extends Seeder
             $this->call('DevelopmentSeeder');
         }
 
-        $this->call('PermAndMenu');
+        $this->call('LCSeeder');
+
+        $this->call('LCBasicUsers')
 
         Model::reguard();
     }
