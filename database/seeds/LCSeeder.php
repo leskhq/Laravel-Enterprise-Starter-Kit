@@ -61,7 +61,7 @@ class LCSeeder extends Seeder
             'display_name' => 'Manage Followups',
             'description'  => 'Allows a user to manage the site followups and the simmilar features.',
             'enabled'      => true,
-        ])
+        ]);
         $permManageSales = Permission::create([
             'name'         => 'manage-sales',
             'display_name' => 'Manage sales',
