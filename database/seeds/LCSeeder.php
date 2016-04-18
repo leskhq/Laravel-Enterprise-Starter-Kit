@@ -201,7 +201,7 @@ class LCSeeder extends Seeder
             "description"   => "Purcashings are granted all permissions to the Admin|Suppliers, Expeditions section",
             "enabled"       => true
             ]);
-        $rolePurcashings->perms()-.attach($permBasicAdminAuthenticated->id);
+        $rolePurcashings->perms()->attach($permBasicAdminAuthenticated->id);
         $rolePurcashings->perms()->attach($permManageSuppliers->id);
         $rolePurcashings->perms()->attach($permManageExpeditions->id);
 
