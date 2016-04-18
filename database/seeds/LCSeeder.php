@@ -194,6 +194,7 @@ class LCSeeder extends Seeder
             ]);
         $roleMarketings->perms()->attach($permBasicAdminAuthenticated->id);
         $roleMarketings->perms()->attach($permManageCustomers->id);
+        $roleMarketings->perms()->attach($permManageFollowups->id);
 
         $rolePurcashings = Role::create([
             "name"          => "purcashings",
