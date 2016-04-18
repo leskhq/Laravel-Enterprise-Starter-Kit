@@ -19,13 +19,13 @@ class CreateSaleTables extends Migration
             $table->date('transfer_date')->nullable()->default(null);
             $table->date('ship_date')->nullable()->default(null);
             $table->date('estimation_date')->nullable()->default(null);
-            $table->string('transfer_via')->unsigned()->nullable();
+            $table->string('transfer_via')->nullable();
             $table->integer('status')->default(1);
             $table->integer('discount')->nullable();
             $table->integer('nominal');
             $table->integer('shipping_fee')->nullable();
             $table->integer('packing_fee')->nullable();
-            $table->string('expedition')->unsigned()->nullable();
+            $table->string('expedition')->nullable();
             $table->string('resi')->nullable();
             $table->text('description')->nullable();
 
@@ -47,8 +47,7 @@ class CreateSaleTables extends Migration
 
             $table->foreign('sale_id')->references('id')->on('sales')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('product_id')->references('id')->on('products')
-                ->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('product_id')->references('id')->on('products');
         });
     }
 
