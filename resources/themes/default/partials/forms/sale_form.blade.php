@@ -147,10 +147,10 @@
                                         {!! Form::text('item['. $key .'][quantity]', $d->quantity, ['placeholder' => 'quantity', 'class' => 'form-control Qty','id' => 'Qty'. $key .'']) !!}
                                     </td>
                                     <td>
-                                        {!! Form::text('item['. $key .'][total]', $d->total, ['placeholder' => 'total', 'class' => 'form-control', 'id' => 'total'. $key .'', 'disabled']) !!}
+                                        {!! Form::text('item['. $key .'][total]', $d->total, ['placeholder' => 'total', 'class' => 'form-control', 'id' => 'total'. $key .'']) !!}
                                     </td>
                                     <td>
-                                        {!! Form::text('item['. $key .'][weight]', $d->weight, ['placeholder' => 'weight', 'class' => 'form-control', 'id' => 'weight'. $key .'', 'disabled']) !!}
+                                        {!! Form::text('item['. $key .'][weight]', $d->weight, ['placeholder' => 'weight', 'class' => 'form-control', 'id' => 'weight'. $key .'']) !!}
                                     </td>
                                     <td><a class="delete" token="{{ csrf_token() }}" data-id='{{ $d->id }}'><i class="fa fa-times"></i></a></td>
                                 </tr>
@@ -180,11 +180,11 @@
                                     </td>
 
                                     <td>
-                                        {!! Form::text('item['. $x .'][total]', '', ['placeholder' => 'total', 'class' => 'form-control', 'id' => 'total'. $x .'', 'disabled']) !!}
+                                        {!! Form::text('item['. $x .'][total]', '', ['placeholder' => 'total', 'class' => 'form-control', 'id' => 'total'. $x .'']) !!}
                                     </td>
 
                                     <td>
-                                        {!! Form::text('item['. $x .'][weight]', '', ['placeholder' => 'weight', 'class' => 'form-control hitungbrt', 'id' => 'weight'. $x .'', 'disabled']) !!}
+                                        {!! Form::text('item['. $x .'][weight]', '', ['placeholder' => 'weight', 'class' => 'form-control hitungbrt', 'id' => 'weight'. $x .'']) !!}
                                     </td>
 
                                     <td id='jer{!!$x!!}' class='qtyJer'>
@@ -217,11 +217,11 @@
                                     </td>
 
                                     <td>
-                                        {!! Form::text('item['. $x .'][total]', '', ['placeholder' => 'total', 'class' => 'form-control', 'id' => 'total'. $x .'', 'disabled']) !!}
+                                        {!! Form::text('item['. $x .'][total]', '', ['placeholder' => 'total', 'class' => 'form-control', 'id' => 'total'. $x .'']) !!}
                                     </td>
 
                                     <td>
-                                        {!! Form::text('item['. $x .'][weight]', '', ['placeholder' => 'weight', 'class' => 'form-control hitungbrt', 'id' => 'weight'. $x .'', 'disabled']) !!}
+                                        {!! Form::text('item['. $x .'][weight]', '', ['placeholder' => 'weight', 'class' => 'form-control hitungbrt', 'id' => 'weight'. $x .'']) !!}
                                     </td>
 
                                     <td id='jer{!!$x!!}' class='qtyJer'>
