@@ -183,7 +183,7 @@
 
 @section('body_bottom')
     <!-- ChartJS -->
-    <script src="{{ asset ("/bower_components/admin-lte/plugins/chartjs/chart.min.js") }}" type="text/javascript"></script>
+    <script src="{{ asset ("/bower_components/admin-lte/plugins/chartjs/Chart.min.js") }}" type="text/javascript"></script>
 
     <script type="text/javascript">
         //-------------
