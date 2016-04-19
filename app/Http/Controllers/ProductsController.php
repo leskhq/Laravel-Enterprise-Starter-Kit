@@ -147,7 +147,7 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->except(['_token', '_method']);
+        $data = $request->except(['_token', '_method', 'supplier']);
 
         $this->product->update($data, $id);
 

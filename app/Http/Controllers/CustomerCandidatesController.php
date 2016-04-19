@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\CustomerCandidate;
+use App\Repositories\CustomerCandidateFollowupRepository as CandidateFollowup;
 use App\Repositories\CustomerCandidateRepository as CustomerCandidateRepo;
 use App\Repositories\Criteria\Customer\CustomerCandidateByCreatedAtAscending;
 use App\Repositories\Criteria\Customer\CustomerCandidateWithFollowup;
+use App\Repositories\Criteria\Customer\CandidateFollowupsByCreatedAtDescending;
 
 use Illuminate\Http\Request;
 
@@ -22,11 +24,18 @@ class CustomerCandidatesController extends Controller
     protected $customerCandidate;
 
     /**
+     * customer candidate followup alias
+     * @var CandidateFollowup
+     */
+    protected $candidateFollowup;
+
+    /**
      * @param CustomerCandidateRepo $customerCandidate
      */
-    public function __construct(CustomerCandidateRepo $customerCandidate)
+    public function __construct(CustomerCandidateRepo $customerCandidate, CandidateFollowup $candidateFollowup)
     {
         $this->customerCandidate = $customerCandidate;
+        $this->candidateFollowup = $candidateFollowup;
     }
 
     /**
@@ -98,10 +107,12 @@ class CustomerCandidatesController extends Controller
     {
         $customer = $this->customerCandidate->pushCriteria(new CustomerCandidateWithFollowup())->find($id);
 
+        $followups = $this->candidateFollowup->pushCriteria(new CandidateFollowupsByCreatedAtDescending())->findWhere(['customer_candidate_id' => $id]);
+
         $page_title = trans('admin/customer-candidates/general.page.show.title');
         $page_description = trans('admin/customer-candidates/general.page.show.description', ['name' => $customer->name]);
 
-        return view('admin.customer-candidates.show', compact('page_title', 'page_description', 'customer'));
+        return view('admin.customer-candidates.show', compact('page_title', 'page_description', 'customer', 'followups'));
     }
 
     /**

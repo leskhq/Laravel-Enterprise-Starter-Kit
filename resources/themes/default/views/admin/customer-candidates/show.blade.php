@@ -82,7 +82,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($customer->candidateFollowups as $key => $fu)
+                            @foreach($followups as $key => $fu)
                             <tr>
                                 <td>{{ date('d F, Y', strtotime($fu->created_at)) }}</td>
                                 <td>{{ $fu->content }}</td>

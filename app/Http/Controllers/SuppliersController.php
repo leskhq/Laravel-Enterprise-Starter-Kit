@@ -152,7 +152,11 @@ class SuppliersController extends Controller
     {
         $return_arr = null;
 
-        $query = $request->input('query');
+        $query = $request->input('term');
+
+        if ($query == '') {
+            $query = $request->input('query');
+        }
 
         $suppliers = $this->supplier->pushCriteria(new SupplierWhereNameLike($query))->all();
 
@@ -160,7 +164,7 @@ class SuppliersController extends Controller
             $id = $e->id;
             $name = $e->name;
 
-            $entry_arr = [ 'id' => $id, 'text' => $name];
+            $entry_arr = [ 'id' => $id, 'text' => $name, 'value' => $name];
             $return_arr[] = $entry_arr;
         }
 

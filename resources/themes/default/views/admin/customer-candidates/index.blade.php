@@ -28,6 +28,10 @@
                                                 {{ date("F", mktime(0, 0, 0, $months, 10)) }}
                                             </a>
                                         </h4>
+
+                                        <div class="pull-right">
+                                            <label class="label label-info">{{ count($month) }}</label>
+                                        </div>
                                     </div>
                                     <div class="panel-collapse collapse" id="collapse{{ $months }}-{{ $years }}" aria-expanded="false">
                                         <div class="box-body">
