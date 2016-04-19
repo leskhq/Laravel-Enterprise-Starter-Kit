@@ -284,6 +284,8 @@ return [
         Baum\Providers\BaumServiceProvider::class,
         Sroutier\L51ESKModules\ModulesServiceProvider::class,
 
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+
     ],
 
     /*
@@ -342,6 +344,8 @@ return [
         'Entrust'     => Zizaco\Entrust\EntrustFacade::class,
         'MenuBuilder' => App\Facades\MenuBuilderFacade::class,
         'Module'      => Sroutier\L51ESKModules\Facades\Module::class,
+
+        'Excel'       => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];

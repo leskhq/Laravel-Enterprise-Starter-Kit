@@ -16,6 +16,7 @@ use App\Repositories\Criteria\Sale\SalesOrderBefore;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Flash;
+use Excel;
 
 class SalesController extends Controller
 {
@@ -164,6 +165,7 @@ class SalesController extends Controller
         $data    = $request->except(['item', 'productName', 'customer_id', '_method', '_token']);
         $items   = $request->input('item');
         $nominal = 0;
+        $status  = $this->sale->find($id)->status;
 
         // because fuck you
         if ($data['transfer_date'] == '') {
@@ -177,7 +179,9 @@ class SalesController extends Controller
         }
 
         if ($data['transfer_date'] != '') {
-            $data['status'] = 2;
+            if ($status == 1) {
+                $data['status'] = 2;
+            }
         }
 
         // loop all the items to define the new total nominal of sale
@@ -254,6 +258,24 @@ class SalesController extends Controller
 
         return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
 
+    }
+
+    /**
+     * export to excel function
+     * @param  int $id sale id
+     * @return xls     excel doc extension
+     */
+    public function excel($id) {
+        $customer     = $this->sale->find($id)->customer;
+
+        Excel::create('PO - '.$customer->name.'', function($excel) use($id) {
+            $excel->sheet('DetailPO', function($sheet) use($id) {
+                $sale     = $this->sale->find($id);
+                $customer = $this->sale->find($id)->customer;
+                $details  = $this->sale->find($id)->saleDetails;
+                $sheet->loadView('admin.sales.excel', ['sale' => $sale, 'customer' => $customer, 'details' => $details]);
+            });
+        })->download('xls');
     }
 
     public function selectByStatus()
