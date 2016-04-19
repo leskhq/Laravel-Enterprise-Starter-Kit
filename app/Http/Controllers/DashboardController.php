@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Models\Product;
+use App\Models\Customer;
+use App\Models\CustomerCandidate;
+use App\Models\Sale;
+
+
 class DashboardController extends Controller
 {
 
@@ -59,6 +65,28 @@ class DashboardController extends Controller
         $page_description = "This is the dashboard";
 
         return view('dashboard', compact('page_title', 'page_description'))->with($data);
+    }
+
+    public function search(Request $request) {
+        $keyword = $request->input('q');
+
+        $products      = Product::where('name', 'like', '%'.$keyword.'%')
+                        ->orderBy('name', 'ASC')
+                        ->get();
+
+        $customers     = Customer::where('name', 'LIKE', '%'.$keyword.'%')
+                        ->orWhere('address',     'LIKE', '%'.$keyword.'%')
+                        ->orWhere('phone',       'LIKE', '%'.$keyword.'%')
+                        ->get();
+
+        # TODO: create sales search by customer name
+
+        $customerCandidates = CustomerCandidate::where('name','LIKE', '%'.$keyword.'%')
+                ->orWhere('address', 'LIKE', '%'.$keyword.'%')
+                ->orWhere('phone',   'LIKE', '%'.$keyword.'%')
+                ->get();
+
+        return view('search', compact('keyword', 'products', 'customers', 'customerCandidates'));
     }
 
 }

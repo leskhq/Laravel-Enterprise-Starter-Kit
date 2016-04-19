@@ -36,6 +36,7 @@ Route::get( 'welcome', ['as' => 'welcome',     'uses' => 'HomeController@welcome
 Route::group(['middleware' => 'authorize'], function () {
     // Application routes...
     Route::get( 'dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
+    Route::get( 'search',    ['as' => 'search',    'uses' => 'DashboardController@search']);
 
     // Site administration section
     Route::group(['prefix' => 'admin'], function () {
