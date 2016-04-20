@@ -55,14 +55,6 @@
               return false;
               event.stopPropagation();
             });
-
-            $('.product').change(function() {
-                if ( $(this).val() == '' ) {
-                    currentId = $(this).attr('id').replace('product', '');
-                    $('#productName'+currentId).attr('value', '');
-                    $('#productName'+currentId).attr('weight', '');
-                }
-            });
         });
     </script>
 @endsection

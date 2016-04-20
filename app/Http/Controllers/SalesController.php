@@ -148,7 +148,7 @@ class SalesController extends Controller
         $sale = $this->sale->find($id);
 
         $page_title = trans('admin/sales/general.page.edit.title');
-        $page_description = trans('admin/sales/general.page.edit.description');
+        $page_description = trans('admin/sales/general.page.edit.description', ['name' => $sale->customer->name]);
 
         return view('admin.sales.edit', compact('page_title', 'page_description', 'sale'));
     }
@@ -178,7 +178,7 @@ class SalesController extends Controller
             $data['estimation_date'] = null;
         }
 
-        if ($data['transfer_date'] != '') {
+        if ($data['transfer_date'] != '' && $data['transfer_date'] != '0000-00-00') {
             if ($status == 1) {
                 $data['status'] = 2;
             }

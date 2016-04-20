@@ -43,18 +43,4 @@
     <script src="{{ asset ("/bower_components/admin-lte/select2/js/select2.min.js") }}" type="text/javascript"></script>
 
     @include('partials.body_bottom_js.sale_forms_js')
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-
-            $('.product').focusout(function() {
-                var currentId = $(this).attr('id').replace('product','');
-                console.log($('#productName'+currentId).val());
-                if ($('#productName'+currentId).val()) {
-                    $('#product'+currentId).attr('style','border-color:#B31154');
-                }
-            });
-
-        });
-    </script>
 @endsection
