@@ -164,18 +164,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Version line
-    |--------------------------------------------------------------------------
-    |
-    | The version line appears at the bottom of every page on the right and can be
-    | any version you want.
-    |
-    | NOTE: The version line supports HTML markup for styling.
-    */
-    'ver_line' => env('APP_VER_LINE', '<a href="#">0.1.1</a>'),
-
-    /*
-    |--------------------------------------------------------------------------
     | Copyright line
     |--------------------------------------------------------------------------
     |
