@@ -3,6 +3,8 @@
 @section('head_extra')
     <!-- datepicker css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker3.min.css">
+    <!-- NProgress 0.2.0  -->
+    <link rel="stylesheet" href="{{ asset('/bower_components/nprogress/nprogress.css') }}" media="screen" charset="utf-8">
 @endsection
 
 @section('content')
@@ -55,6 +57,9 @@
     <!-- datepicker -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
 
+    <!-- NProgress 0.2.0  -->
+    <script src="{{ asset('/bower_components/nprogress/nprogress.js') }}" type="text/javascript"></script>
+
     <script type="text/javascript">
         $('.date').datepicker({
             format            : "yyyy-mm-dd",
@@ -66,25 +71,26 @@
         });
 
         $('#go').click(function(event) {
-          event.preventDefault();
-          var start   = $("#start").val();
-          var end     = $("#end").val();
-          var token   = $("#token").val();
-          $.ajax({
-            url      : "/admin/sales/getReportData",
-            data     : ({start : start, end : end, _token : token}),
-            type     : 'POST',
-            dataType : 'html',
-            success: function(data){
-              $('#eStart').empty();
-              $('#eEnd').empty();
-              $('#eStart').val(start);
-              $('#eEnd').val(end);
-              $( "#isi" ).empty();
-              $( "#isi" ).append( data );
-            }
-          });
-          //window.open( SERVER +'penjualans/export/'+status+'/'+mulai+'/'+slesai);
+            NProgress.start();
+            event.preventDefault();
+            var start   = $("#start").val();
+            var end     = $("#end").val();
+            var token   = $("#token").val();
+            $.ajax({
+                url      : "/admin/sales/getReportData",
+                data     : ({start : start, end : end, _token : token}),
+                type     : 'POST',
+                dataType : 'html',
+                success: function(data){
+                    NProgress.done();
+                    $('#eStart').empty();
+                    $('#eEnd').empty();
+                    $('#eStart').val(start);
+                    $('#eEnd').val(end);
+                    $( "#isi" ).empty();
+                    $( "#isi" ).append( data );
+                }
+            });
         });
     </script>
 @endsection

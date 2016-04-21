@@ -18,7 +18,7 @@ class SalesOrderAfter extends Criteria {
      */
     public function apply( $model, Repository $repository )
     {
-        $model = $model->where('order_date', '>', $this->date);
+        $model = $model->where('transfer_date', '>=', $this->date);
         return $model;
     }
 

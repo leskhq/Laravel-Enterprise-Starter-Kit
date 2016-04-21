@@ -305,6 +305,7 @@ class SalesController extends Controller
     public function getReportData()
     {
         $sales              = $this->sale->pushCriteria(new SalesOrderAfter($_POST['start']))->pushCriteria(new SalesOrderBefore($_POST['end']))->all();
+
         $chemicalIndex      = [1,2,3,4,8];
 		$materialIndex      = [6,7];
 
