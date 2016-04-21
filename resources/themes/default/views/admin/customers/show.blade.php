@@ -74,6 +74,7 @@
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#activity" data-toggle="tab">Followup</a></li>
+                    <li><a href="#orders" data-toggle="tab">Order History</a></li>
                     <li><a href="#settings" data-toggle="tab">Edit</a></li>
                 </ul>
               <div class="tab-content">
@@ -113,6 +114,33 @@
                             </td>
                             {!! Form::close() !!}
                         </tr>
+                        </tbody>
+                    </table>
+                </div><!-- /.tab-pane -->
+
+                <div class="tab-pane" id="orders">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>{{ trans('admin/sales/general.columns.id') }}</th>
+                                <th>{{ trans('admin/sales/general.columns.order_date') }}</th>
+                                <th>{{ trans('admin/sales/general.columns.nominal') }}</th>
+                                <th>{{ trans('admin/sales/general.columns.actions') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($customer->sales as $sale)
+                                <tr>
+                                    <td>{!! link_to_route('admin.sales.show', $sale->id, $sale->id) !!}</td>
+                                    <td>{{ Helpers::date($sale->order_date) }}</td>
+                                    <td>{{ Helpers::reggo($sale->nominal) }}</td>
+                                    <td>
+                                        <a href="{!! route('admin.sales.confirm-delete', $sale->id) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}">
+                                            <i class="fa fa-trash-o deletable"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div><!-- /.tab-pane -->
