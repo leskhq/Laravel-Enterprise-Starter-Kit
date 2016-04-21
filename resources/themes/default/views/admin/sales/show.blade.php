@@ -27,9 +27,9 @@
             Customer
             <address>
                 <strong>{{ $sale->customer->name }}</strong><br>
-                {{ $sale->customer->laundry_address ? $sale->customer->laundry_address : $sale->customer->address }}<br>
-                {{ Helpers::getCustomerTypeDisplayName($sale->customer->type) }}<br>
-                Phone: {{ $sale->customer->phone }}<br>
+                {{ $sale->address }}<br>
+                {{ $sale->customer->getCustomerTypeDisplayName() }}<br>
+                Phone: {{ $sale->phone }}<br>
                 Email: {{ $sale->customer->email }}
             </address>
         </div><!-- /.col -->

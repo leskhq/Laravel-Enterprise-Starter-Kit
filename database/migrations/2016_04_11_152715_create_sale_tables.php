@@ -29,10 +29,7 @@ class CreateSaleTables extends Migration
             $table->string('resi')->nullable();
             $table->text('description')->nullable();
 
-            $table->foreign('customer_id')->references('id')->on('customers')
-                ->onUpdate('cascade')->onDelete('cascade');
-            // $table->foreign('transfer_via')->references('id')->on('bank_accounts');
-            // $table->foreign('expedition_id')->references('id')->on('expeditions');
+            $table->foreign('customer_id')->references('id')->on('customers');
         });
 
         Schema::create('sale_details', function (Blueprint $table) {

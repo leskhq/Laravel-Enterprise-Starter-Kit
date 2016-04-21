@@ -31,7 +31,7 @@
 <div class="form-group">
     {!! Form::label('supplier_id', trans('admin/products/general.columns.supplier_id')) !!}
     {!! Form::hidden('supplier_id', null, ['id' => 'supplier_id']) !!}
-    {!! Form::text('supplier', $product->supplier ? $product->supplier->name : '', ['class' => 'form-control', 'id' => 'supplier']) !!}
+    {!! Form::text('supplier', isset($product->supplier) ? $product->supplier->name : '', ['class' => 'form-control', 'id' => 'supplier']) !!}
 </div>
 
 <div class="form-group">

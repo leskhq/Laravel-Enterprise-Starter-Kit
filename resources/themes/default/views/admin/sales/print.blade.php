@@ -17,14 +17,12 @@
 		<tr>
 			<th>Alamat</th>
 			<td>:</td>
-			<td>
-				{{ $sale->customer->laundry_address ? $sale->customer->laundry_address : $sale->customer->address }}
-			</td>
+			<td>{{ $sale->address }}</td>
 		</tr>
 		<tr>
 			<th>Telepon</th>
 			<td>:</td>
-			<td>{{ $sale->customer->phone }}</td>
+			<td>{{ $sale->phone }}</td>
 		</tr>
 		<tr>
 			<th>Tanggal Order</th>
@@ -78,7 +76,7 @@
 </div>
 
 <div class='orchid' id='mitra'>
-	<b>{{ Helpers::getCustomerTypeDisplayName($sale->customer->type) }}</b>
+	<b>{{ $sale->customer->getCustomerTypeDisplayName() }}</b>
 </div>
 
 <table id="allset" >

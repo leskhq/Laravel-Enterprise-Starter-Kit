@@ -11,6 +11,8 @@ class Sale extends Model
      */
     protected $fillable = [
         'customer_id',
+        'address',
+        'phone',
         'order_date',
         'transfer_date',
         'ship_date',
