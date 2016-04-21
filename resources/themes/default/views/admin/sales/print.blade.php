@@ -17,7 +17,9 @@
 		<tr>
 			<th>Alamat</th>
 			<td>:</td>
-			<td>{{ $sale->customer->address }}</td>
+			<td>
+				{{ $sale->customer->laundry_address ? $sale->customer->laundry_address : $sale->customer->address }}
+			</td>
 		</tr>
 		<tr>
 			<th>Telepon</th>
