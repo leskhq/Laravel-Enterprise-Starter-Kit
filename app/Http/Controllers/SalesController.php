@@ -75,9 +75,11 @@ class SalesController extends Controller
         $items   = $request->input('item');
         $nominal = 0;
 
-        // because fuck you
+        // because database cannot read null
         if ($data['transfer_date'] == '') {
             $data['transfer_date'] = null;
+        } else {
+            $data['status'] = 2;
         }
         if ($data['ship_date'] == '') {
             $data['ship_date'] = null;
@@ -167,7 +169,7 @@ class SalesController extends Controller
         $nominal = 0;
         $status  = $this->sale->find($id)->status;
 
-        // because fuck you
+        // because database cannot read null
         if ($data['transfer_date'] == '') {
             $data['transfer_date'] = null;
         }

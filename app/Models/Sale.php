@@ -22,7 +22,8 @@ class Sale extends Model
         'packing_fee',
         'expedition',
         'resi',
-        'description'
+        'description',
+        'status'
     ];
 
     /**
