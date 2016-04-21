@@ -63,6 +63,12 @@ class Menu extends Model
             return false;
         }
 
+        // Fix #32: Prevent deletion of nodes with children
+        $children = $this->children();
+        if ( $children && ($children->count() > 0) ) {
+            return false;
+        }
+
         return true;
     }
 
