@@ -129,7 +129,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($customer->sales as $sale)
+                            @foreach($sales as $sale)
                                 <tr>
                                     <td>{!! link_to_route('admin.sales.show', $sale->id, $sale->id) !!}</td>
                                     <td>{{ Helpers::date($sale->order_date) }}</td>

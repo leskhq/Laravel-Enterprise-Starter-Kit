@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\CustomerRepository as Customer;
+use App\Repositories\SaleRepository as Sale;
 use App\Repositories\Criteria\Customer\CustomerByCreatedDescending;
 use App\Repositories\Criteria\Customer\CustomerWithFollowup;
 use App\Repositories\Criteria\Customer\CustomerWhereNameLike;
+use App\Repositories\Criteria\Sale\SalesByOrderDateDescending;
 
 use Illuminate\Http\Request;
 
@@ -18,9 +20,12 @@ class CustomersController extends Controller
 {
     private $customer;
 
-    public function __construct(Customer $customer)
+    private $sale;
+
+    public function __construct(Customer $customer, Sale $sale)
     {
         $this->customer = $customer;
+        $this->sale = $sale;
     }
 
     /**
@@ -81,11 +86,12 @@ class CustomersController extends Controller
     public function show($id)
     {
         $customer = $this->customer->pushCriteria(new CustomerWithFollowup())->find($id);
+        $sales = $this->sale->pushCriteria(new SalesByOrderDateDescending())->findWhere(['customer_id' => $id]);
 
         $page_title = trans('admin/customers/general.page.show.title');
         $page_description = trans('admin/customers/general.page.show.description', ['name' => $customer->name]);
 
-        return view('admin.customers.show', compact('customer', 'page_title', 'page_description'));
+        return view('admin.customers.show', compact('customer', 'page_title', 'page_description', 'sales'));
     }
 
     /**
