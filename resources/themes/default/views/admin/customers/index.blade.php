@@ -44,7 +44,7 @@
                                         <td>{!! link_to_route('admin.customers.show', $c->name, $c->id) !!}</td>
                                         <td>{{ $c->email }}</td>
                                         <td>{{ $c->phone }}</td>
-                                        <td>{{ $c->address }}</td>
+                                        <td>{{ $c->laundry_address ? $c->laundry_address : $c->address }}</td>
                                         <td>
                                             <a href="{!! route('admin.customers.update-status', $c->id) !!}" title="{{ trans('general.button.status') }}"><span class="label label-{{ $c->status == 1 ? 'success' : 'danger' }}">{{ Helpers::getCustomerStatusDisplayName($c->status) }}</span>
                                             </a>

@@ -23,9 +23,6 @@
                             <b>Followups</b> <a class="pull-right"> {{ count($customer->customerFollowups) }}</a>
                         </li>
                         <li class="list-group-item">
-                            <b>Following</b> <a class="pull-right">543</a>
-                        </li>
-                        <li class="list-group-item">
                             <b>Since</b> <a class="pull-right">{{ $customer->created_at }}</a>
                         </li>
                     </ul>
@@ -55,18 +52,6 @@
                     <p class="text-muted">{{ $customer->laundry_name }}</p>
                     <hr><strong><i class="fa fa-map-marker margin-r-5"></i> {{ trans('admin/customers/general.columns.laundry_address') }}</strong>
                     <p class="text-muted">{{ $customer->laundry_address }}</p>
-                    <hr>
-                    <strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>
-                    <p>
-                        <span class="label label-danger">UI Design</span>
-                        <span class="label label-success">Coding</span>
-                        <span class="label label-info">Javascript</span>
-                        <span class="label label-warning">PHP</span>
-                        <span class="label label-primary">Node.js</span>
-                    </p>
-                    <hr>
-                    <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
         </div><!-- /.col -->
