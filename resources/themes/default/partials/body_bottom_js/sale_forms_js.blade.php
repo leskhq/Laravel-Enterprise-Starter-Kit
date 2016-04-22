@@ -158,13 +158,14 @@
             var currentId   = $(this).attr('id').replace('Qty','');
 
             var price       = $('#price'+currentId).val();
-            var baseWeight  = $('#productName'+currentId).attr('weight');
+            var baseWeight  = $('#baseWeight'+currentId).val();
             var weight      = $('#weight'+currentId).val();
             var weightTotal = qty*baseWeight;
 
             $('#total'+currentId).val(qty*price);
             $('#displayTotal'+currentId).val(qty*price);
-            $('#jer'+currentId).attr('value', Math.round(qty/5));
+
+            $('#jer'+currentId).val(Math.round(qty/5));
             $('#jer'+currentId).text(Math.round(qty/5));
 
             if(!isNaN(weightTotal)){

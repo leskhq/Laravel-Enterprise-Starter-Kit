@@ -132,28 +132,28 @@
                                 <tr id="row{{ $d->id }}">
                                     <td>{{ $no }}</td>
                                         {!! Form::hidden('item['. $key .'][id]', $d->id) !!}
-                                        {!! Form::hidden('item['. $key .'][product_id]', $d->product_id, ['id'=>'product-name'. $key .'', 'weight' => $d->product->weight]) !!}
-                                        {!! Form::hidden('item['. $key .'][weight]', $d->product->weight, ['id' => 'baseWeight'.$key.'']) !!}
+                                        {!! Form::hidden('item['. $key .'][product_id]', $d->product_id, ['id' => 'product-name'. $no .'']) !!}
+                                        {!! Form::hidden('baseWeight', $d->product->weight, ['id' => 'baseWeight'.$no.'']) !!}
                                     <td>
-                                        {!! Form::text('productName', $d->product->name, ['id' => 'product'. $key .'', 'placeholder' => 'nama', 'class' => 'form-control product']) !!}
+                                        {!! Form::text('productName', $d->product->name, ['id' => 'product'. $no .'', 'placeholder' => 'nama', 'class' => 'form-control product']) !!}
                                     </td>
                                     <td>
                                         {!! Form::text('item['. $key .'][description]', $d->description, ['placeholder' => 'description', 'class' => 'form-control']) !!}
                                     </td>
                                     <td>
-                                        {!! Form::hidden('item['. $key .'][price]', $d->price, ['id' => 'price'. $key .'']) !!}
-                                        {!! Form::text('price', $d->price, ['placeholder' => 'price', 'class' => 'form-control', 'id' => 'displayPrice'. $key .'', 'disabled']) !!}
+                                        {!! Form::hidden('item['. $key .'][price]', $d->price, ['id' => 'price'. $no .'']) !!}
+                                        {!! Form::text('price', $d->price, ['placeholder' => 'price', 'class' => 'form-control', 'id' => 'displayPrice'. $no .'', 'disabled']) !!}
                                     </td>
                                     <td>
                                         {!! Form::text('item['. $key .'][quantity]', $d->quantity, ['placeholder' => 'quantity', 'class' => 'form-control Qty','id' => 'Qty'. $no .'']) !!}
                                     </td>
                                     <td>
-                                        {!! Form::hidden('item['. $key .'][total]', $d->total, ['id' => 'total'. $key .'']) !!}
-                                        {!! Form::text('total', $d->total, ['placeholder' => 'total', 'class' => 'form-control', 'id' => 'displayTotal'. $key .'', 'disabled']) !!}
+                                        {!! Form::hidden('item['. $key .'][total]', $d->total, ['id' => 'total'. $no .'']) !!}
+                                        {!! Form::text('total', $d->total, ['placeholder' => 'total', 'class' => 'form-control', 'id' => 'displayTotal'. $no .'', 'disabled']) !!}
                                     </td>
                                     <td>
-                                        {!! Form::hidden('item['. $key .'][weight]', $d->weight, ['id' => 'weight'. $key .'']) !!}
-                                        {!! Form::text('weight', $d->weight, ['placeholder' => 'weight', 'class' => 'form-control sumWeight', 'id' => 'displayWeight'. $key .'', 'disabled']) !!}
+                                        {!! Form::hidden('item['. $key .'][weight]', $d->weight, ['id' => 'weight'. $no .'']) !!}
+                                        {!! Form::text('weight', $d->weight, ['placeholder' => 'weight', 'class' => 'form-control sumWeight', 'id' => 'displayWeight'. $no .'', 'disabled']) !!}
                                     </td>
                                     <td id='jer{{$no}}' class='qtyJer' value=''>
                                         0

@@ -165,7 +165,7 @@ class SalesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data    = $request->except(['item', 'productName', 'customer_id', '_method', '_token']);
+        $data    = $request->except(['item', 'productName', 'baseWeight', 'customer_id', '_method', '_token']);
         $items   = $request->input('item');
         $nominal = 0;
         $status  = $this->sale->find($id)->status;
