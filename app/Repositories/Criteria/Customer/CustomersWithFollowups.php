@@ -3,7 +3,7 @@
 use Bosnadev\Repositories\Criteria\Criteria;
 use Bosnadev\Repositories\Contracts\RepositoryInterface as Repository;
 
-class CustomerWithFollowup extends Criteria {
+class CustomersWithFollowups extends Criteria {
 
 
     /**

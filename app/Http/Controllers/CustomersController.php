@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\CustomerRepository as Customer;
 use App\Repositories\SaleRepository as Sale;
 use App\Repositories\Criteria\Customer\CustomerByCreatedDescending;
-use App\Repositories\Criteria\Customer\CustomerWithFollowup;
+use App\Repositories\Criteria\Customer\CustomersWithFollowups;
 use App\Repositories\Criteria\Customer\CustomerWhereNameLike;
 use App\Repositories\Criteria\Sale\SalesByOrderDateDescending;
 
@@ -85,7 +85,7 @@ class CustomersController extends Controller
      */
     public function show($id)
     {
-        $customer = $this->customer->pushCriteria(new CustomerWithFollowup())->find($id);
+        $customer = $this->customer->pushCriteria(new CustomersWithFollowups())->find($id);
         $sales = $this->sale->pushCriteria(new SalesByOrderDateDescending())->findWhere(['customer_id' => $id]);
 
         $page_title = trans('admin/customers/general.page.show.title');
