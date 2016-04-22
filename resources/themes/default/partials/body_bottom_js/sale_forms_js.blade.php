@@ -107,7 +107,7 @@
                     $('#price'+currentId).val(ui.item.price);
                 }
 
-                $('#productName'+currentId).attr('weight', ui.item.weight);
+                $('#baseWeight'+currentId).val(ui.item.weight);
                 // $('#beratAwal'+currentId).val(ui.item.weight);
                 $('#productName'+currentId).val(ui.item.id);
                 $('#product'+currentId).removeAttr('style');
@@ -159,13 +159,13 @@
 
             var price       = $('#price'+currentId).val();
             var baseWeight  = $('#baseWeight'+currentId).val();
-            var weight      = $('#weight'+currentId).val();
+            // var weight      = $('#weight'+currentId).val();
             var weightTotal = qty*baseWeight;
 
             $('#total'+currentId).val(qty*price);
             $('#displayTotal'+currentId).val(qty*price);
 
-            $('#jer'+currentId).val(Math.round(qty/5));
+            $('#jer'+currentId).attr('value', Math.round(qty/5));
             $('#jer'+currentId).text(Math.round(qty/5));
 
             if(!isNaN(weightTotal)){

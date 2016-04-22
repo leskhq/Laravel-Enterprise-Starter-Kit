@@ -169,6 +169,7 @@
                                     <td>
                                         {!! $x !!}
                                         {!! Form::hidden('item['. $x .'][product_id]', '', ['id' => 'productName'. $x .'']) !!}
+                                        {!! Form::hidden('baseWeight', '', ['id' => 'baseWeight'.$x.'']) !!}
                                     </td>
 
                                     <td>
@@ -209,6 +210,7 @@
                                     <td>
                                         {!! $x !!}
                                         {!! Form::hidden('item['. $x .'][product_id]', '', ['id' => 'productName'. $x .'']) !!}
+                                        {!! Form::hidden('baseWeight', '', ['id' => 'baseWeight'.$x.'']) !!}
                                     </td>
 
                                     <td>
