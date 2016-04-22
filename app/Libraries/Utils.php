@@ -43,7 +43,7 @@ class Utils {
     public static function date($date) {
         if ($date != 000-00-00 && $date != null) {
             $dt = \Carbon\Carbon::parse($date);
-            return $dt->format('d F');
+            return $dt->format('d F Y');
         }
         return false;
     }

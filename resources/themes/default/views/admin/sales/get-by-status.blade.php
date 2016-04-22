@@ -1,6 +1,5 @@
 @foreach($sales as $key => $sale)
 <tr>
-    <td align="center">{!! Form::checkbox('chkSale[]', $sale->id); !!}</td>
     <td>{!! link_to_route('admin.sales.show', $sale->customer->name, $sale->id) !!}</td>
     <td>{{ Helpers::date($sale->order_date) }}</td>
     <td>{{ Helpers::date($sale->transfer_date) }}</td>

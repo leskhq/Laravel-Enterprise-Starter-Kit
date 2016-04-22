@@ -42,7 +42,8 @@ class SalesController extends Controller
     {
         $sales = $this->sale
             ->pushCriteria(new SalesWithCustomers())
-            ->pushCriteria(new SalesByTransferDateDescending())->paginate(15);
+            ->pushCriteria(new SalesByTransferDateDescending())
+            ->all();
 
         $page_title = trans('admin/sales/general.page.index.title');
         $page_description = trans('admin/sales/general.page.index.description');

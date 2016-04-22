@@ -5,6 +5,8 @@
     @include('partials._head_extra_select2_css')
     <!-- NProgress 0.2.0  -->
     <link rel="stylesheet" href="{{ asset('/bower_components/nprogress/nprogress.css') }}" media="screen" charset="utf-8">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('/bower_components/admin-lte/plugins/datatables/dataTables.bootstrap.css') }}">
 @endsection
 
 @section('content')
@@ -31,14 +33,9 @@
                 </div>
                 <div class="box-body">
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th style="text-align: center">
-                                        <a class="btn" href="#" onclick="toggleCheckbox(); return false;" title="{{ trans('general.button.toggle-select') }}">
-                                            <i class="fa fa-check-square-o"></i>
-                                        </a>
-                                    </th>
                                     <th>{{ trans('admin/sales/general.columns.name') }}</th>
                                     <th>{{ trans('admin/sales/general.columns.order_date') }}</th>
                                     <th>{{ trans('admin/sales/general.columns.transfer_date') }}</th>
@@ -50,11 +47,6 @@
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th style="text-align: center">
-                                        <a class="btn" href="#" onclick="toggleCheckbox(); return false;" title="{{ trans('general.button.toggle-select') }}">
-                                            <i class="fa fa-check-square-o"></i>
-                                        </a>
-                                    </th>
                                     <th>{{ trans('admin/sales/general.columns.name') }}</th>
                                     <th>{{ trans('admin/sales/general.columns.order_date') }}</th>
                                     <th>{{ trans('admin/sales/general.columns.transfer_date') }}</th>
@@ -67,7 +59,6 @@
                             <tbody id="content">
                                 @foreach($sales as $key => $sale)
                                 <tr>
-                                    <td align="center">{!! Form::checkbox('chkSale[]', $sale->id); !!}</td>
                                     <td>{!! link_to_route('admin.sales.show', $sale->customer->name, $sale->id) !!}</td>
                                     <td>{{ Helpers::date($sale->order_date) }}</td>
                                     <td>{{ Helpers::date($sale->transfer_date) }}</td>
@@ -84,7 +75,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        {!! $sales->render() !!}
+
                     </div>
                 </div>
             </div>
@@ -99,15 +90,16 @@
     <!-- NProgress 0.2.0  -->
     <script src="{{ asset('/bower_components/nprogress/nprogress.js') }}" type="text/javascript"></script>
 
-    <script language="JavaScript">
-        function toggleCheckbox() {
-            checkboxes = document.getElementsByName('chkSale[]');
-            for(var i=0, n=checkboxes.length;i<n;i++) {
-                checkboxes[i].checked = !checkboxes[i].checked;
-            }
-        }
+    <!-- DataTables -->
+    <script src="{{ asset('/bower_components/admin-lte/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('/bower_components/admin-lte/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
 
+    <script language="JavaScript">
         $(document).ready(function() {
+            $('#example2').DataTable({
+                "order": [[ 2, 'desc' ]],
+                "ordering": false
+            });
             function status() {
                 $('.status').change(function(e) {
                     NProgress.start();
