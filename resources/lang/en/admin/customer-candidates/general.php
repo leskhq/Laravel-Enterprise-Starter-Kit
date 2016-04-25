@@ -25,6 +25,7 @@ return [
         'enabled'                   => 'Customer Candidate enabled.',
         'disabled'                  => 'Customer Candidate disabled.',
         'no-candidate-selected'     => 'No customer candidate selected.',
+        'changed'                   => 'This Candidate has now became Customer, Grats!',
     ],
 
     'error'               => [

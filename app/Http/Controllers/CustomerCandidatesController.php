@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\CustomerCandidate;
+use App\Repositories\CustomerRepository as Customer;
+use App\Repositories\CustomerFollowupRepository as CustomerFollowup;
 use App\Repositories\CustomerCandidateFollowupRepository as CandidateFollowup;
 use App\Repositories\CustomerCandidateRepository as CustomerCandidateRepo;
 use App\Repositories\Criteria\Customer\CustomerCandidateByCreatedAtAscending;
@@ -30,12 +32,31 @@ class CustomerCandidatesController extends Controller
     protected $candidateFollowup;
 
     /**
+     * customer alias
+     * @var customer
+     */
+    protected $customer;
+
+    /**
+     * customer followup alias
+     * @var customerFollowup
+     */
+    protected $customerFollowup;
+
+    /**
      * @param CustomerCandidateRepo $customerCandidate
      */
-    public function __construct(CustomerCandidateRepo $customerCandidate, CandidateFollowup $candidateFollowup)
+    public function __construct(
+        CustomerCandidateRepo $customerCandidate,
+        CandidateFollowup $candidateFollowup,
+        Customer $customer,
+        CustomerFollowup $customerFollowup
+        )
     {
         $this->customerCandidate = $customerCandidate;
         $this->candidateFollowup = $candidateFollowup;
+        $this->customer          = $customer;
+        $this->customerFollowup  = $customerFollowup;
     }
 
     /**
@@ -61,7 +82,7 @@ class CustomerCandidatesController extends Controller
             }
         }
 
-        $page_title = trans('admin/customer-candidates/general.page.index.title');
+        $page_title       = trans('admin/customer-candidates/general.page.index.title');
         $page_description = trans('admin/customer-candidates/general.page.index.description');
 
         return view('admin.customer-candidates.index', compact('page_title', 'page_description', 'customerCandidates', 'data'));
@@ -190,9 +211,39 @@ class CustomerCandidatesController extends Controller
 
         $modal_title = trans('admin/customer-candidates/dialog.delete-confirm.title');
         $modal_route = route('admin.customer-candidates.delete', array('id' => $customerCandidate->id));
-        $modal_body = trans('admin/customer-candidates/dialog.delete-confirm.body', ['id' => $customerCandidate->id, 'full_name' => $customerCandidate->name]);
+        $modal_body  = trans('admin/customer-candidates/dialog.delete-confirm.body', ['id' => $customerCandidate->id, 'full_name' => $customerCandidate->name]);
 
         return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
+    }
 
+    /**
+     * change customer candidate to customer
+     * @param  int $id customer candidate id
+     * @return response     redirect to customers index
+     */
+    public function change($id)
+    {
+        $customer = $this->customerCandidate->find($id);
+
+        $data = [
+            'name'    => $customer->name,
+            'email'   => $customer->email,
+            'phone'   => $customer->phone,
+            'address' => $customer->address,
+            'type'    => $customer->type
+        ];
+
+        $newCustomer = $this->customer->create($data);
+
+        $this->customerFollowup->create([
+            'customer_id' => $newCustomer->id,
+            'content'     => trans('admin/customer-candidates/general.status.changed')
+        ]);
+
+        $this->customerCandidate->delete($id);
+
+        Flash::success( trans('admin/customer-candidates/general.status.updated') );
+
+        return redirect()->route('admin.customers.index', $data['type']);
     }
 }

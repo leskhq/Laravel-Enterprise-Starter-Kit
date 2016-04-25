@@ -85,7 +85,8 @@ Route::group(['middleware' => 'authorize'], function () {
         Route::get(   'customer-candidates/create',                 ['as' => 'admin.customer-candidates.create',          'uses' => 'CustomerCandidatesController@create']);
         Route::get(   'customer-candidates/{ccId}',                 ['as' => 'admin.customer-candidates.show',            'uses' => 'CustomerCandidatesController@show']);
         Route::patch( 'customer-candidates/{ccId}',                 ['as' => 'admin.customer-candidates.update',          'uses' => 'CustomerCandidatesController@update']);
-        Route::get(  'customer-candidates/{ccId}/update-status',    ['as' => 'admin.customer-candidates.update-status',   'uses' => 'CustomerCandidatesController@updateStatus']);
+        Route::get(   'customer-candidates/{ccId}/change',          ['as' => 'admin.customer-candidates.change',          'uses' => 'CustomerCandidatesController@change']);
+        Route::get(   'customer-candidates/{ccId}/update-status',   ['as' => 'admin.customer-candidates.update-status',   'uses' => 'CustomerCandidatesController@updateStatus']);
         Route::get(   'customer-candidates/{ccId}/confirm-delete',  ['as' => 'admin.customer-candidates.confirm-delete',  'uses' => 'CustomerCandidatesController@getModalDelete']);
         // Customer Followup routes
         Route::get(   'customer-followups',                         ['as' => 'admin.customer-followups.index',            'uses' => 'CustomerFollowupsController@index']);

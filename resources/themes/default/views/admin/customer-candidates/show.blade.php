@@ -23,14 +23,12 @@
                             <b>Followups</b> <a class="pull-right"> {{ count($customer->candidateFollowups) }}</a>
                         </li>
                         <li class="list-group-item">
-                            <b>Following</b> <a class="pull-right">543</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b>Friends</b> <a class="pull-right">13,287</a>
+                            <b>Since</b> <a class="pull-right">{{ $customer->created_at }}</a>
                         </li>
                     </ul>
 
-                    <a href="#" class="btn btn-info btn-block"><b> ... </b></a>
+                    <a href="{{ route('admin.customer-candidates.change', $customer->id) }}" class="btn btn-info btn-block"><b> Change To Customer </b></a>
+                    <a href="{{ route('admin.customer-candidates.confirm-delete', $customer->id) }}" class="btn btn-danger btn-block" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><b> Delete </b></a>
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
 
@@ -50,18 +48,6 @@
                     <hr>
                     <strong><i class="fa fa-phone margin-r-5"></i> {{ trans('admin/customer-candidates/general.columns.phone') }}</strong>
                     <p class="text-muted">{{ $customer->phone }}</p>
-                    <hr>
-                    <strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>
-                    <p>
-                        <span class="label label-danger">UI Design</span>
-                        <span class="label label-success">Coding</span>
-                        <span class="label label-info">Javascript</span>
-                        <span class="label label-warning">PHP</span>
-                        <span class="label label-primary">Node.js</span>
-                    </p>
-                    <hr>
-                    <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
         </div><!-- /.col -->
