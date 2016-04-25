@@ -166,7 +166,7 @@
 		Ket :
 	</div>
 	<div class='tengah' id="ketnya">
-		<b>{{ $sale->description }}</b>
+		<b>{!! nl2br($sale->description) !!}</b>
 	</div>
 	<div class='clearboth'></div>
 </div>
