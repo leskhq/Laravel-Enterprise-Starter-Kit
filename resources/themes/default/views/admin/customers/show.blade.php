@@ -34,7 +34,7 @@
             <!-- About Me Box -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">About Me</h3>
+                    <h3 class="box-title">About Customer</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                     <strong><i class="fa fa-envelope margin-r-5"></i>  {{ trans('admin/customers/general.columns.email') }}</strong>
@@ -45,10 +45,10 @@
                     <strong><i class="fa fa-phone margin-r-5"></i> {{ trans('admin/customers/general.columns.phone') }}</strong>
                     <p class="text-muted">{{ $customer->phone }}</p>
                     <hr>
-                    <strong><i class="fa fa-map-marker margin-r-5"></i> {{ trans('admin/customers/general.columns.address') }}</strong>
+                    <strong><i class="fa fa-home margin-r-5"></i> {{ trans('admin/customers/general.columns.address') }}</strong>
                     <p class="text-muted">{{ $customer->address }}</p>
                     <hr>
-                    <strong><i class="fa fa-map-marker margin-r-5"></i> {{ trans('admin/customers/general.columns.laundry_name') }}</strong>
+                    <strong><i class="fa fa-tags margin-r-5"></i> {{ trans('admin/customers/general.columns.laundry_name') }}</strong>
                     <p class="text-muted">{{ $customer->laundry_name }}</p>
                     <hr><strong><i class="fa fa-map-marker margin-r-5"></i> {{ trans('admin/customers/general.columns.laundry_address') }}</strong>
                     <p class="text-muted">{{ $customer->laundry_address }}</p>
@@ -132,7 +132,7 @@
 
                 <div class="tab-pane" id="settings">
                     <div class="box-body">
-                        {!! Form::model($customer, ['route' => ['admin.customers.update', $customer->id], 'class' => 'form-horizontal', 'method'=>'patch']) !!}
+                        {!! Form::model($customer, ['route' => ['admin.customers.update', $customer->id], 'method'=>'patch']) !!}
 
                             @include('partials.forms.customer_form')
 
