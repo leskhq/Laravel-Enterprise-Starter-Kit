@@ -28,21 +28,21 @@
             </div>
 
             <div class="form-group">
-                {!! Form::label('address', trans('admin/customers/general.columns.address')) !!}
+                {!! Form::label('phone', trans('admin/customers/general.columns.phone')) !!}
                 @if( isset($sale) )
-                    {!! Form::text('address', $sale->customer->address, ['class' => 'form-control', 'id' => 'base-address', 'disabled']) !!}
+                    {!! Form::text('phone', $sale->phone, ['class' => 'form-control phone', 'disabled']) !!}
                 @else
-                    {!! Form::text('address', null, ['class' => 'form-control', 'id' => 'base-address']) !!}
-                    {!! Form::select('address-2', ['default'=>'choose address'], null, ['class' => 'form-control', 'id' => 'sec-address']) !!}
+                    {!! Form::text('phone', null, ['class' => 'form-control phone']) !!}
                 @endif
             </div>
 
             <div class="form-group">
-                {!! Form::label('phone', trans('admin/customers/general.columns.phone')) !!}
+                {!! Form::label('address', trans('admin/customers/general.columns.address')) !!}
                 @if( isset($sale) )
-                    {!! Form::text('phone', $sale->customer->phone, ['class' => 'form-control phone', 'disabled']) !!}
+                    {!! Form::textarea('address', $sale->address, ['class' => 'form-control', 'id' => 'base-address', 'disabled', 'rows' => 3]) !!}
                 @else
-                    {!! Form::text('phone', null, ['class' => 'form-control phone']) !!}
+                    {!! Form::text('address', null, ['class' => 'form-control', 'id' => 'base-address']) !!}
+                    {!! Form::select('address-2', ['default'=>'choose address'], null, ['class' => 'form-control', 'id' => 'sec-address']) !!}
                 @endif
             </div>
         </div><!-- /.tab-pane -->
