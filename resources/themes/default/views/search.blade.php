@@ -17,7 +17,7 @@
     @if($customerCandidates->count())
         @foreach($customerCandidates as $c)
             <li>
-                <h4>{!! link_to_route('admin.customer_candidates.show', $c->name, $c->id) !!}</h4>
+                <h4>{!! link_to_route('admin.customer-candidates.show', $c->name, $c->id) !!}</h4>
             </li>
         @endforeach
     @else
