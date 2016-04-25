@@ -12,6 +12,9 @@ use App\Models\Customer;
 use App\Models\CustomerCandidate;
 use App\Models\Sale;
 
+use Carbon\Carbon;
+use DateTime;
+use DB;
 
 class DashboardController extends Controller
 {
@@ -61,10 +64,107 @@ class DashboardController extends Controller
             ],
         ];
 
+        $newCustomersCount = Customer::where(DB::raw('YEAR(created_at)'), Carbon::now()->year)
+            ->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
+            ->count();
+
+        $salesThisMonthCount = Sale::whereBetween('order_date', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
+            ->count();
+
+        $incomeThisMount = Sale::where('status', 2)
+            ->whereBetween('transfer_date', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
+            ->select('nominal', 'shipping_fee', 'packing_fee')
+            ->get();
+        $incomeThisMountTotal = $incomeThisMount->sum(function ($sale) {
+            return $sale->nominal + $sale->shipping_fee + $sale->packing_fee;
+        });
+
+        $chemicalIndex      = [1,2,3,4,8];
+        $materialIndex      = [6,7];
+
+        $saleDetails = [
+            'chemicals' => [
+                'value'     => 0,
+                'color'     => 'green',
+                'highlight' => '#00a65a',
+                'label'     => 'Chemicals'
+            ],
+            'materials' => [
+                'value'     => 0,
+                'color'     => 'blue',
+                'highlight' => '#0073b7',
+                'label'     => 'Materials'
+            ],
+            'equipments' => [
+                'value'     => 0,
+                'color'     => 'red',
+                'highlight' => '#dd4b39',
+                'label'     => 'Equipments'
+            ],
+        ];
+
+         $sales = Sale::
+            whereBetween('transfer_date', [Carbon::now()->startOfMonth(), Carbon::today()])
+            ->get();
+
+        foreach ($sales as $key => $row) {
+            foreach($row->saleDetails as $key => $d) {
+                if(in_array( $d->product->category, $chemicalIndex)) {
+                    $saleDetails['chemicals']['value'] += $d->total;
+                } elseif (in_array( $d->product->category, $materialIndex)) {
+                    $saleDetails['materials']['value'] += $d->total;
+                } else {
+                    $saleDetails['equipments']['value'] += $d->total;
+                }
+            }
+        }
+
+        $salesLastMonth = Sale::
+            whereBetween('transfer_date', [new DateTime('first day of previous month'), new DateTime('last day of previous month')])
+            ->get();
+
+        $saleDetailsLastMonth = [
+            'chemicals' => [
+                'value'          => 0,
+                'valueThisMonth' => $saleDetails['chemicals']['value'],
+                'label'          => 'Chemicals'
+            ],
+            'materials' => [
+                'value'          => 0,
+                'valueThisMonth' => $saleDetails['materials']['value'],
+                'label'          => 'Materials'
+            ],
+            'equipments' => [
+                'value'          => 0,
+                'valueThisMonth' => $saleDetails['equipments']['value'],
+                'label'          => 'Equipments'
+            ],
+        ];
+
+        foreach ($salesLastMonth as $key => $row) {
+            foreach($row->saleDetails as $key => $d) {
+                if(in_array( $d->product->category, $chemicalIndex)) {
+                    $saleDetailsLastMonth['chemicals']['value'] += $d->total;
+                } elseif (in_array( $d->product->category, $materialIndex)) {
+                    $saleDetailsLastMonth['materials']['value'] += $d->total;
+                } else {
+                    $saleDetailsLastMonth['equipments']['value'] += $d->total;
+                }
+            }
+        }
+
         $page_title = "Dashboard";
         $page_description = "This is the dashboard";
 
-        return view('dashboard', compact('page_title', 'page_description'))->with($data);
+        return view('dashboard', compact(
+                    'page_title',
+                    'page_description',
+                    'newCustomersCount',
+                    'salesThisMonthCount',
+                    'incomeThisMountTotal',
+                    'saleDetails',
+                    'saleDetailsLastMonth'))
+                ->with($data);
     }
 
     public function search(Request $request) {

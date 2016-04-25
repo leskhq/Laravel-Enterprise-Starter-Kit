@@ -6,6 +6,45 @@
 @endsection
 
 @section('content')
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-yellow"><i class="fa fa-users"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">New Customers</span>
+                    <span class="info-box-number">{{ $newCustomersCount }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-green"><i class="fa fa-bar-chart"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Sales</span>
+                    <span class="info-box-number">{{ $salesThisMonthCount }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix visible-sm-block"></div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="fa fa-money"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Income Online</span>
+                    <span class="info-box-number">{{ Helpers::reggo($incomeThisMountTotal) }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-red"><i class="fa fa-smile-o"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">BO Goal</span>
+                    <span class="info-box-number">2</span>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class='row'>
         <div class='col-md-8'>
             <!-- SERVER HEALTH REPORT -->
@@ -80,6 +119,47 @@
 
         </div><!-- /.col -->
         <div class='col-md-4'>
+            <!-- BROWSER USAGE -->
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Income Detail</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="chart-responsive">
+                                <canvas id="pieChart" height="150"></canvas>
+                            </div><!-- ./chart-responsive -->
+                        </div><!-- /.col -->
+                        <div class="col-md-4">
+                            <ul class="chart-legend clearfix">
+                                @foreach($saleDetails as $detail => $item)
+                                <li><i class="fa fa-circle-o text-{{ $item['color'] }}"></i> {{ $detail }}</li>
+                                @endforeach
+                            </ul>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.box-body -->
+                <div class="box-footer no-padding">
+                    <ul class="nav nav-pills nav-stacked">
+                        @foreach($saleDetailsLastMonth as $detail => $item)
+                        <li>
+                            <a href="#">{{ $item['label'] }}
+                                <span class="pull-right text-{{ $item['valueThisMonth'] > $item['value'] ? 'green' : 'red' }}">
+                                    <i class="fa fa-angle-{{ $item['valueThisMonth'] > $item['value'] ? 'up' : 'down' }}"></i>
+                                    {{ Helpers::reggo($item['valueThisMonth']-$item['value']) }}
+                                </span>
+                            </a>
+                        </li>
+                        @endforeach
+                    </ul>
+                </div><!-- /.footer -->
+            </div>
+
             <!-- USERS LIST -->
             <div class="box box-danger">
                 <div class="box-header with-border">
@@ -138,43 +218,6 @@
                     <a href="javascript::" class="uppercase">View All Users</a>
                 </div><!-- /.box-footer -->
             </div>
-
-            <!-- BROWSER USAGE -->
-            <div class="box box-default">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Browser Usage</h3>
-                    <div class="box-tools pull-right">
-                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                    </div>
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="chart-responsive">
-                                <canvas id="pieChart" height="150"></canvas>
-                            </div><!-- ./chart-responsive -->
-                        </div><!-- /.col -->
-                        <div class="col-md-4">
-                            <ul class="chart-legend clearfix">
-                                <li><i class="fa fa-circle-o text-red"></i> Chrome</li>
-                                <li><i class="fa fa-circle-o text-green"></i> IE</li>
-                                <li><i class="fa fa-circle-o text-yellow"></i> FireFox</li>
-                                <li><i class="fa fa-circle-o text-aqua"></i> Safari</li>
-                                <li><i class="fa fa-circle-o text-light-blue"></i> Opera</li>
-                                <li><i class="fa fa-circle-o text-gray"></i> Navigator</li>
-                            </ul>
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
-                </div><!-- /.box-body -->
-                <div class="box-footer no-padding">
-                    <ul class="nav nav-pills nav-stacked">
-                        <li><a href="#">United States of America <span class="pull-right text-red"><i class="fa fa-angle-down"></i> 12%</span></a></li>
-                        <li><a href="#">India <span class="pull-right text-green"><i class="fa fa-angle-up"></i> 4%</span></a></li>
-                        <li><a href="#">China <span class="pull-right text-yellow"><i class="fa fa-angle-left"></i> 0%</span></a></li>
-                    </ul>
-                </div><!-- /.footer -->
-            </div>
         </div><!-- /.col -->
 
     </div><!-- /.row -->
@@ -193,42 +236,14 @@
         var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
         var pieChart = new Chart(pieChartCanvas);
         var PieData = [
+            @foreach($saleDetails as $detail => $item)
             {
-                value: 700,
-                color: "#f56954",
-                highlight: "#f56954",
-                label: "Chrome"
+                value    :  {{ $item['value'] }},
+                color    : '{{ $item['color'] }}',
+                highlight: '{{ $item['highlight'] }}',
+                label    : '{{ $item['label'] }}'
             },
-            {
-                value: 500,
-                color: "#00a65a",
-                highlight: "#00a65a",
-                label: "IE"
-            },
-            {
-                value: 400,
-                color: "#f39c12",
-                highlight: "#f39c12",
-                label: "FireFox"
-            },
-            {
-                value: 600,
-                color: "#00c0ef",
-                highlight: "#00c0ef",
-                label: "Safari"
-            },
-            {
-                value: 300,
-                color: "#3c8dbc",
-                highlight: "#3c8dbc",
-                label: "Opera"
-            },
-            {
-                value: 100,
-                color: "#d2d6de",
-                highlight: "#d2d6de",
-                label: "Navigator"
-            }
+            @endforeach
         ];
         var pieOptions = {
             //Boolean - Whether we should show a stroke on each segment
@@ -254,7 +269,7 @@
             //String - A legend template
             legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>",
             //String - A tooltip template
-            tooltipTemplate: "<%=value %> <%=label%> users"
+            tooltipTemplate: "<%=value%> income <%=label%>"
         };
         //Create pie or douhnut chart
         // You can switch between pie and douhnut using the method below.
