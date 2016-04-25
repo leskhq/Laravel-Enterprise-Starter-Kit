@@ -30,7 +30,7 @@
             <div class="form-group">
                 {!! Form::label('phone', trans('admin/customers/general.columns.phone')) !!}
                 @if( isset($sale) )
-                    {!! Form::text('phone', $sale->phone, ['class' => 'form-control phone', 'disabled']) !!}
+                    {!! Form::text('phone', $sale->phone, ['class' => 'form-control phone']) !!}
                 @else
                     {!! Form::text('phone', null, ['class' => 'form-control phone']) !!}
                 @endif
@@ -39,7 +39,7 @@
             <div class="form-group">
                 {!! Form::label('address', trans('admin/customers/general.columns.address')) !!}
                 @if( isset($sale) )
-                    {!! Form::textarea('address', $sale->address, ['class' => 'form-control', 'id' => 'base-address', 'disabled', 'rows' => 3]) !!}
+                    {!! Form::textarea('address', $sale->address, ['class' => 'form-control', 'id' => 'base-address', 'rows' => 3]) !!}
                 @else
                     {!! Form::text('address', null, ['class' => 'form-control', 'id' => 'base-address']) !!}
                     {!! Form::select('address-2', ['default'=>'choose address'], null, ['class' => 'form-control', 'id' => 'sec-address']) !!}
