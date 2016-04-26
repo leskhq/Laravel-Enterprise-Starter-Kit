@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.5.1 (2016-04-26)
+### Added
+- line breaks in sale description
+- print option on sales index
+- more data tables in some indexes
+
 ## v3.5.0 (2016-04-25)
 ### Added
 - customer candidate change to customer feature
