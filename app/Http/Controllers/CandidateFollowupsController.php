@@ -39,7 +39,7 @@ class CandidateFollowupsController extends Controller
      */
     public function index()
     {
-        $candidateFollowups = $this->candidateFollowup->pushCriteria(new FollowupsWithCandidates())->pushCriteria(new CandidateFollowupsByCreatedAtDescending())->paginate(15);
+        $candidateFollowups = $this->candidateFollowup->pushCriteria(new FollowupsWithCandidates())->pushCriteria(new CandidateFollowupsByCreatedAtDescending())->all();
 
         $page_title = trans('admin/customer-candidates/followup.page.index.title');
         $page_description = trans('admin/customer-candidates/followup.page.index.description');

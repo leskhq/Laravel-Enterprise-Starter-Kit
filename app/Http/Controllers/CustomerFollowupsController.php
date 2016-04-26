@@ -38,7 +38,7 @@ class CustomerFollowupsController extends Controller
     {
         $customerFollowups = $this->customerFollowup->pushCriteria(new FollowupsWithCustomers())->pushCriteria(new CustomerFollowupsByCreatedAtDescending())->paginate(15);
 
-        $page_title = trans('admin/customers/followup.page.index.title');
+        $page_title       = trans('admin/customers/followup.page.index.title');
         $page_description = trans('admin/customers/followup.page.index.description');
 
         return view('admin.customers.followups-index', compact('customerFollowups', 'page_title', 'page_description'));
@@ -136,7 +136,7 @@ class CustomerFollowupsController extends Controller
 
         $modal_route = route('admin.customer-followups.delete', array('id' => $customerFollowup->id));
 
-        $modal_body = trans('admin/customers/followup-dialog.delete-confirm.body', ['id' => $customerFollowup->id, 'full_name' => $customerFollowup->customer->name]);
+        $modal_body  = trans('admin/customers/followup-dialog.delete-confirm.body', ['id' => $customerFollowup->id, 'full_name' => $customerFollowup->customer->name]);
 
         return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
 
@@ -147,11 +147,11 @@ class CustomerFollowupsController extends Controller
         $type = $_POST['query'];
 
         $candidateFollowups = Customer::select(DB::raw('customers.*, count(*) as `aggregate`'))
-        ->join('customer_followups', 'customers.id', '=', 'customer_followups.customer_id')
-        ->where('customers.type', '=', $type)
-        ->groupBy('customer_id')
-        ->orderBy('customer_followups.created_at', 'desc')
-        ->get();
+            ->join('customer_followups', 'customers.id', '=', 'customer_followups.customer_id')
+            ->where('customers.type', '=', $type)
+            ->groupBy('customer_id')
+            ->orderBy('customer_followups.created_at', 'desc')
+            ->get();
 
         return view('admin.customer-candidates.followups-get-by-type', compact('candidateFollowups'));
     }

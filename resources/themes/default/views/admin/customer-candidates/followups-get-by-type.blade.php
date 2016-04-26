@@ -1,8 +1,8 @@
 @foreach($candidateFollowups as $cf)
   <tr>
-      <td align="center">
+      <!-- <td align="center">
         {!! Form::checkbox('chkUser[]', $cf->id); !!}
-      </td>
+      </td> -->
       <td>{!! link_to_route('admin.customer-candidates.show', $cf->name, $cf->id) !!}</td>
       <td>{{ Helpers::getCustomerTypeDisplayName($cf->type) }}</td>
       <td>{{ $cf->phone }}</td>

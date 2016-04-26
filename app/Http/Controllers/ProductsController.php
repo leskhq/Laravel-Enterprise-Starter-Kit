@@ -58,9 +58,9 @@ class ProductsController extends Controller
         $orderBy = $request->input('orderBy');
 
         if ($sortBy && $orderBy) {
-            $products = $this->product->pushCriteria(new ProductWhereCategoryLike($id))->pushCriteria(new ProductOrderByColumn($sortBy, $orderBy))->paginate(25);
+            $products = $this->product->pushCriteria(new ProductWhereCategoryLike($id))->pushCriteria(new ProductOrderByColumn($sortBy, $orderBy))->all();
         } else {
-            $products = $this->product->pushCriteria(new ProductWhereCategoryLike($id))->pushCriteria(new ProductsByNamesAscending)->paginate(25);
+            $products = $this->product->pushCriteria(new ProductWhereCategoryLike($id))->pushCriteria(new ProductsByNamesAscending)->all();
         }
 
         $page_title = trans('admin/products/general.page.index.title');

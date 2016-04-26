@@ -1,5 +1,10 @@
 @extends('layouts.master')
 
+@section('head_extra')
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('/bower_components/admin-lte/plugins/datatables/dataTables.bootstrap.css') }}">
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -19,14 +24,14 @@
                 </div>
                 <div class="box-body">
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table id="example2" class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th style="text-align: center">
+                                    <!-- <th style="text-align: center">
                                         <a class="btn" href="#" onclick="toggleCheckbox(); return false;" title="{{ trans('general.button.toggle-select') }}">
                                             <i class="fa fa-check-square-o"></i>
                                         </a>
-                                    </th>
+                                    </th> -->
                                     <th>{{ trans('admin/customers/general.columns.name') }}</th>
                                     <th>{{ trans('admin/customers/general.columns.email') }}</th>
                                     <th>{{ trans('admin/customers/general.columns.phone') }}</th>
@@ -35,12 +40,27 @@
                                     <th>{{ trans('admin/customers/general.columns.actions') }}</th>
                                 </tr>
                             </thead>
+                            <tfoot>
+                                <tr>
+                                    <!-- <th style="text-align: center">
+                                        <a class="btn" href="#" onclick="toggleCheckbox(); return false;" title="{{ trans('general.button.toggle-select') }}">
+                                            <i class="fa fa-check-square-o"></i>
+                                        </a>
+                                    </th> -->
+                                    <th>{{ trans('admin/customers/general.columns.name') }}</th>
+                                    <th>{{ trans('admin/customers/general.columns.email') }}</th>
+                                    <th>{{ trans('admin/customers/general.columns.phone') }}</th>
+                                    <th>{{ trans('admin/customers/general.columns.address') }}</th>
+                                    <th>{{ trans('admin/customers/general.columns.status') }}</th>
+                                    <th>{{ trans('admin/customers/general.columns.actions') }}</th>
+                                </tr>
+                            </tfoot>
                             <tbody>
                                 @foreach($customers as $key => $c)
                                     <tr>
-                                        <td align="center">
+                                        <!-- <td align="center">
                                             {!! Form::checkbox('chkUser[]', $c->id); !!}
-                                        </td>
+                                        </td> -->
                                         <td>{!! link_to_route('admin.customers.show', $c->name, $c->id) !!}</td>
                                         <td>{{ $c->email }}</td>
                                         <td>{{ $c->phone }}</td>
@@ -64,12 +84,13 @@
 @endsection
 
 @section('body_bottom')
+    <!-- DataTables -->
+    <script src="{{ asset('/bower_components/admin-lte/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('/bower_components/admin-lte/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+
     <script language="JavaScript">
-        function toggleCheckbox() {
-            checkboxes = document.getElementsByName('chkUser[]');
-            for(var i=0, n=checkboxes.length;i<n;i++) {
-                checkboxes[i].checked = !checkboxes[i].checked;
-            }
-        }
+        $('#example2').DataTable({
+            "ordering": false
+        });
     </script>
 @endsection

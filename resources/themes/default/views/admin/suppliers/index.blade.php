@@ -1,5 +1,10 @@
 @extends('layouts.master')
 
+@section('head_extra')
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('/bower_components/admin-lte/plugins/datatables/dataTables.bootstrap.css') }}">
+@endsection
+
 @section('content')
 
   <div class="row">
@@ -18,14 +23,14 @@
               </div>
               <div class="box-body">
                   <div class="table-responsive">
-                      <table class="table table-hover">
+                      <table id="example2" class="table table-hover table-striped">
                           <thead>
                               <tr>
-                                <th style="text-align: center">
+                                <!-- <th style="text-align: center">
                                     <a class="btn" href="#" onclick="toggleCheckbox(); return false;" title="{{ trans('general.button.toggle-select') }}">
                                         <i class="fa fa-check-square-o"></i>
                                     </a>
-                                </th>
+                                </th> -->
                                 <th>{{ trans('admin/suppliers/general.columns.name') }}</th>
                                 <th>{{ trans('admin/suppliers/general.columns.category') }}</th>
                                 <th>{{ trans('admin/suppliers/general.columns.contact') }}</th>
@@ -36,11 +41,11 @@
                           </thead>
                           <tfoot>
                               <tr>
-                                <th style="text-align: center">
+                                <!-- <th style="text-align: center">
                                     <a class="btn" href="#" onclick="toggleCheckbox(); return false;" title="{{ trans('general.button.toggle-select') }}">
                                         <i class="fa fa-check-square-o"></i>
                                     </a>
-                                </th>
+                                </th> -->
                                 <th>{{ trans('admin/suppliers/general.columns.name') }}</th>
                                 <th>{{ trans('admin/suppliers/general.columns.category') }}</th>
                                 <th>{{ trans('admin/suppliers/general.columns.contact') }}</th>
@@ -52,7 +57,7 @@
                           <tbody>
                             @foreach($suppliers as $s)
                               <tr>
-                                <td align="center">{!! Form::checkbox('chkPerm[]', $s->id); !!}</td>
+                                <!-- <td align="center">{!! Form::checkbox('chkPerm[]', $s->id); !!}</td> -->
                                 <td>{!! link_to_route('admin.suppliers.edit', $s->name, $s->id) !!}</td>
                                 <td>{{ $s->getCategoryDisplayName() }}</td>
                                 <td>{{ $s->contact }}</td>
@@ -65,7 +70,6 @@
                             @endforeach
                           </tbody>
                       </table>
-                      {!! $suppliers->render() !!}
                   </div>
               </div>
           </div>
@@ -75,12 +79,13 @@
 @endsection
 
 @section('body_bottom')
+    <!-- DataTables -->
+    <script src="{{ asset('/bower_components/admin-lte/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('/bower_components/admin-lte/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+
     <script language="JavaScript">
-        function toggleCheckbox() {
-            checkboxes = document.getElementsByName('chkPerm[]');
-            for(var i=0, n=checkboxes.length;i<n;i++) {
-                checkboxes[i].checked = !checkboxes[i].checked;
-            }
-        }
+        $('#example2').DataTable({
+            "ordering": false
+        });
     </script>
 @endsection

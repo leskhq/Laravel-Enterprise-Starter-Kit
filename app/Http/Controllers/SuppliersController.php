@@ -30,7 +30,7 @@ class SuppliersController extends Controller
      */
     public function index()
     {
-        $suppliers = $this->supplier->pushCriteria(new SuppliersByNamesAscending)->paginate(15);
+        $suppliers = $this->supplier->pushCriteria(new SuppliersByNamesAscending)->all();
 
         $page_title = trans('admin/suppliers/general.page.index.title');
         $page_description = trans('admin/suppliers/general.page.index.description');
