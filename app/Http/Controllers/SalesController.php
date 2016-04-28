@@ -133,7 +133,7 @@ class SalesController extends Controller
     public function show($id)
     {
         $sale = $this->sale->find($id);
-
+        
         $page_title = trans('admin/sales/general.page.show.title');
         $page_description = trans('admin/sales/general.page.show.description', ['name' => $sale->customer->name]);
 

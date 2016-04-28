@@ -72,7 +72,7 @@
                 <tbody>
                     @if( count($sale->saleDetails) )
                         <?php $totber = 0; $perlengkapan = 0; ?>
-                        @foreach($sale->saleDetails as $d)
+                        @foreach($sale->saleDetails->sortBy('product_id') as $d)
                             <?php $totber += $d->weight ?>
                             @if ( $d->product->category == 5 )
                                 <?php $perlengkapan += $d->total; ?>
