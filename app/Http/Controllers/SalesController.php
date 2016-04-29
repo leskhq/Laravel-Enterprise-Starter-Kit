@@ -8,7 +8,9 @@ use App\Repositories\SaleRepository as Sale;
 use App\Repositories\CustomerRepository as Customer;
 use App\Repositories\SaleDetailRepository as SaleDetail;
 use App\Repositories\Criteria\Sale\SalesWithCustomers;
+use App\Repositories\Criteria\Sale\SalesWithSaleDetails;
 use App\Repositories\Criteria\Sale\SalesByTransferDateDescending;
+use App\Repositories\Criteria\Sale\SalesByTransferDateAscending;
 use App\Repositories\Criteria\Sale\SalesByOrderDateDescending;
 use App\Repositories\Criteria\Sale\SalesOrderAfter;
 use App\Repositories\Criteria\Sale\SalesOrderBefore;
@@ -132,8 +134,8 @@ class SalesController extends Controller
      */
     public function show($id)
     {
-        $sale = $this->sale->find($id);
-        
+        $sale = $this->sale->pushCriteria(new SalesWithSaleDetails())->find($id);
+
         $page_title = trans('admin/sales/general.page.show.title');
         $page_description = trans('admin/sales/general.page.show.description', ['name' => $sale->customer->name]);
 
@@ -307,7 +309,11 @@ class SalesController extends Controller
 
     public function getReportData()
     {
-        $sales              = $this->sale->pushCriteria(new SalesOrderAfter($_POST['start']))->pushCriteria(new SalesOrderBefore($_POST['end']))->all();
+        $sales              = $this->sale
+                            ->pushCriteria(new SalesByTransferDateAscending())
+                            ->pushCriteria(new SalesOrderAfter($_POST['start']))
+                            ->pushCriteria(new SalesOrderBefore($_POST['end']))
+                            ->all();
 
         $chemicalIndex      = [1,2,3,4,8];
 		$materialIndex      = [6,7];
