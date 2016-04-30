@@ -96,33 +96,33 @@
     <script src="{{ asset('/bower_components/admin-lte/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
 
     <script language="JavaScript">
+        function status() {
+            $('.status').change(function(e) {
+                NProgress.start();
+                var status = $(this).val();
+                var id     = $(this).data('id');
+                var data   = {
+                        _token: $(this).data('token'),
+                        status: status
+                    }
+
+                $.ajax({
+                    url : "/admin/sales/" + id + "/update-status",
+                    data: data,
+                    type : 'POST',
+                    dataType : 'html',
+                    success: function(data){
+                        NProgress.done();
+                    }
+                });
+                e.stopPropagation();
+            });
+        }
         $(document).ready(function() {
             $('#example2').DataTable({
                 "order": [[ 2, 'desc' ]],
                 "ordering": false
             });
-            function status() {
-                $('.status').change(function(e) {
-                    NProgress.start();
-                    var status = $(this).val();
-                    var id     = $(this).data('id');
-                    var data   = {
-                            _token: $(this).data('token'),
-                            status: status
-                        }
-
-                    $.ajax({
-                        url : "/admin/sales/" + id + "/update-status",
-                        data: data,
-                        type : 'POST',
-                        dataType : 'html',
-                        success: function(data){
-                            NProgress.done();
-                        }
-                    });
-                    e.stopPropagation();
-                });
-            }
 
             status();
 
