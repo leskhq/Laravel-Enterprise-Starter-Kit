@@ -119,12 +119,12 @@
             });
         }
         $(document).ready(function() {
+            status();
+            
             $('#example2').DataTable({
                 "order": [[ 2, 'desc' ]],
                 "ordering": false
             });
-
-            status();
 
             $(".select-sale-status").select2();
 
