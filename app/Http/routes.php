@@ -118,6 +118,15 @@ Route::group(['middleware' => 'authorize'], function () {
         Route::post(  'sales/{sId}/update-status',     ['as' => 'admin.sales.update-status',    'uses' => 'SalesController@updateStatus']);
         Route::get(   'sales/{sId}/confirm-delete',    ['as' => 'admin.sales.confirm-delete',   'uses' => 'SalesController@getModalDelete']);
         // Sale Detail routes
+        // Outlet routes
+        Route::get(   'outlets',                       ['as' => 'admin.outlets.index',            'uses' => 'OutletsController@index']);
+        Route::post(  'outlets',                       ['as' => 'admin.outlets.store',            'uses' => 'OutletsController@store']);
+        Route::get(   'outlets/search',                ['as' => 'admin.outlets.search',           'uses' => 'OutletsController@search']);
+        Route::get(   'outlets/create',                ['as' => 'admin.outlets.create',           'uses' => 'OutletsController@create']);
+        Route::get(   'outlets/{oId}',                 ['as' => 'admin.outlets.show',             'uses' => 'OutletsController@show']);
+        Route::patch( 'outlets/{oId}',                 ['as' => 'admin.outlets.update',           'uses' => 'OutletsController@update']);
+        Route::get(   'outlets/{oId}/delete',          ['as' => 'admin.outlets.delete',           'uses' => 'OutletsController@destroy']);
+        Route::get(   'outlets/{oId}/confirm-delete',  ['as' => 'admin.outlets.confirm-delete',   'uses' => 'OutletsController@getModalDelete']);
         //======================================================================================================================/
         // User routes
         Route::post(  'users/enableSelected',          ['as' => 'admin.users.enable-selected',  'uses' => 'UsersController@enableSelected']);
@@ -213,8 +222,26 @@ Route::group(['middleware' => 'authorize'], function () {
         // Settings routes
         // TODO: Implements settings
         Route::get('settings',                           ['as' => 'admin.settings.index',          'uses' => 'TestController@test_flash_warning']);
-
     }); // End of ADMIN group
+
+    // Outlet Owner section
+    Route::group(['prefix' => 'outlet'], function () {
+        // Outlet sale routes
+        Route::get(  'sales',                             ['as' => 'outlet.sales.index',                  'uses' => 'OutletSalesController@index']);
+        Route::post( 'sales',                         ['as' => 'outlet.sales.store',                      'uses' => 'OutletSalesController@store']);
+        Route::get(  'sales/{ocId}',                      ['as' => 'outlet.sales.show',                   'uses' => 'OutletSalesController@show']);
+        Route::get(  'sales/{ocId}/delete',               ['as' => 'outlet.sales.delete',                 'uses' => 'OutletSalesController@destroy']);
+        Route::get(  'sales/{ocId}/confirm-delete',       ['as' => 'outlet.sales.confirm-delete',         'uses' => 'OutletSalesController@getModalDelete']);
+        // Outlet customer routes
+        Route::get(  'customers',                         ['as' => 'outlet.customers.index',              'uses' => 'OutletCustomersController@index']);
+        Route::post( 'customers',                         ['as' => 'outlet.customers.store',              'uses' => 'OutletCustomersController@store']);
+        Route::get(  'customers/create',                  ['as' => 'outlet.customers.create',             'uses' => 'OutletCustomersController@create']);
+        Route::get(  'customers/{ocId}',                  ['as' => 'outlet.customers.show',               'uses' => 'OutletCustomersController@show']);
+        Route::patch('customers/{ocId}',                  ['as' => 'outlet.customers.update',             'uses' => 'OutletCustomersController@update']);
+        Route::get(  'customers/{ocId}/edit',             ['as' => 'outlet.customers.edit',               'uses' => 'OutletCustomersController@edit']);
+        Route::get(  'customers/{ocId}/delete',           ['as' => 'outlet.customers.delete',             'uses' => 'OutletCustomersController@destroy']);
+        Route::get(  'customers/{ocId}/confirm-delete',   ['as' => 'outlet.customers.confirm-delete',     'uses' => 'OutletCustomersController@getModalDelete']);
+    });
 
     // TODO: Remove this before release...
     if ($this->app->environment('development')) {

@@ -476,6 +476,10 @@ class UsersController extends Controller {
 
         $query = $request->input('query');
 
+        if ($request->input('term')) {
+            $query = $request->input('term');
+        }
+
         $users = $this->user->pushCriteria(new UsersWhereFirstNameOrLastNameOrUsernameLike($query))->all();
 
         foreach ($users as $user) {
@@ -484,7 +488,7 @@ class UsersController extends Controller {
             $last_name = $user->last_name;
             $username = $user->username;
 
-            $entry_arr = [ 'id' => $id, 'text' => "$first_name $last_name ($username)"];
+            $entry_arr = [ 'id' => $id, 'text' => "$first_name $last_name ($username)", 'value' => $username];
             $return_arr[] = $entry_arr;
         }
 

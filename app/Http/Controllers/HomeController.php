@@ -46,6 +46,10 @@ class HomeController extends Controller
                 $homePerm = $homeRoute->permission;
                 if ($user->can($homePerm->name)) {
                     $homeRouteName = $homeCandidateName;
+                } else {
+                    // TODO: create check if the user is outlet owner,
+                    // and redirect to it's dashboard.
+                    $homeRouteName = 'welcome';
                 }
             }
         }
