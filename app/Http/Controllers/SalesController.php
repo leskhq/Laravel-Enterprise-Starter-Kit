@@ -307,9 +307,57 @@ class SalesController extends Controller
         return view('admin.sales.report', compact('page_title', 'page_description'));
     }
 
+    public function export()
+    {
+        Excel::create('Penjualan', function($excel) {
+			$excel->sheet('Penjualan', function($sheet) {
+    			$sales              = $this->sale
+                                    ->pushCriteria(new SalesWithSaleDetails())
+                                    ->pushCriteria(new SalesByTransferDateAscending())
+                                    ->pushCriteria(new SalesOrderAfter($_POST['eStart']))
+                                    ->pushCriteria(new SalesOrderBefore($_POST['eEnd']))
+                                    ->all();
+                $chemicalIndex      = [1,2,3,4,8];
+        		$materialIndex      = [6,7];
+                $chemicals          = 0;
+        		$materials          = 0;
+                $equipments         = 0;
+                $no                 = 1;
+                $total              = 0;
+                $total_shipping_fee = 0;
+
+                foreach ($sales as $key => $row) {
+        	        foreach($row->saleDetails as $key => $d) {
+                        if(in_array( $d->product->category, $chemicalIndex)) {
+                            $chemicals += $d->total;
+                        } elseif (in_array( $d->product->category, $materialIndex)) {
+                            $materials += $d->total;
+                        } else {
+                            $equipments += $d->total;
+                        }
+        	       }
+                }
+
+        		$sheet->loadView('admin.sales.sale-reports-export',
+                    [
+                        'sales'              => $sales,
+                        'materials'          => $materials,
+                        'equipments'         => $equipments,
+                        'chemicals'          => $chemicals,
+                        'no'                 => $no,
+                        'total'              => $total,
+                        'total_shipping_fee' => $total_shipping_fee,
+                        'chemicalIndex'      => $chemicalIndex,
+                        'materialIndex'      => $materialIndex
+                    ]);
+            });
+		})->download('xls');
+    }
+
     public function getReportData()
     {
         $sales              = $this->sale
+                            ->pushCriteria(new SalesWithSaleDetails())
                             ->pushCriteria(new SalesByTransferDateAscending())
                             ->pushCriteria(new SalesOrderAfter($_POST['start']))
                             ->pushCriteria(new SalesOrderBefore($_POST['end']))
