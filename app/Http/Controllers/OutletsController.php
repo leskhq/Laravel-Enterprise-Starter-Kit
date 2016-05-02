@@ -67,14 +67,6 @@ class OutletsController extends Controller
     {
         $data        = $request->all();
 
-        $outletOwner = $this->role->findBy('name', 'outlet-owner');
-
-        $user        = $this->user->find($data['user_id']);
-
-        if (!$user->hasRole('outlet-owner')) {
-            $user->attachRole($outletOwner);
-        }
-
         $this->outlet->create($data);
 
         Flash::success( trans('admin/outlets/general.status.created') );

@@ -11,7 +11,7 @@ class Outlet extends Model
     /**
    * @var array
    */
-    protected $fillable = ['name', 'user_id', 'email', 'phone', 'address'];
+    protected $fillable = ['name', 'email', 'phone', 'address'];
 
     public function outletCustomers()
     {
