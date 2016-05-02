@@ -13,9 +13,10 @@ class OutletSale extends Model
     [
         'outlet_laundry_id',
         'kilo_quantity',
-        'kilo_total',
         'piece_quantity',
-        'piece_total',
+        'total_kilo_cost',
+        'total_piece_cost',
+        'income',
         'description'
     ];
 

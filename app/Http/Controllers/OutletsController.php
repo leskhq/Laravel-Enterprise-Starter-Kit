@@ -121,7 +121,13 @@ class OutletsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->except(['_method', '_token']);
+
+        $this->outlet->update($data, $id);
+
+        Flash::success( trans('admin/outlets/general.status.updated') );
+
+        return redirect()->back();
     }
 
     /**

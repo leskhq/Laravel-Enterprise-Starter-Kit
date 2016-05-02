@@ -62,16 +62,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Eloquent hook to HasMany relationship between User and Outlet
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function outlets()
-    {
-        return $this->hasMany('App\Models\Outlet');
-    }
-
-    /**
      * Alias to eloquent many-to-many relation's sync() method.
      *
      * @param array $attributes

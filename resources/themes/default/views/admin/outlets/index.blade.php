@@ -16,7 +16,6 @@
                         <table id="example2" class="table table-hover table-striped">
                             <thead>
                                 <tr>
-                                    <th>{{ trans('admin/outlets/general.columns.user_id') }}</th>
                                     <th>{{ trans('admin/outlets/general.columns.name') }}</th>
                                     <th>{{ trans('admin/outlets/general.columns.email') }}</th>
                                     <th>{{ trans('admin/outlets/general.columns.phone') }}</th>
@@ -26,7 +25,6 @@
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th>{{ trans('admin/outlets/general.columns.user_id') }}</th>
                                     <th>{{ trans('admin/outlets/general.columns.name') }}</th>
                                     <th>{{ trans('admin/outlets/general.columns.email') }}</th>
                                     <th>{{ trans('admin/outlets/general.columns.phone') }}</th>
@@ -37,7 +35,6 @@
                             <tbody>
                                 @foreach($outlets as $outlet)
                                 <tr>
-                                    <td>{!! link_to_route('admin.users.show', $outlet->user->username, $outlet->user_id) !!}</td>
                                     <td>{!! link_to_route('admin.outlets.show', $outlet->name, $outlet->id) !!}</td>
                                     <td>{{ $outlet->email }}</td>
                                     <td>{{ $outlet->phone }}</td>

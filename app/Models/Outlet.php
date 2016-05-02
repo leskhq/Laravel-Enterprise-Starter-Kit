@@ -13,11 +13,6 @@ class Outlet extends Model
    */
     protected $fillable = ['name', 'user_id', 'email', 'phone', 'address'];
 
-    public function user()
-    {
-        return $this->belongsTo('App\User');
-    }
-
     public function outletCustomers()
     {
         return $this->hasMany('App\Models\OutletCustomer', 'outlet_laundry_id');

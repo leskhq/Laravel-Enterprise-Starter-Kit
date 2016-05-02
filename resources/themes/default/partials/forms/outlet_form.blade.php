@@ -1,10 +1,4 @@
 <div class="form-group">
-    {!! Form::hidden('user_id', null, ['id' => 'user_id']) !!}
-    {!! Form::label('username', trans('admin/outlets/general.columns.user_id')) !!}
-    {!! Form::text('username', null, ['class' => 'form-control', 'id' => 'username']) !!}
-</div>
-
-<div class="form-group">
     {!! Form::label('name', trans('admin/outlets/general.columns.name')) !!}
     {!! Form::text('name', null, ['class' => 'form-control']) !!}
 </div>

@@ -8,7 +8,7 @@
                 <div class="box-body box-profile">
                     <img class="profile-user-img img-responsive img-circle" src="{{ asset("/bower_components/admin-lte/dist/img/generic_user_160x160.jpg") }}" alt="User profile picture">
                     <h3 class="profile-username text-center">{{ $outlet->name }}</h3>
-                    <p class="text-muted text-center">{{ $outlet->user->username }}</p>
+                    <p class="text-muted text-center">...</p>
 
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">
@@ -61,7 +61,7 @@
                         <tbody>
                             @foreach($outlet->outletCustomers as $key => $customer)
                             <tr>
-                                <td>{!! link_to_route('outlet.customers.show', $customer->name, $customer->id, ['target' => '_blank']) !!}</td>
+                                <td>{{ $customer->name }}</td>
                                 <td>{{ $customer->email }}</td>
                                 <td>{{ $customer->phone }}</td>
                                 <td>{{ $customer->address }}</td>
@@ -104,19 +104,21 @@
                                 <th>{{ trans('outlet/sales/general.columns.created') }}</th>
                                 <th>{{ trans('outlet/sales/general.columns.kilo_quantity') }}</th>
                                 <th>{{ trans('outlet/sales/general.columns.piece_quantity') }}</th>
-                                <th>{{ trans('outlet/sales/general.columns.kilo_total') }}</th>
-                                <th>{{ trans('outlet/sales/general.columns.piece_total') }}</th>
+                                <th>{{ trans('outlet/sales/general.columns.total_kilo_cost') }}</th>
+                                <th>{{ trans('outlet/sales/general.columns.total_piece_cost') }}</th>
+                                <th>{{ trans('outlet/sales/general.columns.income') }}</th>
                                 <th>{{ trans('outlet/sales/general.columns.actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($outlet->outletSales as $sale)
                                 <tr>
-                                    <td>{!! link_to_route('outlet.sales.show', $sale->created_at, $sale->id, ['target' => '_blank']) !!}</td>
+                                    <td>{{ $sale->created_at }}</td>
                                     <td>{{ $sale->kilo_quantity }}</td>
                                     <td>{{ $sale->piece_quantity }}</td>
-                                    <td>{{ Helpers::reggo($sale->kilo_total) }}</td>
-                                    <td>{{ Helpers::reggo($sale->piece_total) }}</td>
+                                    <td>{{ Helpers::reggo($sale->total_kilo_cost) }}</td>
+                                    <td>{{ Helpers::reggo($sale->total_piece_cost) }}</td>
+                                    <td>{{ Helpers::reggo($sale->income) }}</td>
                                     <td>
                                         <a href="{!! route('outlet.sales.confirm-delete', $sale->id) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}">
                                             <i class="fa fa-trash-o deletable"></i>
@@ -125,7 +127,7 @@
                                 </tr>
                             @endforeach
                             <tr>
-                                <td colspan="5">{{ trans('outlet/sales/general.page.create.section-title') }}</td>
+                                <td colspan="7">{{ trans('outlet/sales/general.page.create.section-title') }}</td>
                             </tr>
                             <tr>
                                 {!! Form::open( ['route' => 'outlet.sales.store'] ) !!}
@@ -137,17 +139,18 @@
                                     {!! Form::text( 'piece_quantity', null, ['class' => 'form-control', 'placeholder' => trans('outlet/sales/general.columns.piece_quantity')] ) !!}
                                 </td>
                                 <td>
-                                    {!! Form::text( 'kilo_total', null, ['class' => 'form-control', 'placeholder' => trans('outlet/sales/general.columns.kilo_total')] ) !!}
+                                    {!! Form::text( 'total_kilo_cost', null, ['class' => 'form-control', 'placeholder' => trans('outlet/sales/general.columns.total_kilo_cost')] ) !!}
                                 </td>
                                 <td>
-                                    {!! Form::text( 'piece_total', null, ['class' => 'form-control', 'placeholder' => trans('outlet/sales/general.columns.piece_total')] ) !!}
+                                    {!! Form::text( 'total_piece_cost', null, ['class' => 'form-control', 'placeholder' => trans('outlet/sales/general.columns.total_piece_cost')] ) !!}
                                 </td>
                                 <td>
-                                    {!! Form::text( 'description', null, ['class' => 'form-control', 'placeholder' => trans('outlet/sales/general.columns.description')] ) !!}
+                                    {!! Form::text( 'income', null, ['class' => 'form-control', 'placeholder' => trans('outlet/sales/general.columns.income')] ) !!}
                                 </td>
                                 <td>
                                     {!! Form::submit( trans('general.button.create'), ['class' => 'btn btn-primary'] ) !!}
                                 </td>
+                                <td></td>
                                 {!! Form::close() !!}
                             </tr>
                         </tbody>
