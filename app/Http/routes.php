@@ -228,17 +228,14 @@ Route::group(['middleware' => 'authorize'], function () {
     Route::group(['prefix' => 'outlet'], function () {
         // Outlet sale routes
         Route::get(  'sales',                             ['as' => 'outlet.sales.index',                  'uses' => 'OutletSalesController@index']);
-        Route::post( 'sales',                         ['as' => 'outlet.sales.store',                      'uses' => 'OutletSalesController@store']);
+        Route::post( 'sales',                             ['as' => 'outlet.sales.store',                  'uses' => 'OutletSalesController@store']);
         Route::get(  'sales/{ocId}',                      ['as' => 'outlet.sales.show',                   'uses' => 'OutletSalesController@show']);
         Route::get(  'sales/{ocId}/delete',               ['as' => 'outlet.sales.delete',                 'uses' => 'OutletSalesController@destroy']);
         Route::get(  'sales/{ocId}/confirm-delete',       ['as' => 'outlet.sales.confirm-delete',         'uses' => 'OutletSalesController@getModalDelete']);
         // Outlet customer routes
         Route::get(  'customers',                         ['as' => 'outlet.customers.index',              'uses' => 'OutletCustomersController@index']);
         Route::post( 'customers',                         ['as' => 'outlet.customers.store',              'uses' => 'OutletCustomersController@store']);
-        Route::get(  'customers/create',                  ['as' => 'outlet.customers.create',             'uses' => 'OutletCustomersController@create']);
         Route::get(  'customers/{ocId}',                  ['as' => 'outlet.customers.show',               'uses' => 'OutletCustomersController@show']);
-        Route::patch('customers/{ocId}',                  ['as' => 'outlet.customers.update',             'uses' => 'OutletCustomersController@update']);
-        Route::get(  'customers/{ocId}/edit',             ['as' => 'outlet.customers.edit',               'uses' => 'OutletCustomersController@edit']);
         Route::get(  'customers/{ocId}/delete',           ['as' => 'outlet.customers.delete',             'uses' => 'OutletCustomersController@destroy']);
         Route::get(  'customers/{ocId}/confirm-delete',   ['as' => 'outlet.customers.confirm-delete',     'uses' => 'OutletCustomersController@getModalDelete']);
     });
