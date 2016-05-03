@@ -40,6 +40,7 @@ Route::group(['middleware' => 'authorize'], function () {
     // Site administration section
     Route::group(['prefix' => 'admin'], function () {
         // User routes
+        
         Route::post(  'users/enableSelected',          ['as' => 'admin.users.enable-selected',  'uses' => 'UsersController@enableSelected']);
         Route::post(  'users/disableSelected',         ['as' => 'admin.users.disable-selected', 'uses' => 'UsersController@disableSelected']);
         Route::get(   'users/search',                  ['as' => 'admin.users.search',           'uses' => 'UsersController@searchByName']);
@@ -57,7 +58,12 @@ Route::group(['middleware' => 'authorize'], function () {
         Route::get(   'users/{userId}/delete',         ['as' => 'admin.users.delete',           'uses' => 'UsersController@destroy']);
         Route::get(   'users/{userId}/enable',         ['as' => 'admin.users.enable',           'uses' => 'UsersController@enable']);
         Route::get(   'users/{userId}/disable',        ['as' => 'admin.users.disable',          'uses' => 'UsersController@disable']);
-        Route::get(   'users/{userId}/replayEdit',      ['as' => 'admin.users.replay-edit',      'uses' => 'UsersController@replayEdit']);
+        Route::get(   'users/{userId}/replayEdit',     ['as' => 'admin.users.replay-edit',      'uses' => 'UsersController@replayEdit']);
+        
+        
+        
+        
+        
         // Role routes
         Route::post(  'roles/enableSelected',          ['as' => 'admin.roles.enable-selected',  'uses' => 'RolesController@enableSelected']);
         Route::post(  'roles/disableSelected',         ['as' => 'admin.roles.disable-selected', 'uses' => 'RolesController@disableSelected']);
@@ -136,38 +142,12 @@ Route::group(['middleware' => 'authorize'], function () {
 
     }); // End of ADMIN group
 
-    // TODO: Remove this before release...
-    if ($this->app->environment('development')) {
-        // TEST-ACL routes
-        Route::group(['prefix' => 'test-acl'], function () {
-            Route::get('home',                  ['as' => 'test-acl.home',                'uses' => 'TestController@test_acl_home']);
-            Route::get('do-not-pre-load',       ['as' => 'test-acl.do-not-pre-load',     'uses' => 'TestController@test_acl_do_not_load']);
-            Route::get('no-perm',               ['as' => 'test-acl.no-perm',             'uses' => 'TestController@test_acl_no_perm']);
-            Route::get('basic-authenticated',   ['as' => 'test-acl.basic-authenticated', 'uses' => 'TestController@test_acl_basic_authenticated']);
-            Route::get('guest-only',            ['as' => 'test-acl.guest-only',          'uses' => 'TestController@test_acl_guest_only']);
-            Route::get('open-to-all',           ['as' => 'test-acl.open-to-all',         'uses' => 'TestController@test_acl_open_to_all']);
-            Route::get('admins',                ['as' => 'test-acl.admins',              'uses' => 'TestController@test_acl_admins']);
-            Route::get('power-users',           ['as' => 'test-acl.power-users',         'uses' => 'TestController@test_acl_power_users']);
-        }); // End of TEST-ACL group
+	Route::get('hf/dataTable', ['as' => 'hf.datatable', 'uses' => 'HFController@dataTable']);
+	Route::resource('hf', 'HFController');
+	Route::get('si/dataTable', ['as' => 'si.datatable', 'uses' => 'SIController@dataTable']); 
+	Route::resource('si', 'SIController');
 
-        // TEST-FLASH routes
-        Route::group(['prefix' => 'test-flash'], function () {
-            Route::get('home',    ['as' => 'test-flash.home',     'uses' => 'TestController@test_flash_home']);
-            Route::get('success', ['as' => 'test-flash.success',  'uses' => 'TestController@test_flash_success']);
-            Route::get('info',    ['as' => 'test-flash.info',     'uses' => 'TestController@test_flash_info']);
-            Route::get('warning', ['as' => 'test-flash.warning',  'uses' => 'TestController@test_flash_warning']);
-            Route::get('error',   ['as' => 'test-flash.error',    'uses' => 'TestController@test_flash_error']);
-        }); // End of TEST-FLASH group
-        // TEST-MENU routes
-        Route::group(['prefix' => 'test-menus'], function () {
-            Route::get('home',     ['as' => 'test-menus.home',  'uses' => 'TestMenusController@test_menu_home']);
-            Route::get('one',      ['as' => 'test-menus.one',   'uses' => 'TestMenusController@test_menu_one']);
-            Route::get('two',      ['as' => 'test-menus.two',   'uses' => 'TestMenusController@test_menu_two']);
-            Route::get('two-a',    ['as' => 'test-menus.two-a', 'uses' => 'TestMenusController@test_menu_two_a']);
-            Route::get('two-b',    ['as' => 'test-menus.two-b', 'uses' => 'TestMenusController@test_menu_two_b']);
-            Route::get('three',    ['as' => 'test-menus.three', 'uses' => 'TestMenusController@test_menu_three']);
-        }); // End of TEST-MENU group
-    } // End of if DEV environment
+	Route::get( 'script', ['as' => 'script',     'uses' => 'HomeController@script']);
 
     require __DIR__.'/rapyd.php';
 }); // end of AUTHORIZE middleware group

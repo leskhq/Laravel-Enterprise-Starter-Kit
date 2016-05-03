@@ -25,14 +25,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- Head -->
     @include('partials._head')
-	
-	
-	
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/t/bs/dt-1.10.11,r-2.0.2/datatables.min.css"/>
 
-	
-	<link href="{{ asset(('/assets/themes/wisercapital/css/styles.css')) }}" rel="stylesheet" type="text/css" />
-	
     <!-- Optional header section  -->
     @yield('head_extra')
 
@@ -46,6 +39,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
   </head>
 
   <!-- Body -->
-  @include('partials._body')
+  @include('partials._body_si')
 
 </html>
