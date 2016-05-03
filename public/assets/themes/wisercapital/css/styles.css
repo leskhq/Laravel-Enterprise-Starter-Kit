@@ -1,3 +1,22 @@
-body {
-	background-color: #EDFFD0;
+.skin-blue .main-header .logo, .skin-blue .main-header .logo:hover{
+    background-color: #222d32;
+ 
+}
+
+
+.skin-blue .main-header .navbar {
+    background-color: #222d32;
+}
+
+.skin-blue .main-header li.user-header {
+    background-color: #222d32;
+}
+.skin-blue .sidebar-menu > li:hover > a, .skin-blue .sidebar-menu > li.active > a {
+    background: #1e282c none repeat scroll 0 0;
+ 
+}
+
+.skin-blue.layout-top-nav .main-header > .logo {
+    background-color: #222d32;
+
 }

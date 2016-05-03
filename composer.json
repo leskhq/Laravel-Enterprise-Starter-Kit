@@ -39,7 +39,8 @@
         "sroutier/eloquent-ldap": "^1.0@dev",
         "zofe/rapyd": "2.1.*",
         "baum/baum": "~1.1",
-        "sroutier/l51esk-modules": "^3.0"
+        "sroutier/l51esk-modules": "^3.0",
+        "yajra/laravel-datatables-oracle": "~6.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

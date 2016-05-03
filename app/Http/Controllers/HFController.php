@@ -46,6 +46,8 @@ class HFController extends Controller
 
 	public function dataTable()
 	{
+		
+		
 		return Datatables::of(\App\Site::all())->make(true);
 	}
 	

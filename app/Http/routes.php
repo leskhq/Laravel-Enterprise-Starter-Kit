@@ -142,6 +142,7 @@ Route::group(['middleware' => 'authorize'], function () {
 
     }); // End of ADMIN group
 
+
 	Route::get('hf/dataTable', ['as' => 'hf.datatable', 'uses' => 'HFController@dataTable']);
 	Route::resource('hf', 'HFController');
 	Route::get('si/dataTable', ['as' => 'si.datatable', 'uses' => 'SIController@dataTable']); 

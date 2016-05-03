@@ -283,6 +283,7 @@ return [
         Zofe\Rapyd\RapydServiceProvider::class,
         Baum\Providers\BaumServiceProvider::class,
         Sroutier\L51ESKModules\ModulesServiceProvider::class,
+        Yajra\Datatables\DatatablesServiceProvider::class,
 
     ],
 

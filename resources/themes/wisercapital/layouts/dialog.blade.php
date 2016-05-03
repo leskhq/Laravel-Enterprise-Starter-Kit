@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>L51ESK | {{ $page_title or "Page Title" }}</title>
+    <title>Wiser Capital | {{ $page_title or "Page Title" }}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
@@ -32,7 +32,7 @@
 
 <div class="login-box">
     <div class="login-logo">
-       <img src="/assets/images/Wiser-Capital-logo.gif" />
+       <img src="/assets/themes/wisercapital/img/Wiser-Capital-logo.gif" />
     </div><!-- /.login-logo -->
     <div class="login-box-body">
 
