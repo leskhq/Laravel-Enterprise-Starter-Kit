@@ -2052,12 +2052,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sroutier/eloquent-ldap.git",
-                "reference": "5bd4df14a9f126dd4e5bc6e4e1ce28d697785a03"
+                "reference": "f945119619d5f274de391e2eb024330fc37f119a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sroutier/eloquent-ldap/zipball/5bd4df14a9f126dd4e5bc6e4e1ce28d697785a03",
-                "reference": "5bd4df14a9f126dd4e5bc6e4e1ce28d697785a03",
+                "url": "https://api.github.com/repos/sroutier/eloquent-ldap/zipball/f945119619d5f274de391e2eb024330fc37f119a",
+                "reference": "f945119619d5f274de391e2eb024330fc37f119a",
                 "shasum": ""
             },
             "require": {
@@ -2102,20 +2102,20 @@
                 "ldap",
                 "ldap-eloquent"
             ],
-            "time": "2016-05-02 15:48:29"
+            "time": "2016-05-02 18:31:54"
         },
         {
             "name": "sroutier/l51esk-modules",
-            "version": "3.0.6.2",
+            "version": "3.0.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sroutier/l51esk-modules.git",
-                "reference": "66e73740ff19730ef8d6538f545de5b0682f4930"
+                "reference": "896af3be3aaf9f2d1a809a1a79dfd36626cd8d88"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sroutier/l51esk-modules/zipball/66e73740ff19730ef8d6538f545de5b0682f4930",
-                "reference": "66e73740ff19730ef8d6538f545de5b0682f4930",
+                "url": "https://api.github.com/repos/sroutier/l51esk-modules/zipball/896af3be3aaf9f2d1a809a1a79dfd36626cd8d88",
+                "reference": "896af3be3aaf9f2d1a809a1a79dfd36626cd8d88",
                 "shasum": ""
             },
             "require": {
@@ -2160,7 +2160,7 @@
                 "laravel",
                 "modules"
             ],
-            "time": "2016-03-26 15:27:56"
+            "time": "2016-04-02 14:24:29"
         },
         {
             "name": "swiftmailer/swiftmailer",
