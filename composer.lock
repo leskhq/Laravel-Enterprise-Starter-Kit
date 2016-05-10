@@ -9,19 +9,20 @@
     "packages": [
         {
             "name": "adldap2/adldap2",
-            "version": "v5.0.8",
+            "version": "v5.2.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Adldap2/Adldap2.git",
-                "reference": "1641d1df151dee1c1d00fd2d7a6f1eb932784911"
+                "reference": "b72cd7ec6d9734e2a8ba8af69b5b279ee24c325f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Adldap2/Adldap2/zipball/1641d1df151dee1c1d00fd2d7a6f1eb932784911",
-                "reference": "1641d1df151dee1c1d00fd2d7a6f1eb932784911",
+                "url": "https://api.github.com/repos/Adldap2/Adldap2/zipball/b72cd7ec6d9734e2a8ba8af69b5b279ee24c325f",
+                "reference": "b72cd7ec6d9734e2a8ba8af69b5b279ee24c325f",
                 "shasum": ""
             },
             "require": {
+                "doctrine/collections": "1.3.*",
                 "ext-ldap": "*",
                 "php": ">=5.4.26"
             },
@@ -37,7 +38,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPL-2.1"
+                "MIT"
             ],
             "authors": [
                 {
@@ -46,13 +47,17 @@
                     "role": "Developer"
                 }
             ],
-            "description": "A PHP LDAP Library for Active Directory Manipulation",
+            "description": "A PHP LDAP Library for Active Directory Manipulation.",
             "keywords": [
                 "active directory",
+                "ad",
+                "adLDAP",
+                "adldap2",
+                "directory",
                 "ldap",
                 "windows"
             ],
-            "time": "2015-08-25 20:53:34"
+            "time": "2016-03-29 14:34:03"
         },
         {
             "name": "barryvdh/laravel-debugbar",
@@ -711,7 +716,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/doctrine/dbal/zipball/3df22ccdf20a68fafe34cb1ae452aee7cde7d442",
-                "reference": "3df22ccdf20a68fafe34cb1ae452aee7cde7d442",
+                "reference": "5f0dfd29ed807e4dacba0ae69c70300ded8050c3",
                 "shasum": ""
             },
             "require": {
@@ -2129,16 +2134,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sroutier/eloquent-ldap.git",
-                "reference": "f2d19bc8a9ec562bbf6a7ec471695e1ae4d47832"
+                "reference": "f945119619d5f274de391e2eb024330fc37f119a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sroutier/eloquent-ldap/zipball/f2d19bc8a9ec562bbf6a7ec471695e1ae4d47832",
-                "reference": "f2d19bc8a9ec562bbf6a7ec471695e1ae4d47832",
+                "url": "https://api.github.com/repos/sroutier/eloquent-ldap/zipball/f945119619d5f274de391e2eb024330fc37f119a",
+                "reference": "f945119619d5f274de391e2eb024330fc37f119a",
                 "shasum": ""
             },
             "require": {
-                "adldap2/adldap2": "5.0.*",
+                "adldap2/adldap2": "5.*",
                 "illuminate/support": "~5.1",
                 "php": ">=5.5.9"
             },
@@ -2179,7 +2184,7 @@
                 "ldap",
                 "ldap-eloquent"
             ],
-            "time": "2016-04-11 20:03:01"
+            "time": "2016-05-02 18:31:54"
         },
         {
             "name": "sroutier/l51esk-modules",
@@ -3807,8 +3812,8 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Jeroen-G/laravel-packager/zipball/ee94ea3ee4d1fce9e1074605f8ce04e7b8e12a04",
-                "reference": "ee94ea3ee4d1fce9e1074605f8ce04e7b8e12a04",
+                "url": "https://api.github.com/repos/Jeroen-G/laravel-packager/zipball/dd721f31fd5d036eea0ff70456e3edc15f108e7b",
+                "reference": "b327387efa89f6ad9741d4b631f72189e4a3e323",
                 "shasum": ""
             },
             "require": {

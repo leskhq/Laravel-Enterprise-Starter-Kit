@@ -2,6 +2,7 @@
 #############
 /vendor/
 .env
+.env~
 storage/
 
 # Package development #
