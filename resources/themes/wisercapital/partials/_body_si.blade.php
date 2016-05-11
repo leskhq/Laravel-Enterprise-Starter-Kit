@@ -19,6 +19,7 @@ desired effect
 |---------------------------------------------------------|
 -->
 <body class="skin-blue layout-top-nav">
+	
     <!-- Main body content -->
     @include('partials._body_content_si')
 

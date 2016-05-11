@@ -28,7 +28,7 @@ Route::post('password/reset',           ['as' => 'reset_passwordPost',      'use
 Route::get( 'faust',                    ['as' => 'faust',                   'uses' => 'FaustController@index']);
 
 // Application routes...
-Route::get( '/',       ['as' => 'backslash',   'uses' => 'HomeController@index']);
+Route::get( '/',       ['as' => 'backslash',   'uses' => 'Auth\AuthController@getLogin']);
 Route::get( 'home',    ['as' => 'home',        'uses' => 'HomeController@index']);
 Route::get( 'welcome', ['as' => 'welcome',     'uses' => 'HomeController@welcome']);
 
@@ -142,7 +142,7 @@ Route::group(['middleware' => 'authorize'], function () {
 
     }); // End of ADMIN group
 
-
+	Route::get('hf/{id}/dataroom', ['as' => 'hf.dataroom', 'uses' => 'HFController@dataRoom']);
 	Route::get('hf/dataTable', ['as' => 'hf.datatable', 'uses' => 'HFController@dataTable']);
 	Route::resource('hf', 'HFController');
 	Route::get('si/dataTable', ['as' => 'si.datatable', 'uses' => 'SIController@dataTable']); 
@@ -150,5 +150,5 @@ Route::group(['middleware' => 'authorize'], function () {
 
 	Route::get( 'script', ['as' => 'script',     'uses' => 'HomeController@script']);
 
-    require __DIR__.'/rapyd.php';
+    //require __DIR__.'/rapyd.php';
 }); // end of AUTHORIZE middleware group

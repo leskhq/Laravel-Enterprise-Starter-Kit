@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Yajra\Datatables\Datatables;
-
+use AWS;
+use Storage;
 
 class HFController extends Controller
 {
@@ -41,14 +42,36 @@ class HFController extends Controller
      */
     public function create()
     {
-        //
+        $page_title = 'ADD FACILITY'; // trans('admin/users/general.page.index.title'); // "Admin | Users";
+        $page_description = '';//trans('admin/users/general.page.index.description'); // "List of users";
+        
+		
+	
+		
+        return view('hf.create', compact('page_title', 'page_description'));
     }
 
 	public function dataTable()
 	{
 		
 		
-		return Datatables::of(\App\Site::all())->make(true);
+		return Datatables::of(\App\Site::all())
+			->addColumn('dataroom','<a href="{{ URL::route( "hf.dataroom", array( $site_id )) }}">Data Room</a>')
+			->make(true);
+	}
+	
+	
+	public function dataRoom($id)
+	{
+		
+		
+		$page_title = 'DATA ROOM'; // trans('admin/users/general.page.index.title'); // "Admin | Users";
+        $page_description = '';//trans('admin/users/general.page.index.description'); // "List of users";
+        
+		$files = Storage::allFiles($id);
+	
+		
+        return view('hf.dataroom', compact('page_title', 'page_description', 'files'));
 	}
 	
 	

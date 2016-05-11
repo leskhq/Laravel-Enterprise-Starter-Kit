@@ -3,11 +3,10 @@
     <!-- Header -->
     @include('partials._body_header')
 
-    <!-- Sidebar -->
-    @include('partials._body_left_sidebar')
-
+   
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+	     <div class="container">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
@@ -29,6 +28,7 @@
             @yield('content')
 
         </section><!-- /.content -->
+        </div> <!-- /.container -->
     </div><!-- /.content-wrapper -->
 
     <!-- Body Footer -->

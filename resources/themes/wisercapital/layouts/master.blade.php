@@ -29,8 +29,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	
 	
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/t/bs/dt-1.10.11,r-2.0.2/datatables.min.css"/>
-
-	
 	<link href="{{ asset(('/assets/themes/wisercapital/css/styles.css')) }}" rel="stylesheet" type="text/css" />
 	
     <!-- Optional header section  -->

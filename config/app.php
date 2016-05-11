@@ -124,7 +124,7 @@ return [
     | route will be selected.
     |
     */
-    'home_route' => env('APP_HOME_ROUTE', 'welcome'),
+    'home_route' => env('APP_HOME_ROUTE', 'login'),
 
     /*
     |--------------------------------------------------------------------------
@@ -283,7 +283,10 @@ return [
         Zofe\Rapyd\RapydServiceProvider::class,
         Baum\Providers\BaumServiceProvider::class,
         Sroutier\L51ESKModules\ModulesServiceProvider::class,
+        Aws\Laravel\AwsServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
+        GrahamCampbell\Flysystem\FlysystemServiceProvider::class,
+        
 
     ],
 
@@ -299,7 +302,7 @@ return [
     */
 
     'aliases' => [
-
+	
         'App'       => Illuminate\Support\Facades\App::class,
         'Artisan'   => Illuminate\Support\Facades\Artisan::class,
         'Auth'      => Illuminate\Support\Facades\Auth::class,
@@ -340,7 +343,10 @@ return [
         'Theme'       => YAAP\Theme\Facades\Theme::class,
         'Entrust'     => Zizaco\Entrust\EntrustFacade::class,
         'MenuBuilder' => App\Facades\MenuBuilderFacade::class,
+        'AWS' => Aws\Laravel\AwsFacade::class,
         'Module'      => Sroutier\L51ESKModules\Facades\Module::class,
+        'Flysystem'   => GrahamCampbell\Flysystem\Facades\Flysystem::class,
+        
     ],
 
 ];

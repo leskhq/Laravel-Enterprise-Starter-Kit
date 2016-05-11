@@ -40,7 +40,10 @@
         "zofe/rapyd": "2.1.*",
         "baum/baum": "~1.1",
         "sroutier/l51esk-modules": "^3.0",
-        "yajra/laravel-datatables-oracle": "~6.0"
+        "yajra/laravel-datatables-oracle": "~6.0",
+        "graham-campbell/flysystem": "^3.4",
+        "league/flysystem-aws-s3-v3": "^1.0",
+        "aws/aws-sdk-php-laravel": "~3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

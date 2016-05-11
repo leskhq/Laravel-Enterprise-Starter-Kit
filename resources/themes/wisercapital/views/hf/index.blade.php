@@ -5,14 +5,23 @@
         <div class='col-md-12'>
             <!-- Box -->
        
+				<p>
+					<a href="{{ route('hf.create') }}">
+						<button type="button" class="btn btn-primary btn-lg"><span class="fa fa-building" aria-hidden="true"></span> Add Facility</button>
+					</a>
+				</p>
+				
+				
                 <div class="box box-primary">
+	                
+	                
                 <div class="box-header with-border">
                     <h3 class="box-title">Host Facilities</h3>
-                
-
+					
                 </div>
                 <div class="box-body">
-
+					
+					
                     <div class="table-responsive">
                         <table  id="host-facilities-table" class="table table-hover">
                             <thead>
@@ -67,7 +76,7 @@
     		  } 
     		},
             { data: null },
-			{ data: null }
+			{ data: 'dataroom' }
 			
         ]
 	    });

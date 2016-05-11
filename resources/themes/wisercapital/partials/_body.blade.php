@@ -18,7 +18,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="skin-blue">
+<body class="skin-blue layout-top-nav">
 
     <!-- Main body content -->
     @include('partials._body_content')
