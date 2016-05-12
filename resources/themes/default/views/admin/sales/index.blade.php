@@ -91,9 +91,8 @@
     <!-- NProgress 0.2.0  -->
     <script src="{{ asset('/bower_components/nprogress/nprogress.js') }}" type="text/javascript"></script>
 
-    <!-- DataTables -->
-    <script src="{{ asset('/bower_components/admin-lte/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('/bower_components/admin-lte/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+    <!-- Datatable -->
+    @include('partials.body_bottom_js.datatable_js')
 
     <script language="JavaScript">
         function status() {
@@ -120,7 +119,7 @@
         }
         $(document).ready(function() {
             status();
-            
+
             $('#example2').DataTable({
                 "order": [[ 2, 'desc' ]],
                 "ordering": false

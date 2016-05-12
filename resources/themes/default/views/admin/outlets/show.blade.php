@@ -1,5 +1,12 @@
 @extends('layouts.master')
 
+@section('head_extra')
+    <!-- datepicker css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker3.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('/bower_components/admin-lte/plugins/datatables/dataTables.bootstrap.css') }}">
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-md-3">
@@ -98,7 +105,7 @@
                 </div><!-- /.tab-pane -->
 
                 <div class="tab-pane" id="orders">
-                    <table class="table table-striped">
+                    <table class="table table-striped" id="example2">
                         <thead>
                             <tr>
                                 <th>{{ trans('outlet/sales/general.columns.created') }}</th>
@@ -126,34 +133,50 @@
                                     </td>
                                 </tr>
                             @endforeach
-                            <tr>
-                                <td colspan="7">{{ trans('outlet/sales/general.page.create.section-title') }}</td>
-                            </tr>
-                            <tr>
-                                {!! Form::open( ['route' => 'outlet.sales.store'] ) !!}
-                                {!! Form::hidden( 'outlet_laundry_id', $outlet->id ) !!}
-                                <td>
-                                    {!! Form::text( 'kilo_quantity', null, ['class' => 'form-control', 'placeholder' => trans('outlet/sales/general.columns.kilo_quantity')] ) !!}
-                                </td>
-                                <td>
-                                    {!! Form::text( 'piece_quantity', null, ['class' => 'form-control', 'placeholder' => trans('outlet/sales/general.columns.piece_quantity')] ) !!}
-                                </td>
-                                <td>
-                                    {!! Form::text( 'total_kilo_cost', null, ['class' => 'form-control', 'placeholder' => trans('outlet/sales/general.columns.total_kilo_cost')] ) !!}
-                                </td>
-                                <td>
-                                    {!! Form::text( 'total_piece_cost', null, ['class' => 'form-control', 'placeholder' => trans('outlet/sales/general.columns.total_piece_cost')] ) !!}
-                                </td>
-                                <td>
-                                    {!! Form::text( 'income', null, ['class' => 'form-control', 'placeholder' => trans('outlet/sales/general.columns.income')] ) !!}
-                                </td>
-                                <td>
-                                    {!! Form::submit( trans('general.button.create'), ['class' => 'btn btn-primary'] ) !!}
-                                </td>
-                                <td></td>
-                                {!! Form::close() !!}
-                            </tr>
                         </tbody>
+                    </table>
+                    <table class="table">
+                        <tr>
+                            <td colspan="7">{{ trans('outlet/sales/general.page.create.section-title') }}</td>
+                        </tr>
+                        <tr>
+                            {!! Form::open( ['route' => 'outlet.sales.store'] ) !!}
+                            {!! Form::hidden( 'outlet_laundry_id', $outlet->id ) !!}
+                            <td>
+                                {!! Form::text( 'kilo_quantity', null, ['class' => 'form-control', 'placeholder' => trans('outlet/sales/general.columns.kilo_quantity')] ) !!}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {!! Form::text( 'piece_quantity', null, ['class' => 'form-control', 'placeholder' => trans('outlet/sales/general.columns.piece_quantity')] ) !!}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {!! Form::text( 'total_kilo_cost', null, ['class' => 'form-control', 'placeholder' => trans('outlet/sales/general.columns.total_kilo_cost')] ) !!}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {!! Form::text( 'total_piece_cost', null, ['class' => 'form-control', 'placeholder' => trans('outlet/sales/general.columns.total_piece_cost')] ) !!}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {!! Form::text( 'income', null, ['class' => 'form-control', 'placeholder' => trans('outlet/sales/general.columns.income')] ) !!}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {!! Form::text( 'created_at', null, ['class' => 'form-control date', 'placeholder' => trans('outlet/sales/general.columns.created')] ) !!}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {!! Form::submit( trans('general.button.create'), ['class' => 'btn btn-primary'] ) !!}
+                            </td>
+                        </tr>
+                        {!! Form::close() !!}
                     </table>
                 </div><!-- /.tab-pane -->
 
@@ -174,4 +197,30 @@
             </div><!-- /.nav-tabs-custom -->
         </div><!-- /.col -->
     </div>
+@endsection
+
+@section('body_bottom')
+    <!-- datepicker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
+
+    <!-- Datatable -->
+    @include('partials.body_bottom_js.datatable_js')
+
+    <script>
+        $(document).ready(function() {
+            $('.date').datepicker({
+                format: "yyyy-mm-dd",
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: false,
+                autoclose: true
+            });
+
+            $('#example2').DataTable({
+                "order": [[ 0, 'desc' ]],
+                "ordering": false
+            });
+        });
+    </script>
 @endsection

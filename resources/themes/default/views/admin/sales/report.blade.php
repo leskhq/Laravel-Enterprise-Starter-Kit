@@ -34,7 +34,7 @@
                                 <th>No PO</th>
                                 <th>Customer</th>
                                 <th>Tanggal Order</th>
-                                <th>Tanggal Trasfer</th>
+                                <th>Tanggal Transfer</th>
                                 <th>Status</th>
                                 <th>Chemical</th>
                                 <th>Bahan Baku</th>

@@ -18,10 +18,10 @@
               @include('partials.forms.supplier_form')
 
               <div class="form-group">
-                {!! Form::submit( trans('general.button.edit'), ['class' => 'btn btn-primary'] ) !!}
+                {!! Form::submit( trans('general.button.update'), ['class' => 'btn btn-primary'] ) !!}
                 <a href="{!! route('admin.suppliers.index') !!}" title="{{ trans('general.button.cancel') }}" class='btn btn-default'>{{ trans('general.button.cancel') }}</a>
               </div>
-              
+
               {!! Form::close() !!}
             </div><!-- /.box-body -->
         </div><!-- /.box -->

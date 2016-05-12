@@ -17,7 +17,8 @@ class OutletSale extends Model
         'total_kilo_cost',
         'total_piece_cost',
         'income',
-        'description'
+        'description',
+        'created_at'
     ];
 
     public function outlet()
