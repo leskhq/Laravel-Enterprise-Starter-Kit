@@ -73,7 +73,9 @@
                                 <td>{{ $customer->phone }}</td>
                                 <td>{{ $customer->address }}</td>
                                 <td>
-                                <a href="{!! route('outlet.customers.confirm-delete', $customer->id) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><i class="fa fa-trash-o deletable"></i></a>
+                                    @if(Auth::user()->username != 'indry')
+                                    <a href="{!! route('outlet.customers.confirm-delete', $customer->id) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><i class="fa fa-trash-o deletable"></i></a>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach

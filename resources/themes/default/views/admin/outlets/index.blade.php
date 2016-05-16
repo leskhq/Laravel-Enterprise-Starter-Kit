@@ -7,9 +7,11 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">{{ trans('admin/outlets/general.page.index.table-title') }}</h3>
                     &nbsp;
+                    @if(Auth::user()->username != 'indry')
                     <a class="btn btn-default btn-sm" href="{!! route('admin.outlets.create') !!}" title="{{ trans('admin/outlets/general.action.create') }}">
                       <i class="fa fa-plus-square"></i>
                     </a>
+                    @endif
                 </div>
                 <div class="box-body">
                     <div class="table-responsive">

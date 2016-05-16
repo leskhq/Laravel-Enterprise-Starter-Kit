@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Flash;
+use Auth;
 
 class OutletsController extends Controller
 {
@@ -41,6 +42,11 @@ class OutletsController extends Controller
         $page_title = trans('admin/outlets/general.page.index.title');
         $page_description = trans('admin/outlets/general.page.index.description');
 
+        if (Auth::user()->username == 'indry') {
+            $outlets = $this->outlet->findWhere(['id' => 4]);
+            return view('admin.outlets.index', compact('page_title', 'page_description', 'outlets'));
+        }
+
         return view('admin.outlets.index', compact('page_title', 'page_description', 'outlets'));
     }
 
@@ -51,6 +57,10 @@ class OutletsController extends Controller
      */
     public function create()
     {
+        if (Auth::user()->username == 'indry') {
+            return redirect()->route('admin.outlets.index');
+        }
+
         $page_title = trans('admin/outlets/general.page.create.title');
         $page_description = trans('admin/outlets/general.page.create.description');
 
@@ -89,6 +99,13 @@ class OutletsController extends Controller
 
         $page_title = trans('admin/outlets/general.page.show.title');
         $page_description = trans('admin/outlets/general.page.show.description', ['name' => $outlet->name]);
+
+        if (Auth::user()->username == 'indry') {
+            if ($id != 4) {
+                return redirect()->route('admin.outlets.show', 4);
+            }
+            return view('admin.outlets.show', compact('page_title', 'page_description', 'outlet'));
+        }
 
         return view('admin.outlets.show', compact('page_title', 'page_description', 'outlet'));
     }
@@ -130,6 +147,10 @@ class OutletsController extends Controller
      */
     public function destroy($id)
     {
+        if (Auth::user()->username == 'indry') {
+            return redirect()->route('admin.outlets.index');
+        }
+
         $this->outlet->delete($id);
 
         Flash::success( trans('admin/outlets/general.status.deleted') );
