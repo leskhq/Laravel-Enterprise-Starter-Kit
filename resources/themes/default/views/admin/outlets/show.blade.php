@@ -65,6 +65,15 @@
                               <th>{{ trans('outlet/customers/general.columns.actions') }}</th>
                             </tr>
                         </thead>
+                        <tfoot>
+                            <tr>
+                              <th>{{ trans('outlet/customers/general.columns.name') }}</th>
+                              <th>{{ trans('outlet/customers/general.columns.email') }}</th>
+                              <th>{{ trans('outlet/customers/general.columns.phone') }}</th>
+                              <th>{{ trans('outlet/customers/general.columns.address') }}</th>
+                              <th>{{ trans('outlet/customers/general.columns.actions') }}</th>
+                            </tr>
+                        </tfoot>
                         <tbody>
                             @foreach($outlet->outletCustomers as $key => $customer)
                             <tr>
@@ -185,8 +194,8 @@
                         </tr>
                         {!! Form::close() !!}
                     </table>
+                    @endif
                 </div><!-- /.tab-pane -->
-                @endif
 
                 <div class="tab-pane" id="settings">
                     <div class="box-body">
