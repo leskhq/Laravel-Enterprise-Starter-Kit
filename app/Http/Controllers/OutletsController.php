@@ -42,7 +42,7 @@ class OutletsController extends Controller
         $page_title = trans('admin/outlets/general.page.index.title');
         $page_description = trans('admin/outlets/general.page.index.description');
 
-        if (Auth::user()->username == 'indry') {
+        if (Auth::user()->username == 'indri') {
             $outlets = $this->outlet->findWhere(['id' => 4]);
             return view('admin.outlets.index', compact('page_title', 'page_description', 'outlets'));
         }
@@ -57,7 +57,7 @@ class OutletsController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->username == 'indry') {
+        if (Auth::user()->username == 'indri') {
             return redirect()->route('admin.outlets.index');
         }
 
@@ -100,7 +100,7 @@ class OutletsController extends Controller
         $page_title = trans('admin/outlets/general.page.show.title');
         $page_description = trans('admin/outlets/general.page.show.description', ['name' => $outlet->name]);
 
-        if (Auth::user()->username == 'indry') {
+        if (Auth::user()->username == 'indri') {
             if ($id != 4) {
                 return redirect()->route('admin.outlets.show', 4);
             }
@@ -147,7 +147,7 @@ class OutletsController extends Controller
      */
     public function destroy($id)
     {
-        if (Auth::user()->username == 'indry') {
+        if (Auth::user()->username == 'indri') {
             return redirect()->route('admin.outlets.index');
         }
 

@@ -4,8 +4,6 @@ use Bosnadev\Repositories\Criteria\Criteria;
 use Bosnadev\Repositories\Contracts\RepositoryInterface as Repository;
 
 class ProductsWithSuppliers extends Criteria {
-
-
     /**
      * @param $model
      * @param Repository $repository
