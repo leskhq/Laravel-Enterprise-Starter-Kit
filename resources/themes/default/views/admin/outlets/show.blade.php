@@ -79,6 +79,7 @@
                                 </td>
                             </tr>
                             @endforeach
+                            @if(Auth::user()->username != 'indry')
                             <tr>
                                 <td colspan="5">{{ trans('outlet/customers/general.page.create.section-title') }}</td>
                             </tr>
@@ -102,6 +103,7 @@
                                 </td>
                                 {!! Form::close() !!}
                             </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div><!-- /.tab-pane -->
@@ -129,14 +131,17 @@
                                     <td>{{ Helpers::reggo($sale->total_piece_cost) }}</td>
                                     <td>{{ Helpers::reggo($sale->income) }}</td>
                                     <td>
+                                    @if(Auth::user()->username != 'indry')
                                         <a href="{!! route('outlet.sales.confirm-delete', $sale->id) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}">
                                             <i class="fa fa-trash-o deletable"></i>
                                         </a>
+                                    @endif
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
+                    @if(Auth::user()->username != 'indry')
                     <table class="table">
                         <tr>
                             <td colspan="7">{{ trans('outlet/sales/general.page.create.section-title') }}</td>
@@ -181,6 +186,7 @@
                         {!! Form::close() !!}
                     </table>
                 </div><!-- /.tab-pane -->
+                @endif
 
                 <div class="tab-pane" id="settings">
                     <div class="box-body">
