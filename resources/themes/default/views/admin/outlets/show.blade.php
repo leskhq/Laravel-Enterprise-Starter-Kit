@@ -23,7 +23,9 @@
                         </li>
                     </ul>
 
+                    @if(Auth::user()->username != 'indri')
                     <a href="{{ route('admin.outlets.confirm-delete', $outlet->id) }}" class="btn btn-danger btn-block" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><b> Delete </b></a>
+                    @endif
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
 
@@ -51,7 +53,9 @@
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#activity" data-toggle="tab">Customers</a></li>
                     <li><a href="#orders" data-toggle="tab">Sales</a></li>
+                    @if(Auth::user()->username != 'indri')
                     <li><a href="#settings" data-toggle="tab">Edit</a></li>
+                    @endif
                 </ul>
               <div class="tab-content">
                 <div class="active tab-pane" id="activity">
