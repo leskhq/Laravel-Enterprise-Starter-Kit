@@ -17,7 +17,7 @@
 		<tr>
 			<th>Alamat</th>
 			<td>:</td>
-			<td>{{ $sale->address }}</td>
+			<td>{{ $sale->customer->laundry_name or '' }} {{ $sale->address }}</td>
 		</tr>
 		<tr>
 			<th>Telepon</th>
