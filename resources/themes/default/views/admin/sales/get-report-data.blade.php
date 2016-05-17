@@ -30,7 +30,7 @@ foreach ($sales as $key => $sale):
         <td>{{ Helpers::reggo($totalMaterials) }}</td>
         <td>{{ Helpers::reggo($totalEquipments) }}</td>
         <td>{{ Helpers::reggo($sale->shipping_fee) }}</td>
-        <td>{{ Helpers::reggo($sale->nominal+$sale->shipping_fee) }}</td>
+        <td>{{ Helpers::reggo(($sale->nominal-$sale->discount)+$sale->shipping_fee) }}</td>
     </tr>
     <?php
         $totalChemicals  = 0;

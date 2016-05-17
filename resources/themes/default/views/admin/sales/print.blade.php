@@ -159,7 +159,7 @@
 		Total
 	</div>
 	<div class='tengah'>
-		<b>{{ Helpers::reggo($nom + $sale->shipping_fee + $sale->packing_fee) }}</b>
+		<b>{{ Helpers::reggo(($nom-$sale->discount) + $sale->shipping_fee + $sale->packing_fee) }}</b>
 	</div>
 	<div class='clearboth'></div>
 	<div class='kiri'>

@@ -126,7 +126,7 @@
     </tr><tr>
       <td></td>
       <td>TOTAL</td>
-      <td colspan="3">{{ Helpers::reggo($nom + $sale->shipping_fee + $sale->packing_fee) }}</td>
+      <td colspan="3">{{ Helpers::reggo(($nom-$sale->discount) + $sale->shipping_fee + $sale->packing_fee) }}</td>
       <td></td>
     </tr><tr>
       <td></td>
