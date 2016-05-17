@@ -37,7 +37,8 @@ return [
         'routes'            => 'Routes',
         'data'              => 'Data',
         'customers'         => 'Customers',
-        'items'             => 'Items'
+        'items'             => 'Items',
+        'purchase-order'    => 'Purchase Order'
     ],
 
     'error'              => [

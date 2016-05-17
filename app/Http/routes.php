@@ -117,6 +117,7 @@ Route::group(['middleware' => 'authorize'], function () {
         Route::get(   'sales/{sId}/delete',            ['as' => 'admin.sales.delete',           'uses' => 'SalesController@destroy']);
         Route::post(  'sales/{sId}/update-status',     ['as' => 'admin.sales.update-status',    'uses' => 'SalesController@updateStatus']);
         Route::get(   'sales/{sId}/confirm-delete',    ['as' => 'admin.sales.confirm-delete',   'uses' => 'SalesController@getModalDelete']);
+        Route::get(   'sales/{sId}/formula',           ['as' => 'admin.sales.formula',          'uses' => 'SalesController@formula']);
         // Sale Detail routes
         // Outlet routes
         Route::get(   'outlets',                       ['as' => 'admin.outlets.index',            'uses' => 'OutletsController@index']);
@@ -127,6 +128,18 @@ Route::group(['middleware' => 'authorize'], function () {
         Route::patch( 'outlets/{oId}',                 ['as' => 'admin.outlets.update',           'uses' => 'OutletsController@update']);
         Route::get(   'outlets/{oId}/delete',          ['as' => 'admin.outlets.delete',           'uses' => 'OutletsController@destroy']);
         Route::get(   'outlets/{oId}/confirm-delete',  ['as' => 'admin.outlets.confirm-delete',   'uses' => 'OutletsController@getModalDelete']);
+        // Formula routes
+        Route::get(   'formulas',                      ['as' => 'admin.formulas.index',           'uses' => 'FormulasController@index']);
+        Route::post(  'formulas',                      ['as' => 'admin.formulas.store',           'uses' => 'FormulasController@store']);
+        Route::get(   'formulas/create',               ['as' => 'admin.formulas.create',          'uses' => 'FormulasController@create']);
+        Route::get(   'formulas/search',               ['as' => 'admin.formulas.search',          'uses' => 'FormulasController@materialSearch']);
+        Route::get(   'formulas/{fId}',                ['as' => 'admin.formulas.show',            'uses' => 'FormulasController@show']);
+        Route::patch( 'formulas/{fId}',                ['as' => 'admin.formulas.update',          'uses' => 'FormulasController@update']);
+        Route::get(   'formulas/{fId}/edit',           ['as' => 'admin.formulas.edit',            'uses' => 'FormulasController@edit']);
+        Route::get(   'formulas/{fId}/delete',         ['as' => 'admin.formulas.delete',          'uses' => 'FormulasController@destroy']);
+        Route::get(   'formulas/{fId}/get-materials',  ['as' => 'admin.formulas.get-materials',   'uses' => 'FormulasController@getMaterials']);
+        Route::get(   'formulas/{fId}/confirm-delete', ['as' => 'admin.formulas.confirm-delete',  'uses' => 'FormulasController@getModalDelete']);
+        // Formula Detail routes
         //======================================================================================================================/
         // User routes
         Route::post(  'users/enableSelected',          ['as' => 'admin.users.enable-selected',  'uses' => 'UsersController@enableSelected']);

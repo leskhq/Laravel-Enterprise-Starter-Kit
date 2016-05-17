@@ -43,4 +43,9 @@ class Product extends Model
     {
         return $this->hasMany('App\Models\SaleDetail');
     }
+
+    public function formula()
+    {
+        return $this->belongsTo('App\Models\Formula');
+    }
 }

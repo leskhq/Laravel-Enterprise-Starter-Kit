@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Repositories\SaleRepository as Sale;
 use App\Repositories\CustomerRepository as Customer;
 use App\Repositories\SaleDetailRepository as SaleDetail;
+use App\Repositories\FormulaRepository as Formula;
+use App\Repositories\MaterialRepository as Material;
 use App\Repositories\Criteria\Sale\SalesWithCustomers;
 use App\Repositories\Criteria\Sale\SalesWithSaleDetails;
 use App\Repositories\Criteria\Sale\SalesByTransferDateDescending;
@@ -28,11 +30,17 @@ class SalesController extends Controller
 
     private $saleDetail;
 
-    public function __construct(Sale $sale, Customer $customer, SaleDetail $saleDetail)
+    private $formula;
+
+    private $material;
+
+    public function __construct(Sale $sale, Customer $customer, SaleDetail $saleDetail, Formula $formula, Material $material)
     {
-        $this->sale = $sale;
-        $this->customer = $customer;
+        $this->sale       = $sale;
+        $this->customer   = $customer;
         $this->saleDetail = $saleDetail;
+        $this->formula    = $formula;
+        $this->material   = $material;
     }
 
     /**
@@ -84,6 +92,7 @@ class SalesController extends Controller
         } else {
             $data['status'] = 2;
         }
+
         if ($data['ship_date'] == '') {
             $data['ship_date'] = null;
         }
@@ -110,7 +119,6 @@ class SalesController extends Controller
         $data['nominal'] = $nominal;
         // save sale
         $newSale = $this->sale->create($data);
-        // dd($newSale->name);
 
         foreach($items as $order) {
             if ( $order['product_id'] != '' ) {
@@ -386,5 +394,23 @@ class SalesController extends Controller
         }
 
         return view('admin.sales.get-report-data', compact('sales', 'chemicalIndex', 'materialIndex', 'chemicals', 'materials', 'equipments', 'no', 'total', 'total_shipping_fee'));
+    }
+
+    public function formula($id)
+    {
+        $sale = $this->sale->pushCriteria(new SalesWithSaleDetails())->find($id);
+        $data = [];
+        $total = [];
+        $newVar = [];
+
+        foreach ($sale->saleDetails as $key => $d) {
+            $data[$d->product->name]['quantity'] = $d->quantity;
+            $formula = $this->formula->findBy('product_id', $d->product_id);
+            if ($formula) {
+                $data[$d->product->name]['materials'] = $formula->formulaDetails;
+            }
+        }
+
+        return view('admin.sales.get-formula', compact('data', 'total', 'newVar'));
     }
 }

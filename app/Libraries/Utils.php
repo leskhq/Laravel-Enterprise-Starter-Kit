@@ -1,6 +1,7 @@
 <?php namespace App\Libraries;
 
 use App\Models\Product;
+use App\Models\Material;
 
 class Utils {
 
@@ -10,12 +11,22 @@ class Utils {
         return $products;
     }
 
-    public static function getCustomerStatusDisplayName($id) {
+    public static function getCustomerStatusDisplayName($id)
+    {
         if ( $id == 1 ) {
             return 'Active';
         } else {
             return 'non-Active';
         }
+    }
+
+    public static function getMaterialById($id)
+    {
+        $material = Material::find($id);
+        if ($material) {
+            return $material;
+        }
+        return false;
     }
 
     public static function getCustomerTypeDisplayName($type) {

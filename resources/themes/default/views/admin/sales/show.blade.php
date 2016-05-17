@@ -144,7 +144,7 @@
     <div class="row no-print">
         <div class="col-xs-12">
             <a href="{{ route('admin.sales.print', $sale->id) }}" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
-            <a href="#" class="btn btn-default"> Cetak Purchasing Order</a>
+            <a href="{{ route('admin.sales.formula', $sale->id) }}" class="btn btn-default"> Cetak Purchasing Order</a>
             <a href="{{ route('admin.sales.excel', $sale->id) }}" class="btn btn-success pull-right"><i class="fa fa-download"></i> Download Excel</a>
             <a href="{{ route('admin.sales.edit', $sale->id) }}" class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-edit"></i> Edit</a>
         </div>
