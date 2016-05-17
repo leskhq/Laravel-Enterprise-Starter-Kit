@@ -120,7 +120,7 @@
                     </tr>
                     <tr>
                         <th style="width:50%">{{ trans('admin/sales/general.columns.discount') }}:</th>
-                        <td>{{ $sale->discount }}</td>
+                        <td>{{ Helpers::reggo($sale->discount) }}</td>
                     </tr>
                     <tr>
                         <th>{{ trans('admin/sales/general.columns.packing_fee') }}:</th>
@@ -132,16 +132,9 @@
                     </tr>
                     <tr>
                         <th>{{ trans('admin/sales/general.columns.total') }}:</th>
-                        <?php $total = 0; $discount=0; ?>
-                        @if ($sale->discount)
-                            <?php
-                                $discount = $sale->nominal*($sale->discount/100);
-                                $total = ($sale->nominal-$discount)+$sale->shipping_fee+$sale->packing_fee;
-                            ?>
-                        @else
-                            <?php $total = $sale->nominal + $sale->shipping_fee + $sale->packing_fee; ?>
-                        @endif
-                        <td>{{ Helpers::reggo($total) }}</td>
+                        <td>{{
+                            Helpers::reggo(($sale->nominal-$sale->discount) + $sale->shipping_fee + $sale->packing_fee)
+                        }}</td>
                     </tr>
                 </table>
             </div>
@@ -151,7 +144,7 @@
     <div class="row no-print">
         <div class="col-xs-12">
             <a href="{{ route('admin.sales.print', $sale->id) }}" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
-            <a href="../purchase/{{ $sale->id }}" class="btn btn-default"> Cetak Purchasing Order</a>
+            <a href="{{ route('admin.sales.formula', $sale->id) }}" class="btn btn-default"> Cetak Purchasing Order</a>
             <a href="{{ route('admin.sales.excel', $sale->id) }}" class="btn btn-success pull-right"><i class="fa fa-download"></i> Download Excel</a>
             <a href="{{ route('admin.sales.edit', $sale->id) }}" class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-edit"></i> Edit</a>
         </div>
