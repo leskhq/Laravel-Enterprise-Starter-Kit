@@ -157,14 +157,14 @@ class DashboardController extends Controller
         $page_description = "This is the dashboard";
 
         return view('dashboard', compact(
-                    'page_title',
-                    'page_description',
-                    'newCustomersCount',
-                    'salesThisMonthCount',
-                    'incomeThisMountTotal',
-                    'saleDetails',
-                    'saleDetailsLastMonth'))
-                ->with($data);
+            'page_title',
+            'page_description',
+            'newCustomersCount',
+            'salesThisMonthCount',
+            'incomeThisMountTotal',
+            'saleDetails',
+            'saleDetailsLastMonth'))
+        ->with($data);
     }
 
     public function search(Request $request) {
@@ -186,7 +186,17 @@ class DashboardController extends Controller
                 ->orWhere('phone',   'LIKE', '%'.$keyword.'%')
                 ->get();
 
-        return view('search', compact('keyword', 'products', 'customers', 'customerCandidates'));
+        $page_title       = trans('general.page.search.title');
+        $page_description = trans('general.page.search.description', ['keyword' => $keyword]);
+
+        return view('search', compact(
+            'page_title',
+            'page_description',
+            'keyword',
+            'products',
+            'customers',
+            'customerCandidates'
+        ));
     }
 
 }

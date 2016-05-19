@@ -403,6 +403,9 @@ class SalesController extends Controller
         $total = [];
         $newVar = [];
 
+        $page_title = trans('admin/sales/general.page.formula.title');
+        $page_description = trans('admin/sales/general.page.formula.description', ['name' => $sale->customer->name]);
+
         foreach ($sale->saleDetails as $key => $d) {
             $data[$d->product->name]['quantity'] = $d->quantity;
             $formula = $this->formula->findBy('product_id', $d->product_id);
@@ -411,6 +414,6 @@ class SalesController extends Controller
             }
         }
 
-        return view('admin.sales.get-formula', compact('data', 'total', 'newVar'));
+        return view('admin.sales.get-formula', compact('data', 'total', 'newVar', 'page_title', 'page_description'));
     }
 }

@@ -61,6 +61,10 @@ return [
             'description'      => 'All sales report',
             'section-title'    => 'Report'
         ],
+        'formula'             => [
+            'title'             => 'Admin | Sales | Formula',
+            'description'       => 'Formula from Sale: :name'
+        ],
     ],
 
     'columns'           => [

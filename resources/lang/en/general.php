@@ -28,6 +28,13 @@ return [
         'enabled'           => 'Enabled',
     ],
 
+    'page'              => [
+        'search'           => [
+            'title'         => 'Search',
+            'description'   => 'Search summary for: :keyword'
+        ]
+    ],
+
     'tabs'              => [
         'details'           => 'Details',
         'options'           => 'Options',
