@@ -201,9 +201,9 @@ class FormulasController extends Controller
         $materials = [];
 
         foreach ($formula->formulaDetails as $key => $material) {
-            $materials[$key]['id'] = $material->material_id;
+            $materials[$key]['id']   = $material->material_id;
             $materials[$key]['name'] = $material->material->name;
-            $materials[$key]['qty'] = $material->quantity;
+            $materials[$key]['qty']  = $material->quantity;
         }
 
         return $materials;

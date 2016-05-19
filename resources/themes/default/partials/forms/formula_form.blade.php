@@ -9,7 +9,6 @@
     <table class="table table-hover">
         <tr>
             <td>
-                <input type="hidden" id="material_id" v-model="newMaterial.id">
                 <input placeholder="name" type="text" v-model="newMaterial.name" id="material_name" class="form-control">
             </td>
             <td>
@@ -26,7 +25,7 @@
             <td><input type="text" value="@{{ material.name }}" disabled></td>
             <td><input name="material[@{{ $index }}][quantity]" type="text" value="@{{ material.qty }}"></td>
             <td>
-                <a href="#" v-on:click.prevent="removeMaterial(index)"><i class="fa fa-times"></i></a>
+                <a href="#" v-on:click.prevent="removeMaterial(material)"><i class="fa fa-times"></i></a>
             </td>
         </tr>
     </table>

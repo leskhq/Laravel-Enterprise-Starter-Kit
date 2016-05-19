@@ -44,7 +44,6 @@
     <script type="text/javascript">
         function fetchData() {
             var id = $('#form').data('id');
-            console.log(id);
             $.ajax({
                 url : '/admin/formulas/' + id + '/get-materials',
                 type: 'GET',

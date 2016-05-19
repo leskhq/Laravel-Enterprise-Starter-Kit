@@ -12,7 +12,6 @@
             autoFocus: true,
             select:function(e,ui){
                 // asigning input column from the data that we got above
-                $('#material_id').val(ui.item.id);
                 vm.newMaterial.id = ui.item.id;
             }
         });
@@ -42,9 +41,9 @@
                     this.newMaterial = { id: '', name: '', qty: '' };
                 }
             },
-            removeMaterial: function (index) {
-                this.materials.splice(index, 1);
-            },
-        }
+            removeMaterial: function (item) {
+                this.materials.$remove(item);
+            }
+        },
     });
 </script>
