@@ -9,6 +9,9 @@ use Flash;
 use App\Repositories\RouteRepository as Route;
 use App\Repositories\PermissionRepository as Permission;
 use Auth;
+use AWS;
+use Storage;
+
 
 class HomeController extends Controller
 {
@@ -63,4 +66,23 @@ class HomeController extends Controller
         return view('welcome', compact('page_title', 'page_description'));
     }
 
+	public function script()
+	{
+		$s3 = AWS::createClient('s3');
+		
+		$objects = $s3->getIterator('ListObjects', array(
+		    "Bucket" => env('AWS_S3_BUCKET'),
+		    "Prefix" => ""
+		)); 
+		
+		foreach ($objects as $object) {
+    echo $object['Key'] . "<br>";
+}
+		
+
+		//$directories = Storage::allFiles('10664');
+		//dd($directories);
+					
+		
+	}
 }

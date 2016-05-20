@@ -29,7 +29,7 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
         "doctrine/dbal": "^2.6@dev",
-        "laravelcollective/html": "~5.0",
+        "laravelcollective/html": "~5.2",
         "yaap/theme": "dev-laravel-5.1",
         "barryvdh/laravel-ide-helper": "^2.0@dev",
         "barryvdh/laravel-debugbar": "^2.0@dev",
@@ -39,7 +39,11 @@
         "sroutier/eloquent-ldap": "^1.0@dev",
         "zofe/rapyd": "2.1.*",
         "baum/baum": "~1.1",
-        "sroutier/l51esk-modules": "^3.0"
+        "sroutier/l51esk-modules": "^3.0",
+        "yajra/laravel-datatables-oracle": "~6.0",
+        "graham-campbell/flysystem": "^3.4",
+        "league/flysystem-aws-s3-v3": "^1.0",
+        "aws/aws-sdk-php-laravel": "~3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

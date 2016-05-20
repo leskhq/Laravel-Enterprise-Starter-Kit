@@ -1,0 +1,47 @@
+.skin-blue .main-header .logo, .skin-blue .main-header .logo:hover{
+    background-color: #222d32;
+ 
+}
+
+
+.skin-blue .main-header .navbar {
+    background-color: #222d32;
+}
+
+.skin-blue .main-header li.user-header {
+    background-color: #222d32;
+}
+.skin-blue .sidebar-menu > li:hover > a, .skin-blue .sidebar-menu > li.active > a {
+    background: #1e282c none repeat scroll 0 0;
+ 
+}
+
+.skin-blue.layout-top-nav .main-header > .logo {
+    background-color: #222d32;
+
+}
+
+.content-header
+{
+	background-color:white !important;
+	padding-left:120px;
+	padding-right: 120px;
+}
+
+.content {
+    background: white url("/assets/themes/wisercapital/img/wc-watermark.gif") no-repeat scroll right bottom;
+	padding-left:120px;
+	padding-right: 120px;
+	padding-bottom: 100px;
+
+}
+
+
+.content-wrapper{
+	background: white url("/assets/themes/wisercapital/img/wc-bkg-2560x1670.jpg") no-repeat center center fixed;
+	-moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    -webkit-background-size: 100% 100%; 
+    background-size: 100% 100%;
+}
+

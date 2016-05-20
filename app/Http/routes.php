@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -10,7 +9,6 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
 // Authentication routes...
 Route::get( 'auth/login',               ['as' => 'login',                   'uses' => 'Auth\AuthController@getLogin']);
 Route::post('auth/login',               ['as' => 'loginPost',               'uses' => 'Auth\AuthController@postLogin']);
@@ -26,17 +24,14 @@ Route::get( 'password/reset/{token}',   ['as' => 'reset_password',          'use
 Route::post('password/reset',           ['as' => 'reset_passwordPost',      'uses' => 'Auth\PasswordController@postReset']);
 // Registration terms
 Route::get( 'faust',                    ['as' => 'faust',                   'uses' => 'FaustController@index']);
-
 // Application routes...
 Route::get( '/',       ['as' => 'backslash',   'uses' => 'HomeController@index']);
 Route::get( 'home',    ['as' => 'home',        'uses' => 'HomeController@index']);
 Route::get( 'welcome', ['as' => 'welcome',     'uses' => 'HomeController@welcome']);
-
 // Routes in this group must be authorized.
 Route::group(['middleware' => 'authorize'], function () {
     // Application routes...
     Route::get( 'dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
-
     // Site administration section
     Route::group(['prefix' => 'admin'], function () {
         // User routes
@@ -133,9 +128,7 @@ Route::group(['middleware' => 'authorize'], function () {
         // Settings routes
         // TODO: Implements settings
         Route::get('settings',                         ['as' => 'admin.settings.index',          'uses' => 'TestController@test_flash_warning']);
-
     }); // End of ADMIN group
-
     // TODO: Remove this before release...
     if ($this->app->environment('development')) {
         // TEST-ACL routes
@@ -149,7 +142,6 @@ Route::group(['middleware' => 'authorize'], function () {
             Route::get('admins',                ['as' => 'test-acl.admins',              'uses' => 'TestController@test_acl_admins']);
             Route::get('power-users',           ['as' => 'test-acl.power-users',         'uses' => 'TestController@test_acl_power_users']);
         }); // End of TEST-ACL group
-
         // TEST-FLASH routes
         Route::group(['prefix' => 'test-flash'], function () {
             Route::get('home',    ['as' => 'test-flash.home',     'uses' => 'TestController@test_flash_home']);
@@ -168,6 +160,16 @@ Route::group(['middleware' => 'authorize'], function () {
             Route::get('three',    ['as' => 'test-menus.three', 'uses' => 'TestMenusController@test_menu_three']);
         }); // End of TEST-MENU group
     } // End of if DEV environment
-
     require __DIR__.'/rapyd.php';
 }); // end of AUTHORIZE middleware group
+
+
+	Route::get('hf/{id}/dataroom', ['as' => 'hf.dataroom', 'uses' => 'HFController@dataRoom']);
+	Route::get('hf/datatable', ['as' => 'hf.datatable', 'uses' => 'HFController@dataTable']);
+	Route::resource('hf', 'HFController');
+	Route::get('si/dataTable', ['as' => 'si.datatable', 'uses' => 'SIController@dataTable']); 
+	Route::resource('si', 'SIController');
+	Route::get( 'script', ['as' => 'script',     'uses' => 'HomeController@script']);
+	
+	
+	
