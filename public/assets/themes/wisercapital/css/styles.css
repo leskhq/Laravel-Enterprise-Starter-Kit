@@ -20,3 +20,28 @@
     background-color: #222d32;
 
 }
+
+.content-header
+{
+	background-color:white !important;
+	padding-left:120px;
+	padding-right: 120px;
+}
+
+.content {
+    background: white url("/assets/themes/wisercapital/img/wc-watermark.gif") no-repeat scroll right bottom;
+	padding-left:120px;
+	padding-right: 120px;
+	padding-bottom: 100px;
+
+}
+
+
+.content-wrapper{
+	background: white url("/assets/themes/wisercapital/img/wc-bkg-2560x1670.jpg") no-repeat center center fixed;
+	-moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    -webkit-background-size: 100% 100%; 
+    background-size: 100% 100%;
+}
+

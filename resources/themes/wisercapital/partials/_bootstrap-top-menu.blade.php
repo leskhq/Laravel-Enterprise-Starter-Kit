@@ -1,7 +1,7 @@
 <nav class="navbar navbar-static-top">
       <div class="container">
         <div class="navbar-header">
-          <a href="{{ route('home') }}" class="navbar-brand">{{ config('app.short_name') }}</a>
+          <a href="{{ route('home') }}" class="navbar-brand"><img src="/assets/themes/wisercapital/img/Wiser-Capital-logo.gif" height="22" width="145" alt="Wiser Capital Logo" /></a>
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
             <i class="fa fa-bars"></i>
           </button>

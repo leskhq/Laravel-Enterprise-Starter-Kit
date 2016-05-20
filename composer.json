@@ -29,7 +29,7 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
         "doctrine/dbal": "^2.6@dev",
-        "laravelcollective/html": "~5.0",
+        "laravelcollective/html": "~5.2",
         "yaap/theme": "dev-laravel-5.1",
         "barryvdh/laravel-ide-helper": "^2.0@dev",
         "barryvdh/laravel-debugbar": "^2.0@dev",

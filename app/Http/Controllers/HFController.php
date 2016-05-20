@@ -27,12 +27,9 @@ class HFController extends Controller
         */
      	   
 	   	    
-	    $page_title = 'LIST OF ALL HOST FACILITIES'; // trans('admin/users/general.page.index.title'); // "Admin | Users";
-        $page_description = '';//trans('admin/users/general.page.index.description'); // "List of users";
-        
-      
-	
-        return view('hf.index', compact('page_title', 'page_description'));
+	$page_title = 'LIST OF ALL HOST FACILITIES'; // trans('admin/users/general.page.index.title'); // "Admin | Users";
+       $page_description = '';//trans('admin/users/general.page.index.description'); // "List of users";
+       return view('hf.index', compact('page_title', 'page_description'));
     }
 
     /**
@@ -44,34 +41,23 @@ class HFController extends Controller
     {
         $page_title = 'ADD FACILITY'; // trans('admin/users/general.page.index.title'); // "Admin | Users";
         $page_description = '';//trans('admin/users/general.page.index.description'); // "List of users";
-        
-		
-	
-		
         return view('hf.create', compact('page_title', 'page_description'));
     }
 
 	public function dataTable()
 	{
-		
-		
-		return Datatables::of(\App\Site::all())
-			->addColumn('dataroom','<a href="{{ URL::route( "hf.dataroom", array( $site_id )) }}">Data Room</a>')
+		return Datatables::of(\App\Models\Site::with('user')->get())
+			->addColumn('action','<a href="{{ URL::route( "hf.dataroom", array( $id )) }}">Copy</a> <a href="{{ URL::route( "hf.dataroom", array( $id )) }}">Delete</a>')
 			->make(true);
 	}
 	
 	
 	public function dataRoom($id)
 	{
-		
-		
 		$page_title = 'DATA ROOM'; // trans('admin/users/general.page.index.title'); // "Admin | Users";
         $page_description = '';//trans('admin/users/general.page.index.description'); // "List of users";
-        
-		$files = Storage::allFiles($id);
-	
-		
-        return view('hf.dataroom', compact('page_title', 'page_description', 'files'));
+        $files = Storage::allFiles($id);
+		return view('hf.dataroom', compact('page_title', 'page_description', 'files'));
 	}
 	
 	
@@ -83,8 +69,9 @@ class HFController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+	    $site = \App\Models\Site::create($request->all());
+		$site = \App\Models\Site::find($site->id); dd($site->user);
+	}
 
     /**
      * Display the specified resource.
