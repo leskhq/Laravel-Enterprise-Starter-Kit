@@ -34,6 +34,7 @@
   		{!! Form::hidden('state', 'CA') !!}
   		{!! Form::hidden('zip_code', '91206') !!}
   		{!! Form::hidden('user_id', Auth::user()->id) !!}
+  		{!! Form::hidden('area', rand(1000, 10000).'.'.rand(0,99)) !!}
   		{!! Form::submit('Next') !!}
   		{!! Form::close() !!}
   	</div>

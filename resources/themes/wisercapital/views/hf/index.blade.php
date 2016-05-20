@@ -30,10 +30,9 @@
                                     <th>Name</th>
                                     <th>User</th>
                                     <th>Location</th>
-                                    <th>Utility</th>
-                                    <th>Size Sqft/kW</th>
+                                    <th>Size (kW)</th>
+                                    <th>Action</th>
                                     <th>Status</th>
-                                    <th>Data Room</th>
                                 </tr>
                             </thead>
                         </table>
@@ -59,24 +58,22 @@
         processing: true,
         serverSide: true,
         "pageLength": 25,
+        "scrollX": false,
         ajax: '{!! route('hf.datatable') !!}',
         columns: [
-            { data: 'site_id' },
-            { data: 'site_name' },
-            { data: null },
+            { data: 'id' },
+            { data: 'name' },
+            { data: 'user.email' },
             { data: 'address', 
-	          "render": function(data, type, address, meta){
-			  	return address.site_address + " " + address.site_state;
+	          "render": function(field, type, data, meta){
+		          
+		          
+			  	return data.address + ", " + data.city + ", " + data.state + " " + data.zip_code;
     		  } 
     		},
-            { data: null },
-            { data: 'siteArea', 
-	          "render": function(data, type, siteArea, meta){
-			  	return siteArea.site_area + "/" + siteArea.site_size;
-    		  } 
-    		},
-            { data: null },
-			{ data: 'dataroom' }
+            { data: 'area' },
+            { data: 'action' },            
+            { data: 'status' }
 			
         ]
 	    });
