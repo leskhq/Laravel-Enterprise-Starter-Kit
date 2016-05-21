@@ -5,7 +5,6 @@ use Bosnadev\Repositories\Contracts\RepositoryInterface as Repository;
 
 class PermissionsWithRoutes extends Criteria {
 
-
     /**
      * @param $model
      * @param Repository $repository

@@ -1,10 +1,9 @@
-<?php namespace App\Repositories\Criteria\Permission;
+<?php namespace App\Repositories\Criteria\PurchaseOrder;
 
 use Bosnadev\Repositories\Criteria\Criteria;
 use Bosnadev\Repositories\Contracts\RepositoryInterface as Repository;
 
-class PermissionsWithRoles extends Criteria {
-
+class PurchaseOrdersWithSuppliers extends Criteria {
     /**
      * @param $model
      * @param Repository $repository
@@ -13,7 +12,7 @@ class PermissionsWithRoles extends Criteria {
      */
     public function apply( $model, Repository $repository )
     {
-        $model = $model->with('roles');
+        $model = $model->with('supplier');
         return $model;
     }
 

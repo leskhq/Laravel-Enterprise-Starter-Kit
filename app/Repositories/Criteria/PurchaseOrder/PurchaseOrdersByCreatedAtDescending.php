@@ -1,9 +1,9 @@
-<?php namespace App\Repositories\Criteria\Permission;
+<?php namespace App\Repositories\Criteria\PurchaseOrder;
 
 use Bosnadev\Repositories\Criteria\Criteria;
 use Bosnadev\Repositories\Contracts\RepositoryInterface as Repository;
 
-class PermissionsWithRoles extends Criteria {
+class PurchaseOrdersByCreatedAtDescending extends Criteria {
 
     /**
      * @param $model
@@ -13,7 +13,7 @@ class PermissionsWithRoles extends Criteria {
      */
     public function apply( $model, Repository $repository )
     {
-        $model = $model->with('roles');
+        $model = $model->orderBy('created_at', 'DESC');
         return $model;
     }
 

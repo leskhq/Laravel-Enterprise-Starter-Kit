@@ -7,7 +7,6 @@ class ExpeditionWhereNameLike extends Criteria {
 
     private $str;
 
-
     public function __construct($str)
     {
         $this->str = '%'.$str.'%';

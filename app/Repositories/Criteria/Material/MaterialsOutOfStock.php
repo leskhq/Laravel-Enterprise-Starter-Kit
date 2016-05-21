@@ -1,9 +1,9 @@
-<?php namespace App\Repositories\Criteria\Permission;
+<?php namespace App\Repositories\Criteria\Material;
 
 use Bosnadev\Repositories\Criteria\Criteria;
 use Bosnadev\Repositories\Contracts\RepositoryInterface as Repository;
 
-class PermissionsWithRoles extends Criteria {
+class MaterialsOutOfStock extends Criteria {
 
     /**
      * @param $model
@@ -13,7 +13,7 @@ class PermissionsWithRoles extends Criteria {
      */
     public function apply( $model, Repository $repository )
     {
-        $model = $model->with('roles');
+        $model = $model->where('stock', '<=', 'min_stock');
         return $model;
     }
 

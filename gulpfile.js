@@ -19,7 +19,7 @@ elixir(function(mix) {
     mix.styles([
         //'vendor.css',
         'app.css',
-    ], null, 'public/css');
+    ], 'public/css/all.css', 'public/css');
 
     // Compile our Coffee file to JS.
     mix.coffee('app.coffee');

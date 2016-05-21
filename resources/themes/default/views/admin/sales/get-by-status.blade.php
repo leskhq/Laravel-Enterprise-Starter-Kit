@@ -10,6 +10,7 @@
     </td>
     <td>
         <a href="{!! route('admin.sales.edit', $sale->id) !!}" title="{{ trans('general.button.edit') }}"><i class="fa fa-pencil-square-o"></i></a>
+        <a href="{!! route('admin.sales.print', $sale->id) !!}" target="_blank" title="{{ trans('general.button.print') }}"><i class="fa fa-print"></i></a>
         <a href="{!! route('admin.sales.confirm-delete', $sale->id) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><i class="fa fa-trash-o deletable"></i></a>
     </td>
 </tr>

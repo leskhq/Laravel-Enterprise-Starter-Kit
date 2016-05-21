@@ -20,6 +20,21 @@ class Utils {
         }
     }
 
+    public static function getPurchaseOrderStatusDisplayName($status)
+    {
+        if ($status == 1) {
+            return 'New';
+        } elseif ($status == 2) {
+            return 'Ordered';
+        } elseif ($status == 3) {
+            return 'Shipped';
+        } elseif ($status == 4) {
+            return 'Pending';
+        } else {
+            return 'Finished';
+        }
+    }
+
     public static function getMaterialById($id)
     {
         $material = Material::find($id);

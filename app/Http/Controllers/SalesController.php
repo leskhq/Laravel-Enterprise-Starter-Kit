@@ -398,10 +398,11 @@ class SalesController extends Controller
 
     public function formula($id)
     {
-        $sale = $this->sale->pushCriteria(new SalesWithSaleDetails())->find($id);
-        $data = [];
-        $total = [];
+        $sale   = $this->sale->pushCriteria(new SalesWithSaleDetails())->find($id);
+        $data   = [];
+        $total  = [];
         $newVar = [];
+        $x      = 1;
 
         $page_title = trans('admin/sales/general.page.formula.title');
         $page_description = trans('admin/sales/general.page.formula.description', ['name' => $sale->customer->name]);
@@ -414,6 +415,14 @@ class SalesController extends Controller
             }
         }
 
-        return view('admin.sales.get-formula', compact('data', 'total', 'newVar', 'page_title', 'page_description'));
+        return view('admin.sales.get-formula', compact(
+            'data',
+            'total',
+            'newVar',
+            'page_title',
+            'page_description',
+            'x',
+            'sale'
+        ));
     }
 }

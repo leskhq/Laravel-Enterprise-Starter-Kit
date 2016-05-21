@@ -5,7 +5,6 @@ use Bosnadev\Repositories\Contracts\RepositoryInterface as Repository;
 
 class PermissionsByNamesAscending extends Criteria {
 
-
     /**
      * @param $model
      * @param Repository $repository

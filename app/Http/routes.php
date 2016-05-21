@@ -119,6 +119,22 @@ Route::group(['middleware' => 'authorize'], function () {
         Route::get(   'sales/{sId}/confirm-delete',    ['as' => 'admin.sales.confirm-delete',   'uses' => 'SalesController@getModalDelete']);
         Route::get(   'sales/{sId}/formula',           ['as' => 'admin.sales.formula',          'uses' => 'SalesController@formula']);
         // Sale Detail routes
+        // Material routes
+        Route::get(   'materials/out-of-stock',                ['as' => 'admin.materials.out-of-stock',           'uses' => 'MaterialsController@outOfStock']);
+        Route::post(  'materials/createPurchaseOrder',         ['as' => 'admin.materials.order-selected',         'uses' => 'MaterialsController@createSelected']);
+        // Purchase Order routes
+        Route::get(   'purchase-orders',                       ['as' => 'admin.purchase-orders.index',            'uses' => 'PurchaseOrdersController@index']);
+        Route::post(  'purchase-orders',                       ['as' => 'admin.purchase-orders.store',            'uses' => 'PurchaseOrdersController@store']);
+        Route::get(   'purchase-orders/search',                ['as' => 'admin.purchase-orders.search',           'uses' => 'PurchaseOrdersController@search']);
+        Route::get(   'purchase-orders/create',                ['as' => 'admin.purchase-orders.create',           'uses' => 'PurchaseOrdersController@create']);
+        Route::get(   'purchase-orders/{poId}',                     ['as' => 'admin.purchase-orders.show',             'uses' => 'PurchaseOrdersController@show']);
+        Route::patch( 'purchase-orders/{poId}',                     ['as' => 'admin.purchase-orders.update',           'uses' => 'PurchaseOrdersController@update']);
+        Route::get(   'purchase-orders/{poId}/edit',                ['as' => 'admin.purchase-orders.edit',             'uses' => 'PurchaseOrdersController@edit']);
+        Route::get(   'purchase-orders/{poId}/delete',              ['as' => 'admin.purchase-orders.delete',           'uses' => 'PurchaseOrdersController@destroy']);
+        Route::get(   'purchase-orders/{poId}/get-details',         ['as' => 'admin.purchase-orders.get-details',      'uses' => 'PurchaseOrdersController@getDetails']);
+        Route::post(  'purchase-orders/{poId}/update-status',       ['as' => 'admin.purchase-orders.update-status',    'uses' => 'PurchaseOrdersController@updateStatus']);
+        Route::get(   'purchase-orders/{poId}/check-all',           ['as' => 'admin.purchase-orders.check-all',        'uses' => 'PurchaseOrdersController@checkAll']);
+        Route::get(   'purchase-orders/{poId}/confirm-delete',      ['as' => 'admin.purchase-orders.confirm-delete',   'uses' => 'PurchaseOrdersController@getModalDelete']);
         // Outlet routes
         Route::get(   'outlets',                       ['as' => 'admin.outlets.index',            'uses' => 'OutletsController@index']);
         Route::post(  'outlets',                       ['as' => 'admin.outlets.store',            'uses' => 'OutletsController@store']);
