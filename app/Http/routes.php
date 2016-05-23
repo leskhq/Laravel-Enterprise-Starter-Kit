@@ -120,8 +120,15 @@ Route::group(['middleware' => 'authorize'], function () {
         Route::get(   'sales/{sId}/formula',           ['as' => 'admin.sales.formula',          'uses' => 'SalesController@formula']);
         // Sale Detail routes
         // Material routes
+        Route::get(   'materials',                             ['as' => 'admin.materials.index',                  'uses' => 'MaterialsController@index']);
+        Route::post(  'materials',                             ['as' => 'admin.materials.store',                  'uses' => 'MaterialsController@store']);
+        Route::patch(  'materials/{mId}',                       ['as' => 'admin.materials.update',                 'uses' => 'MaterialsController@update']);
+        Route::get(   'materials/create',                      ['as' => 'admin.materials.create',                 'uses' => 'MaterialsController@create']);
         Route::get(   'materials/out-of-stock',                ['as' => 'admin.materials.out-of-stock',           'uses' => 'MaterialsController@outOfStock']);
-        Route::post(  'materials/createPurchaseOrder',         ['as' => 'admin.materials.order-selected',         'uses' => 'MaterialsController@createSelected']);
+        Route::post( 'materials/createPurchaseOrder',         ['as' => 'admin.materials.order-selected',         'uses' => 'MaterialsController@createSelected']);
+        Route::get(   'materials/{mId}/edit',                  ['as' => 'admin.materials.edit',                   'uses' => 'MaterialsController@edit']);
+        Route::get(   'materials/{mId}/delete',                ['as' => 'admin.materials.delete',                 'uses' => 'MaterialsController@destroy']);
+        Route::get(   'materials/{mId}/confirm-delete',        ['as' => 'admin.materials.confirm-delete',         'uses' => 'MaterialsController@getModalDelete']);
         // Purchase Order routes
         Route::get(   'purchase-orders',                       ['as' => 'admin.purchase-orders.index',            'uses' => 'PurchaseOrdersController@index']);
         Route::post(  'purchase-orders',                       ['as' => 'admin.purchase-orders.store',            'uses' => 'PurchaseOrdersController@store']);

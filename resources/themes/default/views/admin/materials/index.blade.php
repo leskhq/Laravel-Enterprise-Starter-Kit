@@ -13,8 +13,12 @@
                 <div class="box-header">
                     <h3 class="box-title">{{ trans('admin/materials/general.page.index.title') }}</h3>
                     &nbsp;
-                    <a class="btn btn-default btn-sm" href="#" onclick="document.forms['frmMaterialList'].action = '{!! route('admin.materials.order-selected') !!}';  document.forms['frmMaterialList'].submit(); return false;" title="{{ trans('admin/materials/general.button.create') }}">
+                    <a class="btn btn-default btn-sm" href="{{ route('admin.materials.create') }}" title="{{ trans('general.button.create') }}">
                         <i class="fa fa-plus-square"></i>
+                    </a>
+                    &nbsp;
+                    <a class="btn btn-default btn-sm" href="#" onclick="document.forms['frmMaterialList'].action = '{!! route('admin.materials.order-selected') !!}';  document.forms['frmMaterialList'].submit(); return false;" title="{{ trans('general.button.create') }}" disabled>
+                        <i class="fa fa-times"></i>
                     </a>
 
                     <div class="box-tools pull-right">
@@ -32,8 +36,8 @@
                                         </a>
                                     </th>
                                     <th>{{ trans('admin/materials/general.columns.name') }}</th>
-                                    <th>{{ trans('admin/materials/general.columns.min_stock') }}</th>
                                     <th>{{ trans('admin/materials/general.columns.stock') }}</th>
+                                    <th>{{ trans('admin/materials/general.columns.min_stock') }}</th>
                                     <th>{{ trans('admin/materials/general.columns.actions') }}</th>
                                 </tr>
                             </thead>
@@ -45,8 +49,8 @@
                                         </a>
                                     </th>
                                     <th>{{ trans('admin/materials/general.columns.name') }}</th>
-                                    <th>{{ trans('admin/materials/general.columns.min_stock') }}</th>
                                     <th>{{ trans('admin/materials/general.columns.stock') }}</th>
+                                    <th>{{ trans('admin/materials/general.columns.min_stock') }}</th>
                                     <th>{{ trans('admin/materials/general.columns.actions') }}</th>
                                 </tr>
                             </tfoot>
@@ -57,9 +61,12 @@
                                         {!! Form::checkbox('chkMaterial[]', $material->id); !!}
                                     </td>
                                     <td>{{ $material->name }}</td>
-                                    <td>{{ $material->min_stock }}</td>
                                     <td>{{ $material->stock }}</td>
-                                    <td></td>
+                                    <td>{{ $material->min_stock }}</td>
+                                    <td>
+                                        <a href="{!! route('admin.materials.edit', $material->id) !!}" title="{{ trans('general.button.edit') }}"><i class="fa fa-pencil-square-o"></i></a>
+                                        <a href="{!! route('admin.materials.confirm-delete', $material->id) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><i class="fa fa-trash-o deletable"></i></a>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -84,7 +91,7 @@
         }
         $(document).ready(function() {
             $('#example2').DataTable({
-                'ordering': false
+                'order': [[1, 'asc']]
             });
         });
     </script>

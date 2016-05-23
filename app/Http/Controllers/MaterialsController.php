@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Flash;
 
 class MaterialsController extends Controller
 {
@@ -26,7 +27,12 @@ class MaterialsController extends Controller
      */
     public function index()
     {
-        //
+        $materials = $this->material->all();
+
+        $page_title       = trans('admin/materials/general.page.index.title');
+        $page_description = trans('admin/materials/general.page.index.description');
+
+        return view('admin.materials.index', compact('page_title', 'page_description', 'materials'));
     }
 
     /**
@@ -36,7 +42,10 @@ class MaterialsController extends Controller
      */
     public function create()
     {
-        //
+        $page_title       = trans('admin/materials/general.page.create.title');
+        $page_description = trans('admin/materials/general.page.create.description');
+
+        return view('admin.materials.create', compact('page_title', 'page_description'));
     }
 
     /**
@@ -47,7 +56,13 @@ class MaterialsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $this->material->create($data);
+
+        Flash::success( trans('admin/materials/general.status.created') );
+
+        return redirect('/admin/materials');
     }
 
     /**
@@ -69,7 +84,12 @@ class MaterialsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $material = $this->material->find($id);
+
+        $page_title = trans('admin/materials/general.page.edit.title');
+        $page_description = trans('admin/materials/general.page.edit.description');
+
+        return view('admin.materials.edit', compact('page_title', 'page_description', 'material'));
     }
 
     /**
@@ -81,7 +101,13 @@ class MaterialsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->except(['_token', '_method']);
+
+        $this->material->update($data, $id);
+
+        Flash::success( trans('admin/materials/general.status.updated') );
+
+        return redirect('/admin/materials');
     }
 
     /**
@@ -92,7 +118,31 @@ class MaterialsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->material->delete($id);
+
+        Flash::success( trans('admin/materials/general.status.deleted') );
+
+        return redirect('/admin/materials');
+    }
+
+    /**
+     * Delete Confirm
+     *
+     * @param   int   $id
+     * @return  View
+     */
+    public function getModalDelete($id)
+    {
+        $error = null;
+
+        $material = $this->material->find($id);
+
+        $modal_title = trans('admin/materials/dialog.delete-confirm.title');
+        $modal_route = route('admin.materials.delete', array('id' => $material->id));
+        $modal_body  = trans('admin/materials/dialog.delete-confirm.body', ['id' => $material->id, 'name' => $material->name]);
+
+        return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
+
     }
 
     public function outOfStock()

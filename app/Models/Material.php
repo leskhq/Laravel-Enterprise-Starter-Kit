@@ -9,7 +9,7 @@ class Material extends Model
     /**
     * @var array
     */
-    protected $fillable = ['name', 'stock'];
+    protected $fillable = ['name', 'stock', 'min_stock', 'price'];
 
     /**
     * @var timestamps
