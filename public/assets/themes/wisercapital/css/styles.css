@@ -45,3 +45,25 @@
     background-size: 100% 100%;
 }
 
+
+.socialicon {
+	width:20px;height:0px;
+	padding-top:20px;
+	overflow:hidden;
+	background:url('http://wisercapital.com//images/icons-social.gif') 0 0 no-repeat;
+	display:block;float:left;
+	margin:0 15px 0 0;
+}
+.linkedin {background-position:-20px 0;}
+.twitter {background-position:-40px 0;}
+.googleplus {background-position:-60px 0;}
+.blogicon {background-position:-80px 0;}
+
+
+footer {
+	
+	letter-spacing: 1.5px;
+	font-size: 80%;
+}
+
+footer a {color: #444 !important;}
