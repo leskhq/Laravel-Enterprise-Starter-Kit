@@ -9,7 +9,8 @@ use App\Http\Controllers\Controller;
 use Yajra\Datatables\Datatables;
 use AWS;
 use Storage;
-
+use Auth;
+use App\Repositories\AuditRepository as Audit;
 class HFController extends Controller
 {
     /**
@@ -27,7 +28,7 @@ class HFController extends Controller
         */
      	   
 	   	    
-	$page_title = 'LIST OF ALL HOST FACILITIES'; // trans('admin/users/general.page.index.title'); // "Admin | Users";
+		$page_title = 'LIST OF ALL HOST FACILITIES'; // trans('admin/users/general.page.index.title'); // "Admin | Users";
        $page_description = '';//trans('admin/users/general.page.index.description'); // "List of users";
        return view('hf.index', compact('page_title', 'page_description'));
     }
@@ -39,6 +40,7 @@ class HFController extends Controller
      */
     public function create()
     {
+        
         $page_title = 'ADD FACILITY'; // trans('admin/users/general.page.index.title'); // "Admin | Users";
         $page_description = '';//trans('admin/users/general.page.index.description'); // "List of users";
         return view('hf.create', compact('page_title', 'page_description'));
@@ -47,7 +49,14 @@ class HFController extends Controller
 	public function dataTable()
 	{
 		return Datatables::of(\App\Models\Site::with('user')->get())
-			->addColumn('action','<a href="{{ URL::route( "hf.dataroom", array( $id )) }}">Copy</a> <a href="{{ URL::route( "hf.dataroom", array( $id )) }}">Delete</a>')
+			->addColumn('action','<a href="{{ URL::route( "hf.delete", array( $id )) }}">Delete</a> <a href="{{ URL::route( "hf.edit", array( $id )) }}">Edit</a>')
+			->editColumn('status', function($data)
+				{ 
+						
+						if($data->status == 0)
+							return '<a href="#">Facility Info</a>';
+						
+				})
 			->make(true);
 	}
 	
@@ -69,10 +78,14 @@ class HFController extends Controller
      */
     public function store(Request $request)
     {
+	    Audit::log(Auth::user()->id, 'User', 'Created a new Host Facility.', $request->all());
 	    $site = \App\Models\Site::create($request->all());
-		$site = \App\Models\Site::find($site->id); dd($site->user);
+	    return redirect()->route('hf.edit', $site->id);
+	    
+	    	
 	}
-
+	
+ 
     /**
      * Display the specified resource.
      *
@@ -92,7 +105,11 @@ class HFController extends Controller
      */
     public function edit($id)
     {
-        //
+		Audit::log(Auth::user()->id, 'User', 'Edit Host Facility.', array('id'=>$id));    	
+        $page_title = 'Facility Information'; // trans('admin/users/general.page.index.title'); // "Admin | Users";
+		$page_description = '';//trans('admin/users/general.page.index.description'); // "List of users";
+		return view('hf.edit', compact('page_title', 'page_description'));
+		
     }
 
     /**
@@ -115,6 +132,7 @@ class HFController extends Controller
      */
     public function destroy($id)
     {
-        //
+        \App\Models\Site::destroy($id);
+         return redirect()->route('hf.index');
     }
 }
