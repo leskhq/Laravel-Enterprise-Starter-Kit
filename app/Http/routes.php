@@ -161,15 +161,22 @@ Route::group(['middleware' => 'authorize'], function () {
         }); // End of TEST-MENU group
     } // End of if DEV environment
     require __DIR__.'/rapyd.php';
-}); // end of AUTHORIZE middleware group
-
-
-	Route::get('hf/{id}/dataroom', ['as' => 'hf.dataroom', 'uses' => 'HFController@dataRoom']);
+    
+    
+    Route::get('hf/{id}/delete', ['as' => 'hf.delete', 'uses' => 'HFController@destroy']);
+    Route::get('hf/{id}/dataroom', ['as' => 'hf.dataroom', 'uses' => 'HFController@dataRoom']);
 	Route::get('hf/datatable', ['as' => 'hf.datatable', 'uses' => 'HFController@dataTable']);
 	Route::resource('hf', 'HFController');
 	Route::get('si/dataTable', ['as' => 'si.datatable', 'uses' => 'SIController@dataTable']); 
 	Route::resource('si', 'SIController');
 	Route::get( 'script', ['as' => 'script',     'uses' => 'HomeController@script']);
+	
+	
+	
+}); // end of AUTHORIZE middleware group
+
+
+	
 	
 	
 	
