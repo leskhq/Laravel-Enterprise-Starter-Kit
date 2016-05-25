@@ -235,6 +235,17 @@ return [
     | this array to grant expanded functionality to your applications.
     |
     */
+    
+    'facebook' 		=> env('FACEBOOK', '#'),
+    'linkedin' 		=> env('LINKEDIN', '#'),
+    'twitter' 		=> env('TWITTER', '#'),
+    'googleplus' 	=> env('GOOGLEPLUS', '#'),
+    'blog' 			=> env('BLOG', '#'),
+    
+    
+    
+    
+    
     'providers' => [
 
         /*
@@ -274,7 +285,7 @@ return [
 
         Sroutier\EloquentLDAP\Providers\EloquentLDAPServiceProvider::class,
 
-        Barryvdh\Debugbar\ServiceProvider::class,
+        //Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
