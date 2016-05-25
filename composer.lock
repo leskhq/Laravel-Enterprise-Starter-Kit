@@ -712,7 +712,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/3df22ccdf20a68fafe34cb1ae452aee7cde7d442",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/1c6f63dff60f1f8c073087833edae2da96d37287",
                 "reference": "5f0dfd29ed807e4dacba0ae69c70300ded8050c3",
                 "shasum": ""
             },
@@ -2106,16 +2106,16 @@
         },
         {
             "name": "sroutier/l51esk-modules",
-            "version": "3.0.6.4",
+            "version": "3.0.7.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sroutier/l51esk-modules.git",
-                "reference": "896af3be3aaf9f2d1a809a1a79dfd36626cd8d88"
+                "reference": "0bf975c5b038ad3d64e05a4d55f3d23d02339772"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sroutier/l51esk-modules/zipball/896af3be3aaf9f2d1a809a1a79dfd36626cd8d88",
-                "reference": "896af3be3aaf9f2d1a809a1a79dfd36626cd8d88",
+                "url": "https://api.github.com/repos/sroutier/l51esk-modules/zipball/0bf975c5b038ad3d64e05a4d55f3d23d02339772",
+                "reference": "0bf975c5b038ad3d64e05a4d55f3d23d02339772",
                 "shasum": ""
             },
             "require": {
@@ -2160,7 +2160,7 @@
                 "laravel",
                 "modules"
             ],
-            "time": "2016-04-02 14:24:29"
+            "time": "2016-05-10 15:27:55"
         },
         {
             "name": "swiftmailer/swiftmailer",
