@@ -132,7 +132,7 @@
                                 <tr id="row{{ $d->id }}">
                                     <td>{{ $no }}</td>
                                         {!! Form::hidden('item['. $key .'][id]', $d->id) !!}
-                                        {!! Form::hidden('item['. $key .'][product_id]', $d->product_id, ['id' => 'product-name'. $no .'']) !!}
+                                        {!! Form::hidden('item['. $key .'][product_id]', $d->product_id, ['id' => 'productName'. $no .'']) !!}
                                         {!! Form::hidden('baseWeight', $d->product->weight, ['id' => 'baseWeight'.$no.'']) !!}
                                     <td>
                                         {!! Form::text('productName', $d->product->name, ['id' => 'product'. $no .'', 'placeholder' => 'nama', 'class' => 'form-control product']) !!}
