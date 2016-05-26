@@ -398,7 +398,7 @@ access to external resources when specified with the *URL* field.
 To enable the optional walled garden mode simply set the *WALLED_GARDEN* variable to *true* in the *.env* file as shown 
 below:
 ````
-WALLED_GARDEN=true
+WALLED_GARDEN_ENABLED=true
 ````
 By default the walled garden mode is set to off or false. When enabled all guest or un-authenticated users will be 
 redirected to the login page.
