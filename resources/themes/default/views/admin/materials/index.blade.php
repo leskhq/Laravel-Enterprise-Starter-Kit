@@ -63,7 +63,7 @@
                                         {!! Form::checkbox('chkMaterial[]', $material->id); !!}
                                     </td>
                                     <td>{{ $material->name }}</td>
-                                    <td>{{ $material->price }}</td>
+                                    <td>{{ Helpers::reggo($material->price) }}</td>
                                     <td>{{ $material->stock }}</td>
                                     <td>{{ $material->min_stock }}</td>
                                     <td>
