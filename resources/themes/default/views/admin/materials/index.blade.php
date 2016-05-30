@@ -36,8 +36,6 @@
                                         </a>
                                     </th>
                                     <th>{{ trans('admin/materials/general.columns.name') }}</th>
-
-                                    <th>{{ trans('admin/materials/general.columns.name') }}</th>
                                     <th>{{ trans('admin/materials/general.columns.price') }}</th>
                                     <th>{{ trans('admin/materials/general.columns.stock') }}</th>
                                     <th>{{ trans('admin/materials/general.columns.min_stock') }}</th>
@@ -51,8 +49,6 @@
                                             <i class="fa fa-check-square-o"></i>
                                         </a>
                                     </th>
-                                    <th>{{ trans('admin/materials/general.columns.name') }}</th>
-
                                     <th>{{ trans('admin/materials/general.columns.name') }}</th>
                                     <th>{{ trans('admin/materials/general.columns.price') }}</th>
                                     <th>{{ trans('admin/materials/general.columns.stock') }}</th>
