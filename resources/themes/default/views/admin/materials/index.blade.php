@@ -36,6 +36,9 @@
                                         </a>
                                     </th>
                                     <th>{{ trans('admin/materials/general.columns.name') }}</th>
+
+                                    <th>{{ trans('admin/materials/general.columns.name') }}</th>
+                                    <th>{{ trans('admin/materials/general.columns.price') }}</th>
                                     <th>{{ trans('admin/materials/general.columns.stock') }}</th>
                                     <th>{{ trans('admin/materials/general.columns.min_stock') }}</th>
                                     <th>{{ trans('admin/materials/general.columns.actions') }}</th>
@@ -49,6 +52,9 @@
                                         </a>
                                     </th>
                                     <th>{{ trans('admin/materials/general.columns.name') }}</th>
+
+                                    <th>{{ trans('admin/materials/general.columns.name') }}</th>
+                                    <th>{{ trans('admin/materials/general.columns.price') }}</th>
                                     <th>{{ trans('admin/materials/general.columns.stock') }}</th>
                                     <th>{{ trans('admin/materials/general.columns.min_stock') }}</th>
                                     <th>{{ trans('admin/materials/general.columns.actions') }}</th>
@@ -61,6 +67,7 @@
                                         {!! Form::checkbox('chkMaterial[]', $material->id); !!}
                                     </td>
                                     <td>{{ $material->name }}</td>
+                                    <td>{{ $material->price }}</td>
                                     <td>{{ $material->stock }}</td>
                                     <td>{{ $material->min_stock }}</td>
                                     <td>
