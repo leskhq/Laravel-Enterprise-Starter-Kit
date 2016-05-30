@@ -160,6 +160,7 @@ Route::group(['middleware' => 'authorize'], function () {
         Route::patch( 'formulas/{fId}',                ['as' => 'admin.formulas.update',          'uses' => 'FormulasController@update']);
         Route::get(   'formulas/{fId}/edit',           ['as' => 'admin.formulas.edit',            'uses' => 'FormulasController@edit']);
         Route::get(   'formulas/{fId}/delete',         ['as' => 'admin.formulas.delete',          'uses' => 'FormulasController@destroy']);
+        Route::post(  'formulas/add-purchase-order',   ['as' => 'admin.formulas.add-porder',      'uses' => 'FormulasController@addPurchaseOrder']);
         Route::get(   'formulas/{fId}/get-materials',  ['as' => 'admin.formulas.get-materials',   'uses' => 'FormulasController@getMaterials']);
         Route::get(   'formulas/{fId}/confirm-delete', ['as' => 'admin.formulas.confirm-delete',  'uses' => 'FormulasController@getModalDelete']);
         // Formula Detail routes

@@ -208,4 +208,10 @@ class FormulasController extends Controller
 
         return $materials;
     }
+
+    public function addPurchaseOrder(Request $request) {
+        $data = $request->input('chkMaterial');
+
+        return view('admin.purchase-orders.create-from-formulas', compact('data'));
+    }
 }

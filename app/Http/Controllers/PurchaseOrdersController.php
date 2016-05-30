@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Helpers;
 use Flash;
 
 class PurchaseOrdersController extends Controller
@@ -86,6 +87,9 @@ class PurchaseOrdersController extends Controller
 
         foreach ($items as $key => $pODetails) {
             foreach ($pODetails as $key => $pODetail) {
+                if ( !isset($pODetail['total']) ) {
+                    $pODetail['total'] = Helpers::getMaterialById($pODetail['material_id'])->price * $pODetail['quantity'];
+                }
                 $data['total'] += $pODetail['total'];
             }
         }
@@ -101,7 +105,7 @@ class PurchaseOrdersController extends Controller
 
         Flash::success( trans('admin/purchase-orders/general.status.created') );
 
-        return redirect('admin/purchase-orders');
+        return redirect()->route('admin.purchase-orders.show', $newPurchaseOrder->id);
     }
 
     /**

@@ -1,6 +1,8 @@
 @extends('layouts.master')
 
 @section('head_extra')
+    <!-- autocomplete ui css -->
+    @include('partials.head_css.autocomplete_css')
 @endsection
 
 @section('content')
@@ -54,9 +56,9 @@
                                     </table>
                                 </div>
                             </div>
-                            <?php endif; $x++ ?>
+                            <?php endif; $x++; ?>
                         </div>
-                        @endforeach
+                        @endforeach <?php $x = 0; ?>
                     </div>
                 </div>
                 <!-- /.box-body -->
@@ -72,7 +74,8 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12" id="create-purchase-order">
+            {!! Form::open( ['route' => 'admin.purchase-orders.store'] ) !!}
             <div class="box box-solid">
                 <div class="box-header with-border">
                     <h3 class="box-title">Collapsible Accordion</h3>
@@ -81,28 +84,101 @@
                     <table class="table">
                         <thead>
                             <tr>
+                                <th style="text-align: center">
+                                    <a class="btn" href="#" onclick="toggleCheckbox(); return false;" title="{{ trans('general.button.toggle-select') }}">
+                                        <i class="fa fa-check-square-o"></i>
+                                    </a>
+                                </th>
                                 <th>{{ trans('admin/formulas/general.columns.materials') }}</th>
                                 <th>{{ trans('admin/formulas/general.columns.total') }}</th>
                                 <th>{{ trans('admin/formulas/general.columns.stock') }}</th>
                                 <th>{{ trans('admin/formulas/general.columns.need') }}</th>
+                                <th>{{ trans('admin/formulas/general.columns.quantity') }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($total as $material => $value)
                             <tr>
+                                <td align="center">
+                                    {!! Form::checkbox('material['. $x .'][material_id]', Helpers::getMaterialById($material)->id, false, ['class' => 'material', 'id' => 'material'. $x .'']) !!}
+                                </td>
                                 <td>{{ Helpers::getMaterialById($material)->name }}</td>
                                 <td>{{ $value }}</td>
                                 <td>{{ Helpers::getMaterialById($material)->stock }}</td>
                                 <td>{{ Helpers::getMaterialById($material)->stock - $value }}</td>
+                                <td>
+                                    {!! Form::text('material['. $x .'][quantity]', null, ['class' => 'form-control quantity', 'id' => 'quantity'. $x .'', 'disabled']); !!}
+                                    {!! Form::hidden('price', Helpers::getMaterialById($material)->price, ['id' => 'price'. $x .'']) !!}
+                                    {!! Form::hidden('material['. $x .'][total]', null, ['id' => 'total'. $x .'', 'disabled']) !!}
+                                </td>
                             </tr>
+                            <?php $x++ ?>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{ trans('admin/purchase-orders/general.page.create.section-title') }}</h3>
+                </div>
+                <div class="box-body">
+                    <div class="form-group">
+                        {!! Form::hidden('supplier_id', null, ['id' => 'supplier_id']) !!}
+                        {!! Form::label('supplier', trans('admin/purchase-orders/general.columns.supplier')) !!}
+                        {!! Form::text('supplier', null, ['class' => 'form-control', 'id' => 'supplier_name']) !!}
+                    </div>
+
+                    <div class="form-group">
+                        {!! Form::label('description', trans('admin/purchase-orders/general.columns.description')) !!}
+                        {!! Form::textarea('description', null, ['class' => 'form-control', 'rows' => 3]) !!}
+                    </div>
+
+                    <div class="form-group">
+                        {!! Form::submit( trans('general.button.create'), ['class' => 'btn btn-primary', 'id' => 'btn-submit-edit'] ) !!}
+                    </div>
+                </div>
+            </div>
+            {!! Form::close() !!}
         </div>
     </div>
 @endsection
 
 @section('body_bottom')
+
+    <!-- autocomplete UI -->
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
+    <script language="JavaScript">
+        function toggleCheckbox() {
+            checkboxes = document.getElementsByName('material[]');
+            for(var i=0, n=checkboxes.length;i<n;i++) {
+                checkboxes[i].checked = !checkboxes[i].checked;
+            }
+        }
+
+        $('.material').change(function(){
+            var currentId = $(this).attr('id').replace('material', '');
+            $('#total' + currentId).prop('disabled', function(i, v) { return !v; });
+            $('#quantity' + currentId).prop('disabled', function(i, v) { return !v; });
+        });
+
+        $('.quantity').focusout(function () {
+            var currentId = $(this).attr('id').replace('quantity', '');
+            var total = $('#price' + currentId).val() * $('#quantity' + currentId).val();
+            $('#total' + currentId).val(total);
+        });
+
+        $(document).ready(function () {
+            $('#supplier_name').autocomplete({
+                source   : '/admin/suppliers/search',
+                minLength: 3,
+                autoFocus: true,
+                select:function(e, ui){
+                    // asigning input column from the data that we got above
+                    $('#supplier_id').val(ui.item.id);
+                }
+            });
+        });
+    </script>
 @endsection
