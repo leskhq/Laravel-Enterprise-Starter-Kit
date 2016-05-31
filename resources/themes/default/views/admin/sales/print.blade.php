@@ -96,7 +96,7 @@
 		$kg = 0;
 		$totj = 0;
 	?>
-	@foreach($sale->saleDetails as $d)
+	@foreach($sale->saleDetails->sortBy('product_id') as $d)
 		<?php
 			$nom = $nom + $d->total;
 			$kg = $kg + $d->weight;
