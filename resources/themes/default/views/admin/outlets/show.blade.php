@@ -54,7 +54,7 @@
                     <li class="active"><a href="#activity" data-toggle="tab">Customers</a></li>
                     <li><a href="#orders" data-toggle="tab">Sales</a></li>
                     @if(Auth::user()->username != 'indri')
-                    <li><a href="#settings" data-toggle="tab">Edit</a></li>
+                        <li><a href="#settings" data-toggle="tab">Edit</a></li>
                     @endif
                 </ul>
               <div class="tab-content">
@@ -87,7 +87,7 @@
                                 <td>{{ $customer->address }}</td>
                                 <td>
                                     @if(Auth::user()->username != 'indry')
-                                    <a href="{!! route('outlet.customers.confirm-delete', $customer->id) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><i class="fa fa-trash-o deletable"></i></a>
+                                        <a href="{!! route('outlet.customers.confirm-delete', $customer->id) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><i class="fa fa-trash-o deletable"></i></a>
                                     @endif
                                 </td>
                             </tr>

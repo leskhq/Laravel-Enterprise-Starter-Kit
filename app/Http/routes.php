@@ -263,6 +263,7 @@ Route::group(['middleware' => 'authorize'], function () {
 
     // Outlet Owner section
     Route::group(['prefix' => 'outlet'], function () {
+        Route::get(  '/',                                 ['as' => 'outlet.dasboard',                     'uses' => 'OutletsController@operatorIndex']);
         // Outlet sale routes
         Route::get(  'sales',                             ['as' => 'outlet.sales.index',                  'uses' => 'OutletSalesController@index']);
         Route::post( 'sales',                             ['as' => 'outlet.sales.store',                  'uses' => 'OutletSalesController@store']);

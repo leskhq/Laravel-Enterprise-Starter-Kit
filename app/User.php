@@ -51,6 +51,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected $appends = ['full_name'];
 
+    public function outlet()
+    {
+        return $this->belongsTo('App\Models\Outlet');
+    }
+
     /**
      * Eloquent hook to HasMany relationship between User and Audit
      *

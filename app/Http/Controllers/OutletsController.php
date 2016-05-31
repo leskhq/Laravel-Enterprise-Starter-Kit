@@ -37,17 +37,32 @@ class OutletsController extends Controller
      */
     public function index()
     {
-        $outlets = $this->outlet->all();
+        $user = $this->user->find(Auth::user()->id);
 
-        $page_title = trans('admin/outlets/general.page.index.title');
+        $page_title       = trans('admin/outlets/general.page.index.title');
         $page_description = trans('admin/outlets/general.page.index.description');
 
-        if (Auth::user()->username == 'indri') {
+        if ( $user->hasRole('operationals') ) {
+            $outlets = $this->outlet->all();
+        } elseif (Auth::user()->username == 'indri') {
             $outlets = $this->outlet->findWhere(['id' => 4]);
             return view('admin.outlets.index', compact('page_title', 'page_description', 'outlets'));
+        } elseif ( $user->hasRole('outlet-operator') ) {
+            return redirect()->route('/outlet');
         }
 
         return view('admin.outlets.index', compact('page_title', 'page_description', 'outlets'));
+    }
+
+    public function operatorIndex()
+    {
+        $user   = $this->user->find(Auth::user()->id);
+        $outlet = $this->outlet
+            ->pushCriteria(new OutletsWithOutletSales())
+            ->pushCriteria(new OutletsWithOutletCustomers())
+            ->findBy('user_id', $user->id);
+
+        return view('admin.outlets.show', compact('outlet'));
     }
 
     /**
