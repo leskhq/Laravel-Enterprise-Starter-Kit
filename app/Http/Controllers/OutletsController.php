@@ -47,7 +47,7 @@ class OutletsController extends Controller
         } elseif (Auth::user()->username == 'indri') {
             $outlets = $this->outlet->findWhere(['id' => 4]);
             return view('admin.outlets.index', compact('page_title', 'page_description', 'outlets'));
-        } elseif ( $user->hasRole('outlet-operator') ) {
+        } elseif ( $user->hasRole('outlet-operators') ) {
             return redirect()->route('/outlet');
         }
 
