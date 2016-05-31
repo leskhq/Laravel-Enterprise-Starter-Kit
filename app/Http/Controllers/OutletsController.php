@@ -48,7 +48,7 @@ class OutletsController extends Controller
             $outlets = $this->outlet->findWhere(['id' => 4]);
             return view('admin.outlets.index', compact('page_title', 'page_description', 'outlets'));
         } elseif ( $user->hasRole('outlet-operators') ) {
-            return redirect()->route('/outlet');
+            return redirect('/outlet');
         }
 
         return view('admin.outlets.index', compact('page_title', 'page_description', 'outlets'));
