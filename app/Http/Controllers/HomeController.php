@@ -37,21 +37,11 @@ class HomeController extends Controller
         $homeRouteName = 'welcome';
 
         try {
-
-            $user = Auth::user();
-
-            if ($user) {
-                $homeCandidateName = config('app.home_route');
-                $homeRoute = $this->route->findBy('name', $homeCandidateName);
-                $homePerm = $homeRoute->permission;
-                if ($user->can($homePerm->name)) {
-                    $homeRouteName = $homeCandidateName;
-                }
-            }
+            $homeCandidateName = config('app.home_route');
+            $homeRouteName = $homeCandidateName;
         }
-        catch (\Exception $ex) {
+        catch (\Exception $ex) { } // Eat the exception will default to the welcome route.
 
-        }
         return \Redirect::route($homeRouteName);
     }
 
