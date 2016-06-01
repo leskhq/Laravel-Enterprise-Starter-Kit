@@ -28,5 +28,8 @@
         </form>
 
         {!! link_to_route('recover_password', 'I forgot my password', [], ['class' => "text-center"]) !!}<br>
-        {!! link_to_route('register', 'Register a new membership', [], ['class' => "text-center"]) !!}
+        @if (config('app.allow_registration'))
+            {!! link_to_route('register', 'Register a new membership', [], ['class' => "text-center"]) !!}
+        @endif
+
 @endsection
