@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\OutletSaleRepository as OutletSale;
+use App\Repositories\OutletSaleDailyRepository as OutletSale;
 use App\Repositories\UserRepository as User;
 use App\Repositories\Criteria\Outlet\OutletSalesWithOutlets;
 
@@ -13,7 +13,7 @@ use App\Http\Controllers\Controller;
 use Auth;
 use Flash;
 
-class OutletSalesController extends Controller
+class OutletSaleDailiesController extends Controller
 {
     private $outletSale;
 

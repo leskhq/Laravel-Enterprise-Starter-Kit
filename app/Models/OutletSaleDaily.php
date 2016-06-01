@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OutletSale extends Model
+class OutletSaleDaily extends Model
 {
     /**
     * @var array

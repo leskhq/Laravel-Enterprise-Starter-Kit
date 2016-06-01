@@ -135,7 +135,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($outlet->outletSales as $sale)
+                            @foreach($outlet->outletSaleDailies as $sale)
                                 <tr>
                                     <td>{{ $sale->created_at }}</td>
                                     <td>{{ $sale->kilo_quantity }}</td>

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\OutletRepository as Outlet;
 use App\Repositories\UserRepository as User;
 use App\Repositories\RoleRepository as Role;
-use App\Repositories\Criteria\Outlet\OutletsWithOutletSales;
+use App\Repositories\Criteria\Outlet\OutletsWithOutletSaleDailies;
 use App\Repositories\Criteria\Outlet\OutletsWithOutletCustomers;
 
 use Illuminate\Http\Request;
@@ -42,7 +42,7 @@ class OutletsController extends Controller
         $page_title       = trans('admin/outlets/general.page.index.title');
         $page_description = trans('admin/outlets/general.page.index.description');
 
-        if ( $user->hasRole('operationals') ) {
+        if ( $user->hasRole('operationals') || $user->isRoot() ) {
             $outlets = $this->outlet->all();
         } elseif (Auth::user()->username == 'indri') {
             $outlets = $this->outlet->findWhere(['id' => 4]);
@@ -58,7 +58,7 @@ class OutletsController extends Controller
     {
         $user   = $this->user->find(Auth::user()->id);
         $outlet = $this->outlet
-            ->pushCriteria(new OutletsWithOutletSales())
+            ->pushCriteria(new OutletsWithOutletSaleDailies())
             ->pushCriteria(new OutletsWithOutletCustomers())
             ->findBy('user_id', $user->id);
 
@@ -109,7 +109,7 @@ class OutletsController extends Controller
     {
         $outlet = $this->outlet
             ->pushCriteria(new OutletsWithOutletCustomers())
-            ->pushCriteria(new OutletsWithOutletSales())
+            ->pushCriteria(new OutletsWithOutletSaleDailies())
             ->find($id);
 
         $page_title = trans('admin/outlets/general.page.show.title');

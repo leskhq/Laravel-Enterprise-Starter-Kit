@@ -265,11 +265,11 @@ Route::group(['middleware' => 'authorize'], function () {
     Route::group(['prefix' => 'outlet'], function () {
         Route::get(  '/',                                 ['as' => 'outlet.dasboard',                     'uses' => 'OutletsController@operatorIndex']);
         // Outlet sale routes
-        Route::get(  'sales',                             ['as' => 'outlet.sales.index',                  'uses' => 'OutletSalesController@index']);
-        Route::post( 'sales',                             ['as' => 'outlet.sales.store',                  'uses' => 'OutletSalesController@store']);
-        Route::get(  'sales/{ocId}',                      ['as' => 'outlet.sales.show',                   'uses' => 'OutletSalesController@show']);
-        Route::get(  'sales/{ocId}/delete',               ['as' => 'outlet.sales.delete',                 'uses' => 'OutletSalesController@destroy']);
-        Route::get(  'sales/{ocId}/confirm-delete',       ['as' => 'outlet.sales.confirm-delete',         'uses' => 'OutletSalesController@getModalDelete']);
+        Route::get(  'sales',                             ['as' => 'outlet.sales.index',                  'uses' => 'OutletSaleDailiesController@index']);
+        Route::post( 'sales',                             ['as' => 'outlet.sales.store',                  'uses' => 'OutletSaleDailiesController@store']);
+        Route::get(  'sales/{ocId}',                      ['as' => 'outlet.sales.show',                   'uses' => 'OutletSaleDailiesController@show']);
+        Route::get(  'sales/{ocId}/delete',               ['as' => 'outlet.sales.delete',                 'uses' => 'OutletSaleDailiesController@destroy']);
+        Route::get(  'sales/{ocId}/confirm-delete',       ['as' => 'outlet.sales.confirm-delete',         'uses' => 'OutletSaleDailiesController@getModalDelete']);
         // Outlet customer routes
         Route::get(  'customers',                         ['as' => 'outlet.customers.index',              'uses' => 'OutletCustomersController@index']);
         Route::post( 'customers',                         ['as' => 'outlet.customers.store',              'uses' => 'OutletCustomersController@store']);

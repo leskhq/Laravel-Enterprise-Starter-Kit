@@ -23,8 +23,8 @@ class Outlet extends Model
         return $this->hasMany('App\Models\OutletCustomer', 'outlet_laundry_id');
     }
 
-    public function outletSales()
+    public function outletSaleDailies()
     {
-        return $this->hasMany('App\Models\OutletSale', 'outlet_laundry_id');
+        return $this->hasMany('App\Models\OutletSaleDaily', 'outlet_laundry_id');
     }
 }

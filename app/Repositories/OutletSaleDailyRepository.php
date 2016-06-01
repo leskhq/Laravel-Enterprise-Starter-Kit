@@ -2,7 +2,7 @@
 
 use Bosnadev\Repositories\Eloquent\Repository;
 
-class OutletSaleRepository extends Repository {
+class OutletSaleDailyRepository extends Repository {
 
     public function model()
     {

@@ -3,7 +3,7 @@
 use Bosnadev\Repositories\Criteria\Criteria;
 use Bosnadev\Repositories\Contracts\RepositoryInterface as Repository;
 
-class OutletsWithOutletSales extends Criteria
+class OutletsWithOutletSaleDailies extends Criteria
 {
     /**
      * @param $model
@@ -13,7 +13,7 @@ class OutletsWithOutletSales extends Criteria
      */
     public function apply( $model, Repository $repository )
     {
-        $model = $model->with('outletSales');
+        $model = $model->with('outletSaleDailies');
         return $model;
     }
 
