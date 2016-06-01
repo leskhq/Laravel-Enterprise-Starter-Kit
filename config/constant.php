@@ -17,7 +17,8 @@ return [
     "BCA"      => "BCA",
     "Mandiri"  => "Mandiri",
     "BNI"      => "BNI",
-    "Muamalat" => "Muamalat"
+    "Muamalat" => "Muamalat",
+    "BRI"      => "BRI"
   ],
 
   'product-categories' => [
