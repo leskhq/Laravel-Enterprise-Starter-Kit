@@ -29,9 +29,6 @@
                     </div>
 
                     {!! Form::close() !!}
-                <pre>
-                    @{{ $data | json }}
-                </pre>
                 </div><!-- /.box-body -->
             </div>
         </div>
