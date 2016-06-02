@@ -37,25 +37,11 @@ class HomeController extends Controller
         $homeRouteName = 'login';
 
         try {
-
-            $user = Auth::user();
-
-            if ($user) {
-                $homeCandidateName = config('app.home_route');
-                $homeRoute = $this->route->findBy('name', $homeCandidateName);
-                $homePerm = $homeRoute->permission;
-                if ($user->can($homePerm->name)) {
-                    $homeRouteName = $homeCandidateName;
-                } else {
-                    // TODO: create check if the user is outlet owner,
-                    // and redirect to it's dashboard.
-                    $homeRouteName = 'welcome';
-                }
-            }
+            $homeCandidateName = config('app.home_route');
+            $homeRouteName = $homeCandidateName;
         }
-        catch (\Exception $ex) {
+        catch (\Exception $ex) { } // Eat the exception will default to the welcome route.
 
-        }
         return \Redirect::route($homeRouteName);
     }
 

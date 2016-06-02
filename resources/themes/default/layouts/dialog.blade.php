@@ -32,7 +32,7 @@
 
 <div class="login-box">
     <div class="login-logo">
-        {{ config('app.short_name') }} | {{ $page_title or "Page Title" }}
+        {!! config('app.long_name') !!} | {{ $page_title or "Page Title" }}
     </div><!-- /.login-logo -->
     <div class="login-box-body">
 

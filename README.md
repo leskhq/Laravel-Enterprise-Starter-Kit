@@ -233,9 +233,20 @@ npm install
 
 #### Create your *.env* file
 Create a *.env* file from the *.env.example* supplied.
+
+For a Development environment use:
 ```
-cp .env.example .env
+cp .env.example-dev .env
 ```
+
+For a other environments, such as QA and Production use:
+```
+cp .env.example-qa .env
+```
+
+**_NOTE:_** Do not use the environment file for the development environment in any other environment as this will cause a lot of failures in the bootstrap aand kernel part of the application due to some dependencies being dynamically injected for the development environment only.
+
+### Basic configuration
 
 #### Generate application key
 Generate the unique application key:
