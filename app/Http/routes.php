@@ -167,7 +167,15 @@ Route::group(['middleware' => 'authorize'], function () {
             Route::get('two-b',    ['as' => 'test-menus.two-b', 'uses' => 'TestMenusController@test_menu_two_b']);
             Route::get('three',    ['as' => 'test-menus.three', 'uses' => 'TestMenusController@test_menu_three']);
         }); // End of TEST-MENU group
+        // TEST-REPORTS routes
+        Route::group(['prefix' => 'test-reports'], function () {
+            Route::get( 'users',       ['as' => 'test-reports.users',       'uses' => 'TestController@report_users']);
+            Route::post('users-data',  ['as' => 'test-reports.users-data',  'uses' => 'TestController@report_users_data']);
+            Route::get( 'routes',      ['as' => 'test-reports.routes',      'uses' => 'TestController@report_routes']);
+            Route::post('routes-data', ['as' => 'test-reports.routes-data', 'uses' => 'TestController@report_routes_data']);
+        }); // End of TEST-REPORTS group
     } // End of if DEV environment
 
     require __DIR__.'/rapyd.php';
 }); // end of AUTHORIZE middleware group
+

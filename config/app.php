@@ -283,6 +283,7 @@ return [
         Zofe\Rapyd\RapydServiceProvider::class,
         Baum\Providers\BaumServiceProvider::class,
         Sroutier\L51ESKModules\ModulesServiceProvider::class,
+        Mgallegos\LaravelJqgrid\LaravelJqgridServiceProvider::class,
 
     ],
 
@@ -340,6 +341,9 @@ return [
         'Entrust'     => Zizaco\Entrust\EntrustFacade::class,
         'MenuBuilder' => App\Facades\MenuBuilderFacade::class,
         'Module'      => Sroutier\L51ESKModules\Facades\Module::class,
+        'GridRender'  => Mgallegos\LaravelJqgrid\Facades\GridRender::class,
+        'GridEncoder' => Mgallegos\LaravelJqgrid\Facades\GridEncoder::class,
+
     ],
 
 ];
