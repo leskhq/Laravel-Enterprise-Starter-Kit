@@ -38,7 +38,4 @@ desired effect
         </div>
     </div>
 
-    <!-- Application JS-->
-    <script src="{{ asset(elixir('js/all.js')) }}"></script>
-
 </body>
