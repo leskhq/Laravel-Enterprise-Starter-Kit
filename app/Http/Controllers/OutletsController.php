@@ -43,7 +43,7 @@ class OutletsController extends Controller
         $page_title       = trans('admin/outlets/general.page.index.title');
         $page_description = trans('admin/outlets/general.page.index.description');
 
-        if ( $user->hasRole('operationals') || $user->isRoot() ) {
+        if ( $user->hasRole('operationals') || $user->isRoot() || $user->can('manage-outlets') ) {
             $outlets = $this->outlet->all();
         } elseif (Auth::user()->username == 'indri') {
             $outlets = $this->outlet->findWhere(['id' => 4]);
