@@ -149,6 +149,7 @@ Route::group(['middleware' => 'authorize'], function () {
         Route::get(   'outlets/create',                ['as' => 'admin.outlets.create',           'uses' => 'OutletsController@create']);
         Route::get(   'outlets/{oId}',                 ['as' => 'admin.outlets.show',             'uses' => 'OutletsController@show']);
         Route::patch( 'outlets/{oId}',                 ['as' => 'admin.outlets.update',           'uses' => 'OutletsController@update']);
+        Route::get(   'outlets/{oId}/excel',           ['as' => 'admin.outlets.excel',            'uses' => 'OutletsController@excel']);
         Route::get(   'outlets/{oId}/delete',          ['as' => 'admin.outlets.delete',           'uses' => 'OutletsController@destroy']);
         Route::get(   'outlets/{oId}/confirm-delete',  ['as' => 'admin.outlets.confirm-delete',   'uses' => 'OutletsController@getModalDelete']);
         // Formula routes

@@ -14,6 +14,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Flash;
 use Auth;
+use Excel;
 
 class OutletsController extends Controller
 {
@@ -152,6 +153,23 @@ class OutletsController extends Controller
         Flash::success( trans('admin/outlets/general.status.updated') );
 
         return redirect()->back();
+    }
+
+    /**
+     * export to excel function
+     * @param  int $id sale id
+     * @return xls     excel doc extension
+     */
+    public function excel($id) {
+        $outletName       = $this->outlet->find($id)->name;
+
+        Excel::create('Outlet - '. $outletName .'', function($excel) use($id) {
+            $excel->sheet('Outlet Sales', function ($sheet) use ($id) {
+                $outlet   = $this->outlet->find($id);
+                $details  = $this->outlet->find($id)->outletSaleDailies;
+                $sheet->loadView('admin.outlets.excel', ['outlet' => $outlet, 'details' => $details]);
+            });
+        })->download('xls');
     }
 
     /**
