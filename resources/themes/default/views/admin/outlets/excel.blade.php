@@ -20,5 +20,13 @@
             <td>{{ Helpers::reggo($sale->income) }}</td>
         </tr>
         @endforeach
+        <tr>
+            <td>TOTAL</td>
+            <td>{{ $details->sum('kilo_quantity') }}</td>
+            <td>{{ $details->sum('piece_quantity') }}</td>
+            <td>{{ Helpers::reggo($details->sum('total_kilo_cost')) }}</td>
+            <td>{{ Helpers::reggo($details->sum('total_piece_cost')) }}</td>
+            <td>{{ Helpers::reggo($details->sum('income')) }}</td>
+        </tr>
     </tbody>
 </table>

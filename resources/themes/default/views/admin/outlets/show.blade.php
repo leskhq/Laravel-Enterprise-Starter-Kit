@@ -23,8 +23,8 @@
                         </li>
                     </ul>
 
-                    <a href="{{ route('admin.outlets.excel', $outlet->id) }}" class="btn btn-success btn-block"> Print</a>
                     @if(Auth::user()->username != 'indri')
+                        <a href="{{ route('admin.outlets.excel', $outlet->id) }}" class="btn btn-success btn-block"> Download Sales Excel</a>
                         <a href="{{ route('admin.outlets.confirm-delete', $outlet->id) }}" class="btn btn-danger btn-block" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><b> Delete </b></a>
                     @endif
                 </div><!-- /.box-body -->
