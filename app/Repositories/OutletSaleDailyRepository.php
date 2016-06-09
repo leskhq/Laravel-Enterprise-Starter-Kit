@@ -6,7 +6,7 @@ class OutletSaleDailyRepository extends Repository {
 
     public function model()
     {
-        return 'App\Models\OutletSale';
+        return 'App\Models\OutletSaleDaily';
     }
 
 }
