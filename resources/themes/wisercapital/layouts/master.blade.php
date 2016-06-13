@@ -15,6 +15,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link href="{{ asset("/bower_components/admin-lte/bootstrap/css/bootstrap.min.css") }}" rel="stylesheet" type="text/css" />
     <!-- Font Awesome Icons 4.4.0 -->
     <link href="{{ asset("/bower_components/admin-lte/font-awesome/css/font-awesome.min.css") }}" rel="stylesheet" type="text/css" />
+    <link href="//db.onlinewebfonts.com/c/c1cb3da0a99efe5f8993974e51cc68e9?family=FuturaLTW01-Book" rel="stylesheet" type="text/css"/>
+
     <!-- Ionicons 2.0.1 -->
     <link href="{{ asset("/bower_components/admin-lte/ionicons/css/ionicons.min.css") }}" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
@@ -23,6 +25,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Application CSS-->
     <link href="{{ asset(elixir('css/all.css')) }}" rel="stylesheet" type="text/css" />
 
+	
     <!-- Head -->
     @include('partials._head')
 	
