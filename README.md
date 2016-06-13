@@ -63,6 +63,7 @@ Directory (AD) authentication and the dynamic authorization module. But wait the
 * Modules with [l51esk-modules](https://github.com/sroutier/l51esk-modules)
 * Laravel [Repositories](https://github.com/Bosnadev/Repositories).
 * Flash notifications using [laracasts/flash](https://github.com/laracasts/flash).
+* Advanced datatables with [jqGrid](http://www.trirand.com/blog/) and [mgallegos/laravel-jqgrid](https://github.com/mgallegos/laravel-jqgrid).
 * CRUD widgets, datatable, grids, forms with [rapyd-laravel](https://github.com/zofe/rapyd-laravel)
 * Internationalization (i18n).
 * Gulp and Elixir ready to compile and minimize Sass & CoffeeScript.
@@ -70,6 +71,7 @@ Directory (AD) authentication and the dynamic authorization module. But wait the
 * Font-awesome v4.4.0.
 * Ionicons v2.0.1.
 * jQuery v2.1.4.
+* jQuery UI v1.11.4, two themes included: Base and Trontastic.
 * Select2 v4.0.0
 * Select2 Bootstrap Theme v0.1.0-beta.4
 * Development tools
@@ -88,7 +90,6 @@ List of future feature and items that are still have to be completed, in no part
 * Single sign-on for IIS and Apache.
 * Favicon (one per theme?).
 * Settings with precedence, Application vs User settings and DB vs .env file.
-* Sortable tables.
 * Datepicker for date fields.
 * Chart & graph engine.
 * Add comments in .env file.
@@ -500,6 +501,23 @@ returning the view displaying the details to the browser.
 Additionally the *data_parser* function can add to the *data* array an entry with a key of *show_partial* that points to 
 a partial blade file that will be responsible for rendering the parsed data of the audit log entry. If no *show_partial* is 
 specified the default behaviour is to use *var_dump()* to simply dump the value on the page.
+
+### jqGrid datatables & reports.
+Advanced datatables and reports can be easily created using [jqGrid](http://www.trirand.com/blog/) and 
+[mgallegos/laravel-jqgrid](https://github.com/mgallegos/laravel-jqgrid). 
+
+In a development environment, 3 reports
+are available as sample: 
+
+* A simple user list.
+* A list of routes with their associated permission, using a join.
+* A list of permissions and roles for each user, grouped by user and roles. This is implemented by first creating a view
+ in the database as it would have been too complicated for Laravel Query Builder to handle.
+ 
+**_NOTE:_** The view is created in a migration, but will only be created (and dropped) in the development environment.
+
+**_NOTE:_** All jqGRids reports are using the base jQuery UI, except the routes report that uses the trontastic theme, 
+to show how easy it is to change jQuery UI theme.
 
 ### Rapyd demo
 To enable the demo mini sub-site that comes with [rapyd-laravel](https://github.com/zofe/rapyd-laravel) uncomment the 
