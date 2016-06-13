@@ -166,6 +166,9 @@ Route::group(['middleware' => 'authorize'], function () {
     Route::get('hf/{id}/delete', ['as' => 'hf.delete', 'uses' => 'HFController@destroy']);
     Route::get('hf/{id}/dataroom', ['as' => 'hf.dataroom', 'uses' => 'HFController@dataRoom']);
 	Route::get('hf/datatable', ['as' => 'hf.datatable', 'uses' => 'HFController@dataTable']);
+	Route::get('hf/{id}/wsar-score', ['as' => 'hf.wsar-score', 'uses' => 'HFController@WSARScore']);
+	
+	
 	Route::resource('hf', 'HFController');
 	Route::get('si/dataTable', ['as' => 'si.datatable', 'uses' => 'SIController@dataTable']); 
 	Route::resource('si', 'SIController');
