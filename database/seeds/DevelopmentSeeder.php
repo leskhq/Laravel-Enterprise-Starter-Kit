@@ -345,6 +345,14 @@ class DevelopmentSeeder extends Seeder
         $routeTestReportRoutesData = Route::where('name', 'test-reports.routes-data')->get()->first();
         $routeTestReportRoutesData->permission()->associate($permBasicAuthenticated);
         $routeTestReportRoutesData->save();
+        //
+        $routeTestReportPerms = Route::where('name', 'test-reports.perms-and-roles-by-users')->get()->first();
+        $routeTestReportPerms->permission()->associate($permBasicAuthenticated);
+        $routeTestReportPerms->save();
+        //
+        $routeTestReportPermsData = Route::where('name', 'test-reports.perms-and-roles-by-users-data')->get()->first();
+        $routeTestReportPermsData->permission()->associate($permBasicAuthenticated);
+        $routeTestReportPermsData->save();
 
         /////////
         // Find home menu.
@@ -670,6 +678,19 @@ class DevelopmentSeeder extends Seeder
             'enabled'       => true,
             'parent_id'     => $menuTestReportsHome->id,   // Parent is test-menus.home.
             'route_id'      => $routeTestReportRoutes->id,
+            'permission_id' => null,                     // Get permission from route.
+        ]);
+        // Create Menu routes reports
+        $menuTestReportsUsers = Menu::create([
+            'name'          => 'test-reports.perms-and-roles-by-users',
+            'label'         => 'Permisssions',
+            'position'      => 0,
+            'icon'          => 'fa fa-bolt',
+            'separator'     => false,
+            'url'           => null,
+            'enabled'       => true,
+            'parent_id'     => $menuTestReportsHome->id,   // Parent is test-menus.home.
+            'route_id'      => $routeTestReportPerms->id,
             'permission_id' => null,                     // Get permission from route.
         ]);
 

@@ -13,7 +13,7 @@ use DB;
  */
 class ReportRoutesRepository extends EloquentRepositoryAbstract {
 
-    public function __construct(Model $Model)
+    public function __construct()
     {
         $this->Database = DB::table('routes')
             ->join('permissions', 'routes.permission_id', '=', 'permissions.id');
