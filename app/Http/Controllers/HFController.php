@@ -57,7 +57,10 @@ class HFController extends Controller
 			->addColumn('action','<a href="{{ URL::route( "hf.delete", array( $id )) }}">Delete</a> <a href="{{ URL::route( "hf.edit", array( $id )) }}">Edit</a>')
 			->editColumn('status', function($data)
 				{ 
-					if($data->status == 0) return '<a href="#">Facility Info</a>';
+					//if($data->status == 0) return '<a href="#">Facility Info</a>';
+					return HTML::linkRoute('hf.facility-profile', 'Facility Profile', $data->id, array('class' => ''));
+					
+					
 				})
 			->make(true);
 	}
@@ -438,5 +441,16 @@ class HFController extends Controller
         
 		return view('hf.wsar_score', compact('page_title', 'page_description','wsar_score'));
 		    
+    }
+    
+    public function facilityProfile($id)
+    {
+	    $site = Site::find($id);
+		$metas = $site->getMeta();
+		
+	    $page_title = 'FACILITY PROFILE'; // trans('admin/users/general.page.index.title'); // "Admin | Users";
+        $page_description = '';//trans('admin/users/general.page.index.description'); // "List of users";
+        
+		return view('hf.facility_profile', compact('page_title', 'page_description', 'site', 'metas'));
     }
 }

@@ -25,7 +25,7 @@ Route::post('password/reset',           ['as' => 'reset_passwordPost',      'use
 // Registration terms
 Route::get( 'faust',                    ['as' => 'faust',                   'uses' => 'FaustController@index']);
 // Application routes...
-Route::get( '/',       ['as' => 'backslash',   'uses' => 'HomeController@index']);
+Route::get( '/',       ['as' => 'backslash',   'uses' => 'Auth\AuthController@getLogin']);
 Route::get( 'home',    ['as' => 'home',        'uses' => 'HomeController@index']);
 Route::get( 'welcome', ['as' => 'welcome',     'uses' => 'HomeController@welcome']);
 // Routes in this group must be authorized.
@@ -167,7 +167,7 @@ Route::group(['middleware' => 'authorize'], function () {
     Route::get('hf/{id}/dataroom', ['as' => 'hf.dataroom', 'uses' => 'HFController@dataRoom']);
 	Route::get('hf/datatable', ['as' => 'hf.datatable', 'uses' => 'HFController@dataTable']);
 	Route::get('hf/{id}/wsar-score', ['as' => 'hf.wsar-score', 'uses' => 'HFController@WSARScore']);
-	
+	Route::get('hf/{id}/facility-profile', ['as' => 'hf.facility-profile', 'uses' => 'HFController@facilityProfile']);
 	
 	Route::resource('hf', 'HFController');
 	Route::get('si/dataTable', ['as' => 'si.datatable', 'uses' => 'SIController@dataTable']); 
