@@ -36,6 +36,7 @@
                                             <i class="fa fa-check-square-o"></i>
                                         </a>
                                     </th>
+                                    <th>{{ trans('admin/users/general.columns.gravatar') }}</th>
                                     <th>{{ trans('admin/users/general.columns.username') }}</th>
                                     <th>{{ trans('admin/users/general.columns.name') }}</th>
                                     <th>{{ trans('admin/users/general.columns.roles') }}</th>
@@ -51,6 +52,7 @@
                                             <i class="fa fa-check-square-o"></i>
                                         </a>
                                     </th>
+                                    <th>{{ trans('admin/users/general.columns.gravatar') }}</th>
                                     <th>{{ trans('admin/users/general.columns.username') }}</th>
                                     <th>{{ trans('admin/users/general.columns.name') }}</th>
                                     <th>{{ trans('admin/users/general.columns.roles') }}</th>
@@ -67,6 +69,7 @@
                                                 {!! Form::checkbox('chkUser[]', $user->id); !!}
                                             @endif
                                         </td>
+                                        <td><img src="{{ Gravatar::get($user->email , 'tiny') }}" class="user-image" alt="User Image"/></td>
                                         <td>{!! link_to_route('admin.users.show', $user->username, [$user->id], []) !!}</td>
                                         <td>{!! link_to_route('admin.users.show', $user->full_name, [$user->id], []) !!}</td>
                                         <td>{{ $user->roles->count() }}</td>

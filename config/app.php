@@ -284,6 +284,7 @@ return [
         Baum\Providers\BaumServiceProvider::class,
         Sroutier\L51ESKModules\ModulesServiceProvider::class,
         Mgallegos\LaravelJqgrid\LaravelJqgridServiceProvider::class,
+        Creativeorange\Gravatar\GravatarServiceProvider::class,
 
     ],
 
@@ -343,6 +344,7 @@ return [
         'Module'      => Sroutier\L51ESKModules\Facades\Module::class,
         'GridRender'  => Mgallegos\LaravelJqgrid\Facades\GridRender::class,
         'GridEncoder' => Mgallegos\LaravelJqgrid\Facades\GridEncoder::class,
+        'Gravatar'    => Creativeorange\Gravatar\Facades\Gravatar::class,
 
     ],
 

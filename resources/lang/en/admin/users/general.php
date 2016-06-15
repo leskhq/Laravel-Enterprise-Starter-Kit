@@ -61,6 +61,7 @@ return [
 
     'columns'           => [
         'id'                        =>  'ID',
+        'gravatar'                  =>  'Gravatar',
         'username'                  =>  'User name',
         'first_name'                =>  'First name',
         'last_name'                 =>  'Last name',
