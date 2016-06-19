@@ -35,7 +35,9 @@ Route::get( 'welcome', ['as' => 'welcome',     'uses' => 'HomeController@welcome
 // Routes in this group must be authorized.
 Route::group(['middleware' => 'authorize'], function () {
     // Application routes...
-    Route::get( 'dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
+    Route::get(   'dashboard',      ['as' => 'dashboard',          'uses' => 'DashboardController@index']);
+    Route::get(   'user/profile',   ['as' => 'user.profile',       'uses' => 'UsersController@profile']);
+    Route::patch( 'user/profile',   ['as' => 'user.profile.patch', 'uses' => 'UsersController@profileUpdate']);
 
     // Site administration section
     Route::group(['prefix' => 'admin'], function () {

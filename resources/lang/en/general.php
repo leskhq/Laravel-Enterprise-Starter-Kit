@@ -34,6 +34,7 @@ return [
         'roles'             => 'Roles',
         'routes'            => 'Routes',
         'data'              => 'Data',
+        'profile'           => 'Profile',
     ],
 
     'error'              => [
@@ -58,12 +59,23 @@ return [
     'audit-log'           => [
         'category-login'               => 'Login',
         'category-register'            => 'Register',
+        'category-profile'             => 'Profile',
         'msg-login-success'            => 'Successful login: :username.',
         'msg-login-failed'             => 'Login failed: :username.',
         'msg-forcing-logout'           => 'Forcing logout: :username.',
         'msg-registration-attempt'     => 'Registration: :username.',
         'msg-account-created-login-in' => 'Registration successful, account created, login in: :username.',
         'msg-account-created-disabled' => 'Registration successful, account created but *disabled*: :username.',
+        'msg-profile-show'             => 'Showing profile of: :username.',
+        'msg-profile-update'           => 'Updating profile of: :username.',
+    ],
+
+    'page'              => [
+        'profile'              => [
+            'title'             => 'User | Profile',
+            'description'       => 'Displaying user: :full_name',
+            'section-title'     => 'Profile details'
+        ],
     ],
 
 ];

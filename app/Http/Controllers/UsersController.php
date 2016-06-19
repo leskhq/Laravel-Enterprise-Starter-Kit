@@ -516,4 +516,67 @@ class UsersController extends Controller {
         return $user;
     }
 
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function profile()
+    {
+        $user = Auth::user();
+
+        Audit::log(Auth::user()->id, trans('general.audit-log.category-profile'), trans('general.audit-log.msg-profile-show', ['username' => $user->username]));
+
+        $page_title = trans('general.page.profile.title');
+        $page_description = trans('general.page.profile.description', ['full_name' => $user->full_name]);
+        $readOnlyIfLDAP = ('ldap' == $user->auth_type) ? 'readonly' : '';
+        $perms = $this->perm->pushCriteria(new PermissionsByNamesAscending())->all();
+
+        return view('user.profile', compact('user', 'perms', 'readOnlyIfLDAP', 'page_title', 'page_description'));
+    }
+
+    /**
+     * @param UpdateUserRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function profileUpdate(UpdateUserRequest $request)
+    {
+        $user = Auth::user();
+
+        $this->validate($request, \app\User::getUpdateValidationRules($user->id));
+
+        Audit::log(Auth::user()->id, trans('general.audit-log.category-profile'), trans('general.audit-log.msg-profile-update', ['username' => $user->username]));
+
+        // Get all attribute from the request.
+        $attributes = $request->all();
+
+        // Fix #17 as per @sloan58
+        // Check if the password was submitted and has changed.
+        if(!\Hash::check($attributes['password'],$user->password) && $attributes['password'] != '')
+        {
+            // Password was changed, do nothing we are good.
+        }
+        else
+        {
+            // Password was not changed or was not submitted, delete attribute from array to prevent it
+            // from being set to blank.
+            unset($attributes['password']);
+        }
+
+        if ($user->isRoot())
+        {
+            // Prevent changes to some fields for the root user.
+            unset($attributes['username']);
+            unset($attributes['first_name']);
+            unset($attributes['last_name']);
+            unset($attributes['enabled']);
+        }
+
+        $user->update($attributes);
+
+        Flash::success( trans('general.status.profile.updated') );
+
+        return redirect()->route('user.profile');
+    }
+
+
 }

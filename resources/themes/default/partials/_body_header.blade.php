@@ -152,7 +152,7 @@
 
                                 @if ( config('app.user_profile_link') )
                                     <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                        {!! link_to_route('user.profile', 'Profile', [], ['class' => "btn btn-default btn-flat"]) !!}
                                     </div>
                                 @endif
 
