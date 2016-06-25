@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "de921297bbcfdcbe628fafe8a5542442",
-    "content-hash": "9fcfb7eb59355a4aea5c958deea9e48b",
+    "hash": "86fda213e094b0751e7ffa8931c58344",
+    "content-hash": "47db24523ca24b7d506d41589216f1f7",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -756,7 +756,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/7dd848b7afdf065966daebcac3c134f90ba2bcdd",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/caec26728251bcf205ac3aaa69c637912d9b9796",
                 "reference": "5f0dfd29ed807e4dacba0ae69c70300ded8050c3",
                 "shasum": ""
             },
@@ -3399,21 +3399,21 @@
         },
         {
             "name": "yaap/theme",
-            "version": "dev-laravel-5.1",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/sroutier/Theme.git",
-                "reference": "4666be627e6f82d8cfc6c54b546c1bbf99d550d9"
+                "url": "https://github.com/yaapis/Theme.git",
+                "reference": "36109d77b3096e75d3026b119eb0bed80cd9902d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sroutier/Theme/zipball/4666be627e6f82d8cfc6c54b546c1bbf99d550d9",
-                "reference": "4666be627e6f82d8cfc6c54b546c1bbf99d550d9",
+                "url": "https://api.github.com/repos/yaapis/Theme/zipball/36109d77b3096e75d3026b119eb0bed80cd9902d",
+                "reference": "36109d77b3096e75d3026b119eb0bed80cd9902d",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "5.1.*",
-                "php": ">=5.5.9"
+                "illuminate/support": "5.*",
+                "php": ">=5.4.0"
             },
             "type": "library",
             "autoload": {
@@ -3421,6 +3421,7 @@
                     "YAAP\\Theme": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -3430,10 +3431,7 @@
                     "email": "biluk.a@newway.com.ua"
                 }
             ],
-            "support": {
-                "source": "https://github.com/sroutier/Theme/tree/laravel-5.1"
-            },
-            "time": "2015-06-11 03:06:29"
+            "time": "2016-01-06 20:08:00"
         },
         {
             "name": "zizaco/entrust",
@@ -5002,7 +5000,6 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "doctrine/dbal": 20,
-        "yaap/theme": 20,
         "barryvdh/laravel-ide-helper": 20,
         "barryvdh/laravel-debugbar": 20,
         "zizaco/entrust": 20,
