@@ -121,4 +121,17 @@ return [
 
     'pretend' => false,
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Email address and label of the system sender
+    |--------------------------------------------------------------------------
+    |
+    | This is the email address and label of the system sender, the account
+    | used to send system messages and notifications to users.
+    |
+    */
+
+    'system_sender_address' => env('MAIL_SYSTEM_SENDER_ADDRESS', 'system.noreply@l51esk.io'),
+    'system_sender_label'   => env('MAIL_SYSTEM_SENDER_LABEL',   'L51ESK System'),
 ];
