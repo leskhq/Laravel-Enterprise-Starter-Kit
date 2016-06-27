@@ -1,4 +1,4 @@
-Hi, {{ $user->full_name }},<br>
+Hi {{ $user->first_name }},<br>
 <br>
 We got a request to reset your password.<br>
 If you made the request, click <a href="{{ url('password/reset/'.$token) }}">here</a> to reset your password.<br>

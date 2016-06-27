@@ -1,6 +1,6 @@
 <h1>Your password was changed!</h1>
 
-Hi, {{ $user->full_name }},<br>
+Hi {{ $user->first_name }},<br>
 This is just a quick note to inform you that your password was changed.<br>
 <br>
 If you did not request to change your password, your account may have been compromised<br>
