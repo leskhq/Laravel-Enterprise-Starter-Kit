@@ -2,7 +2,7 @@
 
 @section('content')
     <p class="login-box-msg">Enter your email to reset your password</p>
-        <form class="form-signin" method="POST" action="/auth/login" >
+        <form class="form-signin" method="POST" action="{{ route('recover_passwordPost') }}" >
             {!! csrf_field() !!}
 
             <div class="form-group has-feedback">
