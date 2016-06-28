@@ -124,10 +124,16 @@ class ProductionSeeder extends Seeder
         $routeFaust = Route::where('name', 'faust')->get()->first();
         $routeFaust->permission()->associate($permOpenToAll);
         $routeFaust->save();
-        // Associate basic-authenticated permission to the dashboard route
+        // Associate basic-authenticated permission to some routes
         $routeDashboard = Route::where('name', 'dashboard')->get()->first();
         $routeDashboard->permission()->associate($permBasicAuthenticated);
         $routeDashboard->save();
+        $routeUserProfile = Route::where('name', 'user.profile')->get()->first();
+        $routeUserProfile->permission()->associate($permBasicAuthenticated);
+        $routeUserProfile->save();
+        $routeUserProfilePatch = Route::where('name', 'user.profile.patch')->get()->first();
+        $routeUserProfilePatch->permission()->associate($permBasicAuthenticated);
+        $routeUserProfilePatch->save();
         // Associate the audit-log permissions
         $routeAuditView = Route::where('name', 'admin.audit.index')->get()->first();
         $routeAuditView->permission()->associate($permAuditLogView);
@@ -196,7 +202,7 @@ class ProductionSeeder extends Seeder
             "display_name"  => "Administrators",
             "description"   => "Administrators have no restrictions",
             "enabled"       => true
-            ]);
+        ]);
         // Create role: users
         // Assign permission basic-authenticated
         $roleUsers = Role::create([
@@ -204,7 +210,7 @@ class ProductionSeeder extends Seeder
             "display_name"  => "Users",
             "description"   => "All authenticated users",
             "enabled"       => true
-            ]);
+        ]);
         $roleUsers->perms()->attach($permBasicAuthenticated->id);
         // Create role: menu-manager
         // Assign permission manage-menus
@@ -283,7 +289,7 @@ class ProductionSeeder extends Seeder
             "password"      => "Password1",
             "auth_type"     => "internal",
             "enabled"       => true
-            ]);
+        ]);
         $userRoot->roles()->attach($roleAdmins->id);
 
 
