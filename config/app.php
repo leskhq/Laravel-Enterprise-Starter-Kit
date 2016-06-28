@@ -227,6 +227,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Email notifications
+    |--------------------------------------------------------------------------
+    |
+    | Boolean flag that enables email notifications, defaults to false.
+    |
+    */
+    'email_notifications' => env('APP_EMAIL_NOTIFICATIONS_ENABLED', false),
+
+    /*
+    |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------
     |
