@@ -24,6 +24,9 @@ return [
 
     'status'              => [
         'enabled'           => 'Enabled',
+        'profile'              => [
+            'updated'             => 'Profile updated',
+        ],
     ],
 
     'tabs'              => [

@@ -285,6 +285,7 @@ return [
         Sroutier\L51ESKModules\ModulesServiceProvider::class,
         Mgallegos\LaravelJqgrid\LaravelJqgridServiceProvider::class,
         Creativeorange\Gravatar\GravatarServiceProvider::class,
+        Tylercd100\LERN\LERNServiceProvider::class,
 
     ],
 
@@ -345,6 +346,7 @@ return [
         'GridRender'  => Mgallegos\LaravelJqgrid\Facades\GridRender::class,
         'GridEncoder' => Mgallegos\LaravelJqgrid\Facades\GridEncoder::class,
         'Gravatar'    => Creativeorange\Gravatar\Facades\Gravatar::class,
+        'LERN'        => Tylercd100\LERN\Facades\LERN::class,
 
     ],
 

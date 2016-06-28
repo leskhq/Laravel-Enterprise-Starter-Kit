@@ -13,6 +13,7 @@ use App\Traits\UserHasPermissionsTrait;
 use Auth;
 use Config;
 use Sroutier\EloquentLDAP\Contracts\EloquentLDAPUserInterface;
+use Mail;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract, EloquentLDAPUserInterface
 {
@@ -111,6 +112,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = bcrypt($value);
+
+        // Send an email to the user to notify him of the password change.
+        $user = $this;
+        Mail::send(['html' => 'emails.html.password_changed', 'text' => 'emails.text.password_changed'], ['user' => $user], function ($m) use ($user) {
+            $m->from(Config::get('mail.system_sender_address'), Config::get('mail.system_sender_label'));
+            $m->to($user->email, $user->full_name)->subject( trans('emails.password_changed.subject') );
+        });
+
     }
 
     /**
