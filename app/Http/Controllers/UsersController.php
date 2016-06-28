@@ -15,6 +15,8 @@ use App\Repositories\AuditRepository as Audit;
 use Flash;
 use Auth;
 use DB;
+use Mail;
+use Config;
 
 class UsersController extends Controller {
 
@@ -267,17 +269,23 @@ class UsersController extends Controller {
         // Get all attribute from the request.
         $attributes = $request->all();
 
+        // Set passwordChanged flag
+        $passwordChanged = false;
+
         // Fix #17 as per @sloan58
         // Check if the password was submitted and has changed.
         if(!\Hash::check($attributes['password'],$user->password) && $attributes['password'] != '')
         {
-            // Password was changed, do nothing we are good.
+            // Password was changed, set flag for later.
+            $passwordChanged = true;
         }
         else
         {
             // Password was not changed or was not submitted, delete attribute from array to prevent it
             // from being set to blank.
             unset($attributes['password']);
+            // Set flag just to be sure
+            $passwordChanged = false;
         }
 
         // Get a copy of the attributes that we will modify to save for a replay.
@@ -308,6 +316,9 @@ class UsersController extends Controller {
         }
 
         $user->update($attributes);
+        if ($passwordChanged) {
+            $this->emailPasswordChange($user);
+        }
 
         Flash::success( trans('admin/users/general.status.updated') );
 
@@ -549,17 +560,23 @@ class UsersController extends Controller {
         // Get all attribute from the request.
         $attributes = $request->all();
 
+        // Set passwordChanged flag
+        $passwordChanged = false;
+
         // Fix #17 as per @sloan58
         // Check if the password was submitted and has changed.
         if(!\Hash::check($attributes['password'],$user->password) && $attributes['password'] != '')
         {
-            // Password was changed, do nothing we are good.
+            // Password was changed, set flag for later.
+            $passwordChanged = true;
         }
         else
         {
             // Password was not changed or was not submitted, delete attribute from array to prevent it
             // from being set to blank.
             unset($attributes['password']);
+            // Set flag just to be sure
+            $passwordChanged = false;
         }
 
         if ($user->isRoot())
@@ -572,10 +589,25 @@ class UsersController extends Controller {
         }
 
         $user->update($attributes);
+        if ($passwordChanged) {
+            $this->emailPasswordChange($user);
+        }
 
         Flash::success( trans('general.status.profile.updated') );
 
         return redirect()->route('user.profile');
+    }
+
+    /**
+     * @param $user
+     */
+    private function emailPasswordChange($user)
+    {
+        // Send an email to the user to notify him of the password change.
+        Mail::send(['html' => 'emails.html.password_changed', 'text' => 'emails.text.password_changed'], ['user' => $user], function ($m) use ($user) {
+            $m->from(Config::get('mail.system_sender_address'), Config::get('mail.system_sender_label'));
+            $m->to($user->email, $user->full_name)->subject(trans('emails.password_changed.subject'));
+        });
     }
 
 

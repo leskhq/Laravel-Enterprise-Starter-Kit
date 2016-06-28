@@ -12,6 +12,8 @@ use App\Repositories\UserRepository as User;
 use App\Repositories\Criteria\User\UserWhereEmailEquals;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\AuditRepository as Audit;
+use Mail;
+use Config;
 
 class PasswordController extends Controller
 {
@@ -163,8 +165,21 @@ class PasswordController extends Controller
 
         $user->save();
 
+        $this->emailPasswordChange($user);
+
         Auth::login($user);
     }
 
+    /**
+     * @param $user
+     */
+    private function emailPasswordChange($user)
+    {
+        // Send an email to the user to notify him of the password change.
+        Mail::send(['html' => 'emails.html.password_changed', 'text' => 'emails.text.password_changed'], ['user' => $user], function ($m) use ($user) {
+            $m->from(Config::get('mail.system_sender_address'), Config::get('mail.system_sender_label'));
+            $m->to($user->email, $user->full_name)->subject(trans('emails.password_changed.subject'));
+        });
+    }
 
 }
