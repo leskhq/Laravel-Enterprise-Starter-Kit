@@ -164,7 +164,7 @@
                                 </tr>
                                 <?php $no++; ?>
                             @endforeach
-                            @for($x = $no; $x <=50; $x++)
+                            @for($x = $no; $x <=100; $x++)
                                 <tr>
                                     <td>
                                         {!! $x !!}
@@ -205,7 +205,7 @@
                                 </tr>
                             @endfor
                         @else
-                            @for($x = 1; $x <=50; $x++)
+                            @for($x = 1; $x <=100; $x++)
                                 <tr>
                                     <td>
                                         {!! $x !!}
