@@ -26,14 +26,6 @@ return [
             'description'         => 'log of all actions performed by users',
             'table-title'         => 'Audit log',
         ],
-    ],
-
-    'page'              => [
-        'index'              => [
-            'title'             => 'Admin | Audit log',
-            'description'       => 'Audit log',
-            'table-title'       => 'Audit log',
-        ],
         'show'              => [
             'title'             => 'Admin | Audit log | Show',
             'description'       => 'Displaying Audit log',
