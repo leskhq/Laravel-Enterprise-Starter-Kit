@@ -132,6 +132,10 @@ Route::group(['middleware' => 'authorize'], function () {
         Route::get( 'audit/purge',                     ['as' => 'admin.audit.purge',             'uses' => 'AuditsController@purge']);
         Route::get( 'audit/{auditId}/replay',          ['as' => 'admin.audit.replay',            'uses' => 'AuditsController@replay']);
         Route::get( 'audit/{auditId}/show',            ['as' => 'admin.audit.show',              'uses' => 'AuditsController@show']);
+        // Error routes
+        Route::get( 'errors',                          ['as' => 'admin.errors.index',             'uses' => 'ErrorsController@index']);
+        Route::get( 'errors/purge',                    ['as' => 'admin.errors.purge',             'uses' => 'ErrorsController@purge']);
+        Route::get( 'errors/{errorId}/show',           ['as' => 'admin.errors.show',              'uses' => 'ErrorsController@show']);
         // Settings routes
         // TODO: Implements settings
         Route::get('settings',                         ['as' => 'admin.settings.index',          'uses' => 'TestController@test_flash_warning']);

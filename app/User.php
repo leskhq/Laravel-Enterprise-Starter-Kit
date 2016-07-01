@@ -14,6 +14,7 @@ use Auth;
 use Config;
 use Sroutier\EloquentLDAP\Contracts\EloquentLDAPUserInterface;
 use Mail;
+use App\Models\Error;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract, EloquentLDAPUserInterface
 {
@@ -60,6 +61,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function audits()
     {
         return $this->hasMany('App\Models\Audit');
+    }
+
+    /**
+     * Eloquent hook to HasMany relationship between User and Error
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function errors()
+    {
+        return $this->hasMany(Error::class);
     }
 
     /**
