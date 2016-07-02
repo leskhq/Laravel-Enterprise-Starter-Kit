@@ -3,6 +3,32 @@
 class Utils {
 
 
+    /**
+     * @param $expression
+     * @return array
+     */
+    public static function getParmsForStrHeadAndTails($expression)
+    {
+        $parms = str_replace(['(', ')', ' '], '', $expression);
+        $parmsCnt = substr_count($parms, ',') + 1;
+        switch ($parmsCnt) {
+            case 1:
+                $value = $parms;
+                $limit = 100;
+                $end = '...';
+                break;
+            case 2:
+                list($value, $limit) = explode(',', $parms);
+                $end = '...';
+                break;
+            case 3:
+                list($value, $limit, $end) = explode(',', $parms);
+                $end = str_replace(['"', "'"], '', $end);
+                break;
+        }
+        return array($value, $limit, $end);
+    }
+
 
     public static function str_head($value, $limit = 100, $end = '...')
     {

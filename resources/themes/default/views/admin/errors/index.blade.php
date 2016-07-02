@@ -40,9 +40,9 @@
 
                                         <tr>
                                             <td><nobr><a href="{!! route('admin.errors.show', $lern_error->id) !!}" title="{{ trans('general.button.display') }}">{{ $lern_error->created_at }}</a></nobr></td>
-                                            <td><a href="{!! route('admin.errors.show', $lern_error->id) !!}" title="{{ trans('general.button.display') }}">{{ App\Libraries\Utils::str_head_and_tail($lern_error->class, 50, "...") }}</a></td>
-                                            <td><a href="{!! route('admin.errors.show', $lern_error->id) !!}" title="{{ trans('general.button.display') }}">{{ App\Libraries\Utils::str_tail($lern_error->url, 30, "...") }}</a></td>
-                                            <td><a href="{!! route('admin.errors.show', $lern_error->id) !!}" title="{{ trans('general.button.display') }}">{{ App\Libraries\Utils::str_head($lern_error->message, 70, "...") }}</a></td>
+                                            <td><a href="{!! route('admin.errors.show', $lern_error->id) !!}" title="{{ trans('general.button.display') }}">@strHeadAndTail($lern_error->class, 50, "...")</a></td>
+                                            <td><a href="{!! route('admin.errors.show', $lern_error->id) !!}" title="{{ trans('general.button.display') }}">@strTail($lern_error->url, 30, "...")</a></td>
+                                            <td><a href="{!! route('admin.errors.show', $lern_error->id) !!}" title="{{ trans('general.button.display') }}">@strHead($lern_error->message, 70, "...")</a></td>
                                             <td>
                                                 @if ($lern_error->user)
                                                     <a href="{!! route('admin.users.show', $lern_error->user->id) !!}" title="{{ trans('general.button.display') }}"> {{ $lern_error->user->username }} </a>
