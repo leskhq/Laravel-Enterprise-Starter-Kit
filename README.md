@@ -42,6 +42,7 @@ Directory (AD) authentication and the dynamic authorization module. But wait the
     * 403: Forbidden access.
     * 404: Page not found.
     * 500: Internal server error.
+* Context sensitive help pages.
 * Authentication & Authorization.
     * User authentication using Laravel's default model and middleware.
     * Role based authorization using [zizaco/entrust](https://github.com/zizaco/entrust).
@@ -64,9 +65,11 @@ Directory (AD) authentication and the dynamic authorization module. But wait the
 * Laravel [Repositories](https://github.com/Bosnadev/Repositories).
 * Flash notifications using [laracasts/flash](https://github.com/laracasts/flash).
 * Advanced datatables with [jqGrid](http://www.trirand.com/blog/) and [mgallegos/laravel-jqgrid](https://github.com/mgallegos/laravel-jqgrid).
-* CRUD widgets, datatable, grids, forms with [rapyd-laravel](https://github.com/zofe/rapyd-laravel)
+* CRUD widgets, datatable, grids, forms with [rapyd-laravel](https://github.com/zofe/rapyd-laravel).
+* User profile with Gravatar integration using [creativeorange/gravatar](https://github.com/creativeorange/gravatar).
 * Internationalization (i18n).
 * Gulp and Elixir ready to compile and minimize Sass & CoffeeScript.
+* Laravel Exception Recorder and Notifier using [LERN](https://github.com/tylercd100/lern) with admin pages to view logged errors and link to user.
 * Bootstrap v3.3.4.
 * Font-awesome v4.4.0.
 * Ionicons v2.0.1.
@@ -84,7 +87,6 @@ Directory (AD) authentication and the dynamic authorization module. But wait the
 ## Roadmap
 List of future feature and items that are still have to be completed, in no particular order:
 
-* Gravatar integration.
 * Implement soft-delete for Users, Roles, Permissions and maybe even Routes.
 * Persistent notifications.
 * Single sign-on for IIS and Apache.
