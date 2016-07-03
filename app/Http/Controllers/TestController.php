@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Models\Route;
 use Illuminate\Http\Request;
 
 use Flash;
@@ -14,6 +13,7 @@ use App\Repositories\ReportRoutesRepository;
 use App\Repositories\ReportPermissionsAndRolesByUsersRepository;
 
 use App\Repositories\AuditRepository as Audit;
+use Illuminate\Container\Container as App;
 
 class TestController extends Controller
 {

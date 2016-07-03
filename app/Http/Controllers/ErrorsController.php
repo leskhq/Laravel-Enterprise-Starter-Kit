@@ -16,17 +16,12 @@ class ErrorsController extends Controller {
     private $error;
 
     /**
-     * @var App
-     */
-    private $app;
-
-    /**
      * @param Route $route
      * @param Permission $permission
      */
-    public function __construct(App $app, Error $error)
+    public function __construct(App $app, Audit $audit, Error $error)
     {
-        $this->app = $app;
+        parent::__construct($app, $audit);
         $this->error = $error;
     }
 

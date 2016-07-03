@@ -12,6 +12,7 @@ use App\Repositories\UserRepository as User;
 use App\Repositories\PermissionRepository as Permission;
 use App\Repositories\RoleRepository as Role;
 use App\Repositories\AuditRepository as Audit;
+use Illuminate\Container\Container as App;
 use Flash;
 use Auth;
 use DB;
@@ -36,20 +37,15 @@ class UsersController extends Controller {
     protected $perm;
 
     /**
-     * @var Audit
-     */
-    protected $audit;
-
-    /**
      * @param User $user
      * @param Role $role
      */
-    public function __construct(User $user, Role $role, Permission $perm, Audit $audit)
+    public function __construct(App $app, Audit $audit, User $user, Role $role, Permission $perm)
     {
+        parent::__construct($app, $audit);
         $this->user  = $user;
         $this->role  = $role;
         $this->perm  = $perm;
-        $this->audit = $audit;
     }
 
     /**

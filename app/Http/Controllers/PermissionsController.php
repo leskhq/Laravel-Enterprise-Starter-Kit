@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Laracasts\Flash\Flash;
 use App\Repositories\AuditRepository as Audit;
 use Auth;
+use Illuminate\Container\Container as App;
 
 class PermissionsController extends Controller {
 
@@ -20,8 +21,9 @@ class PermissionsController extends Controller {
      * @param Role $role
      * @param Route $route
      */
-    public function __construct(Permission $permission, Role $role, Route $route)
+    public function __construct(App $app, Audit $audit, Permission $permission, Role $role, Route $route)
     {
+        parent::__construct($app, $audit);
         $this->permission = $permission;
         $this->role = $role;
         $this->route = $route;

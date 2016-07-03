@@ -10,26 +10,6 @@ use Illuminate\Support\Facades\View;
 class AuditsController extends Controller {
 
     /**
-     * @var Audit
-     */
-    private $audit;
-
-    /**
-     * @var App
-     */
-    private $app;
-
-    /**
-     * @param Route $route
-     * @param Permission $permission
-     */
-    public function __construct(App $app, Audit $audit)
-    {
-        $this->app = $app;
-        $this->audit = $audit;
-    }
-
-    /**
      * @return \Illuminate\View\View
      */
     public function index()

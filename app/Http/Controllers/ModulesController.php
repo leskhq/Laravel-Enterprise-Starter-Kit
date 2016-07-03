@@ -3,12 +3,12 @@
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Sroutier\L51ESKModules\Facades\Module;
 use App\Repositories\AuditRepository as Audit;
 use Auth;
 use Laracasts\Flash\Flash;
 use Artisan;
+use Illuminate\Container\Container as App;
 
 class ModulesController extends Controller
 {

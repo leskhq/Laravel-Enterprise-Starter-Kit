@@ -11,6 +11,7 @@ use Flash;
 use DB;
 use App\Repositories\AuditRepository as Audit;
 use Auth;
+use Illuminate\Container\Container as App;
 
 class RolesController extends Controller {
 
@@ -34,8 +35,9 @@ class RolesController extends Controller {
      * @param Permission $permission
      * @param User $user
      */
-    public function __construct(Role $role, Permission $permission, User $user)
+    public function __construct(App $app, Audit $audit, Role $role, Permission $permission, User $user)
     {
+        parent::__construct($app, $audit);
         $this->role = $role;
         $this->permission = $permission;
         $this->user = $user;

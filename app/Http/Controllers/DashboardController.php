@@ -2,24 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
-
-    /**
-     * Create a new dashboard controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        // Protect all dashboard routes. Users must be authenticated.
-        $this->middleware('auth');
-    }
 
     public function index() {
         $data['tasks'] = [

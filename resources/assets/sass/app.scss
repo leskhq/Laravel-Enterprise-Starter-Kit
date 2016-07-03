@@ -35,3 +35,7 @@ i.fa-colour-teal,               { color: teal; }
 i.fa-colour-violet,             { color: violet }
 i.fa-colour-white,              { color: white; }
 i.fa-colour-yellow,             { color: yellow; }
+// Disable anchor tags
+.disable_a_href{
+  pointer-events: none;
+}

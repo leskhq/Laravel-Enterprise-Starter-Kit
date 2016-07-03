@@ -1,12 +1,5 @@
 <?php namespace App\Http\Controllers;
 
-//use App\Repositories\Criteria\Menu\MenusByIDAscending;
-//use App\Repositories\Criteria\Menu\MenusByParentIDAscending;
-//use App\Repositories\Criteria\Menu\MenusByPositionAscending;
-//use App\Repositories\Criteria\Menu\MenusByLabelAscending;
-//use App\Repositories\MenuRepository as Menu;
-//use App\Repositories\Criteria\Route\RoutesByNameAscending;
-//use App\Repositories\Criteria\Permission\PermissionsByNamesAscending;
 use App\Models\Permission;
 use App\Models\Route;
 use App\Models\Menu;
@@ -15,33 +8,10 @@ use Illuminate\Http\Request;
 use Flash;
 use DB;
 use App\Repositories\AuditRepository as Audit;
-//use App\Repositories\RouteRepository as Route;
-//use App\Repositories\PermissionRepository as Permission;
 use Auth;
+use Illuminate\Container\Container as App;
 
 class MenusController extends Controller {
-
-//    /**
-//     * @var Route
-//     */
-//    private $route;
-//
-//    /**
-//     * @var Permission
-//     */
-//    private $permission;
-
-//    /**
-//     * @param Menu $menu
-//     * @param Route $route
-//     * @param Permission $permission
-//     */
-//    public function __construct(Route $route, Permission $permission)
-//    {
-//        $this->route = $route;
-//        $this->permission = $permission;
-//    }
-
 
     /**
      * @return \Illuminate\View\View

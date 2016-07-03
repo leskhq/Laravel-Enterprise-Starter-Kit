@@ -21,6 +21,10 @@
 
                 @if (Auth::check())
 
+                    @if ( config('app.context_help_area') )
+                        {!! $context_help_area   !!}
+                    @endif
+
                     @if ( config('app.notification_area') )
                         <!-- Messages: style can be found in dropdown.less-->
                         <li class="dropdown messages-menu">

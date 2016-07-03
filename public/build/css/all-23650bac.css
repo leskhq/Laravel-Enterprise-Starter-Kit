@@ -75,6 +75,9 @@ i.fa-colour-white {
 i.fa-colour-yellow {
   color: yellow; }
 
+.disable_a_href {
+  pointer-events: none; }
+
 /*# sourceMappingURL=app.css.map */
 
 /*# sourceMappingURL=all.css.map */
