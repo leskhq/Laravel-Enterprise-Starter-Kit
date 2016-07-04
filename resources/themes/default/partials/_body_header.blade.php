@@ -21,7 +21,7 @@
 
                 @if (Auth::check())
 
-                    @if ( config('app.context_help_area') )
+                    @if ( config('app.context_help_area') && (isset($context_help_area)))
                         {!! $context_help_area   !!}
                     @endif
 
