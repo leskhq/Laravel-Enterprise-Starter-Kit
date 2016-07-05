@@ -21,9 +21,16 @@ Directory (AD) authentication and the dynamic authorization module. But wait the
     - [First login and test](#first-login-and-test)
 - [Configuration](#configuration)
     - [Authentication & Authorization](#authentication--authorization)
+    - [LDAP/AD authentication](#ldapad-authentication)
+    - [Menu system](#menu-system)
     - [Walled garden](#walled-garden)
     - [Themes](#themes)
     - [Audit log](#audit-log)
+    - [jqGrid datatables & reports](#jqgrid-datatables--reports)
+    - [Rapyd demo](#rapyd-demo)
+    - [Modules](#modules)
+    - [LERN](#lern)
+    - [Context sensitive help](#context-sensitive-help)
 - [Deploying to Production](#deploying-to-production)
     - [Combine and minimize](#combine-and-minimize)
 - [Troubleshooting](#troubleshooting)
@@ -42,7 +49,7 @@ Directory (AD) authentication and the dynamic authorization module. But wait the
     * 403: Forbidden access.
     * 404: Page not found.
     * 500: Internal server error.
-* Context sensitive help pages.
+* Context sensitive help.
 * Authentication & Authorization.
     * User authentication using Laravel's default model and middleware.
     * Role based authorization using [zizaco/entrust](https://github.com/zizaco/entrust).
@@ -537,6 +544,39 @@ to original package notes.
 Small features can be grouped into modules and managed, enabled and upgraded, without impacting the entire site.
 Refer to the documentation on the [l51esk-modules](https://github.com/sroutier/l51esk-modules) and look at a 
 concrete example [Module Demo](https://github.com/sroutier/l51esk-modules-demo-1) for more details.  
+
+### LERN
+To enable LERN (Laravel Exception Recorder and Notifier) set the configuration option as show below:
+```
+LERN_ENABLED=false
+```
+Once enabled, LERN can record exceptions in the table ```lern_exceptions``` as well as email them if your mail system is properlly
+configured. A few more options are available to tweak the behaviour of LERN, refer to the ```lern.php``` configuration page and the [project home page](https://github.com/tylercd100/lern).
+All recorded exceptions can be seen in the ``` Error ``` page from the ```Admin``` menu. Individual exception also can be reviewed and should the need arise, old entries can be deleted with the purge button. The setting ```ERRORS_PURGE_RETENTION``` let you configure how 
+far back, in days, exceptions are kept when purging. By default any exception older than ```30``` days is deleted.
+
+### Context sensitive help
+
+Context sensitive help can be enabled by setting the configuration option ```APP_CONTEXT_HELP_AREA``` to true. When context sensitive help is enabled, a question mark (?) appears in the top-right area of the Web application. The question mark is either dimmed and disabled, or lit and enabled dependint on whether context sensitive help is available or not. For example on the home page the question mark will be dimmed and disabled but on the User edit page it will be lit and enabled. When clicked on, a small box will appear with the content of the context help inside. The help box can be dismissed by clicking anywhere outside the box.
+
+To create a new context sensitive help box, simply create a blade file under the ```resources/themes/default/views/context_help/``` folder followed by a struture representing the name of your route. For example the user edit page is accessed by the ```admin.users.edit``` route so create a blade page named ```edit.blade.php``` under ```resources/themes/default/views/context_help/admin/users/``` and it will automatically be loaded and shown when a user click on the question mark (?) icon.
+
+Module can also create context sensitive help by following the same principle but they must also set the __context__ parameter when they call the parent __constructor__, here is how the (Active Directory Inspector)[https://github.com/sroutier/L51ESK-Module_ActiveDirectoryInspector] module sets it, notice the 3rd parameter in the ```parent::__construct()``` call:
+```
+...
+    /**
+     * Custom constructor to get a handle on the Application instance.
+     * @param Application $app
+     */
+    public function __construct(Application $app, Audit $audit)
+    {
+        parent::__construct($app, $audit, "activedirectoryinspector");
+        $this->app = $app;
+        $this->ldapConfig = $this->app['config']['activedirectoryinspector'];
+    }
+...
+```
+Once the context set, the context sensitive help for the __home__ page is automatically loaded from ```app/Modules/ActiveDirectoryInspector/Resources/views/context_help/activedirectoryinspector/home.blade.php```This path is generated using this formula: ```app/Modules/<module namespace>/Resources/views/context_help/<route name>/<last part of route name>.blade.php```
 
 
 ## Deploying to production
