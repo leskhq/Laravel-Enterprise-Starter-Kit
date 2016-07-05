@@ -3,9 +3,7 @@
 use App\Repositories\AuditRepository as Audit;
 use App\Repositories\Criteria\Audit\AuditByCreatedDateDescending;
 use App\Repositories\Criteria\Audit\AuditCreatedBefore;
-use Illuminate\Container\Container as App;
 use Auth;
-use Illuminate\Support\Facades\View;
 
 class AuditsController extends Controller {
 

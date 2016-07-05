@@ -7,7 +7,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use View;
 use App\Repositories\AuditRepository as Audit;
-use Illuminate\Container\Container as App;
+use Illuminate\Contracts\Foundation\Application;
 
 abstract class Controller extends BaseController
 {
@@ -23,19 +23,21 @@ abstract class Controller extends BaseController
      */
     protected $app;
 
+    protected $context;
 
     protected $context_help_area;
 
-    public function __construct(App $app, Audit $audit)
+    public function __construct(Application $app, Audit $audit, $context = null)
     {
         $this->app = $app;
         $this->audit = $audit;
+        $this->context = $context;
         $this->context_help_area = '';
 
         if ( Config('app.context_help_area') ) {
             try {
                 $routeName = $this->app->request->route()->getName();
-                $helpViewName = "context_help." . $routeName;
+                $helpViewName = (($this->context) ? $this->context . "::" : '') . "context_help." . $routeName;
                 $this->context_help_area = View::make($helpViewName)->render();
             }
             catch (\Exception $ex)

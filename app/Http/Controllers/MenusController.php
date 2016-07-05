@@ -9,7 +9,6 @@ use Flash;
 use DB;
 use App\Repositories\AuditRepository as Audit;
 use Auth;
-use Illuminate\Container\Container as App;
 
 class MenusController extends Controller {
 

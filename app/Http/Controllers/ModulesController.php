@@ -8,7 +8,6 @@ use App\Repositories\AuditRepository as Audit;
 use Auth;
 use Laracasts\Flash\Flash;
 use Artisan;
-use Illuminate\Container\Container as App;
 
 class ModulesController extends Controller
 {

@@ -15,7 +15,7 @@ use App\Libraries\Utils;
 use DB;
 use App\Repositories\AuditRepository as Audit;
 use Auth;
-use Illuminate\Container\Container as App;
+use Illuminate\Contracts\Foundation\Application;
 
 class RoutesController extends Controller {
 
@@ -33,7 +33,7 @@ class RoutesController extends Controller {
      * @param Route $route
      * @param Permission $permission
      */
-    public function __construct(App $app, Audit $audit, Route $route, Permission $permission)
+    public function __construct(Application $app, Audit $audit, Route $route, Permission $permission)
     {
         parent::__construct($app, $audit);
         $this->route = $route;

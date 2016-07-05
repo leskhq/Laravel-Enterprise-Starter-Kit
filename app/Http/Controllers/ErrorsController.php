@@ -5,7 +5,7 @@ use App\Repositories\ErrorRepository as Error;
 use App\Repositories\Criteria\Error\ErrorByCreatedDateDescending;
 use App\Repositories\Criteria\Error\ErrorsWithUsers;
 use App\Repositories\Criteria\Error\ErrorCreatedBefore;
-use Illuminate\Container\Container as App;
+use Illuminate\Contracts\Foundation\Application;
 use Auth;
 
 class ErrorsController extends Controller {
@@ -19,7 +19,7 @@ class ErrorsController extends Controller {
      * @param Route $route
      * @param Permission $permission
      */
-    public function __construct(App $app, Audit $audit, Error $error)
+    public function __construct(Application $app, Audit $audit, Error $error)
     {
         parent::__construct($app, $audit);
         $this->error = $error;

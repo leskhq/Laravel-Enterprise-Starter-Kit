@@ -13,7 +13,6 @@ use App\Repositories\ReportRoutesRepository;
 use App\Repositories\ReportPermissionsAndRolesByUsersRepository;
 
 use App\Repositories\AuditRepository as Audit;
-use Illuminate\Container\Container as App;
 
 class TestController extends Controller
 {
