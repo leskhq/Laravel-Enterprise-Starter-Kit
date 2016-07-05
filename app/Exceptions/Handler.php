@@ -49,7 +49,6 @@ class Handler extends ExceptionHandler
                         break;
                 }
 
-
             }
         }
 
