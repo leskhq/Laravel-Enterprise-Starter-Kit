@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Flash;
-use Auth;
-
 use App\Repositories\AuditRepository as Audit;
+use Auth;
+use Flash;
 
 class TestController extends Controller
 {

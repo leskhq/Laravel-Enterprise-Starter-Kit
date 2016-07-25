@@ -1,10 +1,10 @@
 <?php namespace App\Models;
 
-use Zizaco\Entrust\EntrustPermission;
 use App\Traits\PermissionHasUsersTrait;
+use Zizaco\Entrust\EntrustPermission;
 
-class Permission extends EntrustPermission {
-
+class Permission extends EntrustPermission
+{
     use PermissionHasUsersTrait;
 
     /**
@@ -22,6 +22,7 @@ class Permission extends EntrustPermission {
     {
         return $this->hasMany('App\Models\Menu');
     }
+
     /**
      * @param $roleName
      *
@@ -29,10 +30,8 @@ class Permission extends EntrustPermission {
      */
     public function hasRole($roleName)
     {
-        foreach($this->roles as $role)
-        {
-            if($role->name == $roleName)
-            {
+        foreach ($this->roles as $role) {
+            if ($role->name == $roleName) {
                 return true;
             }
         }
@@ -40,7 +39,6 @@ class Permission extends EntrustPermission {
     }
 
     /**
-     * @param $value
      * @return bool
      */
     public function getIsUsedByRoleAttribute()
@@ -49,7 +47,6 @@ class Permission extends EntrustPermission {
     }
 
     /**
-     * @param $value
      * @return bool
      */
     public function getIsUsedByRouteAttribute()
@@ -58,7 +55,6 @@ class Permission extends EntrustPermission {
     }
 
     /**
-     * @param $value
      * @return bool
      */
     public function getIsUsedAttribute()
@@ -72,8 +68,9 @@ class Permission extends EntrustPermission {
     public function isEditable()
     {
         // Protect the guest-only and basic-authenticated permissions from edits.
-        if ( ('guest-only' == $this->name) ||
-             ('basic-authenticated' == $this->name)) {
+        if (('guest-only' == $this->name) ||
+            ('basic-authenticated' == $this->name)
+        ) {
             return false;
         }
         // Otherwise
@@ -86,10 +83,11 @@ class Permission extends EntrustPermission {
     public function isDeletable()
     {
         // Protect the guest-only, basic-authenticated and open-to-all permissions from deletion.
-        if ( ('guest-only'          == $this->name) ||
-             ('basic-authenticated' == $this->name) ||
-             ('open-to-all'         == $this->name) ||
-             ($this->is_used) ) {
+        if (('guest-only' == $this->name) ||
+            ('basic-authenticated' == $this->name) ||
+            ('open-to-all' == $this->name) ||
+            ($this->is_used)
+        ) {
             return false;
         }
         // Otherwise
@@ -123,17 +121,14 @@ class Permission extends EntrustPermission {
     }
 
     /**
-     *
-     *
      * @param array $attributes
-     * @param $user
      */
     public function assignRoutes(array $attributes = [])
     {
         if (array_key_exists('routes', $attributes) && (is_array($attributes['routes'])) && ("" != $attributes['routes'][0])) {
             $this->clearRouteAssociation();
 
-            foreach($attributes['routes'] as $id) {
+            foreach ($attributes['routes'] as $id) {
                 $route = \App\Models\Route::find($id);
                 $this->routes()->save($route);
             }
@@ -143,10 +138,7 @@ class Permission extends EntrustPermission {
     }
 
     /**
-     *
-     *
      * @param array $attributes
-     * @param $user
      */
     public function assignRoles(array $attributes = [])
     {
@@ -157,14 +149,10 @@ class Permission extends EntrustPermission {
         }
     }
 
-    /**
-     *
-     */
     public function clearRouteAssociation()
     {
         foreach ($this->routes as $route) {
             $route->permission()->dissociate();
-//            $route->dissociate();
             $route->save();
         }
         $this->save();

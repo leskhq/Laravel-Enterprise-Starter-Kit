@@ -8,7 +8,6 @@ use App\Repositories\PermissionRepository as Permission;
 use App\Repositories\UserRepository as User;
 use Illuminate\Http\Request;
 use Flash;
-use DB;
 use App\Repositories\AuditRepository as Audit;
 use Auth;
 
@@ -68,8 +67,6 @@ class RolesController extends Controller {
         $page_description = trans('admin/roles/general.page.show.description', ['name' => $role->name]); // "Displaying role";
 
         $perms = $this->permission->all();
-//        $userCollection = \App\User::take(10)->get(['id', 'first_name', 'last_name', 'username'])->lists('full_name_and_username', 'id');
-//        $userList = [''=>''] + $userCollection->all();
 
         return view('admin.roles.show', compact('role', 'perms', 'page_title', 'page_description'));
     }
@@ -140,9 +137,6 @@ class RolesController extends Controller {
         }
 
         $perms = $this->permission->all();
-//        $rolePerms = $role->perms();
-//        $userCollection = \App\User::take(10)->get(['id', 'first_name', 'last_name', 'username'])->lists('full_name_and_username', 'id');
-//        $userList = [''=>''] + $userCollection->all();
 
         return view('admin.roles.edit', compact('role', 'perms', 'page_title', 'page_description'));
     }

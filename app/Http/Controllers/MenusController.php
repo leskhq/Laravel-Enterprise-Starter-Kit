@@ -1,48 +1,16 @@
 <?php namespace App\Http\Controllers;
 
-//use App\Repositories\Criteria\Menu\MenusByIDAscending;
-//use App\Repositories\Criteria\Menu\MenusByParentIDAscending;
-//use App\Repositories\Criteria\Menu\MenusByPositionAscending;
-//use App\Repositories\Criteria\Menu\MenusByLabelAscending;
-//use App\Repositories\MenuRepository as Menu;
-//use App\Repositories\Criteria\Route\RoutesByNameAscending;
-//use App\Repositories\Criteria\Permission\PermissionsByNamesAscending;
+use App\Models\Menu;
 use App\Models\Permission;
 use App\Models\Route;
-use App\Models\Menu;
+use App\Repositories\AuditRepository as Audit;
+use Auth;
+use Flash;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-use Flash;
-use DB;
-use App\Repositories\AuditRepository as Audit;
-//use App\Repositories\RouteRepository as Route;
-//use App\Repositories\PermissionRepository as Permission;
-use Auth;
 
-class MenusController extends Controller {
-
-//    /**
-//     * @var Route
-//     */
-//    private $route;
-//
-//    /**
-//     * @var Permission
-//     */
-//    private $permission;
-
-//    /**
-//     * @param Menu $menu
-//     * @param Route $route
-//     * @param Permission $permission
-//     */
-//    public function __construct(Route $route, Permission $permission)
-//    {
-//        $this->route = $route;
-//        $this->permission = $permission;
-//    }
-
-
+class MenusController extends Controller
+{
     /**
      * @return \Illuminate\View\View
      */
@@ -84,22 +52,22 @@ class MenusController extends Controller {
     }
 
     /**
-     * @param array $menusCol
+     * @param array|Collection $menusCol
      * @return string
      */
     private function menusOrmToJsTreeJson(Collection $menusCol)
     {
         $jsTreeCol = $menusCol->map(function ($item, $key) {
-            $id             = $item->id;
-            $parent_id      = $item->parent_id;
-            $label          = $item->label;
-            $icon           = $item->icon;
+            $id = $item->id;
+            $parent_id = $item->parent_id;
+            $label = $item->label;
+            $icon = $item->icon;
             // Fix attribute of root item for JSTree
-            if ( ($id == $parent_id) && ('Root' == $label) ) {
+            if (($id == $parent_id) && ('Root' == $label)) {
                 $parent_id = '#';
             }
 
-             return collect(['id' => $id, 'parent' => $parent_id, 'text' => $label, 'icon' => $icon]);
+            return collect(['id' => $id, 'parent' => $parent_id, 'text' => $label, 'icon' => $icon]);
         });
 
         $menusJson = $jsTreeCol->toJson();
@@ -121,16 +89,13 @@ class MenusController extends Controller {
             // Locate existing menu item.
             $menuItem = Menu::find($id);
 
-            if (!$menuItem->isEditable())
-            {
-                Flash::warning( trans('admin/menu-builder/menu-builder.update-failed-cant-be-edited', ['id' => $menuItem->id, 'label' => $menuItem->label]) );
-            }
-            else
-            {
+            if (!$menuItem->isEditable()) {
+                Flash::warning(trans('admin/menu-builder/menu-builder.update-failed-cant-be-edited', ['id' => $menuItem->id, 'label' => $menuItem->label]));
+            } else {
                 // Fix issue #23: using the wrong column name in the unique rule.
                 // validate attributes.
-                $this->validate($request, array(    'name' => 'required|unique:menus,name,' . $id,
-                                                    'label' => 'required',
+                $this->validate($request, array('name' => 'required|unique:menus,name,' . $id,
+                    'label' => 'required',
                 ));
 
                 // Log action by user.
@@ -139,23 +104,22 @@ class MenusController extends Controller {
                 // Update menu item.
                 $menuItem->update($attributes);
 
-                Flash::success( trans('admin/menu-builder/menu-builder.update-success') );
+                Flash::success(trans('admin/menu-builder/menu-builder.update-success'));
             }
 
-        }
-        else { // else creating new menu item.
+        } else { // else creating new menu item.
             // First unset/remove blank 'id' element from the array, otherwise the insert SQL statement will not
             // include an incremented value for the identity column, but instead the value of id which is
             // blank: ''.
             unset($attributes['id']);
             // Validate attributes.
-            $this->validate($request, array(    'name' => 'required|unique:menus',
-                                                'label' => 'required',
+            $this->validate($request, array('name' => 'required|unique:menus',
+                'label' => 'required',
             ));
             // Create new menu item.
-            $menuItem = Menu::create($attributes);
+            Menu::create($attributes);
 
-            Flash::success( trans('admin/menu-builder/menu-builder.create-success') );
+            Flash::success(trans('admin/menu-builder/menu-builder.create-success'));
         }
 
         return redirect('/admin/menus');
@@ -169,17 +133,14 @@ class MenusController extends Controller {
     {
         $menu = Menu::find($id);
 
-        if (!$menu->isDeletable())
-        {
-            Flash::warning( trans('admin/menu-builder/menu-builder.delete-failed-cant-be-deleted', ['id' => $menu->id, 'label' => $menu->label]) );
-        }
-        else
-        {
+        if (!$menu->isDeletable()) {
+            Flash::warning(trans('admin/menu-builder/menu-builder.delete-failed-cant-be-deleted', ['id' => $menu->id, 'label' => $menu->label]));
+        } else {
             Audit::log(Auth::user()->id, trans('admin/menu-builder/menu-builder.audit-log.category'), trans('admin/menu-builder/menu-builder.audit-log.msg-destroy', ['label' => $menu->label]));
 
             $menu->delete($id);
 
-            Flash::success( trans('admin/menu-builder/menu-builder.delete-success') );
+            Flash::success(trans('admin/menu-builder/menu-builder.delete-success'));
         }
 
         return redirect('/admin/menus');
@@ -188,7 +149,7 @@ class MenusController extends Controller {
     /**
      * Delete Confirm
      *
-     * @param   int   $id
+     * @param   int $id
      * @return  View
      */
     public function getModalDelete($id)
@@ -197,21 +158,18 @@ class MenusController extends Controller {
 
         $menu = Menu::find($id);
 
-        if (!$menu->isdeletable())
-        {
+        if (!$menu->isdeletable()) {
             $modal_title = trans('admin/menu-builder/menu-builder.modal-delete-title-cant-be-deleted');
-            $modal_body  = trans('admin/menu-builder/menu-builder.modal-delete-message-cant-be-deleted', ['id' => $menu->id, 'label' => $menu->label]);
+            $modal_body = trans('admin/menu-builder/menu-builder.modal-delete-message-cant-be-deleted', ['id' => $menu->id, 'label' => $menu->label]);
             // Force a redirect to the index page if the user clicks on OK.
             $modal_route = route('admin.menus.index');
-        }
-        else
-        {
+        } else {
             $modal_title = trans('admin/menu-builder/menu-builder.modal-delete-title');
-            $modal_body  = trans('admin/menu-builder/menu-builder.modal-delete-message', ['id' => $menu->id, 'label' => $menu->label]);
+            $modal_body = trans('admin/menu-builder/menu-builder.modal-delete-message', ['id' => $menu->id, 'label' => $menu->label]);
 
             $modal_route = route('admin.menus.delete', array('id' => $menu->id));
         }
-        return view('modal_confirmation', compact( 'error', 'modal_route', 'modal_title', 'modal_body' ));
+        return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
 
     }
 
@@ -226,5 +184,4 @@ class MenusController extends Controller {
 
         return $menuItem;
     }
-
 }

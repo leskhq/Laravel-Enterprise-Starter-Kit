@@ -5,7 +5,6 @@ use App\Repositories\Criteria\Audit\AuditByCreatedDateDescending;
 use App\Repositories\Criteria\Audit\AuditCreatedBefore;
 use Illuminate\Container\Container as App;
 use Auth;
-use Illuminate\Support\Facades\View;
 
 class AuditsController extends Controller {
 
@@ -20,8 +19,8 @@ class AuditsController extends Controller {
     private $app;
 
     /**
-     * @param Route $route
-     * @param Permission $permission
+     * @param App $app
+     * @param Audit $audit
      */
     public function __construct(App $app, Audit $audit)
     {
@@ -57,7 +56,6 @@ class AuditsController extends Controller {
             // The AuditRepository located at $this->audit is changed to a instance of the
             // QueryBuilder when we run a query as done above. So we had to revert to some
             // Magic to get a handle of the model...
-//            $this->audit->delete($audit->id);
             $this->app->make($this->audit->model())->destroy($audit->id);
         }
 
@@ -75,6 +73,7 @@ class AuditsController extends Controller {
 
     // TODO: Implement function show to display more details, including data field.
     /**
+     * @param $id
      * @return \Illuminate\View\View
      */
     public function show($id)

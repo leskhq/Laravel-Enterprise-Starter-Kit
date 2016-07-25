@@ -44,6 +44,7 @@ class PermissionsController extends Controller {
     }
 
     /**
+     * @param $id
      * @return \Illuminate\View\View
      */
     public function show($id)
