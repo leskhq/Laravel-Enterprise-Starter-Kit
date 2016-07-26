@@ -1,16 +1,17 @@
 <?php namespace App\Http\Controllers;
 
+use App\Models\Menu;
 use App\Models\Permission;
 use App\Models\Route;
-use App\Models\Menu;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
-use Flash;
-use DB;
 use App\Repositories\AuditRepository as Audit;
 use Auth;
+use DB;
+use Flash;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
 
-class MenusController extends Controller {
+class MenusController extends Controller
+{
 
     /**
      * @return \Illuminate\View\View
@@ -53,7 +54,8 @@ class MenusController extends Controller {
     }
 
     /**
-     * @param array $menusCol
+     * @param array|Collection $menusCol
+     *
      * @return string
      */
     private function menusOrmToJsTreeJson(Collection $menusCol)
@@ -78,6 +80,7 @@ class MenusController extends Controller {
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function save(Request $request)
@@ -90,12 +93,9 @@ class MenusController extends Controller {
             // Locate existing menu item.
             $menuItem = Menu::find($id);
 
-            if (!$menuItem->isEditable())
-            {
+            if (!$menuItem->isEditable()) {
                 Flash::warning( trans('admin/menu-builder/menu-builder.update-failed-cant-be-edited', ['id' => $menuItem->id, 'label' => $menuItem->label]) );
-            }
-            else
-            {
+            } else {
                 // Fix issue #23: using the wrong column name in the unique rule.
                 // validate attributes.
                 $this->validate($request, array(    'name' => 'required|unique:menus,name,' . $id,
@@ -110,9 +110,7 @@ class MenusController extends Controller {
 
                 Flash::success( trans('admin/menu-builder/menu-builder.update-success') );
             }
-
-        }
-        else { // else creating new menu item.
+        } else { // else creating new menu item.
             // First unset/remove blank 'id' element from the array, otherwise the insert SQL statement will not
             // include an incremented value for the identity column, but instead the value of id which is
             // blank: ''.
@@ -132,18 +130,16 @@ class MenusController extends Controller {
 
     /**
      * @param $id
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy($id)
     {
         $menu = Menu::find($id);
 
-        if (!$menu->isDeletable())
-        {
+        if (!$menu->isDeletable()) {
             Flash::warning( trans('admin/menu-builder/menu-builder.delete-failed-cant-be-deleted', ['id' => $menu->id, 'label' => $menu->label]) );
-        }
-        else
-        {
+        } else {
             Audit::log(Auth::user()->id, trans('admin/menu-builder/menu-builder.audit-log.category'), trans('admin/menu-builder/menu-builder.audit-log.msg-destroy', ['label' => $menu->label]));
 
             $menu->delete($id);
@@ -158,6 +154,7 @@ class MenusController extends Controller {
      * Delete Confirm
      *
      * @param   int   $id
+     *
      * @return  View
      */
     public function getModalDelete($id)
@@ -166,26 +163,23 @@ class MenusController extends Controller {
 
         $menu = Menu::find($id);
 
-        if (!$menu->isdeletable())
-        {
+        if (!$menu->isdeletable()) {
             $modal_title = trans('admin/menu-builder/menu-builder.modal-delete-title-cant-be-deleted');
             $modal_body  = trans('admin/menu-builder/menu-builder.modal-delete-message-cant-be-deleted', ['id' => $menu->id, 'label' => $menu->label]);
             // Force a redirect to the index page if the user clicks on OK.
             $modal_route = route('admin.menus.index');
-        }
-        else
-        {
+        } else {
             $modal_title = trans('admin/menu-builder/menu-builder.modal-delete-title');
             $modal_body  = trans('admin/menu-builder/menu-builder.modal-delete-message', ['id' => $menu->id, 'label' => $menu->label]);
 
             $modal_route = route('admin.menus.delete', array('id' => $menu->id));
         }
         return view('modal_confirmation', compact( 'error', 'modal_route', 'modal_title', 'modal_body' ));
-
     }
 
     /**
      * @param Request $request
+     *
      * @return mixed
      */
     public function getData(Request $request)

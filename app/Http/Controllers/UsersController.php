@@ -2,24 +2,24 @@
 
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Repositories\Criteria\User\UsersWhereFirstNameOrLastNameOrUsernameLike;
-use Illuminate\Http\Request;
-use App\Repositories\Criteria\User\UsersWithRoles;
-use App\Repositories\Criteria\User\UsersByUsernamesAscending;
+use App\Repositories\AuditRepository as Audit;
 use App\Repositories\Criteria\Permission\PermissionsByNamesAscending;
 use App\Repositories\Criteria\Role\RolesByNamesAscending;
-use App\Repositories\UserRepository as User;
+use App\Repositories\Criteria\User\UsersByUsernamesAscending;
+use App\Repositories\Criteria\User\UsersWhereFirstNameOrLastNameOrUsernameLike;
+use App\Repositories\Criteria\User\UsersWithRoles;
 use App\Repositories\PermissionRepository as Permission;
 use App\Repositories\RoleRepository as Role;
-use App\Repositories\AuditRepository as Audit;
-use Illuminate\Contracts\Foundation\Application;
-use Flash;
+use App\Repositories\UserRepository as User;
 use Auth;
-use DB;
-use Mail;
 use Config;
+use Flash;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\Request;
+use Mail;
 
-class UsersController extends Controller {
+class UsersController extends Controller
+{
 
     /**
      * @var User
@@ -74,8 +74,6 @@ class UsersController extends Controller {
         $page_title = trans('admin/users/general.page.show.title'); // "Admin | User | Show";
         $page_description = trans('admin/users/general.page.show.description', ['full_name' => $user->full_name]); // "Displaying user";
 
-//        $roleCollection = \App\Models\Role::take(10)->get(['id', 'display_name'])->lists('display_name', 'id');
-//        $roleList = [''=>''] + $roleCollection->all();
         $perms = $this->perm->pushCriteria(new PermissionsByNamesAscending())->all();
 
         return view('admin.users.show', compact('user', 'perms', 'page_title', 'page_description'));
@@ -91,9 +89,6 @@ class UsersController extends Controller {
 
         $perms = $this->perm->pushCriteria(new PermissionsByNamesAscending())->all();
         $user = new \App\User();
-//        $userRoles = $user->roles;
-//        $roleCollection = \App\Models\Role::take(10)->get(['id', 'display_name'])->lists('display_name', 'id');
-//        $roleList = [''=>''] + $roleCollection->all();
 
         return view('admin.users.create', compact('user', 'perms', 'page_title', 'page_description'));
     }

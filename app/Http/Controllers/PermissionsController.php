@@ -1,16 +1,17 @@
 <?php namespace App\Http\Controllers;
 
+use App\Repositories\AuditRepository as Audit;
 use App\Repositories\Criteria\Permission\PermissionsByNamesAscending;
 use App\Repositories\PermissionRepository as Permission;
 use App\Repositories\RoleRepository as Role;
 use App\Repositories\RouteRepository as Route;
-use Illuminate\Http\Request;
-use Laracasts\Flash\Flash;
-use App\Repositories\AuditRepository as Audit;
 use Auth;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\Request;
+use Laracasts\Flash\Flash;
 
-class PermissionsController extends Controller {
+class PermissionsController extends Controller
+{
 
     private $role;
     private $permission;
@@ -46,6 +47,7 @@ class PermissionsController extends Controller {
     }
 
     /**
+     * @param $id
      * @return \Illuminate\View\View
      */
     public function show($id)
@@ -76,6 +78,7 @@ class PermissionsController extends Controller {
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
@@ -105,6 +108,7 @@ class PermissionsController extends Controller {
 
     /**
      * @param $id
+     *
      * @return \Illuminate\View\View
      */
     public function edit($id)
@@ -116,8 +120,7 @@ class PermissionsController extends Controller {
         $page_title = trans('admin/permissions/general.page.edit.title');
         $page_description = trans('admin/permissions/general.page.edit.description', ['name' => $perm->name]); // "Editing permission";
 
-        if(!$perm->isEditable())
-        {
+        if(!$perm->isEditable()) {
             abort(403);
         }
 
@@ -129,6 +132,7 @@ class PermissionsController extends Controller {
     /**
      * @param Request $request
      * @param $id
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, $id)
@@ -139,8 +143,7 @@ class PermissionsController extends Controller {
 
         $perm = $this->permission->find($id);
 
-        if(!$perm->isEditable())
-        {
+        if(!$perm->isEditable()) {
             abort(403);
         }
 
@@ -173,8 +176,7 @@ class PermissionsController extends Controller {
 
         $permission = $this->permission->find($id);
 
-        if(!$permission->isDeletable())
-        {
+        if(!$permission->isDeletable()) {
             abort(403);
         }
 
@@ -201,8 +203,7 @@ class PermissionsController extends Controller {
 
         $permission = $this->permission->find($id);
 
-        if(!$permission->isDeletable())
-        {
+        if(!$permission->isDeletable()) {
             abort(403);
         }
 
@@ -213,7 +214,6 @@ class PermissionsController extends Controller {
         $modal_body = trans('admin/permissions/dialog.delete-confirm.body', ['id' => $permission->id, 'name' => $permission->name]);
 
         return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
-
     }
 
     /**
@@ -226,11 +226,9 @@ class PermissionsController extends Controller {
         $routes = $this->route->all();
 
         $cnt = 0;
-        foreach ($routes as $route)
-        {
+        foreach ($routes as $route) {
             $name           = $route->path . '!' . $route->method;
-            if (null == $this->permission->findBy('name', $name))
-            {
+            if (null == $this->permission->findBy('name', $name)) {
                 $this->permission->create( ['name' => $name,
                                             'display_name' => $name,
                                             'description' => 'Auto-generated from route: ' . $route->action_name]);
@@ -290,18 +288,14 @@ class PermissionsController extends Controller {
 
         Audit::log(Auth::user()->id, trans('admin/permissions/general.audit-log.category'), trans('admin/permissions/general.audit-log.msg-enabled-selected'), $chkPerms);
 
-        if (isset($chkPerms))
-        {
-            foreach ($chkPerms as $perm_id)
-            {
+        if (isset($chkPerms)) {
+            foreach ($chkPerms as $perm_id) {
                 $permission = $this->permission->find($perm_id);
                 $permission->enabled = true;
                 $permission->save();
             }
             Flash::success(trans('admin/permissions/general.status.global-enabled'));
-        }
-        else
-        {
+        } else {
             Flash::warning(trans('admin/permissions/general.status.no-perm-selected'));
         }
         return redirect('/admin/permissions');
@@ -318,18 +312,14 @@ class PermissionsController extends Controller {
 
         Audit::log(Auth::user()->id, trans('admin/permissions/general.audit-log.category'), trans('admin/permissions/general.audit-log.msg-disabled-selected'), $chkPerms);
 
-        if (isset($chkPerms))
-        {
-            foreach ($chkPerms as $perm_id)
-            {
+        if (isset($chkPerms)) {
+            foreach ($chkPerms as $perm_id) {
                 $permission = $this->permission->find($perm_id);
                 $permission->enabled = false;
                 $permission->save();
             }
             Flash::success(trans('admin/permissions/general.status.global-disabled'));
-        }
-        else
-        {
+        } else {
             Flash::warning(trans('admin/permissions/general.status.no-perm-selected'));
         }
         return redirect('/admin/permissions');

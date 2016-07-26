@@ -23,6 +23,9 @@ class AuditsController extends Controller {
         return view('admin.audit.index', compact('audits', 'purge_retention', 'page_title', 'page_description'));
     }
 
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function purge()
     {
         Audit::log(Auth::user()->id, trans('admin/audit/general.audit-log.category'), trans('admin/audit/general.audit-log.msg-purge'));
@@ -42,6 +45,10 @@ class AuditsController extends Controller {
         return \Redirect::route('admin.audit.index');
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function replay($id)
     {
         Audit::log(Auth::user()->id, trans('admin/audit/general.audit-log.category'), trans('admin/audit/general.audit-log.msg-replay', ['ID' => $id]));

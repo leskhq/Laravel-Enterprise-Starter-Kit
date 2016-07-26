@@ -3,7 +3,8 @@
 use Tylercd100\LERN\Models\ExceptionModel;
 use App\User;
 
-class Error extends ExceptionModel {
+class Error extends ExceptionModel
+{
 
     public function user()
     {

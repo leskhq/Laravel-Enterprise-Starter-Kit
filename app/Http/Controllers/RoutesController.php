@@ -1,23 +1,20 @@
 <?php namespace App\Http\Controllers;
 
-//use App\Models\Route;
-use App\Repositories\RouteRepository as Route;
-use App\Repositories\PermissionRepository as Permission;
-use App\Repositories\Criteria\Route\RoutesWithPermissions;
-use App\Repositories\Criteria\Route\RoutesByPathAscending;
-use App\Repositories\Criteria\Route\RoutesByMethodAscending;
-use App\Repositories\Criteria\Route\RoutesWhereNameOrPathOrActionNameLike;
-
-use Illuminate\Http\Request;
 use App\Http\Requests;
-use Flash;
-use App\Libraries\Utils;
-use DB;
 use App\Repositories\AuditRepository as Audit;
+use App\Repositories\Criteria\Route\RoutesByMethodAscending;
+use App\Repositories\Criteria\Route\RoutesByPathAscending;
+use App\Repositories\Criteria\Route\RoutesWhereNameOrPathOrActionNameLike;
+use App\Repositories\Criteria\Route\RoutesWithPermissions;
+use App\Repositories\PermissionRepository as Permission;
+use App\Repositories\RouteRepository as Route;
 use Auth;
+use Flash;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\Request;
 
-class RoutesController extends Controller {
+class RoutesController extends Controller
+{
 
     /**
      * @var Route
@@ -30,6 +27,8 @@ class RoutesController extends Controller {
     private $permission;
 
     /**
+     * @param Application $app
+     * @param Audit $audit
      * @param Route $route
      * @param Permission $permission
      */
@@ -65,8 +64,6 @@ class RoutesController extends Controller {
 //        array_unshift($perms, '');
 
         return view('admin.routes.index', compact('routes', 'perms', 'page_title', 'page_description'));
-
-
     }
 
     /**

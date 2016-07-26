@@ -2,8 +2,8 @@
 
 use Zizaco\Entrust\EntrustRole;
 
-class Role extends EntrustRole {
-
+class Role extends EntrustRole
+{
     /**
      * @var array
      */
@@ -16,7 +16,7 @@ class Role extends EntrustRole {
     public function isEditable()
     {
         // Protect the admins and users roles from editing changes
-        if ( ('admins' == $this->name) || ('users' == $this->name) ) {
+        if (('admins' == $this->name) || ('users' == $this->name)) {
             return false;
         }
 
@@ -29,7 +29,7 @@ class Role extends EntrustRole {
     public function isDeletable()
     {
         // Protect the admins and users roles from deletion
-        if ( ('admins' == $this->name) || ('users' == $this->name) ) {
+        if (('admins' == $this->name) || ('users' == $this->name)) {
             return false;
         }
 
@@ -82,7 +82,7 @@ class Role extends EntrustRole {
             return true;
         }
         // Return true if the role has is assigned the given permission.
-        if ( $this->perms()->where('id' , $perm->id)->first() ) {
+        if ($this->perms()->where('id', $perm->id)->first()) {
             return true;
         }
         // Otherwise
@@ -90,7 +90,6 @@ class Role extends EntrustRole {
     }
 
     /**
-     *
      * Force the role to have the given permission.
      *
      * @param $permissionName
@@ -120,6 +119,4 @@ class Role extends EntrustRole {
             $this->users()->detach();
         }
     }
-
-
 }

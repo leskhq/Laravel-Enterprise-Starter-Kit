@@ -1,18 +1,13 @@
-<?php
-
-namespace App\Http\Controllers;
-
-use App\User;
-use Illuminate\Http\Request;
-
-use Flash;
-use Auth;
-use GridEncoder;
-use App\Repositories\ReportUsersRepository;
-use App\Repositories\ReportRoutesRepository;
-use App\Repositories\ReportPermissionsAndRolesByUsersRepository;
+<?php namespace App\Http\Controllers;
 
 use App\Repositories\AuditRepository as Audit;
+use App\Repositories\ReportPermissionsAndRolesByUsersRepository;
+use App\Repositories\ReportRoutesRepository;
+use App\Repositories\ReportUsersRepository;
+use App\User;
+use Auth;
+use Flash;
+use GridEncoder;
 
 class TestController extends Controller
 {

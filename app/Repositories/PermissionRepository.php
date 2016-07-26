@@ -2,8 +2,8 @@
 
 use Bosnadev\Repositories\Eloquent\Repository;
 
-class PermissionRepository extends Repository {
-
+class PermissionRepository extends Repository
+{
     public function model()
     {
         return 'App\Models\Permission';

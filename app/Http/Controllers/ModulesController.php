@@ -1,13 +1,12 @@
 <?php namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Http\Requests;
-use Sroutier\L51ESKModules\Facades\Module;
 use App\Repositories\AuditRepository as Audit;
-use Auth;
-use Laracasts\Flash\Flash;
 use Artisan;
+use Auth;
+use Illuminate\Http\Request;
+use Laracasts\Flash\Flash;
+use Sroutier\L51ESKModules\Facades\Module;
 
 class ModulesController extends Controller
 {
@@ -26,7 +25,6 @@ class ModulesController extends Controller
         $modules = Module::sortBy('order')->all();
 
         return view('admin.modules.index', compact('modules', 'page_title', 'page_description'));
-
     }
 
     /**
@@ -43,11 +41,12 @@ class ModulesController extends Controller
         Flash::success(trans('admin/modules/general.status.optimized'));
 
         return redirect('/admin/modules');
-
     }
 
     /**
      * Disables a module.
+     *
+     * @param $slug
      *
      * @return \Illuminate\Http\Response
      */
@@ -60,11 +59,12 @@ class ModulesController extends Controller
         Flash::success(trans('admin/modules/general.status.disabled'));
 
         return redirect('/admin/modules');
-
     }
 
     /**
      * Enables a module.
+     *
+     * @param $slug
      *
      * @return \Illuminate\Http\Response
      */
@@ -77,11 +77,12 @@ class ModulesController extends Controller
         Flash::success(trans('admin/modules/general.status.enabled'));
 
         return redirect('/admin/modules');
-
     }
 
 
     /**
+     * @param Request $request
+     *
      * @return \Illuminate\View\View
      */
     public function enableSelected(Request $request)
@@ -90,22 +91,20 @@ class ModulesController extends Controller
 
         Audit::log(Auth::user()->id, trans('admin/modules/general.audit-log.category'), trans('admin/modules/general.audit-log.msg-enabled-selected'), $chkMods);
 
-        if (isset($chkMods))
-        {
-            foreach ($chkMods as $slug)
-            {
+        if (isset($chkMods)) {
+            foreach ($chkMods as $slug) {
                 Module::enable($slug);
             }
             Flash::success(trans('admin/modules/general.status.global-enabled'));
-        }
-        else
-        {
+        } else {
             Flash::warning(trans('admin/modules/general.status.no-mod-selected'));
         }
         return redirect('/admin/modules');
     }
 
     /**
+     * @param Request $request
+     *
      * @return \Illuminate\View\View
      */
     public function disableSelected(Request $request)
@@ -114,16 +113,12 @@ class ModulesController extends Controller
 
         Audit::log(Auth::user()->id, trans('admin/modules/general.audit-log.category'), trans('admin/modules/general.audit-log.msg-disabled-selected'), $chkMods);
 
-        if (isset($chkMods))
-        {
-            foreach ($chkMods as $slug)
-            {
+        if (isset($chkMods)) {
+            foreach ($chkMods as $slug) {
                 Module::disable($slug);
             }
             Flash::success(trans('admin/modules/general.status.global-disabled'));
-        }
-        else
-        {
+        } else {
             Flash::warning(trans('admin/modules/general.status.no-perm-selected'));
         }
         return redirect('/admin/modules');
@@ -131,6 +126,8 @@ class ModulesController extends Controller
 
     /**
      * Initialize the modules.
+     *
+     * @param $slug
      *
      * @return \Illuminate\Http\Response
      */
@@ -142,24 +139,21 @@ class ModulesController extends Controller
 
         if ($module) {
             if (\Module::isUninitialized($slug)) {
-
                 \Module::initialize($slug);
-
                 Flash::success(trans('admin/modules/general.status.initialized', ['name' => $module['name']]));
-
             } else {
                 Flash::warning(trans('admin/modules/general.status.already-initialized', ['name' => $module['name']]));
             }
-        }
-        else {
+        } else {
             Flash::error(trans('admin/modules/general.status.not-found', ['slug' => $slug]));
         }
         return redirect('/admin/modules');
-
     }
 
     /**
      * Uninitialize the modules.
+     *
+     * @param $slug
      *
      * @return \Illuminate\Http\Response
      */
@@ -172,24 +166,19 @@ class ModulesController extends Controller
         if ($module) {
             if (\Module::isInitialized($slug)) {
                 if (\Module::isDisabled($slug)) {
-
                     \Module::uninitialize($slug);
-
                     Flash::success(trans('admin/modules/general.status.uninitialized', ['name' => $module['name']]));
-
                 } else {
                     Flash::warning(trans('admin/modules/general.status.not-disabled', ['name' => $module['name']]));
                 }
             } else {
                 Flash::warning(trans('admin/modules/general.status.not-initialized', ['name' => $module['name']]));
             }
-        }
-        else {
+        } else {
             Flash::error(trans('admin/modules/general.status.not-found', ['slug' => $slug]));
         }
 
         return redirect('/admin/modules');
-
     }
 
 }
