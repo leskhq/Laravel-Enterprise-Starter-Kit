@@ -1,19 +1,19 @@
 <?php namespace App\Http\Controllers;
 
-use App\Repositories\Criteria\Role\RolesWithPermissions;
+use App\Repositories\AuditRepository as Audit;
 use App\Repositories\Criteria\Role\RolesByNamesAscending;
 use App\Repositories\Criteria\Role\RolesWhereDisplayNameOrDescriptionLike;
-use App\Repositories\RoleRepository as Role;
+use App\Repositories\Criteria\Role\RolesWithPermissions;
 use App\Repositories\PermissionRepository as Permission;
+use App\Repositories\RoleRepository as Role;
 use App\Repositories\UserRepository as User;
-use Illuminate\Http\Request;
-use Flash;
-use DB;
-use App\Repositories\AuditRepository as Audit;
 use Auth;
+use Flash;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\Request;
 
-class RolesController extends Controller {
+class RolesController extends Controller
+{
 
     /**
      * @var Role
@@ -31,6 +31,8 @@ class RolesController extends Controller {
     private $user;
 
     /**
+     * @param Application $app
+     * @param Audit $audit
      * @param Role $role
      * @param Permission $permission
      * @param User $user
@@ -58,6 +60,8 @@ class RolesController extends Controller {
     }
 
     /**
+     * @param $id
+     *
      * @return \Illuminate\View\View
      */
     public function show($id)
@@ -70,8 +74,6 @@ class RolesController extends Controller {
         $page_description = trans('admin/roles/general.page.show.description', ['name' => $role->name]); // "Displaying role";
 
         $perms = $this->permission->all();
-//        $userCollection = \App\User::take(10)->get(['id', 'first_name', 'last_name', 'username'])->lists('full_name_and_username', 'id');
-//        $userList = [''=>''] + $userCollection->all();
 
         return view('admin.roles.show', compact('role', 'perms', 'page_title', 'page_description'));
     }
@@ -92,6 +94,7 @@ class RolesController extends Controller {
 
     /**
      * @param Request $request
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
@@ -125,6 +128,7 @@ class RolesController extends Controller {
 
     /**
      * @param $id
+     *
      * @return \Illuminate\View\View
      */
     public function edit($id)
@@ -136,15 +140,11 @@ class RolesController extends Controller {
         $page_title = trans('admin/roles/general.page.edit.title'); // "Admin | Role | Edit";
         $page_description = trans('admin/roles/general.page.edit.description', ['name' => $role->name]); // "Editing role";
 
-        if( !$role->isEditable() &&  !$role->canChangePermissions() )
-        {
+        if( !$role->isEditable() &&  !$role->canChangePermissions() ) {
             abort(403);
         }
 
         $perms = $this->permission->all();
-//        $rolePerms = $role->perms();
-//        $userCollection = \App\User::take(10)->get(['id', 'first_name', 'last_name', 'username'])->lists('full_name_and_username', 'id');
-//        $userList = [''=>''] + $userCollection->all();
 
         return view('admin.roles.edit', compact('role', 'perms', 'page_title', 'page_description'));
     }
@@ -152,6 +152,7 @@ class RolesController extends Controller {
     /**
      * @param Request $request
      * @param $id
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, $id)
@@ -172,20 +173,17 @@ class RolesController extends Controller {
             $attributes['users'] = [];
         }
 
-        if ($role->isEditable())
-        {
+        if ($role->isEditable()) {
             $role->update($attributes);
         }
 
-        if ($role->canChangePermissions())
-        {
+        if ($role->canChangePermissions()) {
             $role->savePermissions($request->get('perms'));
         }
 
         $role->forcePermission('basic-authenticated');
 
-        if ($role->canChangeMembership())
-        {
+        if ($role->canChangeMembership()) {
             $role->saveUsers($attributes['users']);
         }
 
@@ -196,14 +194,14 @@ class RolesController extends Controller {
 
     /**
      * @param $id
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy($id)
     {
         $role = $this->role->find($id);
 
-        if (!$role->isdeletable())
-        {
+        if (!$role->isdeletable()) {
             abort(403);
         }
 
@@ -220,6 +218,7 @@ class RolesController extends Controller {
      * Delete Confirm
      *
      * @param   int   $id
+     *
      * @return  View
      */
     public function getModalDelete($id)
@@ -228,8 +227,7 @@ class RolesController extends Controller {
 
         $role = $this->role->find($id);
 
-        if (!$role->isdeletable())
-        {
+        if (!$role->isdeletable()) {
             abort(403);
         }
 
@@ -241,11 +239,11 @@ class RolesController extends Controller {
         $modal_body = trans('admin/roles/dialog.delete-confirm.body', ['id' => $role->id, 'name' => $role->name]);
 
         return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
-
     }
 
     /**
      * @param $id
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function enable($id)
@@ -264,6 +262,7 @@ class RolesController extends Controller {
 
     /**
      * @param $id
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function disable($id)
@@ -283,6 +282,8 @@ class RolesController extends Controller {
     }
 
     /**
+     * @param Request $request
+     *
      * @return \Illuminate\View\View
      */
     public function enableSelected(Request $request)
@@ -291,24 +292,22 @@ class RolesController extends Controller {
 
         Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-enabled-selected'), $chkRoles);
 
-        if (isset($chkRoles))
-        {
-            foreach ($chkRoles as $role_id)
-            {
+        if (isset($chkRoles)) {
+            foreach ($chkRoles as $role_id) {
                 $role = $this->role->find($role_id);
                 $role->enabled = true;
                 $role->save();
             }
             Flash::success(trans('admin/roles/general.status.global-enabled'));
-        }
-        else
-        {
+        } else {
             Flash::warning(trans('admin/roles/general.status.no-role-selected'));
         }
         return redirect('/admin/roles');
     }
 
     /**
+     * @param Request $request
+     *
      * @return \Illuminate\View\View
      */
     public function disableSelected(Request $request)
@@ -319,18 +318,14 @@ class RolesController extends Controller {
 
         Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-disabled-selected'), $chkRoles);
 
-        if (isset($chkRoles))
-        {
-            foreach ($chkRoles as $role_id)
-            {
+        if (isset($chkRoles)) {
+            foreach ($chkRoles as $role_id) {
                 $role = $this->role->find($role_id);
                 $role->enabled = false;
                 $role->save();
             }
             Flash::success(trans('admin/roles/general.status.global-disabled'));
-        }
-        else
-        {
+        } else {
             Flash::warning(trans('admin/roles/general.status.no-role-selected'));
         }
         return redirect('/admin/roles');
@@ -338,6 +333,7 @@ class RolesController extends Controller {
 
     /**
      * @param Request $request
+     *
      * @return array|static[]
      */
     public function searchByName(Request $request)
@@ -358,11 +354,11 @@ class RolesController extends Controller {
         }
 
         return $return_arr;
-
     }
 
     /**
      * @param Request $request
+     *
      * @return mixed
      */
     public function getInfo(Request $request)

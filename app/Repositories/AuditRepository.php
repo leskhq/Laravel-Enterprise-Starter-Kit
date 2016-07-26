@@ -1,23 +1,30 @@
 <?php namespace App\Repositories;
 
-use Bosnadev\Repositories\Eloquent\Repository;
 use App\Models\Audit;
+use Bosnadev\Repositories\Eloquent\Repository;
 
-class AuditRepository extends Repository {
-
+class AuditRepository extends Repository
+{
     public function model()
     {
         return 'App\Models\Audit';
     }
 
     /**
-     *
-     **/
-    public static function log($user_id, $category, $message, Array $attributes = null, $data_parser = null, $replay_route = null){
+     * @param $user_id
+     * @param $category
+     * @param $message
+     * @param array $attributes
+     * @param null $data_parser
+     * @param null $replay_route
+     * @return bool|static
+     */
+    public static function log($user_id, $category, $message, Array $attributes = null, $data_parser = null, $replay_route = null)
+    {
 
-        $audit_enabled  = config('audit.enabled');
-        $audit          = false;
-        $attJson        = null;
+        $audit_enabled = config('audit.enabled');
+        $audit = false;
+        $attJson = null;
 
         if ($audit_enabled) {
             // Remove from array attributes that we do not want to save.
@@ -31,17 +38,15 @@ class AuditRepository extends Repository {
             }
 
             $audit = Audit::create([
-                "user_id"           => $user_id,
-                "category"          => $category,
-                "message"           => $message,
-                "data"              => $attJson,
-                "data_parser"       => $data_parser,
-                "replay_route"      => $replay_route,
+                "user_id" => $user_id,
+                "category" => $category,
+                "message" => $message,
+                "data" => $attJson,
+                "data_parser" => $data_parser,
+                "replay_route" => $replay_route,
             ]);
         }
 
         return $audit;
     }
-
-
 }

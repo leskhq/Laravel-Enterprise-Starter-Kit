@@ -1,7 +1,6 @@
 <?php namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Libraries\Utils;
 
 class Route extends Model
 {
@@ -15,27 +14,11 @@ class Route extends Model
     {
         return $this->belongsTo('App\Models\Permission');
     }
+
     public function menus()
     {
         return $this->hasMany('App\Models\Menu');
     }
-//    /**
-//     * @return string
-//     */
-//    public function getUniqueRoutePathAttribute($value)
-//    {
-//        return Route::makeUniqueRoutePath($this->method, $this->action_name);
-//    }
-//
-//    /**
-//     * @param $method
-//     * @param $action_name
-//     * @return string
-//     */
-//    public static function makeUniqueRoutePath($method, $action_name)
-//    {
-//        return $method . ":" . $action_name;
-//    }
 
     public function scopeOfMethod($query, $method)
     {
@@ -66,7 +49,9 @@ class Route extends Model
      * Load the Laravel routes into the application routes for
      * permission assignment.
      *
-     * @return int  The number of Laravel routes loaded.
+     * @param $routeNameRegEx
+     *
+     * @return int The number of Laravel routes loaded.
      */
     public static function loadLaravelRoutes($routeNameRegEx)
     {
@@ -102,7 +87,7 @@ class Route extends Model
 
                             if (!isset($route)) {
                                 $cnt++;
-                                $newRoute = Route::create([
+                                Route::create([
                                     'name'          => $name,
                                     'method'        => $method,
                                     'path'          => $path,

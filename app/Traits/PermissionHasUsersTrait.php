@@ -56,7 +56,6 @@ trait PermissionHasUsersTrait
     }
 
     /**
-     * @param $value
      * @return bool
      */
     public function getIsUsedByUserAttribute()
