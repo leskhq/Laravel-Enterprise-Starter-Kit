@@ -113,7 +113,7 @@ Route::group(['middleware' => 'authorize'], function () {
         Route::patch( 'sales/{sId}',                   ['as' => 'admin.sales.update',           'uses' => 'SalesController@update']);
         Route::get(   'sales/{sId}/edit',              ['as' => 'admin.sales.edit',             'uses' => 'SalesController@edit']);
         Route::get(   'sales/{sId}/excel',             ['as' => 'admin.sales.excel',            'uses' => 'SalesController@excel']);
-        Route::get(   'sales/{sId}/print',             ['as' => 'admin.sales.print',            'uses' => 'SalesController@print']);
+        Route::get(   'sales/{sId}/print',             ['as' => 'admin.sales.print',            'uses' => 'SalesController@printTemp']);
         Route::get(   'sales/{sId}/delete',            ['as' => 'admin.sales.delete',           'uses' => 'SalesController@destroy']);
         Route::post(  'sales/{sId}/update-status',     ['as' => 'admin.sales.update-status',    'uses' => 'SalesController@updateStatus']);
         Route::get(   'sales/{sId}/confirm-delete',    ['as' => 'admin.sales.confirm-delete',   'uses' => 'SalesController@getModalDelete']);
