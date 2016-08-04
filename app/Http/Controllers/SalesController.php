@@ -300,7 +300,7 @@ class SalesController extends Controller
         return view('admin.sales.get-by-status', compact('sales'));
     }
 
-    public function print($id)
+    public function printTemp($id)
     {
         $sale = $this->sale->find($id);
 
