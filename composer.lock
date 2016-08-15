@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8bb8b3fbbbf9e2e4f80a633e91e8076d",
-    "content-hash": "267af6e3f68e53fe1a93ed69a5a12d51",
+    "hash": "188cc10d269fcd28f16cedacc779082c",
+    "content-hash": "3e1eebbebf067d5b87427fdffb6de185",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -811,7 +811,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/432b80084acb401f9f2daba461679ace39cf67df",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/45939c61df532608c67a92733b7cd1e64455abc1",
                 "reference": "432b80084acb401f9f2daba461679ace39cf67df",
                 "shasum": ""
             },
@@ -1693,16 +1693,16 @@
         },
         {
             "name": "mgallegos/laravel-jqgrid",
-            "version": "v1.0.2",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mgallegos/laravel-jqgrid.git",
-                "reference": "19ca2bf9f2c992a2f5dd90e08fdc3517a97344bd"
+                "reference": "5c5fabbf0aad0be3d13b6f4e04ec5e21aebf939a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mgallegos/laravel-jqgrid/zipball/19ca2bf9f2c992a2f5dd90e08fdc3517a97344bd",
-                "reference": "19ca2bf9f2c992a2f5dd90e08fdc3517a97344bd",
+                "url": "https://api.github.com/repos/mgallegos/laravel-jqgrid/zipball/5c5fabbf0aad0be3d13b6f4e04ec5e21aebf939a",
+                "reference": "5c5fabbf0aad0be3d13b6f4e04ec5e21aebf939a",
                 "shasum": ""
             },
             "require": {
@@ -1726,7 +1726,7 @@
             "authors": [
                 {
                     "name": "Mario Gallegos",
-                    "email": "mgallegos76@gmail.com"
+                    "email": "freelance@mariogallegos.com"
                 }
             ],
             "description": "Laravel jqGrid package allows you to easily integrate the popular jQuery Grid Plugin (jqGrid) into your Laravel application.",
@@ -1736,7 +1736,7 @@
                 "jquery",
                 "laravel"
             ],
-            "time": "2015-05-18 15:59:58"
+            "time": "2016-06-29 17:34:09"
         },
         {
             "name": "monolog/monolog",
@@ -4153,7 +4153,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/libern/laravel-sql-logging/zipball/b050d9ffcb9b9adc96572dfb04e6364615bb0a37",
+                "url": "https://api.github.com/repos/libern/laravel-sql-logging/zipball/d14ad7b918b46de3e78d491fedf376d30dee22dc",
                 "reference": "b050d9ffcb9b9adc96572dfb04e6364615bb0a37",
                 "shasum": ""
             },
