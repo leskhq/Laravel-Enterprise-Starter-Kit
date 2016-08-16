@@ -3,7 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Models\Setting;
 use Theme;
+use Auth;
 
 class ThemeSelector
 {
@@ -16,8 +18,18 @@ class ThemeSelector
      */
     public function handle($request, Closure $next)
     {
-        // TODO: Get theme from user settings or system setting, or env or default....
-        Theme::init(env('DEFAULT_THEME', 'default'));
+        $themeName = null;
+
+        // If user is logged in, try to get his theme.
+        if (Auth::check()) {
+            $themeName = Setting::get('user.' . Auth::user()->id . '.theme');
+        }
+        // If no theme resolved, try to get the system theme, or the default.
+        if (null == $themeName) {
+            $themeName = Setting::get('theme.default', 'default');
+        }
+
+        Theme::init( $themeName );
 
         return $next($request);
     }

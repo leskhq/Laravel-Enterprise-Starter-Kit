@@ -5,7 +5,7 @@ return [
     /**
      * Master switch to enable or disable the feature.
      */
-    'enabled'   => env('LERN_ENABLED', false),
+    'enabled'   => env('LERN.ENABLED', false),
 
     /**
      * Set the operating behaviour of the LERN module.
@@ -14,7 +14,7 @@ return [
      *   - Record
      *   - Notify
      */
-    'behaviour' => env('LERN_BEHAVIOUR', 'RecordAndNotify'),
+    'behaviour' => env('LERN.BEHAVIOUR', 'RecordAndNotify'),
 
     'record' => [
         'table' => 'lern_exceptions',
@@ -38,7 +38,7 @@ return [
         /**
          * The default name of the monolog logger channel
          */
-        'channel' => env('LERN_CHANNEL', 'LESK'),
+        'channel' => env('LERN.CHANNEL', 'LESK'),
 
         /**
          * When using the default message body this will also include the stack trace
@@ -54,8 +54,8 @@ return [
          * Mail settings
          */
         'mail'=>[
-            'to'   => env('LERN_MAIL_RECIPIENT'),
-            'from' => env('LERN_MAIL_SENDER'),
+            'to'   => env('LERN.MAIL_RECIPIENT'),
+            'from' => env('MAIL.SYSTEM_SENDER_ADDRESS'),
             'smtp' => true,
         ],
 

@@ -75,5 +75,5 @@ return [
     | enable them.
     |
     */
-    'enable_user_on_create' => env('AUTH_ENABLE_USER_ON_CREATE', true),
+    'enable_user_on_create' => env('AUTH.ENABLE_USER_ON_CREATE', true),
 ];

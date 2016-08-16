@@ -2,6 +2,7 @@
 
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Setting;
 use App\Repositories\AuditRepository as Audit;
 use App\Repositories\Criteria\Permission\PermissionsByNamesAscending;
 use App\Repositories\Criteria\Role\RolesByNamesAscending;
@@ -12,7 +13,6 @@ use App\Repositories\PermissionRepository as Permission;
 use App\Repositories\RoleRepository as Role;
 use App\Repositories\UserRepository as User;
 use Auth;
-use Config;
 use Flash;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
@@ -594,10 +594,10 @@ class UsersController extends Controller
      */
     private function emailPasswordChange($user)
     {
-        if (Config('app.email_notifications')) {
+        if (Setting::get('app.email_notifications')) {
             // Send an email to the user to notify him of the password change.
             Mail::send(['html' => 'emails.html.password_changed', 'text' => 'emails.text.password_changed'], ['user' => $user], function ($m) use ($user) {
-                $m->from(Config::get('mail.system_sender_address'), Config::get('mail.system_sender_label'));
+                $m->from(Setting::get('mail.from.address'), Setting::get('mail.from.name'));
                 $m->to($user->email, $user->full_name)->subject(trans('emails.password_changed.subject'));
             });
         }

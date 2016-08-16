@@ -10,8 +10,8 @@ return array(
     | The directory with your themes.
     |
     */
+    'path'         => base_path('resources/themes'),
 
-        'path'         => base_path('resources/themes'),
     /*
     |--------------------------------------------------------------------------
     | Path to directory with assets
@@ -20,8 +20,8 @@ return array(
     | The directory with assets.
     |
     */
+    'assets_path'  => 'assets/themes',
 
-        'assets_path'  => 'assets/themes',
     /*
     |--------------------------------------------------------------------------
     | A pieces of theme collections
@@ -31,12 +31,14 @@ return array(
     | keep "layouts", "assets" and "partials".
     |
     */
+    'containerDir' => array(
+        'layout'  => 'layouts',
+        'partial' => 'partials',
+        'view'    => 'views',
+    ),
 
-        'containerDir' => array(
-            'layout'  => 'layouts',
-            'partial' => 'partials',
-            'view'    => 'views',
-        ),
-
-
+    /**
+     * Default theme to use.
+     */
+    'default' => env('THEME.DEFAULT', 'default'),
 );

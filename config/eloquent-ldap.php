@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'enabled' => env('LDAP_ENABLED', false),
+    'enabled' => env('LDAP.ENABLED', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -24,7 +24,7 @@ return [
     |
     */
 
-    'create_accounts' => env('LDAP_CREATE_ACCOUNTS', true),
+    'create_accounts' => env('LDAP.CREATE_ACCOUNTS', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -40,7 +40,7 @@ return [
     |
     */
 
-    'replicate_group_membership' => env('LDAP_REPLICATE_GROUP_MEMBERSHIP', true),
+    'replicate_group_membership' => env('LDAP.REPLICATE_GROUP_MEMBERSHIP', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'resync_on_login' => env('LDAP_RESYNC_ON_LOGIN', true),
+    'resync_on_login' => env('LDAP.RESYNC_ON_LOGIN', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -70,7 +70,7 @@ return [
     |
     */
 
-    'group_model' => env('LDAP_GROUP_MODEL', App\Models\Group::class),
+    'group_model' => env('LDAP.GROUP_MODEL', App\Models\Group::class),
 
     /*
     |--------------------------------------------------------------------------
@@ -84,7 +84,7 @@ return [
     |
     */
 
-    'label_internal' => env('LDAP_LABEL_INTERNAL', 'internal'),
+    'label_internal' => env('LDAP.LABEL_INTERNAL', 'internal'),
 
     /*
     |--------------------------------------------------------------------------
@@ -96,7 +96,7 @@ return [
     |
     */
 
-    'label_ldap' => env('LDAP_LABEL_LDAP', 'ldap'),
+    'label_ldap' => env('LDAP.LABEL_LDAP', 'ldap'),
 
     /*
     |--------------------------------------------------------------------------
@@ -109,7 +109,7 @@ return [
     |
     */
 
-    'account_suffix' => env('LDAP_ACCOUNT_SUFFIX', "@company.com"),
+    'account_suffix' => env('LDAP.ACCOUNT_SUFFIX', "@company.com"),
 
     /*
     |--------------------------------------------------------------------------
@@ -120,7 +120,7 @@ return [
     |
     */
 
-    'base_dn' => env('LDAP_BASE_DN', "DC=department,DC=company,DC=com"),
+    'base_dn' => env('LDAP.BASE_DN', "DC=department,DC=company,DC=com"),
 
     /*
     |--------------------------------------------------------------------------
@@ -132,7 +132,7 @@ return [
     |
     */
 
-    'server' => [ env('LDAP_SERVER', "ldapsrv01.company.com") ],
+    'server' => [ env('LDAP.SERVER', "ldapsrv01.company.com") ],
 
     /*
     |--------------------------------------------------------------------------
@@ -143,7 +143,7 @@ return [
     |
     */
 
-    'port' => env('LDAP_PORT', 389),
+    'port' => env('LDAP.PORT', 389),
 
     /*
     |--------------------------------------------------------------------------
@@ -154,7 +154,7 @@ return [
     |
     */
 
-    'user_name' => env('LDAP_USER_NAME', "ldap_reader"),
+    'user_name' => env('LDAP.USER_NAME', "ldap_reader"),
 
     /*
     |--------------------------------------------------------------------------
@@ -165,7 +165,7 @@ return [
     |
     */
 
-    'password' => env('LDAP_PASSWORD', "PaSsWoRd"),
+    'password' => env('LDAP.PASSWORD', "PaSsWoRd"),
 
     /*
     |--------------------------------------------------------------------------
@@ -177,7 +177,7 @@ return [
     |
     */
 
-    'return_real_primary_group' => env('LDAP_RETURN_REAL_PRIMARY_GROUP', true),
+    'return_real_primary_group' => env('LDAP.RETURN_REAL_PRIMARY_GROUP', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -191,7 +191,7 @@ return [
     |
     */
 
-    'secured' => env('LDAP_SECURED', false),
+    'secured' => env('LDAP.SECURED', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -202,7 +202,7 @@ return [
     |
     */
 
-    'secured_port' => env('LDAP_SECURED_PORT', 636),
+    'secured_port' => env('LDAP.SECURED_PORT', 636),
 
     /*
     |--------------------------------------------------------------------------
@@ -215,7 +215,7 @@ return [
     |
     */
 
-    'recursive_groups' => env('LDAP_RECURSIVE_GROUPS', false),
+    'recursive_groups' => env('LDAP.RECURSIVE_GROUPS', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -229,7 +229,7 @@ return [
     |
     */
 
-    'sso' => env('LDAP_SSO', false),
+    'sso' => env('LDAP.SSO', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -240,7 +240,7 @@ return [
     |
     */
 
-    'username_field' => env('LDAP_USERNAME_FIELD', "samaccountname"),
+    'username_field' => env('LDAP.USERNAME_FIELD', "samaccountname"),
 
     /*
     |--------------------------------------------------------------------------
@@ -251,7 +251,7 @@ return [
     |
     */
 
-    'email_field' => env('LDAP_EMAIL_FIELD', "userprincipalname"),
+    'email_field' => env('LDAP.EMAIL_FIELD', "userprincipalname"),
 
     /*
     |--------------------------------------------------------------------------
@@ -262,7 +262,7 @@ return [
     |
     */
 
-    'first_name_field' => env('LDAP_FIRST_NAME_FIELD', "givenname"),
+    'first_name_field' => env('LDAP.FIRST_NAME_FIELD', "givenname"),
 
     /*
     |--------------------------------------------------------------------------
@@ -273,7 +273,7 @@ return [
     |
     */
 
-    'last_name_field' => env('LDAP_LAST_NAME_FIELD', "sn"),
+    'last_name_field' => env('LDAP.LAST_NAME_FIELD', "sn"),
 
 ];
 

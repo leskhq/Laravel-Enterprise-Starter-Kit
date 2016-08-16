@@ -1,11 +1,11 @@
 <?php
 
-use Illuminate\Database\Seeder;
-use App\User;
-use App\Models\Role;
-use App\Models\Permission;
-use App\Models\Route;
 use App\Models\Menu;
+use App\Models\Permission;
+use App\Models\Role;
+use App\Models\Route;
+use App\User;
+use Illuminate\Database\Seeder;
 
 class ProductionSeeder extends Seeder
 {
@@ -15,7 +15,7 @@ class ProductionSeeder extends Seeder
      *
      * @return void
      */
-    public function run(/* User $user, Role $role */)
+    public function run()
     {
         ////////////////////////////////////
         // Load the routes

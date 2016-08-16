@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App\Models\Setting;
 
 class HomeController extends Controller
 {
@@ -11,7 +12,7 @@ class HomeController extends Controller
         $homeRouteName = 'welcome';
 
         try {
-            $homeCandidateName = config('app.home_route');
+            $homeCandidateName = Setting::get('app.home_route');
             $homeRouteName = $homeCandidateName;
         }
         catch (\Exception $ex) { } // Eat the exception will default to the welcome route.

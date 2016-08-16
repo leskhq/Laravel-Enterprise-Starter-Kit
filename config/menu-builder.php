@@ -18,7 +18,7 @@ return array(
     |
     */
 
-    'framework_handler' => env('MENU_BUILDER_FRAMEWORK_HANDLER', 'App\Handlers\L51ESKSecuredMenuHandler'),
+    'framework_handler' => env('MENU-BUILDER.FRAMEWORK_HANDLER', 'App\Handlers\L51ESKSecuredMenuHandler'),
 
 );
 

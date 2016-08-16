@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ResetsPasswords;
-use Flash;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Mail\Message;
-use App\Repositories\UserRepository as User;
-use App\Repositories\Criteria\User\UserWhereEmailEquals;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Setting;
 use App\Repositories\AuditRepository as Audit;
+use App\Repositories\Criteria\User\UserWhereEmailEquals;
+use App\Repositories\UserRepository as User;
+use Flash;
+use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
+use Illuminate\Mail\Message;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
 use Mail;
-use Config;
 
 class PasswordController extends Controller
 {
@@ -175,10 +175,10 @@ class PasswordController extends Controller
      */
     private function emailPasswordChange($user)
     {
-        if (Config('app.email_notifications')) {
+        if (Setting::get('app.email_notifications')) {
             // Send an email to the user to notify him of the password change.
             Mail::send(['html' => 'emails.html.password_changed', 'text' => 'emails.text.password_changed'], ['user' => $user], function ($m) use ($user) {
-                $m->from(Config::get('mail.system_sender_address'), Config::get('mail.system_sender_label'));
+                $m->from(Setting::get('mail.from.address'), Setting::get('mail.from.name'));
                 $m->to($user->email, $user->full_name)->subject(trans('emails.password_changed.subject'));
             });
         }

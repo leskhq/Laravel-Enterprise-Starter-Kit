@@ -138,7 +138,19 @@ Route::group(['middleware' => 'authorize'], function () {
         Route::get( 'errors/{errorId}/show',           ['as' => 'admin.errors.show',              'uses' => 'ErrorsController@show']);
         // Settings routes
         // TODO: Implements settings
-        Route::get('settings',                         ['as' => 'admin.settings.index',          'uses' => 'TestController@test_flash_warning']);
+        Route::post(  'settings',                             ['as' => 'admin.settings.store',            'uses' => 'SettingsController@store']);
+        Route::get(   'settings',                             ['as' => 'admin.settings.index',            'uses' => 'SettingsController@index']);
+        Route::get(   'settings/load',                        ['as' => 'admin.settings.load',             'uses' => 'SettingsController@load']);
+        Route::get(   'settings/create',                      ['as' => 'admin.settings.create',           'uses' => 'SettingsController@create']);
+        Route::get(   'settings/{settingKey}',                ['as' => 'admin.settings.show',             'uses' => 'SettingsController@show']);
+        Route::patch( 'settings/{settingKey}',                ['as' => 'admin.settings.patch',            'uses' => 'SettingsController@update']);
+        Route::put(   'settings/{settingKey}',                ['as' => 'admin.settings.update',           'uses' => 'SettingsController@update']);
+        Route::delete('settings/{settingKey}',                ['as' => 'admin.settings.destroy',          'uses' => 'SettingsController@destroy']);
+        Route::get(   'settings/{settingKey}/edit',           ['as' => 'admin.settings.edit',             'uses' => 'SettingsController@edit']);
+        Route::get(   'settings/{settingKey}/confirm-delete', ['as' => 'admin.settings.confirm-delete',   'uses' => 'SettingsController@getModalDelete']);
+        Route::get(   'settings/{settingKey}/delete',         ['as' => 'admin.settings.delete',           'uses' => 'SettingsController@destroy']);
+
+
 
     }); // End of ADMIN group
 

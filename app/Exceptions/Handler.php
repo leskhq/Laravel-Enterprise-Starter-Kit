@@ -2,13 +2,13 @@
 
 namespace App\Exceptions;
 
+use App\Models\Setting;
+use Auth;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Input;
 use LERN;
 use Request;
-use Auth;
-use Input;
-use Config;
 
 class Handler extends ExceptionHandler
 {
@@ -36,7 +36,7 @@ class Handler extends ExceptionHandler
             //Check to see if LERN is installed otherwise you will not get an exception.
             if (app()->bound("lern")) {
 
-                switch(Config('lern.behaviour')) {
+                switch(Setting::get('lern.behaviour')) {
                     case 'record':
                         app()->make("lern")->record($e); //Record the Exception to the database
                         break;
@@ -71,7 +71,7 @@ class Handler extends ExceptionHandler
     private function setLERNNotificationFormat()
     {
         //Change the subject
-        LERN::setSubject(config('lern.notify.channel') . ": An Exception was thrown!");
+        LERN::setSubject(Setting::get('lern.notify.channel') . ": An Exception was thrown!");
 
         //Change the message body
         LERN::setMessage(function ($exception) {

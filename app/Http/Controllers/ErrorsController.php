@@ -1,12 +1,13 @@
 <?php namespace App\Http\Controllers;
 
+use App\Models\Setting;
 use App\Repositories\AuditRepository as Audit;
-use App\Repositories\ErrorRepository as Error;
 use App\Repositories\Criteria\Error\ErrorByCreatedDateDescending;
-use App\Repositories\Criteria\Error\ErrorsWithUsers;
 use App\Repositories\Criteria\Error\ErrorCreatedBefore;
-use Illuminate\Contracts\Foundation\Application;
+use App\Repositories\Criteria\Error\ErrorsWithUsers;
+use App\Repositories\ErrorRepository as Error;
 use Auth;
+use Illuminate\Contracts\Foundation\Application;
 
 class ErrorsController extends Controller {
 
@@ -34,7 +35,7 @@ class ErrorsController extends Controller {
 
         $page_title = trans('admin/error/general.page.index.title');
         $page_description = trans('admin/error/general.page.index.description');
-        $purge_retention = config('errors.purge_retention');
+        $purge_retention = Setting::get('errors.purge_retention');
 
         $lern_errors = $this->error->pushCriteria(new ErrorByCreatedDateDescending())->pushCriteria(new ErrorsWithUsers())->paginate(20);
 
@@ -45,7 +46,7 @@ class ErrorsController extends Controller {
     {
         Audit::log(Auth::user()->id, trans('admin/error/general.audit-log.category'), trans('admin/error/general.audit-log.msg-purge'));
 
-        $purge_retention = config('errors.purge_retention');
+        $purge_retention = Setting::get('errors.purge_retention');
         $purge_date = (new \DateTime())->modify("- $purge_retention day");
         $errorsToDelete = $this->error->pushCriteria(new ErrorCreatedBefore($purge_date))->all();
 

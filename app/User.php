@@ -2,19 +2,18 @@
 
 namespace App;
 
+use App\Models\Error;
+use App\Models\Role;
+use App\Models\Setting;
+use App\Traits\UserHasPermissionsTrait;
+use Auth;
 use Illuminate\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use Zizaco\Entrust\Traits\EntrustUserTrait as EntrustUserTrait;
-use App\Models\Role;
-use App\Traits\UserHasPermissionsTrait;
-use Auth;
-use Config;
+use Illuminate\Database\Eloquent\Model;
 use Sroutier\EloquentLDAP\Contracts\EloquentLDAPUserInterface;
-use Mail;
-use App\Models\Error;
+use Zizaco\Entrust\Traits\EntrustUserTrait as EntrustUserTrait;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract, EloquentLDAPUserInterface
 {
@@ -244,7 +243,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         // If the auth_type is not explicitly set by the call function or module,
         // set it to the internal value.
         if (!array_key_exists('auth_type', $attributes) || ("" == ($attributes['auth_type'])) ) {
-            $attributes['auth_type'] = Config::get('eloquent-ldap.label_internal');
+            $attributes['auth_type'] = Setting::get('eloquent-ldap.label_internal');
         }
 
         // Call original create method from parent

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "188cc10d269fcd28f16cedacc779082c",
-    "content-hash": "3e1eebbebf067d5b87427fdffb6de185",
+    "hash": "5a7ca8ac58174d4710b28959cc274270",
+    "content-hash": "daf89d110cd235ca7b6c63c869503660",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -58,6 +58,131 @@
                 "windows"
             ],
             "time": "2016-03-29 14:34:03"
+        },
+        {
+            "name": "arcanedev/settings",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ARCANEDEV/Settings.git",
+                "reference": "8e08dadc29d5a47c64099454696100babb356530"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ARCANEDEV/Settings/zipball/8e08dadc29d5a47c64099454696100babb356530",
+                "reference": "8e08dadc29d5a47c64099454696100babb356530",
+                "shasum": ""
+            },
+            "require": {
+                "arcanedev/support": "~3.0",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "phpunit/phpcov": "~2.0|~3.0",
+                "phpunit/phpunit": "~4.0|~5.0"
+            },
+            "suggest": {
+                "illuminate/database": "Save settings to a database table.",
+                "illuminate/filesystem": "Save settings to a JSON file."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Arcanedev\\Settings\\": "src/"
+                },
+                "files": [
+                    "helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "ARCANEDEV",
+                    "email": "arcanedev.maroc@gmail.com",
+                    "homepage": "https://github.com/ARCANEDEV",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Persistent settings for Laravel.",
+            "homepage": "https://github.com/ARCANEDEV/Settings",
+            "keywords": [
+                "Settings",
+                "arcanedev",
+                "config",
+                "database",
+                "json",
+                "laravel",
+                "persistent",
+                "setting"
+            ],
+            "time": "2016-04-16 17:19:56"
+        },
+        {
+            "name": "arcanedev/support",
+            "version": "3.12.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ARCANEDEV/Support.git",
+                "reference": "e02933dd6af4d61ee77e3e13ae8d04ff0fb0fdfd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ARCANEDEV/Support/zipball/e02933dd6af4d61ee77e3e13ae8d04ff0fb0fdfd",
+                "reference": "e02933dd6af4d61ee77e3e13ae8d04ff0fb0fdfd",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/filesystem": "~5.0",
+                "illuminate/support": "~5.0",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "phpunit/phpcov": "~2.0|~3.0",
+                "phpunit/phpunit": "~4.0|~5.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Arcanedev\\Support\\": "src/"
+                },
+                "files": [
+                    "constants.php",
+                    "helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "ARCANEDEV",
+                    "email": "arcanedev.maroc@gmail.com",
+                    "homepage": "https://github.com/arcanedev-maroc"
+                }
+            ],
+            "description": "ARCANEDEV Support Helpers",
+            "homepage": "https://github.com/ARCANEDEV/Support",
+            "keywords": [
+                "arcanedev",
+                "arcanesoft",
+                "laravel",
+                "support"
+            ],
+            "time": "2016-08-09 19:11:22"
         },
         {
             "name": "barryvdh/laravel-debugbar",
@@ -4153,7 +4278,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/libern/laravel-sql-logging/zipball/d14ad7b918b46de3e78d491fedf376d30dee22dc",
+                "url": "https://api.github.com/repos/libern/laravel-sql-logging/zipball/b050d9ffcb9b9adc96572dfb04e6364615bb0a37",
                 "reference": "b050d9ffcb9b9adc96572dfb04e6364615bb0a37",
                 "shasum": ""
             },

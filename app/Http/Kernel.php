@@ -20,6 +20,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\VerifyCsrfToken::class,
         \App\Http\Middleware\ThemeSelector::class,
         \App\Http\Middleware\WalledGarden::class,
+        \Arcanedev\Settings\Http\Middleware\SettingsMiddleware::class,
     ];
 
     /**
