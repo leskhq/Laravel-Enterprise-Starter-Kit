@@ -54,7 +54,22 @@ class ModulesController extends Controller
     {
         Audit::log(Auth::user()->id, trans('admin/modules/general.audit-log.category'), trans('admin/modules/general.audit-log.msg-disable', ['slug' => $slug]));
 
-        Module::disable($slug);
+        $module = \Module::where('slug', $slug)->first();
+
+        if ($module) {
+            if (\Module::isInitialized($slug)) {
+                if (\Module::isEnabled($slug)) {
+                    \Module::disable($slug);
+                    Flash::success(trans('admin/modules/general.status.disabled', ['name' => $module['name']]));
+                } else {
+                    Flash::warning(trans('admin/modules/general.status.not-enabled', ['name' => $module['name']]));
+                }
+            } else {
+                Flash::warning(trans('admin/modules/general.status.not-initialized', ['name' => $module['name']]));
+            }
+        } else {
+            Flash::error(trans('admin/modules/general.status.not-found', ['slug' => $slug]));
+        }
 
         Flash::success(trans('admin/modules/general.status.disabled'));
 
@@ -72,57 +87,26 @@ class ModulesController extends Controller
     {
         Audit::log(Auth::user()->id, trans('admin/modules/general.audit-log.category'), trans('admin/modules/general.audit-log.msg-enable', ['slug' => $slug]));
 
-        Module::enable($slug);
+        $module = \Module::where('slug', $slug)->first();
 
-        Flash::success(trans('admin/modules/general.status.enabled'));
-
-        return redirect('/admin/modules');
-    }
-
-
-    /**
-     * @param Request $request
-     *
-     * @return \Illuminate\View\View
-     */
-    public function enableSelected(Request $request)
-    {
-        $chkMods = $request->input('chkMod');
-
-        Audit::log(Auth::user()->id, trans('admin/modules/general.audit-log.category'), trans('admin/modules/general.audit-log.msg-enabled-selected'), $chkMods);
-
-        if (isset($chkMods)) {
-            foreach ($chkMods as $slug) {
-                Module::enable($slug);
+        if ($module) {
+            if (\Module::isInitialized($slug)) {
+                if (\Module::isDisabled($slug)) {
+                    \Module::enable($slug);
+                    Flash::success(trans('admin/modules/general.status.enabled', ['name' => $module['name']]));
+                } else {
+                    Flash::warning(trans('admin/modules/general.status.not-disabled', ['name' => $module['name']]));
+                }
+            } else {
+                Flash::warning(trans('admin/modules/general.status.not-initialized', ['name' => $module['name']]));
             }
-            Flash::success(trans('admin/modules/general.status.global-enabled'));
         } else {
-            Flash::warning(trans('admin/modules/general.status.no-mod-selected'));
+            Flash::error(trans('admin/modules/general.status.not-found', ['slug' => $slug]));
         }
+
         return redirect('/admin/modules');
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return \Illuminate\View\View
-     */
-    public function disableSelected(Request $request)
-    {
-        $chkMods = $request->input('chkMod');
-
-        Audit::log(Auth::user()->id, trans('admin/modules/general.audit-log.category'), trans('admin/modules/general.audit-log.msg-disabled-selected'), $chkMods);
-
-        if (isset($chkMods)) {
-            foreach ($chkMods as $slug) {
-                Module::disable($slug);
-            }
-            Flash::success(trans('admin/modules/general.status.global-disabled'));
-        } else {
-            Flash::warning(trans('admin/modules/general.status.no-perm-selected'));
-        }
-        return redirect('/admin/modules');
-    }
 
     /**
      * Initialize the modules.

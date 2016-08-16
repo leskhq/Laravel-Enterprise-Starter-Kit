@@ -36,9 +36,8 @@ return [
     ],
 
     'error'               => [
-        'cant-delete-this-permission' => 'This permission cannot be deleted',
-        'cant-delete-perm-in-use'     => 'This permission is in use or protected',
-        'cant-edit-this-permission'   => 'This permission cannot be edited',
+        'cant-enable-this-module'       => 'This module cannot be enabled until it is initialized.',
+        'cant-uninitialize-this-module' => 'This module cannot be uninitialized until it is disabled.',
     ],
 
     'page'              => [
