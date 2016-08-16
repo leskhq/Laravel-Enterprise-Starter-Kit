@@ -21,7 +21,7 @@ return array(
 	|
 	*/
 
-	'default_grid_options' => array('datatype' => 'json', 'mtype'  =>  'POST'),
+	'default_grid_options' => array('datatype' => 'json', 'mtype'  =>  'POST', 'treeGridModel' => 'adjacency'),
 
 	/*
 	|--------------------------------------------------------------------------
