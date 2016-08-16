@@ -8,6 +8,7 @@ use App\User;
 use Auth;
 use Flash;
 use GridEncoder;
+use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
