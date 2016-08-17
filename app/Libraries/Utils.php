@@ -1,5 +1,8 @@
 <?php namespace App\Libraries;
 
+use App\Repositories\AuditRepository as Audit;
+use Auth;
+use Flash;
 use Illuminate\Support\Arr;
 
 class Utils
@@ -214,5 +217,44 @@ class Utils
 
         return $value;
     }
+
+
+
+    /**
+     * @param $auditCategory
+     * @param $msg
+     * @param $flashLevel
+     * @param null $exception
+     */
+    public static function flashAndAudit($auditCategory, $msg, $flashLevel = FlashLevel::SUCCESS, $exception = null)
+    {
+        // Get current user or set guest to true for unauthenticated users.
+        if ( Auth::check() ) {
+            $user       = Auth::user();
+
+            if( (isset($exception)) && (strlen($exception->getMessage()) > 0) ) {
+                $msg = $msg . " Exception information: " . $exception->getMessage();
+            }
+            switch ($flashLevel) {
+                case FlashLevel::INFO:
+                    Flash::info($msg);
+                    break;
+                case FlashLevel::SUCCESS:
+                    Flash::success($msg);
+                    break;
+                case FlashLevel::WARNING:
+                    Flash::warning($msg);
+                    break;
+                //            case FlashLevel::ERROR:
+                default:
+                    Flash::error($msg);
+                    break;
+
+            }
+            Audit::log( $user->id, $auditCategory, $msg );
+        }
+    }
+
+
 
 }
