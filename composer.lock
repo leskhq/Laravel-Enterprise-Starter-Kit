@@ -936,7 +936,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/432b80084acb401f9f2daba461679ace39cf67df",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/45939c61df532608c67a92733b7cd1e64455abc1",
                 "reference": "432b80084acb401f9f2daba461679ace39cf67df",
                 "shasum": ""
             },
@@ -4278,7 +4278,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/libern/laravel-sql-logging/zipball/b050d9ffcb9b9adc96572dfb04e6364615bb0a37",
+                "url": "https://api.github.com/repos/libern/laravel-sql-logging/zipball/d14ad7b918b46de3e78d491fedf376d30dee22dc",
                 "reference": "b050d9ffcb9b9adc96572dfb04e6364615bb0a37",
                 "shasum": ""
             },
