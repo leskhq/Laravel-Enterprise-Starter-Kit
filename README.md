@@ -543,7 +543,7 @@ to original package notes.
 ### Modules
 Small features can be grouped into modules and managed, enabled and upgraded, without impacting the entire site.
 Refer to the documentation on the [l51esk-modules](https://github.com/sroutier/l51esk-modules) and look at a 
-concrete example [Module Demo](https://github.com/sroutier/l51esk-modules-demo-1) for more details.  
+concrete example [Module Active Directory Inspector](https://github.com/sroutier/L51ESK-Module_ActiveDirectoryInspector) for more details.  
 
 ### LERN
 To enable LERN (Laravel Exception Recorder and Notifier) set the configuration option as show below:
