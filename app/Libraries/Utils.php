@@ -221,19 +221,24 @@ class Utils
 
 
     /**
+     * Send flash message to the users screen and logs an audit log. If an exception is provided
+     * the exception message will be included in the audit log entry.
+     *
      * @param $auditCategory
      * @param $msg
      * @param $flashLevel
      * @param null $exception
      */
-    public static function flashAndAudit($auditCategory, $msg, $flashLevel = FlashLevel::SUCCESS, $exception = null)
+    public static function flashAndAudit($auditCategory, $msg, $flashLevel, $exception = null)
     {
+        $auditMsg = $msg;
+
         // Get current user or set guest to true for unauthenticated users.
         if ( Auth::check() ) {
             $user       = Auth::user();
 
             if( (isset($exception)) && (strlen($exception->getMessage()) > 0) ) {
-                $msg = $msg . " Exception information: " . $exception->getMessage();
+                $auditMsg = $msg . " Exception information: " . $exception->getMessage();
             }
             switch ($flashLevel) {
                 case FlashLevel::INFO:
@@ -245,13 +250,13 @@ class Utils
                 case FlashLevel::WARNING:
                     Flash::warning($msg);
                     break;
-                //            case FlashLevel::ERROR:
+                // case FlashLevel::ERROR
                 default:
                     Flash::error($msg);
                     break;
 
             }
-            Audit::log( $user->id, $auditCategory, $msg );
+            Audit::log( $user->id, $auditCategory, $auditMsg );
         }
     }
 
