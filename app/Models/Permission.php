@@ -1,11 +1,13 @@
 <?php namespace App\Models;
 
+use App\Traits\BaseModelTrait;
 use App\Traits\PermissionHasUsersTrait;
 use Zizaco\Entrust\EntrustPermission;
 
 class Permission extends EntrustPermission
 {
     use PermissionHasUsersTrait;
+    use BaseModelTrait;
 
     /**
      * @var array

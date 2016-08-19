@@ -1,10 +1,12 @@
 <?php namespace app\Models;
 
-use Tylercd100\LERN\Models\ExceptionModel;
+use App\Traits\BaseModelTrait;
 use App\User;
+use Tylercd100\LERN\Models\ExceptionModel;
 
 class Error extends ExceptionModel
 {
+    use BaseModelTrait;
 
     public function user()
     {

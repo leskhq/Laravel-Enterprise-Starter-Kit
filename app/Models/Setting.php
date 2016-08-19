@@ -1,10 +1,12 @@
 <?php namespace App\Models;
 
-use Arcanedev\Settings\Facades\Setting as BaseSetting;
 use App\Libraries\Utils;
+use App\Traits\BaseModelTrait;
+use Arcanedev\Settings\Facades\Setting as BaseSetting;
 
 class Setting extends BaseSetting
 {
+    use BaseModelTrait;
 
     public static function get($key, $defaultVal = null)
     {

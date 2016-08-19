@@ -1,9 +1,12 @@
 <?php namespace App\Models;
 
+use App\Traits\BaseModelTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class Route extends Model
 {
+    use BaseModelTrait;
+
     /**
      * @var array
      */

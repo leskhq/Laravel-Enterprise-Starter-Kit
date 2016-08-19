@@ -1,10 +1,12 @@
 <?php namespace App\Models;
 
 use App\Exceptions\InvalidUserException;
+use App\Traits\BaseModelTrait;
 use App\User;
 
 class UserSetting extends Setting
 {
+    use BaseModelTrait;
 
     public static function get($key, $default = null, User $user = null)
     {

@@ -1,10 +1,12 @@
 <?php namespace App\Models;
 
+use App\Traits\BaseModelTrait;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Routing\RouteCollection;
 
 class Menu extends Model
 {
+    use BaseModelTrait;
+
     /**
      * @var array
      */

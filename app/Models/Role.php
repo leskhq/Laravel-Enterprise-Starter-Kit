@@ -1,9 +1,12 @@
 <?php namespace App\Models;
 
+use App\Traits\BaseModelTrait;
 use Zizaco\Entrust\EntrustRole;
 
 class Role extends EntrustRole
 {
+    use BaseModelTrait;
+
     /**
      * @var array
      */
