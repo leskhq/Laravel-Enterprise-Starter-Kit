@@ -25,6 +25,7 @@ Directory (AD) authentication and the dynamic authorization module. But wait the
     - [Menu system](#menu-system)
     - [Walled garden](#walled-garden)
     - [Themes](#themes)
+    - [Persistent Settings](#persistent-settings)
     - [Audit log](#audit-log)
     - [jqGrid datatables & reports](#jqgrid-datatables--reports)
     - [Rapyd demo](#rapyd-demo)
@@ -68,6 +69,7 @@ Directory (AD) authentication and the dynamic authorization module. But wait the
 * Optional audit log of user actions.
     * Allows to "replay" some user actions.
     * Allows to hook a custom data parser and blade partial to render the "replay" data.
+* Persistent settings using [arcanedev/settings](https://github.com/arcanedev/settings) configurable from the user interface.
 * Modules with [l51esk-modules](https://github.com/sroutier/l51esk-modules)
 * Laravel [Repositories](https://github.com/Bosnadev/Repositories).
 * Flash notifications using [laracasts/flash](https://github.com/laracasts/flash).
@@ -98,7 +100,6 @@ List of future feature and items that are still have to be completed, in no part
 * Persistent notifications.
 * Single sign-on for IIS and Apache.
 * Favicon (one per theme?).
-* Settings with precedence, Application vs User settings and DB vs .env file.
 * Datepicker for date fields.
 * Chart & graph engine.
 * Add comments in .env file.
@@ -271,7 +272,7 @@ chmod -R ugo+rw storage/
 chmod -R ugo+rw bootstrap/cache/
 ````
 
-#### Review default settings
+#### Review default configuration
 Review and edit the *.env* file and all the files under */config*. Paying particular attention to */config/app.php* and 
 */config/database.php*. More details can be found in the [Configuring](#Configuring) and 
 [Documentation](#Documentation) section below.
@@ -379,7 +380,7 @@ Some important hard-set rules to note are:
 To enable the optional LDAP/AD authentication module, set the *LDAP_ENABLED* variable to *true* in the *.env* file as shown 
 below:
 ````
-LDAP_ENABLED=true
+LDAP.ENABLED=true
 ````
 By default the LDAP/AD authentication module is set to off or false, as it requires some extra configuration on your part.
 For more information on how to configure the module, refer to documentation of the underlying package at 
@@ -419,7 +420,7 @@ access to external resources when specified with the *URL* field.
 To enable the optional walled garden mode simply set the *WALLED_GARDEN* variable to *true* in the *.env* file as shown 
 below:
 ````
-WALLED_GARDEN_ENABLED=true
+WALLED-GARDEN.ENABLED=true
 ````
 By default the walled garden mode is set to off or false. When enabled all guest or un-authenticated users will be 
 redirected to the login page.
@@ -427,13 +428,28 @@ redirected to the login page.
 ### Themes
 To change the default theme, set the *DEFAULT_THEME* variable in the *.env* file:
 ````
-DEFAULT_THEME=red
+THEME.DEFAULT=red
 ````
 L51ESK comes with 3 themes: default, green and red.
 Both the red and green themes inherit much of there look from the default theme which is mostly blue and based on the 
 look of the [almasaeed2010/AdminLTE](https://github.com/almasaeed2010/AdminLTE) Web template.
 For more details on how to configure and develop your own themes refer to the documentation of the 
 [yaapis/Theme](https://github.com/yaapis/Theme) package.
+
+### Persistent Settings
+The Persistent Settings mechanism allows for the easy editing of configuration options using the built in interface.
+A distinction is made between the configuration options accessible using the ```Config``` class and the settings
+accessible through the ```Settings``` class. When a setting such as the ```WALLED-GARDEN.ENABLED``` is requested, the 
+system will first try to return the matching setting, then, if it cannot be found, revert to looking up the 
+same configuration option.
+
+Initially the application does not have any settings. The settings can be generated from the Settings Administration
+page in the Admin menu by clicking on the "Load settings" button. This will read the ```.env``` file and create a 
+setting with it's value for each valid entry. 
+A setting can also be manually created from the Settings Administration page if the proper name to use is known. The 
+names to use are the keys used by the configuration and can be located in the ```config``` directory.
+Once a setting is defined, it's value will take precedence over the value held in the configuration files or 
+environment.
 
 ### Audit log
 To enable the optional audit log simply set the *AUDIT_ENABLED* variable to *true* in the *.env* file as shown 
@@ -548,7 +564,7 @@ concrete example [Module Active Directory Inspector](https://github.com/sroutier
 ### LERN
 To enable LERN (Laravel Exception Recorder and Notifier) set the configuration option as show below:
 ```
-LERN_ENABLED=false
+LERN.ENABLED=false
 ```
 Once enabled, LERN can record exceptions in the table ```lern_exceptions``` as well as email them if your mail system is properlly
 configured. A few more options are available to tweak the behaviour of LERN, refer to the ```lern.php``` configuration page and the [project home page](https://github.com/tylercd100/lern).
