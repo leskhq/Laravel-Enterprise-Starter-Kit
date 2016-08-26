@@ -39,7 +39,7 @@
                                 @foreach($lern_errors as $lern_error)
 
                                         <tr>
-                                            <td><nobr><a href="{!! route('admin.errors.show', $lern_error->id) !!}" title="{{ trans('general.button.display') }}">{{ $lern_error->created_at }}</a></nobr></td>
+                                            <td><nobr><a href="{!! route('admin.errors.show', $lern_error->id) !!}" title="{{ trans('general.button.display') }}">@userTimeZone($lern_error->created_at)</a></nobr></td>
                                             <td><a href="{!! route('admin.errors.show', $lern_error->id) !!}" title="{{ trans('general.button.display') }}">@strHeadAndTail($lern_error->class, 50, "...")</a></td>
                                             <td><a href="{!! route('admin.errors.show', $lern_error->id) !!}" title="{{ trans('general.button.display') }}">@strTail($lern_error->url, 30, "...")</a></td>
                                             <td><a href="{!! route('admin.errors.show', $lern_error->id) !!}" title="{{ trans('general.button.display') }}">@strHead($lern_error->message, 70, "...")</a></td>

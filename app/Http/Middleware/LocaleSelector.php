@@ -2,11 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use App;
 use App\Libraries\Utils;
 use Closure;
-use Theme;
 
-class ThemeSelector
+class LocaleSelector
 {
     /**
      * Handle an incoming request.
@@ -17,11 +17,10 @@ class ThemeSelector
      */
     public function handle($request, Closure $next)
     {
-        $themeName = Utils::getUserOrAppOrDefaultSetting('theme', 'theme.default', 'default');
+        $locale = Utils::getUserOrAppOrDefaultSetting('locale', 'app.locale', 'en');
 
-        Theme::init( $themeName );
+        App::setLocale($locale);
 
         return $next($request);
     }
-
 }

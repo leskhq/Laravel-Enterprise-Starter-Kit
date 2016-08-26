@@ -175,10 +175,12 @@ class PasswordController extends Controller
      */
     private function emailPasswordChange($user)
     {
-        if (Setting::get('app.email_notifications')) {
+        $settings = new Setting();
+
+        if ($settings->get('app.email_notifications')) {
             // Send an email to the user to notify him of the password change.
-            Mail::send(['html' => 'emails.html.password_changed', 'text' => 'emails.text.password_changed'], ['user' => $user], function ($m) use ($user) {
-                $m->from(Setting::get('mail.from.address'), Setting::get('mail.from.name'));
+            Mail::send(['html' => 'emails.html.password_changed', 'text' => 'emails.text.password_changed'], ['user' => $user], function ($m) use ($user, $settings) {
+                $m->from($settings->get('mail.from.address'), $settings->get('mail.from.name'));
                 $m->to($user->email, $user->full_name)->subject(trans('emails.password_changed.subject'));
             });
         }

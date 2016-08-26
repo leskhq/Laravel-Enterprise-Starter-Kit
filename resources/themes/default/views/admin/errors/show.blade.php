@@ -21,7 +21,7 @@
                         <div class="tab-pane active" id="tab_details">
                             <div class="form-group">
                                 {!! Form::label('date', trans('admin/error/general.columns.date')) !!}
-                                {!! Form::text('date', $error->created_at, ['class' => 'form-control', 'readonly']) !!}
+                                {!! Form::text('date', App\Libraries\Utils::userTimeZone($error->created_at), ['class' => 'form-control', 'readonly']) !!}
                             </div>
                             <div class="form-group">
                                 {!! Form::label('user', trans('admin/error/general.columns.user')) !!}

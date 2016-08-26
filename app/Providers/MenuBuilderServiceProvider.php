@@ -8,8 +8,8 @@
  * @package Sroutier\MenuBuilder
  */
 
-use Illuminate\Support\ServiceProvider;
 use App\Managers\MenuBuilderManager;
+use Illuminate\Support\ServiceProvider;
 
 class MenuBuilderServiceProvider extends ServiceProvider
 {

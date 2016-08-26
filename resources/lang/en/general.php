@@ -2,6 +2,10 @@
 
 return [
 
+    'text'              => [
+        'welcome'   => 'Welcome',
+    ],
+
     'button'              => [
         'cancel'            => 'Cancel',
         'close'             => 'Close',
@@ -38,6 +42,7 @@ return [
         'routes'            => 'Routes',
         'data'              => 'Data',
         'profile'           => 'Profile',
+        'settings'          => 'Settings',
     ],
 
     'error'              => [

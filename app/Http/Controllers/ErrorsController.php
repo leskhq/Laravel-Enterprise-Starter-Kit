@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App\Libraries\Utils;
 use App\Models\Setting;
 use App\Repositories\AuditRepository as Audit;
 use App\Repositories\Criteria\Error\ErrorByCreatedDateDescending;
@@ -35,7 +36,7 @@ class ErrorsController extends Controller {
 
         $page_title = trans('admin/error/general.page.index.title');
         $page_description = trans('admin/error/general.page.index.description');
-        $purge_retention = Setting::get('errors.purge_retention');
+        $purge_retention = (new Setting())->get('errors.purge_retention');
 
         $lern_errors = $this->error->pushCriteria(new ErrorByCreatedDateDescending())->pushCriteria(new ErrorsWithUsers())->paginate(20);
 
@@ -46,7 +47,7 @@ class ErrorsController extends Controller {
     {
         Audit::log(Auth::user()->id, trans('admin/error/general.audit-log.category'), trans('admin/error/general.audit-log.msg-purge'));
 
-        $purge_retention = Setting::get('errors.purge_retention');
+        $purge_retention = (new Setting())->get('errors.purge_retention');
         $purge_date = (new \DateTime())->modify("- $purge_retention day");
         $errorsToDelete = $this->error->pushCriteria(new ErrorCreatedBefore($purge_date))->all();
 

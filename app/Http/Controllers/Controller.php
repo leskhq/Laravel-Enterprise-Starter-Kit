@@ -35,7 +35,7 @@ abstract class Controller extends BaseController
         $this->context = $context;
         $this->context_help_area = '';
 
-        if ( Setting::get('app.context_help_area') ) {
+        if ( (new Setting())->get('app.context_help_area') ) {
             try {
                 $routeName = $this->app->request->route()->getName();
                 $helpViewName = (($this->context) ? $this->context . "::" : '') . "context_help." . $routeName;

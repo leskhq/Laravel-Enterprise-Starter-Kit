@@ -34,7 +34,7 @@
                             </div>
                             <div class="form-group">
                                 {!! Form::label('date', trans('admin/audit/general.columns.date')) !!}
-                                {!! Form::text('date', $audit->created_at, ['class' => 'form-control', 'readonly']) !!}
+                                {!! Form::text('date', App\Libraries\Utils::userTimeZone($audit->created_at), ['class' => 'form-control', 'readonly']) !!}
                             </div>
                         </div><!-- /.tab-pane -->
 

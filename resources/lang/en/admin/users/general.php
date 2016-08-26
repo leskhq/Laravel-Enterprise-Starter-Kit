@@ -80,10 +80,25 @@ return [
         'actions'                   =>  'Actions',
         'effective'                 =>  'Effective',
         'enabled'                   =>  'Enabled',
+        'theme'                     =>  'Theme',
+        'time_zone'                 =>  'Time zone',
+        'locale'                    =>  'Locale',
+        'time_format'               =>  'Time format',
     ],
 
     'button'               => [
         'create'    =>  'Create new user',
+    ],
+
+    'options'               => [
+        '12_hours'    =>  '12 hours',
+        '24_hours'    =>  '24 hours',
+    ],
+
+    'placeholder'           => [
+        'select-theme'         => 'Select a theme',
+        'select-time_zone'     => 'Select a time-zone',
+        'select-locale'        => 'Select a locale',
     ],
 
 

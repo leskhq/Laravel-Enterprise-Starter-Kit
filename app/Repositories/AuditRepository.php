@@ -23,7 +23,7 @@ class AuditRepository extends Repository
     public static function log($user_id, $category, $message, Array $attributes = null, $data_parser = null, $replay_route = null)
     {
 
-        $audit_enabled = Setting::get('audit.enabled');
+        $audit_enabled = (new Setting())->get('audit.enabled');
         $audit = false;
         $attJson = null;
 

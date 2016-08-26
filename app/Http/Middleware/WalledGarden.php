@@ -37,9 +37,11 @@ class WalledGarden
     {
         $exempt = false;
 
-        $walled_garden_enabled = Setting::getTyped('walled-garden.enabled');
-        $exemptionPath         = Setting::get('walled-garden.exemptions-path');
-        $exemptionsRegEx       = Setting::get('walled-garden.exemptions-regex');
+        $settings = new Setting();
+
+        $walled_garden_enabled = $settings->getTyped('walled-garden.enabled');
+        $exemptionPath         = $settings->get('walled-garden.exemptions-path');
+        $exemptionsRegEx       = $settings->get('walled-garden.exemptions-regex');
 
         // Redirect to the login page if the user is not authenticated and the site
         // is configured as a walled garden, except if the request is going to a page

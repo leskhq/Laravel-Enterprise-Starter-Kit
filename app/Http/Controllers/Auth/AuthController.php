@@ -168,7 +168,7 @@ class AuthController extends Controller
 
         $user = $this->create($request->all());
 
-        if (Setting::get('auth.enable_user_on_create')) {
+        if ((new Setting())->get('auth.enable_user_on_create')) {
             $user->enabled = true;
             $user->save();
             Audit::log(null, trans('general.audit-log.category-login'), trans('general.audit-log.msg-account-created-login-in', ['username' => $user->username]));

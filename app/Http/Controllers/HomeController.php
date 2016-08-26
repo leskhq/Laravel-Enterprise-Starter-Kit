@@ -12,7 +12,7 @@ class HomeController extends Controller
         $homeRouteName = 'welcome';
 
         try {
-            $homeCandidateName = Setting::get('app.home_route');
+            $homeCandidateName = (new Setting())->get('app.home_route');
             $homeRouteName = $homeCandidateName;
         }
         catch (\Exception $ex) { } // Eat the exception will default to the welcome route.
@@ -25,7 +25,7 @@ class HomeController extends Controller
      */
     public function welcome()
     {
-        $page_title = "Welcome";
+        $page_title = trans('general.text.welcome');
         $page_description = "This is the welcome page";
 
         return view('welcome', compact('page_title', 'page_description'));

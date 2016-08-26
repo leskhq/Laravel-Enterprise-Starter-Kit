@@ -41,7 +41,7 @@
                                         <td>{{ ($audit->user) ? $audit->user->username : "N/A" }}</td>
                                         <td>{{ $audit->category }}</td>
                                         <td>{{ $audit->message }}</td>
-                                        <td>{{ $audit->created_at }}</td>
+                                        <td>@userTimeZone($audit->created_at)</td>
                                         <td>
                                             <a href="{!! route('admin.audit.show', $audit->id) !!}" title="{{ trans('general.button.display') }}"><i id="action-show" class="fa fa-eye"></i></a>
                                             @if ( $audit->replay_route )

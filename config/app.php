@@ -43,6 +43,40 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Application Time format
+    |--------------------------------------------------------------------------
+    |
+    | Should the time be displayed in 12 hour or 24 hour format?.
+    | Defaults to 24 hour format.
+    |
+    */
+
+    'time_format' => env('APP.TIME_FORMAT', '24'),
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Supported locale
+    |--------------------------------------------------------------------------
+    |
+    | List of supported locale for the application. Uncomment and add entries
+    | as needed.
+    |
+    */
+
+    'supportedLocales' => [
+        'en'          => 'English',
+//        'en-AU'       => 'Australian English',
+//        'en-GB'       => 'British English',
+//        'en-US'       => 'U.S. English',
+        'es'          => 'español',
+        'fr'          => 'français',
+//        'fr-CA'       => 'français canadien',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Locale Configuration
     |--------------------------------------------------------------------------
     |
@@ -291,6 +325,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\MenuBuilderServiceProvider::class,
+        App\Providers\CustomBladeServiceProvider::class,
 
         Sroutier\EloquentLDAP\Providers\EloquentLDAPServiceProvider::class,
 

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <h1>Welcome</h1>
+    <h1>{{ trans('general.text.welcome') }}</h1>
     <div class="box-body">
         Mei ad adhuc summo cetero. Qui assum habemus signiferumque cu,
         per idque evertitur cu, doming corpora deserunt te vis. Melius
@@ -34,6 +34,4 @@
         id dolor consetetur, vel cu aeque pertinax qualisque. Et vim agam
         graeci, vis purto accusam ex.
     </div>
-
-
 @endsection

@@ -71,10 +71,12 @@ class SettingDotEnv extends Dotenv
             }
         }
 
-        if (Setting::has($key)) {
+        $settings = new Setting();
+
+        if ($settings->has($key)) {
             return $cnt;
         } else {
-            Setting::set($key, $value);
+            $settings->set($key, $value);
             $cnt  = 1;
         }
 
