@@ -313,6 +313,18 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
+     * Overwrite Model::delete() to clear/delete user settings first,
+     * then invoke original delete method.
+     *
+     * @throws \Exception
+     */
+    public function delete()
+    {
+        $this->settings()->forget();
+        parent::delete();
+    }
+    
+    /**
      * Implements the 'isMemberOf(...)' as required by Eloquent-LDAP by using
      * the hasRole method and ignoring the enable state of the role.
      *
@@ -384,20 +396,24 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     private function processUserSetting($settingKey, array $attributes, array $valuesArr = null)
     {
-        // Get the value from the HTTP atributes
-        $setting_selected = $attributes[$settingKey];
-        // If not null set it otherwise forget it.
-        if (!Str::isNullOrEmptyString($setting_selected)) {
-            // If a array of values was provided, look up the real value by using the index.
-            if (!is_null($valuesArr)) {
-                $setting_value = $valuesArr[$setting_selected];
+        try {
+            // Get the value from the HTTP atributes
+            $setting_selected = $attributes[$settingKey];
+            // If not null set it otherwise forget it.
+            if (!Str::isNullOrEmptyString($setting_selected)) {
+                // If a array of values was provided, look up the real value by using the index.
+                if (!is_null($valuesArr)) {
+                    $setting_value = $valuesArr[$setting_selected];
+                } else {
+                    $setting_value = $setting_selected;
+                }
+                // Set the value.
+                $this->settings()->set($settingKey, $setting_value);
             } else {
-                $setting_value = $setting_selected;
+                $this->settings()->forget($settingKey);
             }
-            // Set the value.
-            $this->settings()->set($settingKey, $setting_value);
-        } else {
-            $this->settings()->forget($settingKey);
+        } catch (\Exception $ex) {
+            // Setting [$settingKey] not found in list [$attributes]?!
         }
     }
 

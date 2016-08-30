@@ -62,10 +62,14 @@ class Setting extends BaseSetting
     }
 
 
-    public function forget($key)
+    public function forget($key = null)
     {
         if (!Str::isNullOrEmptyString($this->prefix)) {
-            $key = $this->prefix . $this->delim . $key;
+            if (!Str::isNullOrEmptyString($key)) {
+                $key = $this->prefix . $this->delim . $key;
+            } else {
+                $key = $this->prefix;
+            }
         }
 
         return parent::forget($key);

@@ -75,6 +75,7 @@
                                 </div>
 
                                 <div class="form-group">
+                                    {!! '<input type="hidden" name="time_format" value="">' !!}
                                     {!! Form::label('time_format', trans('admin/users/general.columns.time_format')) !!}&nbsp;
                                     <label class="radio-inline"><input type="radio" name="time_format" value="12" {{("12"==$time_format)?'checked="checked"':''}}>{{trans('admin/users/general.options.12_hours')}}</label>
                                     <label class="radio-inline"><input type="radio" name="time_format" value="24" {{("24"==$time_format)?'checked="checked"':''}}>{{trans('admin/users/general.options.24_hours')}}</label>
