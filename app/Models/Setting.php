@@ -72,6 +72,10 @@ class Setting extends BaseSetting
     }
 
 
+    public function all()
+    {
+        return parent::all();
+    }
 
     public function getTyped($key, $defaultVal = null)
     {

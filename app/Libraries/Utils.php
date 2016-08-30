@@ -2,6 +2,7 @@
 
 use App\Models\Setting;
 use App\Repositories\AuditRepository as Audit;
+use App\User;
 use Auth;
 use DateTime;
 use DateTimeZone;
@@ -61,7 +62,8 @@ class Utils
         $allNonUserSetting = Arr::where($allSettings, function ($k) {
             if ("User." === substr( $k, 0, 5 ) ) {
                 $kparts = explode('.', $k);
-                if (is_numeric($kparts[1])) {
+                $user = User::ofUsername($kparts[1])->first();
+                if ($user instanceof User) {
                     return false;
                 }
             }
