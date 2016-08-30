@@ -323,7 +323,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         $this->settings()->forget();
         parent::delete();
     }
-    
+
     /**
      * Implements the 'isMemberOf(...)' as required by Eloquent-LDAP by using
      * the hasRole method and ignoring the enable state of the role.
