@@ -168,7 +168,7 @@ class DashboardController extends Controller
     }
 
     public function search(Request $request) {
-        $keyword = $request->input('q');
+        $keyword = $request->input('term');
 
         $products      = Product::where('name', 'like', '%'.$keyword.'%')
                         ->orderBy('name', 'ASC')

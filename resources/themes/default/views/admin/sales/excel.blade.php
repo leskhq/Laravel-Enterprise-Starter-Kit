@@ -78,9 +78,9 @@
       <th align="center" style="border:1px solid #000000;">{{ $no }}</th>
       <td style="border:1px solid #000000;">{{ $row->product->name }}</td>
       <td style="border:1px solid #000000;">{{ $row->description }}</td>
-      <td style="border:1px solid #000000;">{{ Helpers::reggo($row->price) }}</td>
+      <td style="border:1px solid #000000;">{{ $row->price }}</td>
       <td style="border:1px solid #000000;">{{ $row->quantity }}</td>
-      <td style="border:1px solid #000000;">{{ Helpers::reggo($row->total) }}</td>
+      <td style="border:1px solid #000000;">{{ $row->total }}</td>
       <td style="border:1px solid #000000;">{{ $row->weight }} Kg</td>
       <td style="border:1px solid #000000;"></td>
       <td style="border:1px solid #000000;"></td>

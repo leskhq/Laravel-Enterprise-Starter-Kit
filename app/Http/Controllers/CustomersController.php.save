@@ -15,7 +15,6 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Helpers;
 use Flash;
-use Excel;
 
 class CustomersController extends Controller
 {
@@ -39,18 +38,17 @@ class CustomersController extends Controller
         //
     }
 
-    public function export($id) {
-	Excel::create('Customer', function($excel) use($id) {
-		$excel->sheet('Customer', function($sheet) use($id) {
-			$customers = $this->customer->pushCriteria(new CustomerByCreatedDescending())->findWhere(['type' => $id]);
-			$sheet->loadView('admin.customers.excel', ['customers' => $customers,'id'=>$id]);
+   public function export($id) {
+		Excel::create('Customer', function($excel) use($id) {
+			$excel->sheet('Customer', function($sheet) use($id) {
+		    $cutomers = Customer::where('tipe',$id)->get();
+			$sheet->loadView('admin.customers.csv', ['customers' => $customers,'id'=>$id]);
 		});
-	})->export('csv');
+	})->export('xlsx');
     }
 
     public function indexByType($id)
     {
-	$tipe = $id;
         $customers = $this->customer->pushCriteria(new CustomerByCreatedDescending())->findWhere(['type' => $id]);
 
         $type = Helpers::getCustomerTypeDisplayName($id);
@@ -58,7 +56,7 @@ class CustomersController extends Controller
         $page_title = trans('admin/customers/general.page.index.title');
         $page_description = trans('admin/customers/general.page.index.description', ['type' => $type]);
 
-        return view('admin/customers/index', compact('customers', 'page_title', 'page_description', 'tipe'));
+        return view('admin/customers/index', compact('customers', 'page_title', 'page_description'));
     }
 
     /**

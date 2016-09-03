@@ -15,6 +15,9 @@
                     <a class="btn btn-default btn-sm" href="{!! route('admin.customer-candidates.create') !!}" title="{{ trans('admin/customers/general.button.create') }}">
                         <i class="fa fa-plus-square"></i>
                     </a>
+		    <a class="btn btn-default btn-sm" href="{!! route('admin.customers.export', $tipe) !!}" title="{{ trans('admin/customers/general.button.export') }}">
+                        Export Excel
+                    </a>
 
                     <div class="box-tools pull-right">
                         <label class="label label-info">{{ $customers->count() }}</label>

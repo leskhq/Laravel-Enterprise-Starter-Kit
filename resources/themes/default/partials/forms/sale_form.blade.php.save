@@ -138,7 +138,7 @@
                                         {!! Form::text('productName', $d->product->name, ['id' => 'product'. $no .'', 'placeholder' => 'nama', 'class' => 'form-control product']) !!}
                                     </td>
                                     <td>
-                                        {!! Form::text('item['. $key .'][description]', $d->description, ['placeholder' => 'description', 'class' => 'aroma form-control', 'id' => 'aroma'. $key .'']) !!}
+                                        {!! Form::text('item['. $key .'][description]', $d->description, ['placeholder' => 'description', 'class' => 'aroma form-control'], 'id' => 'aroma'. $x .'') !!}
                                     </td>
                                     <td>
                                         {!! Form::hidden('item['. $key .'][price]', $d->price, ['id' => 'price'. $no .'']) !!}

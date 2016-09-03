@@ -19,6 +19,11 @@
 </div>
 
 <div class="form-group">
+    {!! Form::label('created_at', trans('admin/sales/general.columns.created')) !!}
+    {!! Form::text('created_at', null, ['class' => 'form-control date']) !!}
+</div>
+
+<div class="form-group">
     <label>
         {!! '<input type="hidden" name="status" value="0">' !!}
         {!! Form::checkbox('status', '1', isset($customer) ? $customer->status:false, ['id' => 'status']) !!} {{ trans('admin/customer-candidates/general.columns.status') }}

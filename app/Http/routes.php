@@ -79,6 +79,7 @@ Route::group(['middleware' => 'authorize'], function () {
         Route::get(   'customers/{ccId}/type',             ['as' => 'admin.customers.index',            'uses' => 'CustomersController@indexByType']);
         Route::get(   'customers/{ccId}/update-status',    ['as' => 'admin.customers.update-status',    'uses' => 'CustomersController@updateStatus']);
         Route::get(   'customers/{ccId}/confirm-delete',   ['as' => 'admin.customers.confirm-delete',   'uses' => 'CustomersController@getModalDelete']);
+	Route::get(   'customers/{ccId}/export',	   ['as' => 'admin.customers.export',		'uses' => 'CustomersController@export']);
         // Customer Candidate routes
         Route::get(   'customer-candidates',                        ['as' => 'admin.customer-candidates.index',           'uses' => 'CustomerCandidatesController@index']);
         Route::post(  'customer-candidates',                        ['as' => 'admin.customer-candidates.store',           'uses' => 'CustomerCandidatesController@store']);

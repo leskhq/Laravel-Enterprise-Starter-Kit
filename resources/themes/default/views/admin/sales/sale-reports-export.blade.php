@@ -43,11 +43,11 @@
                         {{ $sale->getStatusDisplayName() }}
                     </label>
                 </td>
-                <td>{{ Helpers::reggo($totalChemicals) }}</td>
-                <td>{{ Helpers::reggo($totalMaterials) }}</td>
-                <td>{{ Helpers::reggo($totalEquipments) }}</td>
-                <td>{{ Helpers::reggo($sale->shipping_fee) }}</td>
-                <td>{{ Helpers::reggo(($sale->nominal-$sale->discount)+$sale->shipping_fee) }}</td>
+                <td>{{ $totalChemicals }}</td>
+                <td>{{ $totalMaterials }}</td>
+                <td>{{ $totalEquipments }}</td>
+                <td>{{ $sale->shipping_fee }}</td>
+                <td>{{ ($sale->nominal-$sale->discount)+$sale->shipping_fee }}</td>
             </tr>
             <?php
                 $totalChemicals  = 0;
