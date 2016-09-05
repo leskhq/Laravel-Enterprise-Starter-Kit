@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Libraries\Utils;
 use App\Models\Setting;
 use Auth;
 use Exception;
@@ -9,6 +10,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Input;
 use LERN;
 use Request;
+use View;
 
 class Handler extends ExceptionHandler
 {
@@ -35,8 +37,9 @@ class Handler extends ExceptionHandler
 
             //Check to see if LERN is installed otherwise you will not get an exception.
             if (app()->bound("lern")) {
-
-                switch((new Setting())->get('lern.behaviour')) {
+                $lernBahaviour = (new Setting())->get('lern.behaviour');
+                $lernBahaviour = strtolower($lernBahaviour);
+                switch($lernBahaviour) {
                     case 'record':
                         app()->make("lern")->record($e); //Record the Exception to the database
                         break;
@@ -45,6 +48,7 @@ class Handler extends ExceptionHandler
                         app()->make("lern")->notify($e); //Notify the Exception
                         break;
                     default:
+                        $this->setLERNNotificationFormat();
                         app()->make("lern")->handle($e); //Record and Notify the Exception
                         break;
                 }
@@ -71,36 +75,58 @@ class Handler extends ExceptionHandler
     private function setLERNNotificationFormat()
     {
         //Change the subject
-        LERN::setSubject((new Setting())->get('lern.notify.channel') . ": An Exception was thrown!");
+        LERN::setSubject("[" . (new Setting())->get('lern.notify.channel') . "]: An Exception was thrown! (" . date("D M d, Y G:i", time()) . " UTC)");
 
         //Change the message body
-        LERN::setMessage(function ($exception) {
-            $msg = "";
-
-            //Get the route
+        LERN::setMessage(function (Exception $exception) {
             $url = Request::url();
             $method = Request::method();
-            if ($url) {
-                $msg .= "URL: {$method}@{$url}" . "<br/>" . PHP_EOL;
-            }
-
-            //Get the User
             $user = Auth::user();
             if ($user) {
-                $msg .= "User: #{$user->id} {$user->first_name} {$user->last_name}" . PHP_EOL;
+                $user_id = $user->id;
+                $user_name = $user->username;
+                $user_first_name = $user->first_name;
+                $user_last_name = $user->last_name;
+            } else {
+                $user_id = 'N/A';
+                $user_name = 'unauthenticated';
+                $user_first_name = 'Unauthenticated User';
+                $user_last_name = 'N/A';
             }
-
-            //Exception
-            $msg .= get_class($exception) . ":{$exception->getFile()}:{$exception->getLine()} {$exception->getMessage()}" . PHP_EOL;
-
-            //Input
+            $exception_class = get_class($exception);
+            $exception_file = $exception->getFile();
+            $exception_line = $exception->getLine();
+            $exception_message = $exception->getMessage();
+            $exception_trace = $exception->getTrace();
             $input = Input::all();
             if (!empty($input)) {
-                $msg .= "Data: " . json_encode($input) . PHP_EOL;
+                $input = json_encode($input);
+            } else {
+                $input = "";
             }
 
-            //Trace
-            $msg .= PHP_EOL . "Trace: {$exception->getTraceAsString()}";
+            $exception_trace_formatted = [];
+            foreach ($exception->getTrace() as $trace) {
+                $formatted_trace = "";
+
+                if (isset($trace['function']) && isset($trace['class'])) {
+                    $formatted_trace = sprintf('at %s%s%s(%s)', Utils::formatClass($trace['class']), $trace['type'], $trace['function'], Utils::formatArgs($trace['args']));
+                }
+                else if (isset($trace['function'])) {
+                    $formatted_trace = sprintf('at %s(%s)', $trace['function'], Utils::formatArgs($trace['args']));
+                }
+                if (isset($trace['file']) && isset($trace['line'])) {
+                    $formatted_trace .= Utils::formatPath($trace['file'], $trace['line']);
+                }
+                $exception_trace_formatted[] = $formatted_trace;
+            }
+
+            $view = View::make('emails.html.lern_notification', compact('url', 'method', 'user_id', 'user_name',
+                'user_first_name', 'user_last_name', 'exception_class', 'exception_file', 'exception_line',
+                'exception_message', 'exception_trace', 'exception_trace_formatted', 'input'));
+
+            $msg = $view->render();
+
             return $msg;
         });
     }

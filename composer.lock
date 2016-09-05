@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5a7ca8ac58174d4710b28959cc274270",
-    "content-hash": "daf89d110cd235ca7b6c63c869503660",
+    "hash": "8d704e13f1f0ed35d434d43901caf662",
+    "content-hash": "df812218fcec4471df2f8223e6cf7382",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -413,12 +413,12 @@
             "version": "0.12",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Bosnadev/Repositories.git",
+                "url": "https://github.com/bosnadev/repository.git",
                 "reference": "9444fab1e52463e9f1a56b3da450f3c531d4e9be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Bosnadev/Repositories/zipball/9444fab1e52463e9f1a56b3da450f3c531d4e9be",
+                "url": "https://api.github.com/repos/bosnadev/repository/zipball/9444fab1e52463e9f1a56b3da450f3c531d4e9be",
                 "reference": "9444fab1e52463e9f1a56b3da450f3c531d4e9be",
                 "shasum": ""
             },
@@ -936,7 +936,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/45939c61df532608c67a92733b7cd1e64455abc1",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/432b80084acb401f9f2daba461679ace39cf67df",
                 "reference": "432b80084acb401f9f2daba461679ace39cf67df",
                 "shasum": ""
             },
@@ -3504,16 +3504,16 @@
         },
         {
             "name": "tylercd100/laravel-notify",
-            "version": "1.8.0",
+            "version": "1.8.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tylercd100/laravel-notify.git",
-                "reference": "0a6219ec0430e8ca3f985e15ad29715f06796a50"
+                "reference": "77543fb5b64001a8940c072f45b28cb7b08f21be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tylercd100/laravel-notify/zipball/0a6219ec0430e8ca3f985e15ad29715f06796a50",
-                "reference": "0a6219ec0430e8ca3f985e15ad29715f06796a50",
+                "url": "https://api.github.com/repos/tylercd100/laravel-notify/zipball/77543fb5b64001a8940c072f45b28cb7b08f21be",
+                "reference": "77543fb5b64001a8940c072f45b28cb7b08f21be",
                 "shasum": ""
             },
             "require": {
@@ -3555,27 +3555,27 @@
                 "notifications",
                 "tylercd100"
             ],
-            "time": "2016-04-27 01:49:49"
+            "time": "2016-08-30 22:21:21"
         },
         {
             "name": "tylercd100/lern",
-            "version": "3.5.0",
+            "version": "3.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tylercd100/lern.git",
-                "reference": "c132c8f625e12fc13022214a3cf912c1ed4ae74a"
+                "reference": "e1e513a065c1dbbd1087249d900dc2b46de51bb7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tylercd100/lern/zipball/c132c8f625e12fc13022214a3cf912c1ed4ae74a",
-                "reference": "c132c8f625e12fc13022214a3cf912c1ed4ae74a",
+                "url": "https://api.github.com/repos/tylercd100/lern/zipball/e1e513a065c1dbbd1087249d900dc2b46de51bb7",
+                "reference": "e1e513a065c1dbbd1087249d900dc2b46de51bb7",
                 "shasum": ""
             },
             "require": {
                 "illuminate/support": "^5.0",
                 "monolog/monolog": "~1.11",
                 "php": "^5.4|^7.0",
-                "tylercd100/laravel-notify": "^1.8"
+                "tylercd100/laravel-notify": "^1.8.2"
             },
             "require-dev": {
                 "doctrine/dbal": "~2.3",
@@ -3609,7 +3609,7 @@
                 "slack",
                 "tylercd100"
             ],
-            "time": "2016-04-26 04:42:09"
+            "time": "2016-08-30 22:00:09"
         },
         {
             "name": "tylercd100/monolog-mailgun",
@@ -4278,7 +4278,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/libern/laravel-sql-logging/zipball/d14ad7b918b46de3e78d491fedf376d30dee22dc",
+                "url": "https://api.github.com/repos/libern/laravel-sql-logging/zipball/b050d9ffcb9b9adc96572dfb04e6364615bb0a37",
                 "reference": "b050d9ffcb9b9adc96572dfb04e6364615bb0a37",
                 "shasum": ""
             },

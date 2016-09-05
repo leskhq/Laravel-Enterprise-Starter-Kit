@@ -56,7 +56,7 @@ return [
         'mail'=>[
             'to'   => env('LERN.MAIL_RECIPIENT'),
             'from' => env('MAIL.SYSTEM_SENDER_ADDRESS'),
-            'smtp' => true,
+            'smtp' => false,
         ],
 
         /**
