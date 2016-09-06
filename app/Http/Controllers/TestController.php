@@ -107,9 +107,6 @@ class TestController extends Controller
         $page_description = "Testing the ACL mechanism.";
         $page_message = "This route requires open-to-all perms.";
 
-        // Test LERN
-        throw new Exception("This is a test for LERN");
-
         return view('test_acl_xxx', compact('page_title', 'page_description', 'page_message'));
     }
 
