@@ -248,7 +248,9 @@ class Utils
                     $formattedValue = '<em>resource</em>';
                 } elseif (isset($item[1]) && ($item[1] instanceof \Closure))  {
                     $formattedValue = '<em>Closure</em>';
-                } elseif (isset($item[1]))  {
+		} elseif (isset($item[1]))  {
+                    if (isset($item[1]['exception_message']))
+                        echo $item[1]['exception_message']."\n";
                     $formattedValue = str_replace("\n", '', var_export(self::escapeHtml((string)$item[1]), true));
                 } else {
                     $formattedValue = "";
