@@ -15,6 +15,13 @@
                 {{ ucwords(Session::get('flash_notification.level')) }}!</h4>
             {{ Session::get('flash_notification.message') }}
         </div>
+        <script>
+            $(document).ready (function(){
+                $(".alert").delay(4000).slideUp(200, function() {
+                    $(this).alert('close');
+                });
+            });
+        </script>
     @endif
     {{ Session::forget('flash_notification') }}
 @endif
