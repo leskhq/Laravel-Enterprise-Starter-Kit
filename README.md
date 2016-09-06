@@ -611,6 +611,16 @@ gulp --production
 ## Troubleshooting
 Below are some troubleshooting tips that we have encoutered and resolved:
 
+### Blank page or HTTP 500 server error.
+Check the laravel log file (```storage/logs/laravel.log```) file for hints. If nothing new was added to the file that is a good hint in 
+itself. Next, check the Web server error log (```/var/log/httpd/error.log```) if you see a message such as this one:
+> PHP Fatal error:  Uncaught exception 'UnexpectedValueException' with message 'The stream or 
+> file "/.../.../storage/logs/laravel.log" could not be opened: failed to open stream: Permission 
+> denied' in /.../.../vendor/monolog/monolog/src/Monolog/Handler/StreamHandler.php:97
+
+Check the file permission on the laravel log file (```storage/logs/laravel.log```) it could be that the process 
+running your Web server does not have ```write``` permission to it.
+ 
 ### Node.js
 
 #### Old version
