@@ -238,8 +238,9 @@ class RoutesController extends Controller
         Audit::log(Auth::user()->id, trans('admin/routes/general.audit-log.category'), trans('admin/routes/general.audit-log.msg-load'));
 
         $nbRoutesLoaded = \App\Models\Route::loadLaravelRoutes('/.*/');
+        $nbRoutesDeleted = \App\Models\Route::deleteLaravelRoutes();
 
-        Flash::success( trans('admin/routes/general.status.loaded', ['number' => $nbRoutesLoaded]) );
+        Flash::success( trans('admin/routes/general.status.synced', ['nbLoaded' => $nbRoutesLoaded, 'nbDeleted' => $nbRoutesDeleted]) );
         return redirect('/admin/routes');
     }
 
