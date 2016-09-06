@@ -196,6 +196,8 @@ Route::group(['middleware' => 'authorize'], function () {
         }); // End of TEST-REPORTS group
     } // End of if DEV environment
 
-    require __DIR__.'/rapyd.php';
+    // Uncomment to enable Rapyd datagrid.
+//    require __DIR__.'/rapyd.php';
+
 }); // end of AUTHORIZE middleware group
 

@@ -58,28 +58,29 @@ class Route extends Model
      */
     public static function loadLaravelRoutes($routeNameRegEx)
     {
-        $AppRoutes =  \Route::getRoutes();
+        $AppRoutes = \Route::getRoutes();
 
         $cnt = 0;
 
-        foreach ($AppRoutes as $appRoute)
-        {
-            $name       = $appRoute->getName();
-            $methods    = $appRoute->getMethods();
-            $path       = $appRoute->getPath();
+        foreach ($AppRoutes as $appRoute) {
+            $name = $appRoute->getName();
+            $methods = $appRoute->getMethods();
+            $path = $appRoute->getPath();
             $actionName = $appRoute->getActionName();
 
             // Skip AuthController and PasswordController routes, Those are always authorized.
-            if (    !str_contains($actionName, 'AuthController')
-                 && !str_contains($actionName, 'PasswordController') ) {
+            if (!str_contains($actionName, 'AuthController')
+                && !str_contains($actionName, 'PasswordController')
+            ) {
 
                 // Include only if the name matches the requested Regular Expression.
                 if (preg_match($routeNameRegEx, $name)) {
                     foreach ($methods as $method) {
                         $route = null;
 
-                        if (    'HEAD' !== $method                     // Skip method 'HEAD' looks to be duplicated of 'GET'
-                             && !starts_with($path, '_debugbar')   ) { // Skip all DebugBar routes.
+                        if ('HEAD' !== $method                     // Skip method 'HEAD' looks to be duplicated of 'GET'
+                            && !starts_with($path, '_debugbar')
+                        ) { // Skip all DebugBar routes.
 
                             // TODO: Use Repository 'findWhere' when its fixed!!
                             //                    $route = $this->route->findWhere([
@@ -91,11 +92,11 @@ class Route extends Model
                             if (!isset($route)) {
                                 $cnt++;
                                 Route::create([
-                                    'name'          => $name,
-                                    'method'        => $method,
-                                    'path'          => $path,
-                                    'action_name'   => $actionName,
-                                    'enabled'       => 1,
+                                    'name' => $name,
+                                    'method' => $method,
+                                    'path' => $path,
+                                    'action_name' => $actionName,
+                                    'enabled' => 1,
                                 ]);
                             }
                         }
@@ -108,5 +109,36 @@ class Route extends Model
         return $cnt;
     }
 
+
+    public static function deleteLaravelRoutes()
+    {
+        $laravelRoutes = \Route::getRoutes();
+        $dbRoutes = \App\Models\Route::all();
+        $dbRoutesToDelete = [];
+        $cnt = 0;
+
+        foreach( $dbRoutes as $dbRoute) {
+            $dbRouteActionName = $dbRoute->action_name;
+
+            $laravelRoute = null;
+            // Try to find by action
+            $laravelRoute = $laravelRoutes->getByAction($dbRouteActionName);
+            // Try to find by name
+            if (null == $laravelRoute) {
+                $dbRouteName = $dbRoute->name;
+                $laravelRoute = $laravelRoutes->getByName($dbRouteName);
+            }
+            // Laravel route not found, add to list to delete.
+            if (null == $laravelRoute) {
+                $dbRoutesToDelete[]= $dbRoute->id;
+            }
+        }
+
+        if ( ($cnt = count($dbRoutesToDelete)) > 0) {
+            \App\Models\Route::destroy($dbRoutesToDelete);
+        }
+
+        return $cnt;
+    }
 
 }
