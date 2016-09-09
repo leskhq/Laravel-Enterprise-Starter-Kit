@@ -13,7 +13,6 @@ use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
-use Mail;
 
 class PasswordController extends Controller
 {
@@ -165,25 +164,9 @@ class PasswordController extends Controller
 
         $user->save();
 
-        $this->emailPasswordChange($user);
+        $user->emailPasswordChange();
 
         Auth::login($user);
-    }
-
-    /**
-     * @param $user
-     */
-    private function emailPasswordChange($user)
-    {
-        $settings = new Setting();
-
-        if ($settings->get('app.email_notifications')) {
-            // Send an email to the user to notify him of the password change.
-            Mail::send(['html' => 'emails.html.password_changed', 'text' => 'emails.text.password_changed'], ['user' => $user], function ($m) use ($user, $settings) {
-                $m->from($settings->get('mail.from.address'), $settings->get('mail.from.name'));
-                $m->to($user->email, $user->full_name)->subject(trans('emails.password_changed.subject'));
-            });
-        }
     }
 
 }

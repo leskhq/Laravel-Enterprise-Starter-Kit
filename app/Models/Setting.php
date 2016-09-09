@@ -19,7 +19,7 @@ class Setting extends BaseSetting
     }
 
 
-    public function get($key, $defaultVal = null)
+    private function underlyingGet($key, $defaultVal = null)
     {
         $val = null;
 
@@ -81,9 +81,9 @@ class Setting extends BaseSetting
         return parent::all();
     }
 
-    public function getTyped($key, $defaultVal = null)
+    public function get($key, $defaultVal = null)
     {
-        $val = $this->get($key, $defaultVal);
+        $val = $this->underlyingGet($key, $defaultVal);
         $val = Utils::correctType($val);
         return $val;
     }

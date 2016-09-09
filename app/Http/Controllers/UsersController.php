@@ -333,7 +333,7 @@ class UsersController extends Controller
 
         $user->update($attributes);
         if ($passwordChanged) {
-            $this->emailPasswordChange($user);
+            $user->emailPasswordChange();
         }
 
         Flash::success( trans('admin/users/general.status.updated') );
@@ -617,30 +617,12 @@ class UsersController extends Controller
         // Update user properties.
         $user->update($attributes);
         if ($passwordChanged) {
-            $this->emailPasswordChange($user);
+            $user->emailPasswordChange();
         }
 
         Flash::success( trans('general.status.profile.updated') );
 
         return redirect()->route('user.profile');
     }
-
-    /**
-     * @param $user
-     */
-    private function emailPasswordChange($user)
-    {
-        $settings = new Setting();
-
-        if ($settings->get('app.email_notifications')) {
-            // Send an email to the user to notify him of the password change.
-            Mail::send(['html' => 'emails.html.password_changed', 'text' => 'emails.text.password_changed'], ['user' => $user], function ($m) use ($user, $settings) {
-                $m->from($settings->get('mail.from.address'), $settings->get('mail.from.name'));
-                $m->to($user->email, $user->full_name)->subject(trans('emails.password_changed.subject'));
-            });
-        }
-    }
-
-
 
 }

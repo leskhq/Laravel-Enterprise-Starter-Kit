@@ -76,4 +76,29 @@ return [
     |
     */
     'enable_user_on_create' => env('AUTH.ENABLE_USER_ON_CREATE', true),
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Email validation
+    |--------------------------------------------------------------------------
+    |
+    | Should the system send an email to a user, after the registration form is
+    | submitted, with a validation link.
+    |
+    */
+    'email_validation' => env('AUTH.EMAIL_VALIDATION', false),
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Enable user on validation
+    |--------------------------------------------------------------------------
+    |
+    | Should the system automatically enable users if they pass the email
+    | validation test?
+    |
+    */
+    'enable_user_on_validation' => env('AUTH.ENABLE_USER_ON_VALIDATION', false),
+
 ];

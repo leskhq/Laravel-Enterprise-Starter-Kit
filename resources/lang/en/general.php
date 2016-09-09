@@ -28,6 +28,7 @@ return [
 
     'status'              => [
         'enabled'           => 'Enabled',
+        'email-validated'   => 'You have successfully verified your account.',
         'profile'              => [
             'updated'             => 'Profile updated',
         ],
@@ -71,9 +72,10 @@ return [
         'msg-login-success'            => 'Successful login: :username.',
         'msg-login-failed'             => 'Login failed: :username.',
         'msg-forcing-logout'           => 'Forcing logout: :username.',
-        'msg-registration-attempt'     => 'Registration: :username.',
-        'msg-account-created-login-in' => 'Registration successful, account created, login in: :username.',
-        'msg-account-created-disabled' => 'Registration successful, account created but *disabled*: :username.',
+        'msg-registration-attempt'     => 'Registration attempt for :username.',
+        'msg-account-created'          => 'Registration successful, account :username created.',
+        'msg-email-validated'          => 'Email validated for: :username',
+        'msg-account-enabled'          => 'Account :username enabled.',
         'msg-profile-show'             => 'Showing profile of: :username.',
         'msg-profile-update'           => 'Updating profile of: :username.',
     ],
