@@ -100,6 +100,10 @@ class Handler extends ExceptionHandler
             $exception_trace = $exception->getTrace();
             $input = Input::all();
             if (!empty($input)) {
+                if (array_has($input, 'password')) {
+                    $input['password'] = "hidden-secret";
+                    $input['password_confirmation'] = "hidden-secret";
+                }
                 $input = json_encode($input);
             } else {
                 $input = "";
