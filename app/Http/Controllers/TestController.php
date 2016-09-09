@@ -175,6 +175,7 @@ class TestController extends Controller
         $page_description = "Testing the flash mechanism with a error level";
 
         Flash::error('This is an error message!');
+        Flash::important();
 
         return view('test_flash_xxx', compact('page_title', 'page_description'));
     }
