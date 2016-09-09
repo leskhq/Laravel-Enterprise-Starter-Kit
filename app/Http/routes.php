@@ -18,6 +18,10 @@ Route::get( 'auth/logout',              ['as' => 'logout',                  'use
 // Registration routes...
 Route::get( 'auth/register',            ['as' => 'register',                'uses' => 'Auth\AuthController@getRegister']);
 Route::post('auth/register',            ['as' => 'registerPost',            'uses' => 'Auth\AuthController@postRegister']);
+// Verify email...
+Route::get( 'auth/verify/{token}',      ['as' => 'confirm_email',           'uses' => 'Auth\AuthController@verify']);
+Route::get( 'auth/verify',              ['as' => 'confirm_emailGet',        'uses' => 'Auth\AuthController@getVerify']);
+Route::post('auth/verify',              ['as' => 'confirm_emailPost',       'uses' => 'Auth\AuthController@postVerify']);
 // Password reset link request routes...
 Route::get( 'password/email',           ['as' => 'recover_password',        'uses' => 'Auth\PasswordController@getEmail']);
 Route::post('password/email',           ['as' => 'recover_passwordPost',    'uses' => 'Auth\PasswordController@postEmail']);
@@ -137,7 +141,6 @@ Route::group(['middleware' => 'authorize'], function () {
         Route::get( 'errors/purge',                    ['as' => 'admin.errors.purge',             'uses' => 'ErrorsController@purge']);
         Route::get( 'errors/{errorId}/show',           ['as' => 'admin.errors.show',              'uses' => 'ErrorsController@show']);
         // Settings routes
-        // TODO: Implements settings
         Route::post(  'settings',                             ['as' => 'admin.settings.store',            'uses' => 'SettingsController@store']);
         Route::get(   'settings',                             ['as' => 'admin.settings.index',            'uses' => 'SettingsController@index']);
         Route::get(   'settings/load',                        ['as' => 'admin.settings.load',             'uses' => 'SettingsController@load']);

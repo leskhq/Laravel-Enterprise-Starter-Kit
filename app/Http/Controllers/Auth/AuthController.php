@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Auth;
 
+use App\Exceptions\InvalidConfirmationCodeException;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use App\Repositories\AuditRepository as Audit;
@@ -8,6 +9,7 @@ use Auth;
 use Flash;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
+use Redirect;
 use Validator;
 
 class AuthController extends Controller
@@ -167,23 +169,82 @@ class AuthController extends Controller
         }
 
         $user = $this->create($request->all());
+        Audit::log(null, trans('general.audit-log.category-register'), trans('general.audit-log.msg-account-created', ['username' => $user->username]));
 
         if ((new Setting())->get('auth.enable_user_on_create')) {
             $user->enabled = true;
             $user->save();
-            Audit::log(null, trans('general.audit-log.category-login'), trans('general.audit-log.msg-account-created-login-in', ['username' => $user->username]));
+            Audit::log(null, trans('general.audit-log.category-register'), trans('general.audit-log.msg-account-enabled', ['username' => $user->username]));
+        }
+
+        $user->emailValidation();
+
+        if ($user->enabled) {
             Flash::success("Welcome " . $user->first_name . ", your account has been created");
-
             Auth::login($user);
-
+            $request->flashExcept(['password', 'password_confirmation']);
             return redirect($this->redirectPath());
+        } else {
+            if ((new Setting())->get('auth.email_validation')) {
+                Flash::success("Welcome " . $user->first_name . ", your account has been created, an email has been sent to your address to complete the registration process.");
+                $request->flashExcept(['password', 'password_confirmation']);
+                return redirect(route('confirm_emailPost'));
+            } else {
+                Flash::success("Welcome " . $user->first_name . ", your account has been created, and will soon be enabled.");
+                $request->flashExcept(['password', 'password_confirmation']);
+                return redirect(route('home'));
+            }
         }
-        else {
-            Audit::log(null, trans('general.audit-log.category-login'), trans('general.audit-log.msg-account-created-disabled', ['username' => $user->username]));
-            Flash::success("Welcome " . $user->first_name . ", your account has been created, and will soon be enabled.");
 
-            return redirect(route('home'));
+    }
+
+    public function verify($confirmation_code, Request $request)
+    {
+        if( ! $confirmation_code)
+        {
+            throw new InvalidConfirmationCodeException;
         }
+
+        $user = User::whereConfirmationCode($confirmation_code)->first();
+
+        if ( ! $user)
+        {
+            throw new InvalidConfirmationCodeException;
+        }
+
+        $user->confirmed = 1;
+        $user->confirmation_code = null;
+        Audit::log(null, trans('general.audit-log.category-register'), trans('general.audit-log.msg-email-validated', ['username' => $user->username]));
+
+        if ((new Setting())->get('auth.enable_user_on_validation')) {
+            $user->enabled = true;
+            Audit::log(null, trans('general.audit-log.category-register'), trans('general.audit-log.msg-account-enabled', ['username' => $user->username]));
+        }
+
+        $user->save();
+
+        Flash::message(trans('general.status.email-validated'));
+
+        $request->session()->reflash();
+        return Redirect::route('home');
+    }
+
+    public function getVerify()
+    {
+        $page_title = "Verify email";
+
+        return view('auth.verify', compact('page_title'));
+    }
+
+    public function postVerify(Request $request)
+    {
+        $this->validate($request, [
+            'token' => 'required|size:30',
+        ]);
+
+        $token = $request['token'];
+
+        return $this->verify($token, $request);
     }
 
 }

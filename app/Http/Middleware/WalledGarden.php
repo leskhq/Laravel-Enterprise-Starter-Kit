@@ -39,7 +39,7 @@ class WalledGarden
 
         $settings = new Setting();
 
-        $walled_garden_enabled = $settings->getTyped('walled-garden.enabled');
+        $walled_garden_enabled = $settings->get('walled-garden.enabled');
         $exemptionPath         = $settings->get('walled-garden.exemptions-path');
         $exemptionsRegEx       = $settings->get('walled-garden.exemptions-regex');
 
@@ -68,6 +68,8 @@ class WalledGarden
                     }
                 }
                 if (!$exempt) {
+//                    $request->flashExcept(['password', 'password_confirmation']);
+                    $request->session()->reflash();
                     return redirect()->guest('auth/login');
                 }
             }

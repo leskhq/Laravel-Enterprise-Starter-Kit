@@ -25,8 +25,8 @@ return array(
     |
     */
     'exemptions-path' => [
-        '/',                'home',                             'faust',
-        'auth/login',       'auth/register',
+        '/',                'home',                            'faust',
+        'auth/login',       'auth/register',                   'auth/verify',
         'password/email',   'password/reset',
         '_debugbar/open',   '_debugbar/assets/stylesheets',    '_debugbar/assets/javascript',
     ],
@@ -38,11 +38,12 @@ return array(
     |--------------------------------------------------------------------------
     |
     | Paths that should be exempt from the walled garden based on Regular
-    | Expressios.
+    | Expressions.
     |
     */
     'exemptions-regex' => [
         '/password\/reset\/.*/',
+        '/auth\/verify\/.*/',
     ],
 
 );

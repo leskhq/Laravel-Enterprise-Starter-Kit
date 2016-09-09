@@ -38,6 +38,10 @@ class SettingsController extends Controller
     {
         $value = (new Setting())->get($key);
 
+        if (is_bool($value)) {
+            $value = ($value)? "true":"false";
+        }
+
         Audit::log(Auth::user()->id, trans('admin/settings/general.audit-log.category'), trans('admin/settings/general.audit-log.msg-show', ['key' => $key]));
 
         $page_title = trans('admin/settings/general.page.show.title');
@@ -79,6 +83,10 @@ class SettingsController extends Controller
     public function edit($key)
     {
         $value = (new Setting())->get($key);
+
+        if (is_bool($value)) {
+            $value = ($value)? "true":"false";
+        }
 
         $page_title = trans('admin/settings/general.page.edit.title');
         $page_description = trans('admin/settings/general.page.edit.description', ['key' => $key]);
