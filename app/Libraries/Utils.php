@@ -229,40 +229,6 @@ class Utils
         return sprintf(' in <a title="%s line %3$d" ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;">%s line %d</a>', $path, $file, $line);
     }
 
-    public static function formatArgs(array $args)
-    {
-        $result = array();
-        foreach ($args as $key => $item) {
-            if (is_array($item) && isset($item[0])) {
-                if ('object' === $item[0]) {
-                    $formattedValue = sprintf('<em>object</em>(%s)', self::formatClass($item[1]));
-                } elseif ('array' === $item[0]) {
-                    $formattedValue = sprintf('<em>array</em>(%s)', is_array($item[1]) ? self::formatArgs($item[1]) : $item[1]);
-                } elseif ('string' === $item[0]) {
-                    $formattedValue = sprintf("'%s'", self::escapeHtml($item[1]));
-                } elseif ('null' === $item[0]) {
-                    $formattedValue = '<em>null</em>';
-                } elseif ('boolean' === $item[0]) {
-                    $formattedValue = '<em>' . strtolower(var_export($item[1], true)) . '</em>';
-                } elseif ('resource' === $item[0]) {
-                    $formattedValue = '<em>resource</em>';
-                } elseif (isset($item[1]) && ($item[1] instanceof \Closure))  {
-                    $formattedValue = '<em>Closure</em>';
-		} elseif (isset($item[1]))  {
-                    if (isset($item[1]['exception_message']))
-                        echo $item[1]['exception_message']."\n";
-                    $formattedValue = str_replace("\n", '', var_export(self::escapeHtml((string)$item[1]), true));
-                } else {
-                    $formattedValue = "";
-                }
-
-                $result[] = is_int($key) ? $formattedValue : sprintf("'%s' => %s", $key, $formattedValue);
-            }
-        }
-
-        return implode(', ', $result);
-    }
-
     /**
      * HTML-encodes a string.
      */

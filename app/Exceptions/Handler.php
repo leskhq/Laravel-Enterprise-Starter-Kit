@@ -114,10 +114,10 @@ class Handler extends ExceptionHandler
                 $formatted_trace = "";
 
                 if (isset($trace['function']) && isset($trace['class'])) {
-                    $formatted_trace = sprintf('at %s%s%s(%s)', Utils::formatClass($trace['class']), $trace['type'], $trace['function'], Utils::formatArgs($trace['args']));
+                    $formatted_trace = sprintf('at %s%s%s(...)', Utils::formatClass($trace['class']), $trace['type'], $trace['function']);
                 }
                 else if (isset($trace['function'])) {
-                    $formatted_trace = sprintf('at %s(%s)', $trace['function'], Utils::formatArgs($trace['args']));
+                    $formatted_trace = sprintf('at %s(...)', $trace['function']);
                 }
                 if (isset($trace['file']) && isset($trace['line'])) {
                     $formatted_trace .= Utils::formatPath($trace['file'], $trace['line']);
