@@ -53,7 +53,7 @@
                     <hr>
                     <strong><i class="fa fa-tags margin-r-5"></i> {{ trans('admin/customers/general.columns.laundry_name') }}</strong>
                     <p class="text-muted">{{ $customer->laundry_name }}</p>
-                    <hr><strong><i class="fa fa-map-marker margin-r-5"></i> {{ $customer->type == 3 || $customer_type == 2 ?trans('admin/customers/general.columns.outlet_address') : trans('admin/customers/general.columns.laundry_address') }}</strong>
+                    <hr><strong><i class="fa fa-map-marker margin-r-5"></i> {{ $customer->type == 3 || $customer->type == 2 ?trans('admin/customers/general.columns.outlet_address') : trans('admin/customers/general.columns.laundry_address') }}</strong>
                     <p class="text-muted">{{ $customer->laundry_address }}</p>
                 </div><!-- /.box-body -->
             </div><!-- /.box -->

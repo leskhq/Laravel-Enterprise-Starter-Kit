@@ -24,7 +24,8 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('laundry_address', trans('admin/customers/general.columns.laundry_address')) !!}
+    {!! Form::label('laundry_address', trans('admin/customers/general.columns.laundry_address')) !!} / 
+    {!! Form::label('laundry_address', trans('admin/customers/general.columns.outlet_address')) !!}
     {!! Form::textarea('laundry_address', null, ['class' => 'form-control', 'rows' => 3]) !!}
 </div>
 
