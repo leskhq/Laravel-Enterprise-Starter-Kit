@@ -13,6 +13,7 @@
             <th>Bahan Baku</th>
             <th>Perlengkapan</th>
             <th>Ongkir</th>
+	    <th>Packing</th>
             <th>Nominal</th>
         </tr>
         <?php
@@ -22,6 +23,7 @@
         foreach ($sales as $key => $sale):
             $total               += $sale->nominal;
             $total_shipping_fee  += $sale->shipping_fee;
+	    $total_packing_fee   += $sale->packing_fee;
             foreach( $sale->saleDetails as $key => $d ):
                 if( in_array($d->product->category, $chemicalIndex) ) {
                     $totalChemicals += $d->total;
@@ -47,7 +49,8 @@
                 <td>{{ $totalMaterials }}</td>
                 <td>{{ $totalEquipments }}</td>
                 <td>{{ $sale->shipping_fee }}</td>
-                <td>{{ ($sale->nominal-$sale->discount)+$sale->shipping_fee }}</td>
+		<td>{{ $sale->packing_fee }}</td>
+                <td>{{ ($sale->nominal-$sale->discount)+$sale->shipping_fee+$sale->packing_fee }}</td>
             </tr>
             <?php
                 $totalChemicals  = 0;
@@ -64,7 +67,8 @@
             <td>{{ Helpers::reggo($materials) }}</td>
             <td>{{ Helpers::reggo($equipments) }}</td>
             <td>{{ Helpers::reggo($total_shipping_fee) }}</td>
-            <td>{{ Helpers::reggo($total + $total_shipping_fee) }}</td>
+	    <td>{{ Helpers::reggo($total_packing_fee) }}</td>
+            <td>{{ Helpers::reggo($total + $total_shipping_fee + $total_packing_fee) }}</td>
         </tr>
     </tbody>
 </table>

@@ -40,6 +40,7 @@
                                 <th>Bahan Baku</th>
                                 <th>Perlengkapan</th>
                                 <th>Ongkir</th>
+				<th>Packing</th>
                                 <th>Nominal</th>
                             </tr>
                         </thead>

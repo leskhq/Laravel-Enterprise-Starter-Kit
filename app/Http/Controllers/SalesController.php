@@ -333,6 +333,7 @@ class SalesController extends Controller
                 $no                 = 1;
                 $total              = 0;
                 $total_shipping_fee = 0;
+		$total_packing_fee  = 0;
 
                 foreach ($sales as $key => $row) {
         	        foreach($row->saleDetails as $key => $d) {
@@ -355,6 +356,7 @@ class SalesController extends Controller
                         'no'                 => $no,
                         'total'              => $total,
                         'total_shipping_fee' => $total_shipping_fee,
+			'total_packing_fee'  => $total_packing_fee,
                         'chemicalIndex'      => $chemicalIndex,
                         'materialIndex'      => $materialIndex
                     ]);
@@ -381,6 +383,7 @@ class SalesController extends Controller
         $no                 = 1;
         $total              = 0;
         $total_shipping_fee = 0;
+	$total_packing_fee  = 0;
         foreach ($sales as $key => $row) {
             foreach($row->saleDetails as $key => $d) {
                 if(in_array( $d->product->category, $chemicalIndex)) {
@@ -393,7 +396,7 @@ class SalesController extends Controller
             }
         }
 
-        return view('admin.sales.get-report-data', compact('sales', 'chemicalIndex', 'materialIndex', 'chemicals', 'materials', 'equipments', 'no', 'total', 'total_shipping_fee'));
+        return view('admin.sales.get-report-data', compact('sales', 'chemicalIndex', 'materialIndex', 'chemicals', 'materials', 'equipments', 'no', 'total', 'total_shipping_fee', 'total_packing_fee'));
     }
 
     public function formula($id)
