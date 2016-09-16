@@ -44,3 +44,8 @@
     {!! Form::label('address', trans('admin/customers/general.columns.address')) !!}
     {!! Form::textarea('address', null, ['class' => 'form-control', 'rows' => 3]) !!}
 </div>
+
+<div class="form-group">
+    {!! Form::label('send_address', trans('admin/customers/general.columns.send_address')) !!}
+    {!! Form::textarea('send_address', null, ['class' => 'form-control', 'rows' => 3]) !!}
+</div>

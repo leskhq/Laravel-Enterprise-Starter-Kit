@@ -9,7 +9,7 @@ class Customer extends Model
     /**
      * @var array
      */
-    protected $fillable = ['name', 'email', 'phone', 'address', 'type', 'status', 'laundry_address', 'laundry_name', 'created_at'];
+    protected $fillable = ['name', 'email', 'phone', 'address', 'type', 'status', 'send_address', 'laundry_address', 'laundry_name', 'created_at'];
 
     public function customerFollowups()
     {

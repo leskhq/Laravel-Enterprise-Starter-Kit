@@ -64,6 +64,8 @@ return [
         'email'                     =>  'Email',
         'phone'                     =>  'Phone',
         'address'                   =>  'Address',
+        'send_address'              =>  'Send Address',
+        'outlet_address'            =>  'Outlet Address',
         'laundry_name'              =>  'Laundry Name',
         'laundry_address'           =>  'Laundry Address',
         'type'                      =>  'Type',
