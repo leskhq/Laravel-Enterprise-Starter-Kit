@@ -22,7 +22,18 @@ class ModulesController extends Controller
         $page_title = trans('admin/modules/general.page.index.title');
         $page_description = trans('admin/modules/general.page.index.description');
 
-        $modules = Module::sortBy('order')->all();
+        // Get all Modules
+        $modules = Module::all();
+        // Sort by order then by name.
+        $modules = $modules->sort(function($a, $b) {
+            if($a['order'] === $b['order']) {
+                if($a['name'] === $b['name']) {
+                    return 0;
+                }
+                return $a['name'] < $b['name'] ? -1 : 1;
+            }
+            return $a['order'] < $b['order'] ? -1 : 1;
+        });
 
         return view('admin.modules.index', compact('modules', 'page_title', 'page_description'));
     }
