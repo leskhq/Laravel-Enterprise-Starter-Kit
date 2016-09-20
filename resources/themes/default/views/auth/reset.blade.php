@@ -4,7 +4,7 @@
     <p class="login-box-msg">Enter your email address and new password</p>
 
 
-    <form method="POST" action="/password/reset">
+    <form method="POST" action="{!! route('reset_passwordPost') !!}">
         {!! csrf_field() !!}
         <input type="hidden" name="token" value="{{ $token }}">
 

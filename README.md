@@ -34,6 +34,8 @@ Directory (AD) authentication and the dynamic authorization module. But wait the
     - [Context sensitive help](#context-sensitive-help)
 - [Deploying to Production](#deploying-to-production)
     - [Combine and minimize](#combine-and-minimize)
+- [Tips](#tips)
+    - [Deploy to a sub-directory](#deploy-to-a-sub-directory)
 - [Troubleshooting](#troubleshooting)
 - [Change log](#change-log)
 - [Security](#security)
@@ -608,8 +610,51 @@ below:
 gulp --production
 ```
 
+## Tips
+
+### Deploy to a sub-directory
+If you plan to deploy the application in a sub-directory of a Web server, such as 
+```http://my-domain.com/awesome-app``` instead of the root of the server as ```http://awesome-app.com```, 
+you may want to tweak the ```.htaccess``` file that is provided by default under the ```public/``` directory.
+
+Below are the 2 Apache configuration files required to configure LESK to run under the directory ```/lesk-sp```.
+
+Here is a example of a modified ```.htaccess``` configuration file:
+```
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
+
+    RewriteEngine On
+
+    # Sets the base URL for per-directory rewrites
+    RewriteBase /lesk-sp/
+
+    # Redirect Trailing Slashes...
+    RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
+```
+**_Note_** the addition of the ```RewriteBase``` directive pointing to the directory of the application.
+
+And here is the matching ```/etc/httpd/conf.d/lesk-sp.conf```:
+```
+Alias /lesk-sp /var/www/lesk-sp/public
+
+<Directory "/var/www/lesk-sp/public">
+  AllowOverride all
+  Order allow,deny
+  Allow from all
+</Directory>
+```
+
 ## Troubleshooting
-Below are some troubleshooting tips that we have encoutered and resolved:
+Below are some troubleshooting tips that we have encountered and resolved:
 
 ### Blank page or HTTP 500 server error.
 Check the laravel log file (```storage/logs/laravel.log```) file for hints. If nothing new was added to the file that is a good hint in 

@@ -2,7 +2,7 @@
 
 @section('content')
     <p class="login-box-msg">Sign in to start your session</p>
-        <form class="form-signin" method="POST" action="/auth/login" >
+        <form class="form-signin" method="POST" action="{!! route('loginPost') !!}" >
             {!! csrf_field() !!}
 
             <div class="form-group has-feedback">
