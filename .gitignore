@@ -11,7 +11,7 @@ storage/
 
 # Configuration testing #
 #########################
-.env.mysql
+.env.mysql-*
 .env.pgsql
 .env.sqlite3
 
