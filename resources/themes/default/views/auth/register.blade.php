@@ -2,7 +2,7 @@
 
 @section('content')
     <p class="login-box-msg">Enter your information to register</p>
-        <form class="form-signin" method="POST" action="/auth/register" >
+        <form class="form-signin" method="POST" action="{!! route('registerPost') !!}" >
             {!! csrf_field() !!}
 
             <div class="form-group has-feedback">
@@ -33,7 +33,7 @@
                 <div class="col-xs-8">
                     <div class="checkbox icheck">
                         <label>
-                            <input type="checkbox" id="remember" name="remember"> I agree to the <a href="/faust">terms</a>
+                            <input type="checkbox" id="remember" name="remember"> I agree to the <a href="{{URL::to('faust')}}">terms</a>
                         </label>
                     </div>
                 </div><!-- /.col -->

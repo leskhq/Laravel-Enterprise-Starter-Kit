@@ -136,6 +136,13 @@ class L51ESKSecuredMenuHandler implements MenuHandlerInterface
             $url = $this->traitGenerateUrl($menu);
         }
 
+        // Fix #55: Fix the url to add the basepath in case where
+        // the application is hosted in a subdirectory.
+        $base = \Request::getBasePath();
+        if ($base) {
+            $url = $base . $url;
+        }
+
         return $url;
     }
 

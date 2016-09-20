@@ -2,7 +2,7 @@
 
 @section('content')
     <p class="login-box-msg">Enter the token that you received or click on the link provided in the email.</p>
-        <form class="form-signin" method="POST" action="/auth/verify" >
+        <form class="form-signin" method="POST" action="{{ route('confirm_emailPost') }}" >
             {!! csrf_field() !!}
 
             <div class="form-group has-feedback">
