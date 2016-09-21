@@ -37,20 +37,17 @@ class Handler extends ExceptionHandler
 
             //Check to see if LERN is installed otherwise you will not get an exception.
             if (app()->bound("lern")) {
-                $lernBahaviour = (new Setting())->get('lern.behaviour');
-                $lernBahaviour = strtolower($lernBahaviour);
-                switch($lernBahaviour) {
-                    case 'record':
-                        app()->make("lern")->record($e); //Record the Exception to the database
-                        break;
-                    case 'notify':
-                        $this->setLERNNotificationFormat();
-                        app()->make("lern")->notify($e); //Notify the Exception
-                        break;
-                    default:
-                        $this->setLERNNotificationFormat();
-                        app()->make("lern")->handle($e); //Record and Notify the Exception
-                        break;
+
+                $lernRecordEnabled = (new Setting())->get('lern.enable_record');
+                $lernNotifyEnabled = (new Setting())->get('lern.enable_notify');
+
+                if ($lernRecordEnabled) {
+                    app()->make("lern")->record($e); //Record the Exception to the database
+                }
+
+                if ($lernNotifyEnabled) {
+                    $this->setLERNNotificationFormat(); // Set some formatting options
+                    app()->make("lern")->notify($e); //Notify the Exception
                 }
 
             }

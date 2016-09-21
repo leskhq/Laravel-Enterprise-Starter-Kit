@@ -3,18 +3,14 @@
 return [
 
     /**
-     * Master switch to enable or disable the feature.
+     * Enables recording of exception.
      */
-    'enabled'   => env('LERN.ENABLED', false),
+    'enable_record'   => env('LERN.ENABLE_RECORD', false),
 
     /**
-     * Set the operating behaviour of the LERN module.
-     * Accepted values are:
-     *   - RecordAndNotify
-     *   - Record
-     *   - Notify
+     * Enables notification of exception.
      */
-    'behaviour' => env('LERN.BEHAVIOUR', 'RecordAndNotify'),
+    'enable_notify'   => env('LERN.ENABLE_NOTIFY', false),
 
     'record' => [
         'table' => 'lern_exceptions',
