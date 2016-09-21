@@ -103,7 +103,20 @@ class UsersController extends Controller
         $perms = $this->perm->pushCriteria(new PermissionsByNamesAscending())->all();
         $user = new \App\User();
 
-        return view('admin.users.create', compact('user', 'perms', 'page_title', 'page_description'));
+        $themes = \Theme::getList();
+        $themes = Arr::indexToAssoc($themes, true);
+        $theme = $user->settings()->get('theme', null);
+
+        $time_zones = \DateTimeZone::listIdentifiers();
+        $time_zone = $user->settings()->get('time_zone', null);
+        $tzKey = array_search($time_zone, $time_zones);
+
+        $time_format = $user->settings()->get('time_format', null);
+
+        $locales = (new Setting())->get('app.supportedLocales');
+        $locale = $user->settings()->get('locale', null);
+
+        return view('admin.users.create', compact('user', 'perms', 'themes', 'theme', 'time_zones', 'tzKey', 'time_format', 'locale', 'locales', 'page_title', 'page_description'));
     }
 
     /**
