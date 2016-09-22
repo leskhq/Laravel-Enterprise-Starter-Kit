@@ -627,6 +627,22 @@ class UsersController extends Controller
             unset($attributes['last_name']);
             unset($attributes['enabled']);
         }
+
+        // Fix: Editing the profile does not allow to edit the Roles and permissions only to see them.
+        // So load the attribute array with current roles and perms to prevent them from being erased.
+        $role_ids = [];
+        foreach ($user->roles as $role) {
+            $role_ids[] = $role->id;
+        }
+        $attributes['role'] = $role_ids;
+
+        $perm_ids = [];
+        foreach ($user->permissions as $perm) {
+            $perm_ids[] = $perm->id;
+        }
+        $attributes['perms'] = $perm_ids;
+
+
         // Update user properties.
         $user->update($attributes);
         if ($passwordChanged) {
