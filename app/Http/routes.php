@@ -159,35 +159,6 @@ Route::group(['middleware' => 'authorize'], function () {
 
     // TODO: Remove this before release...
     if ($this->app->environment('development')) {
-        // TEST-ACL routes
-        Route::group(['prefix' => 'test-acl'], function () {
-            Route::get('home',                  ['as' => 'test-acl.home',                'uses' => 'TestController@test_acl_home']);
-            Route::get('do-not-pre-load',       ['as' => 'test-acl.do-not-pre-load',     'uses' => 'TestController@test_acl_do_not_load']);
-            Route::get('no-perm',               ['as' => 'test-acl.no-perm',             'uses' => 'TestController@test_acl_no_perm']);
-            Route::get('basic-authenticated',   ['as' => 'test-acl.basic-authenticated', 'uses' => 'TestController@test_acl_basic_authenticated']);
-            Route::get('guest-only',            ['as' => 'test-acl.guest-only',          'uses' => 'TestController@test_acl_guest_only']);
-            Route::get('open-to-all',           ['as' => 'test-acl.open-to-all',         'uses' => 'TestController@test_acl_open_to_all']);
-            Route::get('admins',                ['as' => 'test-acl.admins',              'uses' => 'TestController@test_acl_admins']);
-            Route::get('power-users',           ['as' => 'test-acl.power-users',         'uses' => 'TestController@test_acl_power_users']);
-        }); // End of TEST-ACL group
-
-        // TEST-FLASH routes
-        Route::group(['prefix' => 'test-flash'], function () {
-            Route::get('home',    ['as' => 'test-flash.home',     'uses' => 'TestController@test_flash_home']);
-            Route::get('success', ['as' => 'test-flash.success',  'uses' => 'TestController@test_flash_success']);
-            Route::get('info',    ['as' => 'test-flash.info',     'uses' => 'TestController@test_flash_info']);
-            Route::get('warning', ['as' => 'test-flash.warning',  'uses' => 'TestController@test_flash_warning']);
-            Route::get('error',   ['as' => 'test-flash.error',    'uses' => 'TestController@test_flash_error']);
-        }); // End of TEST-FLASH group
-        // TEST-MENU routes
-        Route::group(['prefix' => 'test-menus'], function () {
-            Route::get('home',     ['as' => 'test-menus.home',  'uses' => 'TestMenusController@test_menu_home']);
-            Route::get('one',      ['as' => 'test-menus.one',   'uses' => 'TestMenusController@test_menu_one']);
-            Route::get('two',      ['as' => 'test-menus.two',   'uses' => 'TestMenusController@test_menu_two']);
-            Route::get('two-a',    ['as' => 'test-menus.two-a', 'uses' => 'TestMenusController@test_menu_two_a']);
-            Route::get('two-b',    ['as' => 'test-menus.two-b', 'uses' => 'TestMenusController@test_menu_two_b']);
-            Route::get('three',    ['as' => 'test-menus.three', 'uses' => 'TestMenusController@test_menu_three']);
-        }); // End of TEST-MENU group
         // TEST-REPORTS routes
         Route::group(['prefix' => 'test-reports'], function () {
             Route::get( 'users',       ['as' => 'test-reports.users',       'uses' => 'TestController@report_users']);
