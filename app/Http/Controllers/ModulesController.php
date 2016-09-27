@@ -6,7 +6,7 @@ use Artisan;
 use Auth;
 use Illuminate\Http\Request;
 use Laracasts\Flash\Flash;
-use Sroutier\L51ESKModules\Facades\Module;
+use Sroutier\LESKModules\Facades\Module;
 
 class ModulesController extends Controller
 {

@@ -19,7 +19,7 @@ use Log;
 use App\Models\Menu;
 use App\Models\Route;
 
-class L51ESKSecuredMenuHandler implements MenuHandlerInterface
+class LESKSecuredMenuHandler implements MenuHandlerInterface
 {
 
     use MenuHandlerTrait {
@@ -173,9 +173,9 @@ class L51ESKSecuredMenuHandler implements MenuHandlerInterface
         $routeLaravel = $this->app->request->route();
         $routeAction = $routeLaravel->getAction();
         $routeName = $routeAction['as'];
-        $routeL51esk = Route::where('name', $routeName)->first();
-        if ($routeL51esk instanceof Route) {
-            $leaf = $this->menuRepository->findBy('route_id', $routeL51esk->id);
+        $routeLesk = Route::where('name', $routeName)->first();
+        if ($routeLesk instanceof Route) {
+            $leaf = $this->menuRepository->findBy('route_id', $routeLesk->id);
             if ($leaf instanceof Menu) {
                 return $leaf;
             }

@@ -1,10 +1,10 @@
-# Laravel 5.1 - Enterprise Starter Kit (L51ESK)
+# Laravel Enterprise Starter Kit (LESK)
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
 
 ## Description
-L51ESK, is a template project based on the [Laravel](http://laravel.com/) framework v5.1, combining a set of features 
+LESK, is a template project based on the [Laravel](http://laravel.com/) framework v5.1, combining a set of features 
 that can kick start any Web application for the Internet or on an Intranet. What makes this project unique, from what
 I have seen, are two key features: the optional Lightweight Directory Access Protocol (LDAP) & Microsoft Active 
 Directory (AD) authentication and the dynamic authorization module. But wait there is more, keep reading...
@@ -72,7 +72,7 @@ Directory (AD) authentication and the dynamic authorization module. But wait the
     * Allows to "replay" some user actions.
     * Allows to hook a custom data parser and blade partial to render the "replay" data.
 * Persistent settings using [arcanedev/settings](https://github.com/arcanedev/settings) configurable from the user interface.
-* Modules with [l51esk-modules](https://github.com/sroutier/l51esk-modules)
+* Modules with [lesk-modules](https://github.com/sroutier/lesk-modules)
 * Laravel [Repositories](https://github.com/Bosnadev/Repositories).
 * Flash notifications using [laracasts/flash](https://github.com/laracasts/flash).
 * Advanced datatables with [jqGrid](http://www.trirand.com/blog/) and [mgallegos/laravel-jqgrid](https://github.com/mgallegos/laravel-jqgrid).
@@ -124,18 +124,18 @@ the method that you selected to install *Node.js*.
 ## Installing
 
 ### Acquire a copy
-There are multiple ways to acquire a copy of L51ESK. You can download a ZIP archive, clone the project and finally fork 
+There are multiple ways to acquire a copy of LESK. You can download a ZIP archive, clone the project and finally fork 
 your own repository then clone it.
 
 #### Option 1: Download
 To download a ZIP archive, simply got to the main repository page at of 
-[L51ESK](https://github.com/sroutier/laravel-5.1-enterprise-starter-kit) and click on the "Download ZIP" button. 
+[LESK](https://github.com/sroutier/laravel-enterprise-starter-kit) and click on the "Download ZIP" button. 
 
 #### Option 2: Clone
 Simply clone this repository on your machine using the command:
 
 ```
-git clone https://github.com/sroutier/laravel-5.1-enterprise-starter-kit.git l51esk
+git clone https://github.com/sroutier/laravel-enterprise-starter-kit.git lesk
 ```
 
 #### Option 3: Fork & Clone
@@ -144,7 +144,7 @@ to learn how to [fork an existing repository](https://help.github.com/articles/f
 similar to this to clone your own repository:
 
 ```
-git clone https://github.com/YOUR-NAME/laravel-5.1-enterprise-starter-kit.git l51esk
+git clone https://github.com/YOUR-NAME/laravel-enterprise-starter-kit.git lesk
 ```
 
 ### Homestead (optional)
@@ -177,8 +177,8 @@ folders:
       to: /home/vagrant/projects
 
 sites:
-    - map: l51esk.dev
-      to: /home/vagrant/projects/shared/l51esk/public
+    - map: lesk.dev
+      to: /home/vagrant/projects/shared/lesk/public
 
 databases:
     - homestead
@@ -190,7 +190,7 @@ variables:
 
 Next you will have to add an entry in your host file.
 ```
-echo "192.168.10.10   l51esk-demo.dev" | sudo tee -a /etc/hosts
+echo "192.168.10.10   lesk-demo.dev" | sudo tee -a /etc/hosts
 ```
 
 Finally the last step is to provision the Homestead VM.
@@ -201,7 +201,7 @@ homestead provision
 Once provisioned, you can ssh into the running homestead VM, and change directory to the root of the project.
 ```
 homestead ssh
-cd projects/shared/l51esk
+cd projects/shared/lesk
 ```
 
 
@@ -432,7 +432,7 @@ To change the default theme, set the *DEFAULT_THEME* variable in the *.env* file
 ````
 THEME.DEFAULT=red
 ````
-L51ESK comes with 3 themes: default, green and red.
+LESK comes with 3 themes: default, green and red.
 Both the red and green themes inherit much of there look from the default theme which is mostly blue and based on the 
 look of the [almasaeed2010/AdminLTE](https://github.com/almasaeed2010/AdminLTE) Web template.
 For more details on how to configure and develop your own themes refer to the documentation of the 
@@ -481,7 +481,7 @@ The replay action feature, as the name suggest, allows to replay or repeat an ac
 Perhaps the best and easiest way to understand how it function is to follow a concrete example. Below I will describe how the replay action is used in the case of a user edit.
 
 ##### Creating a replay-able audit log entry
-1. The operator (human) click on the link to edit the entry of a user, say ID #3, the URL would look something like this *http://l51esk/admin/users/3/edit*.
+1. The operator (human) click on the link to edit the entry of a user, say ID #3, the URL would look something like this *http://lesk/admin/users/3/edit*.
 2. The controller *UsersController* and it's function *edit* are invoked. The *edit* function prepares the data that will be displayed and edited then pass it all the the view *admin.users.edit*. Note that in the *edit* function an audit log entry is created stating that the operator initiated the edition of the user. This is just a simple audit log entry that does not save any *attributes* or sets the *replay_route*, it is there simply for audit purposes.
 3. The view is built and returned to the operator to see in his browser.
 4. The operator makes the changes that are required and submits the form.
@@ -507,7 +507,7 @@ The 5th parameter is the fully qualified function name that will be used to pars
 ##### Triggering a replay-able entry
 Following the example above, here is a description of how triggering a replay-able action functions:
 
-1. The operator (human) access the audit log page at: *http://l51esk/admin/audit*
+1. The operator (human) access the audit log page at: *http://lesk/admin/audit*
 2. Locates the replay-able entry by it's spinning recycling icon in the action column, and click on it.
 3. The *replay* function of the *AuditsController* controller is invoked. The *replay* function locates the audit log entry from the id passed in, and redirect to the Laravel route that is store in the *replay_route*. In this case it is *admin.users.replay-edit*.
 4. The *admin.users.replay-edit* route triggers the function *replayEdit* in the *UsersController* controller, as defined in the *app\Http\routes.php* file.
@@ -560,8 +560,8 @@ to original package notes.
 
 ### Modules
 Small features can be grouped into modules and managed, enabled and upgraded, without impacting the entire site.
-Refer to the documentation on the [l51esk-modules](https://github.com/sroutier/l51esk-modules) and look at a 
-concrete example [Module Active Directory Inspector](https://github.com/sroutier/L51ESK-Module_ActiveDirectoryInspector) for more details.  
+Refer to the documentation on the [lesk-modules](https://github.com/sroutier/lesk-modules) and look at a 
+concrete example [Module Active Directory Inspector](https://github.com/sroutier/LESK-Module_ActiveDirectoryInspector) for more details.  
 
 ### LERN
 To enable LERN (Laravel Exception Recorder and Notifier) set the configuration option as show below:
@@ -579,7 +579,7 @@ Context sensitive help can be enabled by setting the configuration option ```APP
 
 To create a new context sensitive help box, simply create a blade file under the ```resources/themes/default/views/context_help/``` folder followed by a struture representing the name of your route. For example the user edit page is accessed by the ```admin.users.edit``` route so create a blade page named ```edit.blade.php``` under ```resources/themes/default/views/context_help/admin/users/``` and it will automatically be loaded and shown when a user click on the question mark (?) icon.
 
-Module can also create context sensitive help by following the same principle but they must also set the __context__ parameter when they call the parent __constructor__, here is how the (Active Directory Inspector)[https://github.com/sroutier/L51ESK-Module_ActiveDirectoryInspector] module sets it, notice the 3rd parameter in the ```parent::__construct()``` call:
+Module can also create context sensitive help by following the same principle but they must also set the __context__ parameter when they call the parent __constructor__, here is how the (Active Directory Inspector)[https://github.com/sroutier/LESK-Module_ActiveDirectoryInspector] module sets it, notice the 3rd parameter in the ```parent::__construct()``` call:
 ```
 ...
     /**
@@ -722,7 +722,7 @@ Additionally credit goes out to the authors of the various components and module
 as part of this project. 
  
 Finally I would like to point to a number of projects that served as inspiration and great source of learning material.
-These projects are similar to the L51ESK, but did not fully cover the requirements that I had. You may want to
+These projects are similar to the LESK, but did not fully cover the requirements that I had. You may want to
  have a look at them, here is the list:
  
 * [yajra/laravel-admin-template](https://github.com/yajra/laravel-admin-template) Laravel 4.2 Bootstrap Admin Starter Template, with Oracle DB Support.
@@ -732,12 +732,12 @@ These projects are similar to the L51ESK, but did not fully cover the requiremen
 * [todstoychev/Laravel5Starter](https://github.com/todstoychev/Laravel5Starter) A Laravel 5 starter project. It contains user management with roles and basic admin panel with application settings.
 
 ### License
-The L51ESK is open-sourced software licensed under the GNU General Public License Version 3 (GPLv3). 
+The LESK is open-sourced software licensed under the GNU General Public License Version 3 (GPLv3). 
 Please see [License File](LICENSE.md) for more information.
 
 
 [ico-version]: https://img.shields.io/badge/packagist-v0.1.0-orange.svg
 [ico-license]: https://img.shields.io/badge/licence-GPLv3-brightgreen.svg
 
-[link-packagist]: https://packagist.org/packages/sroutier/laravel-5.1-enterprise-starter-kit
+[link-packagist]: https://packagist.org/packages/sroutier/laravel-enterprise-starter-kit
 

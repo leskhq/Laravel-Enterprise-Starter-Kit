@@ -39,7 +39,7 @@
         "sroutier/eloquent-ldap": "^1.0@dev",
         "zofe/rapyd": "2.1.*",
         "baum/baum": "~1.1",
-        "sroutier/l51esk-modules": "^3.0",
+        "sroutier/lesk-modules": "^3.0",
         "mgallegos/laravel-jqgrid": "1.*",
         "creativeorange/gravatar": "~1.0",
         "tylercd100/lern": "~3.6.5",
