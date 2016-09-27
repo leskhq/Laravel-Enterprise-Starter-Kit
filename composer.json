@@ -1,5 +1,5 @@
 {
-    "name": "sroutier/laravel-5.1-enterprise-starter-kit",
+    "name": "sroutier/laravel-enterprise-starter-kit",
     "description": "A Starter project based on Laravel 5.1 with theme support, optional LDAP/AD authentication, dynamic route authorization, etc...",
     "keywords": [
       "framework",
@@ -10,7 +10,7 @@
       "LDAP",
       "Active Directory"
     ],
-    "homepage": "https://github.com/sroutier/laravel-5.1-enterprise-starter-kit",
+    "homepage": "https://github.com/sroutier/laravel-enterprise-starter-kit",
     "license": "GPL-3.0",
     "authors": [
       {
@@ -22,7 +22,7 @@
     "repositories": [
       {
         "type": "vcs",
-        "url": "https://github.com/sroutier/laravel-5.1-enterprise-starter-kit"
+        "url": "https://github.com/sroutier/laravel-enterprise-starter-kit"
       }
     ],
     "require": {
