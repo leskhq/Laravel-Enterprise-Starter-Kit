@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8d704e13f1f0ed35d434d43901caf662",
-    "content-hash": "df812218fcec4471df2f8223e6cf7382",
+    "hash": "664886cdc067e5f2a57f410dcc46ed18",
+    "content-hash": "a872d6ddf159bb79d5d518bbdbd1fb95",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -2407,16 +2407,16 @@
         },
         {
             "name": "sroutier/lesk-modules",
-            "version": "3.0.7.7",
+            "version": "3.0.7.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sroutier/lesk-modules.git",
-                "reference": "0bf975c5b038ad3d64e05a4d55f3d23d02339772"
+                "reference": "cd05b7e9af90b94ff87a692633c107cb06d671a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sroutier/lesk-modules/zipball/0bf975c5b038ad3d64e05a4d55f3d23d02339772",
-                "reference": "0bf975c5b038ad3d64e05a4d55f3d23d02339772",
+                "url": "https://api.github.com/repos/sroutier/lesk-modules/zipball/cd05b7e9af90b94ff87a692633c107cb06d671a5",
+                "reference": "cd05b7e9af90b94ff87a692633c107cb06d671a5",
                 "shasum": ""
             },
             "require": {
@@ -2457,11 +2457,11 @@
             ],
             "description": "Module package for Laravel enterprise starter kit",
             "keywords": [
-                "lesk",
                 "laravel",
+                "lesk",
                 "modules"
             ],
-            "time": "2016-05-10 15:27:55"
+            "time": "2016-09-27 14:51:19"
         },
         {
             "name": "swiftmailer/swiftmailer",
