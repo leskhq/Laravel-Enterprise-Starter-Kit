@@ -20,10 +20,6 @@ class ProductionSeeder extends Seeder
         ////////////////////////////////////
         // Load the routes
         Route::loadLaravelRoutes('/.*/');
-        // Look for and delete route named 'do-not-load' if it exist.
-        // That route is used to test the Authorization middleware and should not be loaded automatically.
-        $routeToDelete = Route::where('name', 'do-not-load')->get()->first();
-        if ($routeToDelete) Route::destroy($routeToDelete->id);
 
 
         ////////////////////////////////////

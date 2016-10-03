@@ -157,19 +157,6 @@ Route::group(['middleware' => 'authorize'], function () {
 
     }); // End of ADMIN group
 
-    // TODO: Remove this before release...
-    if ($this->app->environment('development')) {
-        // TEST-REPORTS routes
-        Route::group(['prefix' => 'test-reports'], function () {
-            Route::get( 'users',       ['as' => 'test-reports.users',       'uses' => 'TestController@report_users']);
-            Route::post('users-data',  ['as' => 'test-reports.users-data',  'uses' => 'TestController@report_users_data']);
-            Route::get( 'routes',      ['as' => 'test-reports.routes',      'uses' => 'TestController@report_routes']);
-            Route::post('routes-data', ['as' => 'test-reports.routes-data', 'uses' => 'TestController@report_routes_data']);
-            Route::get( 'perms-and-roles-by-users',       ['as' => 'test-reports.perms-and-roles-by-users',       'uses' => 'TestController@report_perms_and_roles_by_users']);
-            Route::post('perms-and-roles-by-users-data',  ['as' => 'test-reports.perms-and-roles-by-users-data',  'uses' => 'TestController@report_perms_and_roles_by_users_data']);
-        }); // End of TEST-REPORTS group
-    } // End of if DEV environment
-
     // Uncomment to enable Rapyd datagrid.
 //    require __DIR__.'/rapyd.php';
 
