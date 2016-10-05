@@ -176,6 +176,8 @@ class DashboardController extends Controller
 
         $customers     = Customer::where('name', 'LIKE', '%'.$keyword.'%')
                         ->orWhere('address',     'LIKE', '%'.$keyword.'%')
+			->orWhere('laundry_address', 'LIKE', '%'.$keyword.'%')
+			->orWhere('send_address', 'LIKE', '%'.$keyword.'%')
                         ->orWhere('phone',       'LIKE', '%'.$keyword.'%')
                         ->get();
 

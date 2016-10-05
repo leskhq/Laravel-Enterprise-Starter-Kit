@@ -156,6 +156,13 @@
 	</div>
 	<div class='clearboth'></div>
 	<div class='kiri'>
+		Diskon
+	</div>
+	<div class='tengah'>
+		{{ Helpers::reggo($sale->discount) }}
+	</div>
+	<div class='clearboth'></div>
+	<div class='kiri'>
 		Total
 	</div>
 	<div class='tengah'>

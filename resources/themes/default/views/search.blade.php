@@ -57,8 +57,8 @@
                 @if($customers->count())
                     @foreach($customers as $customer)
                         <div class="bs-callout bs-callout-info">
-                            <h4>{!! link_to_route('admin.customers.show', $customer->name, $customer->id) !!}</h4>
-                            <p>{{ $customer->address }} {{ $customer->phone }} {{ $customer->email }}</p>
+                            <h4>{!! link_to_route('admin.customers.show', $customer->name, $customer->id) !!} - <span>({{ Helpers::getCustomerTypeDisplayName($customer->type) }})</span></h4>
+                            <p>{{ $customer->laundry_address ? $customer->laundry_address : $customer->address }} {{ $customer->phone }} {{ $customer->email }}</p>
                         </div>
                     @endforeach
                 @else
