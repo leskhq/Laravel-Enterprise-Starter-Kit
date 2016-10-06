@@ -50,3 +50,8 @@
     {!! Form::label('send_address', trans('admin/customers/general.columns.send_address')) !!}
     {!! Form::textarea('send_address', null, ['class' => 'form-control', 'rows' => 3]) !!}
 </div>
+
+<div class="form-group">
+    {!! Form::label('description', 'Nomor Sertifikat') !!}
+    {!! Form::text('description', null, ['class' => 'form-control']) !!}
+</div>

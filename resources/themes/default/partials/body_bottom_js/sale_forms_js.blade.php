@@ -96,7 +96,7 @@
             select       : function(e, ui) {
                 currentId = $(this).attr('id').replace('product', '');
                 type      = $('#type').val();
-                if(type == 1 || type == 3 || type == 6) {
+                if(type == 1 || type == 3 || type == 6 || type == 8) {
                     $('#displayPrice'+currentId).val(ui.item.agenlepas_price);
                     $('#price'+currentId).val(ui.item.agenlepas_price);
                 } else if(type == 2 || type == 7) {
