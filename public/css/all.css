@@ -78,6 +78,9 @@ i.fa-colour-yellow {
 .disable_a_href {
   pointer-events: none; }
 
+.sidebar-mini.sidebar-collapse .main-header .logo > .logo-mini {
+  font-size: 13px !important; }
+
 /*# sourceMappingURL=app.css.map */
 
 /*# sourceMappingURL=all.css.map */
