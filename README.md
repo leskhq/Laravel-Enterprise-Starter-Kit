@@ -257,7 +257,7 @@ For a other environments, such as QA and Production use:
 cp .env.example-qa .env
 ```
 
-**_NOTE:_** Do not use the environment file for the development environment in any other environment as this will cause a lot of failures in the bootstrap aand kernel part of the application due to some dependencies being dynamically injected for the development environment only.
+**_NOTE:_** Do not use the environment file for the development environment in any other environment as this will cause a lot of failures in the bootstrap and kernel part of the application due to some dependencies being dynamically injected for the development environment only.
 
 ### Basic configuration
 
@@ -296,8 +296,7 @@ To run the migration scripts run this command
  ./artisan migrate
  ```
  
- To seed the database run the command below, note that in the development environment a few extra user and permissions
- are created.
+ To seed the database run the command below
  ```
  ./artisan db:seed
  ```
@@ -566,6 +565,7 @@ A number of modules have already been created, here is the current list:
 | Name                                                                                            | Description                        |
 |-------------------------------------------------------------------------------------------------|------------------------------------|
 | [Active Directory Inspector](https://github.com/sroutier/LESK-Module_ActiveDirectoryInspector)  | A simple Active Directory browser. |
+| [Reports Users](https://github.com/sroutier/LESK-Module_ReportsUsers)                           | Provides some reports on users and their permissions for admin purpose. |
 | [SQL Utils](https://github.com/sroutier/LESK-Module_SQLUtils)                                   | A set of utility functions and classes to help interact with SQL Servers. |
 | [Test and demos](https://github.com/sroutier/LESK-Module_TestsAndDemos)                         | Tests and demos of the ACLs, flash levels and menus. |
 
