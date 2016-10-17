@@ -39,3 +39,8 @@ i.fa-colour-yellow,             { color: yellow; }
 .disable_a_href{
   pointer-events: none;
 }
+
+// Overwrite font size of the mini logo.
+.sidebar-mini.sidebar-collapse .main-header .logo>.logo-mini {
+  font-size: 18px !important;
+}
