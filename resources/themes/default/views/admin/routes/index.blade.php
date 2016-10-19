@@ -34,7 +34,7 @@
                             <i class="fa fa-floppy-o"></i>
                         </a>
                         &nbsp;
-                        {!! Form::select( 'globalPerm', $perms, '', [ 'style' => 'max-width:150px;', 'id' => 'select-global-perm', 'class' => 'select-global-perm'] ) !!}
+                        {!! Form::select( 'globalPerm', $perms, '', [ 'style' => 'max-width:150px;', 'id' => 'select-global-perm', 'class' => 'select-global-perm', 'placeholder' => trans('admin/routes/general.placeholder.select-permission')] ) !!}
 
                         <div class="box-tools pull-right">
                             <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
@@ -74,7 +74,7 @@
                                     @foreach($routes as $route)
                                         <tr>
                                             <td align="center">{!! Form::checkbox('chkRoute[]', $route->id); !!}</td>
-                                            <td>{!! Form::select( 'perms['. $route->id .']', $perms, (isset($route->permission)?$route->permission->id:''), [ 'style' => 'max-width:150px;', 'class' => 'select-perms'] ) !!}</td>
+                                            <td>{!! Form::select( 'perms['. $route->id .']', $perms, (isset($route->permission)?$route->permission->id:''), [ 'style' => 'max-width:150px;', 'class' => 'select-perms', 'placeholder' => trans('admin/routes/general.placeholder.select-permission') ] ) !!}</td>
                                             <td>{!! link_to_route('admin.routes.show', $route->method, [$route->id], []) !!}</td>
                                             <td>{!! link_to_route('admin.routes.show', $route->path, [$route->id], []) !!}</td>
                                             @if ('' != $route->name)
@@ -126,8 +126,12 @@
 <script type="text/javascript">
 
     $(document).ready(function() {
-        $(".select-global-perm").select2();
-        $(".select-perms").select2();
+        $(".select-global-perm").select2({
+            placeholder: '{{ trans('admin/routes/general.placeholder.select-permission') }}'
+        });
+        $(".select-perms").select2({
+            placeholder: '{{ trans('admin/routes/general.placeholder.select-permission') }}'
+        });
     });
 </script>
 @endsection

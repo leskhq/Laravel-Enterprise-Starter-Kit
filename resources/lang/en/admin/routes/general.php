@@ -83,5 +83,8 @@ return [
         'save-perms-assignment' => 'Save permission assignments',
     ],
 
+    'placeholder'   => [
+        'select-permission' => 'Select permission',
+    ],
 
 ];
