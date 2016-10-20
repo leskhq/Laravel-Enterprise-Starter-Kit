@@ -3,13 +3,13 @@
 namespace App\Exceptions;
 
 use App\Libraries\Utils;
-use App\Models\Setting;
 use Auth;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Input;
 use LERN;
 use Request;
+use Setting;
 use View;
 
 class Handler extends ExceptionHandler
@@ -38,8 +38,8 @@ class Handler extends ExceptionHandler
             //Check to see if LERN is installed otherwise you will not get an exception.
             if (app()->bound("lern")) {
 
-                $lernRecordEnabled = (new Setting())->get('lern.enable_record');
-                $lernNotifyEnabled = (new Setting())->get('lern.enable_notify');
+                $lernRecordEnabled = Setting::get('lern.enable_record');
+                $lernNotifyEnabled = Setting::get('lern.enable_notify');
 
                 if ($lernRecordEnabled) {
                     app()->make("lern")->record($e); //Record the Exception to the database
@@ -72,7 +72,7 @@ class Handler extends ExceptionHandler
     private function setLERNNotificationFormat()
     {
         //Change the subject
-        LERN::setSubject("[" . (new Setting())->get('lern.notify.channel') . "]: An Exception was thrown! (" . date("D M d, Y G:i", time()) . " UTC)");
+        LERN::setSubject("[" . Setting::get('lern.notify.channel') . "]: An Exception was thrown! (" . date("D M d, Y G:i", time()) . " UTC)");
 
         //Change the message body
         LERN::setMessage(function (Exception $exception) {

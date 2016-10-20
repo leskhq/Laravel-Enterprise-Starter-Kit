@@ -335,6 +335,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\MenuBuilderServiceProvider::class,
+        App\Providers\SettingServiceProvider::class,
         App\Providers\CustomBladeServiceProvider::class,
 
         Sroutier\EloquentLDAP\Providers\EloquentLDAPServiceProvider::class,
@@ -408,6 +409,7 @@ return [
         'Theme'       => YAAP\Theme\Facades\Theme::class,
         'Entrust'     => Zizaco\Entrust\EntrustFacade::class,
         'MenuBuilder' => App\Facades\MenuBuilderFacade::class,
+        'Setting'     => App\Facades\SettingFacade::class,
         'Module'      => Sroutier\LESKModules\Facades\Module::class,
         'GridRender'  => Mgallegos\LaravelJqgrid\Facades\GridRender::class,
         'GridEncoder' => Mgallegos\LaravelJqgrid\Facades\GridEncoder::class,

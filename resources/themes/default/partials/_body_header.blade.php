@@ -4,9 +4,9 @@
     <!-- Logo -->
     <a href="{{ route('home') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini">{{ config('app.short_name') }}</span>
+        <span class="logo-mini">{{ Setting::get('app.short_name') }}</span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg">{!! config('app.long_name') !!}</span>
+        <span class="logo-lg">{!! Setting::get('app.long_name') !!}</span>
     </a>
 
     <!-- Header Navbar -->
@@ -21,11 +21,11 @@
 
                 @if (Auth::check())
 
-                    @if ( config('app.context_help_area') && (isset($context_help_area)))
+                    @if ( Setting::get('app.context_help_area') && (isset($context_help_area)))
                         {!! $context_help_area   !!}
                     @endif
 
-                    @if ( config('app.notification_area') )
+                    @if ( Setting::get('app.notification_area') )
                         <!-- Messages: style can be found in dropdown.less-->
                         <li class="dropdown messages-menu">
                             <!-- Menu toggle button -->
@@ -136,7 +136,7 @@
                                 </p>
                             </li>
 
-                            @if ( config('app.extended_user_menu') )
+                            @if ( Setting::get('app.extended_user_menu') )
                                 <!-- Menu Body -->
                                 <li class="user-body">
                                     <div class="col-xs-4 text-center">
@@ -154,7 +154,7 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
 
-                                @if ( config('app.user_profile_link') )
+                                @if ( Setting::get('app.user_profile_link') )
                                     <div class="pull-left">
                                         {!! link_to_route('user.profile', 'Profile', [], ['class' => "btn btn-default btn-flat"]) !!}
                                     </div>
@@ -167,7 +167,7 @@
                         </ul>
                     </li>
 
-                    @if ( config('app.right_sidebar') )
+                    @if ( Setting::get('app.right_sidebar') )
                         <!-- Control Sidebar Toggle Button -->
                         <li>
                             <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
@@ -175,7 +175,7 @@
                     @endif
                 @else
                     <li>{!! link_to_route('login', 'Sign in') !!}</li>
-                    @if (config('app.allow_registration'))
+                    @if (Setting::get('app.allow_registration'))
                         <li>{!! link_to_route('register', 'Register') !!}</li>
                     @endif
                 @endif

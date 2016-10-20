@@ -1,8 +1,8 @@
 <?php namespace App\Repositories;
 
 use App\Models\Audit;
-use App\Models\Setting;
 use Bosnadev\Repositories\Eloquent\Repository;
+use Setting;
 
 class AuditRepository extends Repository
 {
@@ -23,7 +23,7 @@ class AuditRepository extends Repository
     public static function log($user_id, $category, $message, Array $attributes = null, $data_parser = null, $replay_route = null)
     {
 
-        $audit_enabled = (new Setting())->get('audit.enabled');
+        $audit_enabled = Setting::get('audit.enabled');
         $audit = false;
         $attJson = null;
 

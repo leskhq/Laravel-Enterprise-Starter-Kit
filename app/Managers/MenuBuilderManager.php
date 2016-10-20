@@ -8,8 +8,8 @@
  * @package Sroutier\MenuBuilder
  */
 
-use App\Models\Setting;
 use Illuminate\Foundation\Application;
+use Setting;
 
 class MenuBuilderManager
 {
@@ -58,7 +58,7 @@ class MenuBuilderManager
         // If no specific menu handler class name is specified, use the default as per the configuration.
         if (null == $menuHandlerName) {
             // Get the menu handler class name from the config.
-            $menuHandlerName = (new Setting())->get('menu-builder.framework_handler');
+            $menuHandlerName = Setting::get('menu-builder.framework_handler');
 
             // If the class name was resolved via ::class (PHP 5.5+)
             if (stripos($menuHandlerName, '::class') !== false) {

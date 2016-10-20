@@ -1,6 +1,5 @@
 <?php namespace App\Libraries;
 
-use App\Models\Setting;
 use App\Repositories\AuditRepository as Audit;
 use App\User;
 use Auth;
@@ -8,6 +7,7 @@ use DateTime;
 use DateTimeZone;
 use Flash;
 use Illuminate\Support\Arr;
+use Setting;
 
 class Utils
 {
@@ -200,7 +200,7 @@ class Utils
             $setting = $user->settings()->get($userKey);
         }
         if (null == $setting) {
-            $setting = (new Setting())->get($appKey, $default);
+            $setting = Setting::get($appKey, $default);
         }
         return $setting;
     }

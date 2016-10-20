@@ -1,8 +1,7 @@
 <?php namespace App\Libraries;
 
-use App\Models\Setting;
-use Illuminate\Support\Arr;
 use Dotenv;
+use Setting;
 
 class SettingDotEnv extends Dotenv
 {
@@ -71,12 +70,10 @@ class SettingDotEnv extends Dotenv
             }
         }
 
-        $settings = new Setting();
-
-        if ($settings->has($key)) {
+        if (Setting::has($key)) {
             return $cnt;
         } else {
-            $settings->set($key, $value);
+            Setting::set($key, $value);
             $cnt  = 1;
         }
 

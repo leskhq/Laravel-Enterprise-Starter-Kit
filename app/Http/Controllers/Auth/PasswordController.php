@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Setting;
 use App\Repositories\AuditRepository as Audit;
 use App\Repositories\Criteria\User\UserWhereEmailEquals;
 use App\Repositories\UserRepository as User;

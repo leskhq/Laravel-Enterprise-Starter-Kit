@@ -28,7 +28,7 @@
         </form>
 
         {!! link_to_route('recover_password', 'I forgot my password', [], ['class' => "text-center"]) !!}<br>
-        @if (config('app.allow_registration'))
+        @if (Setting::get('app.allow_registration'))
             {!! link_to_route('register', 'Register a new membership', [], ['class' => "text-center"]) !!}
         @endif
 

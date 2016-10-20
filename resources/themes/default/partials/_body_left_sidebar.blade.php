@@ -18,7 +18,7 @@
             @endif
         </div>
 
-        @if ( config('app.search_box') )
+        @if ( Setting::get('app.search_box') )
             <!-- search form (Optional) -->
             <form action="#" method="get" class="sidebar-form">
                 <div class="input-group">

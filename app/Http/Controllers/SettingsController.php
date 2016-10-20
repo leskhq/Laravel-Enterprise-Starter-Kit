@@ -2,13 +2,13 @@
 
 use App\Libraries\SettingDotEnv;
 use App\Libraries\Utils;
-use App\Models\Setting;
 use App\Repositories\AuditRepository as Audit;
 use Auth;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Laracasts\Flash\Flash;
+use Setting;
 
 class SettingsController extends Controller
 {
@@ -25,7 +25,8 @@ class SettingsController extends Controller
         $page_title = trans('admin/settings/general.page.index.title'); // "Admin | Settings";
         $page_description = trans('admin/settings/general.page.index.description'); // "List of Settings";
 
-        $settings = (new Setting())->all();
+//        $settings = (new SettingModel())->all();
+        $settings = Setting::all();
         $settings = Arr::dot($settings);
         $settingsFiltered = Utils::FilterOutUserSettings($settings);
         $settingsFiltered = Arr::sortRecursive($settingsFiltered);
@@ -36,7 +37,7 @@ class SettingsController extends Controller
 
     public function show($key)
     {
-        $value = (new Setting())->get($key);
+        $value = Setting::get($key);
 
         if (is_bool($value)) {
             $value = ($value)? "true":"false";
@@ -72,7 +73,7 @@ class SettingsController extends Controller
 
         Audit::log(Auth::user()->id, trans('admin/settings/general.audit-log.category'), trans('admin/settings/general.audit-log.msg-store', ['key' => $attributes['key']]));
 
-        (new Setting())->set($attributes['key'], $attributes['value']);
+        Setting::set($attributes['key'], $attributes['value']);
 
         Flash::success( trans('admin/settings/general.status.created') );
 
@@ -82,7 +83,7 @@ class SettingsController extends Controller
 
     public function edit($key)
     {
-        $value = (new Setting())->get($key);
+        $value = Setting::get($key);
 
         if (is_bool($value)) {
             $value = ($value)? "true":"false";
@@ -109,9 +110,9 @@ class SettingsController extends Controller
 
         Audit::log(Auth::user()->id, trans('admin/settings/general.audit-log.category'), trans('admin/settings/general.audit-log.msg-update', ['key' => $key]));
 
-        (new Setting())->set($key, $value);
+        Setting::set($key, $value);
         if ($orgKey != $key) {
-            (new Setting())->forget($orgKey);
+            Setting::forget($orgKey);
         }
 
         Flash::success( trans('admin/settings/general.status.updated') );
@@ -121,7 +122,7 @@ class SettingsController extends Controller
 
     public function destroy($key)
     {
-        (new Setting())->forget($key);
+        Setting::forget($key);
 
         Audit::log(Auth::user()->id, trans('admin/settings/general.audit-log.category'), trans('admin/settings/general.audit-log.msg-destroy', ['key' => $key]));
 

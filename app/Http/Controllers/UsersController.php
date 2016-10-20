@@ -4,7 +4,6 @@ use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Libraries\Arr;
 use App\Libraries\Str;
-use App\Models\Setting;
 use App\Repositories\AuditRepository as Audit;
 use App\Repositories\Criteria\Permission\PermissionsByNamesAscending;
 use App\Repositories\Criteria\Role\RolesByNamesAscending;
@@ -19,6 +18,7 @@ use Flash;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 use Mail;
+use Setting;
 
 class UsersController extends Controller
 {
@@ -81,7 +81,7 @@ class UsersController extends Controller
         $theme = $user->settings()->get('theme', null);
         $time_zone = $user->settings()->get('time_zone', null);
         $time_format = $user->settings()->get('time_format', null);
-        $locales = (new Setting())->get('app.supportedLocales');
+        $locales = Setting::get('app.supportedLocales');
         $localeIdent = $user->settings()->get('locale', null);
         if (!Str::isNullOrEmptyString($localeIdent)) {
             $locale = $locales[$localeIdent];
@@ -113,7 +113,7 @@ class UsersController extends Controller
 
         $time_format = $user->settings()->get('time_format', null);
 
-        $locales = (new Setting())->get('app.supportedLocales');
+        $locales = Setting::get('app.supportedLocales');
         $locale = $user->settings()->get('locale', null);
 
         return view('admin.users.create', compact('user', 'perms', 'themes', 'theme', 'time_zones', 'tzKey', 'time_format', 'locale', 'locales', 'page_title', 'page_description'));
@@ -175,7 +175,7 @@ class UsersController extends Controller
 
         $time_format = $user->settings()->get('time_format', null);
 
-        $locales = (new Setting())->get('app.supportedLocales');
+        $locales = Setting::get('app.supportedLocales');
         $locale = $user->settings()->get('locale', null);
 
         return view('admin.users.edit', compact('user', 'roles', 'perms', 'themes', 'theme', 'time_zones', 'tzKey', 'time_format', 'locale', 'locales', 'page_title', 'page_description'));
@@ -580,7 +580,7 @@ class UsersController extends Controller
 
         $time_format = $user->settings()->get('time_format');
 
-        $locales = (new Setting())->get('app.supportedLocales');
+        $locales = Setting::get('app.supportedLocales');
         $locale = $user->settings()->get('locale');
 
         return view('user.profile', compact('user', 'perms', 'themes', 'theme', 'time_zones', 'tzKey', 'time_format', 'locale', 'locales', 'readOnlyIfLDAP', 'page_title', 'page_description'));

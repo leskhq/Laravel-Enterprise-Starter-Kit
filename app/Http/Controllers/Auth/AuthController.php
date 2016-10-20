@@ -2,7 +2,6 @@
 
 use App\Exceptions\InvalidConfirmationCodeException;
 use App\Http\Controllers\Controller;
-use App\Models\Setting;
 use App\Repositories\AuditRepository as Audit;
 use App\User;
 use Auth;
@@ -10,6 +9,7 @@ use Flash;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
 use Redirect;
+use Setting;
 use Validator;
 
 class AuthController extends Controller
@@ -171,7 +171,7 @@ class AuthController extends Controller
         $user = $this->create($request->all());
         Audit::log(null, trans('general.audit-log.category-register'), trans('general.audit-log.msg-account-created', ['username' => $user->username]));
 
-        if ((new Setting())->get('auth.enable_user_on_create')) {
+        if (Setting::get('auth.enable_user_on_create')) {
             $user->enabled = true;
             $user->save();
             Audit::log(null, trans('general.audit-log.category-register'), trans('general.audit-log.msg-account-enabled', ['username' => $user->username]));
@@ -185,7 +185,7 @@ class AuthController extends Controller
             $request->flashExcept(['password', 'password_confirmation']);
             return redirect($this->redirectPath());
         } else {
-            if ((new Setting())->get('auth.email_validation')) {
+            if (Setting::get('auth.email_validation')) {
                 Flash::success("Welcome " . $user->first_name . ", your account has been created, an email has been sent to your address to complete the registration process.");
                 $request->flashExcept(['password', 'password_confirmation']);
                 return redirect(route('confirm_emailPost'));
@@ -216,7 +216,7 @@ class AuthController extends Controller
         $user->confirmation_code = null;
         Audit::log(null, trans('general.audit-log.category-register'), trans('general.audit-log.msg-email-validated', ['username' => $user->username]));
 
-        if ((new Setting())->get('auth.enable_user_on_validation')) {
+        if (Setting::get('auth.enable_user_on_validation')) {
             $user->enabled = true;
             Audit::log(null, trans('general.audit-log.category-register'), trans('general.audit-log.msg-account-enabled', ['username' => $user->username]));
         }

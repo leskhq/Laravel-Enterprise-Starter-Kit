@@ -2,10 +2,10 @@
 
 namespace App;
 
+use App\Models\Setting as SettingModel;
 use App\Libraries\Str;
 use App\Models\Error;
 use App\Models\Role;
-use App\Models\Setting;
 use App\Traits\UserHasPermissionsTrait;
 use Auth;
 use Illuminate\Auth\Authenticatable;
@@ -14,6 +14,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Model;
 use Mail;
+use Setting;
 use Sroutier\EloquentLDAP\Contracts\EloquentLDAPUserInterface;
 use Zizaco\Entrust\Traits\EntrustUserTrait as EntrustUserTrait;
 
@@ -253,7 +254,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         // If the auth_type is not explicitly set by the call function or module,
         // set it to the internal value.
         if (!array_key_exists('auth_type', $attributes) || ("" == ($attributes['auth_type'])) ) {
-            $attributes['auth_type'] = (new Setting())->get('eloquent-ldap.label_internal');
+            $attributes['auth_type'] = Setting::get('eloquent-ldap.label_internal');
         }
 
         // Call original create method from parent
@@ -388,7 +389,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         if (null != $this->settings) {
             return $this->settings;
         } else {
-            return new Setting('User.' . $this->username);
+            return new SettingModel('User.' . $this->username);
         }
     }
 
@@ -454,16 +455,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function emailValidation()
     {
-        $settings = new Setting();
-
-        if ($settings->get('auth.email_validation')) {
+        if (Setting::get('auth.email_validation')) {
             // Set or reset validation code.
             $confirmation_code = str_random(30);
             $this->confirmation_code = $confirmation_code;
             $this->save();
             // Send email.
-            Mail::send(['html' => 'emails.html.email_validation', 'text' => 'emails.text.email_validation'], ['user' => $this], function ($message) use ($settings) {
-                $message->from($settings->get('mail.from.address'), $settings->get('mail.from.name'));
+            Mail::send(['html' => 'emails.html.email_validation', 'text' => 'emails.text.email_validation'], ['user' => $this], function ($message) {
+                $message->from(Setting::get('mail.from.address'), Setting::get('mail.from.name'));
                 $message->to($this->email, $this->full_name)->subject(trans('emails.email_validation.subject', ['first_name' => $this->first_name]));
             });
         }
@@ -474,12 +473,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function emailPasswordChange()
     {
-        $settings = new Setting();
-
-        if ($settings->get('app.email_notifications')) {
+        if (Setting::get('app.email_notifications')) {
             // Send an email to the user to notify him of the password change.
-            Mail::send(['html' => 'emails.html.password_changed', 'text' => 'emails.text.password_changed'], ['user' => $this], function ($message) use ($settings) {
-                $message->from($settings->get('mail.from.address'), $settings->get('mail.from.name'));
+            Mail::send(['html' => 'emails.html.password_changed', 'text' => 'emails.text.password_changed'], ['user' => $this], function ($message) {
+                $message->from(Setting::get('mail.from.address'), Setting::get('mail.from.name'));
                 $message->to($this->email, $this->full_name)->subject(trans('emails.password_changed.subject'));
             });
         }

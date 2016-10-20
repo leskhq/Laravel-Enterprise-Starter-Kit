@@ -34,7 +34,7 @@
     <!-- Body Footer -->
     @include('partials._body_footer')
 
-    @if ( config('app.right_sidebar') )
+    @if ( Setting::get('app.right_sidebar') )
         <!-- Body right sidebar -->
         @include('partials._body_right_sidebar')
     @endif
