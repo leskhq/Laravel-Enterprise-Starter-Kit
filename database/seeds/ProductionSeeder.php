@@ -200,9 +200,39 @@ class ProductionSeeder extends Seeder
             $route->save();
         }
         // Associate the admin-settings permissions
-        $routeAdminSettings = Route::where('name', 'admin.settings.index')->get()->first();
-        $routeAdminSettings->permission()->associate($permAdminSettings);
-        $routeAdminSettings->save();
+        $routeSettingsIndex = Route::where('name', 'admin.settings.index')->get()->first();
+        $routeSettingsIndex->permission()->associate($permAdminSettings);
+        $routeSettingsIndex->save();
+        $routeSettingsStore = Route::where('name', 'admin.settings.store')->get()->first();
+        $routeSettingsStore->permission()->associate($permAdminSettings);
+        $routeSettingsStore->save();
+        $routeSettingsDestroy = Route::where('name', 'admin.settings.destroy')->get()->first();
+        $routeSettingsDestroy->permission()->associate($permAdminSettings);
+        $routeSettingsDestroy->save();
+        $routeSettingsShow = Route::where('name', 'admin.settings.show')->get()->first();
+        $routeSettingsShow->permission()->associate($permAdminSettings);
+        $routeSettingsShow->save();
+        $routeSettingsPatch = Route::where('name', 'admin.settings.patch')->get()->first();
+        $routeSettingsPatch->permission()->associate($permAdminSettings);
+        $routeSettingsPatch->save();
+        $routeSettingsUpdate = Route::where('name', 'admin.settings.update')->get()->first();
+        $routeSettingsUpdate->permission()->associate($permAdminSettings);
+        $routeSettingsUpdate->save();
+        $routeSettingsConfirmDelete = Route::where('name', 'admin.settings.confirm-delete')->get()->first();
+        $routeSettingsConfirmDelete->permission()->associate($permAdminSettings);
+        $routeSettingsConfirmDelete->save();
+        $routeSettingsDelete = Route::where('name', 'admin.settings.delete')->get()->first();
+        $routeSettingsDelete->permission()->associate($permAdminSettings);
+        $routeSettingsDelete->save();
+        $routeSettingsEdit = Route::where('name', 'admin.settings.edit')->get()->first();
+        $routeSettingsEdit->permission()->associate($permAdminSettings);
+        $routeSettingsEdit->save();
+        $routeSettingsCreate = Route::where('name', 'admin.settings.create')->get()->first();
+        $routeSettingsCreate->permission()->associate($permAdminSettings);
+        $routeSettingsCreate->save();
+        $routeSettingsLoad = Route::where('name', 'admin.settings.load')->get()->first();
+        $routeSettingsLoad->permission()->associate($permAdminSettings);
+        $routeSettingsLoad->save();
         // Associate the error-log permissions
         $routeErrorView = Route::where('name', 'admin.errors.index')->get()->first();
         $routeErrorView->permission()->associate($permErrorLogView);
@@ -530,7 +560,7 @@ class ProductionSeeder extends Seeder
             'url'           => null,                // Get URL from route.
             'enabled'       => true,
             'parent_id'     => $menuAdmin->id,      // Parent is admin.
-            'route_id'      => $routeAdminSettings->id,
+            'route_id'      => $routeSettingsIndex->id,
             'permission_id' => null,                // Get permission from route.
         ]);
 
