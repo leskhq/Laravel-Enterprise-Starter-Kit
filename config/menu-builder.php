@@ -18,7 +18,7 @@ return array(
     |
     */
 
-    'framework_handler' => env('MENU-BUILDER.FRAMEWORK_HANDLER', 'App\Handlers\LESKSecuredMenuHandler'),
+    'framework_handler' => env('menu-builder.framework_handler', 'App\Handlers\LESKSecuredMenuHandler'),
 
 );
 

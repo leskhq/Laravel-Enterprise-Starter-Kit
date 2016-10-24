@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'purge_retention' => env('ERRORS.PURGE_RETENTION', 30),
+    'purge_retention' => env('errors.purge_retention', 30),
 
 ];
 

@@ -52,6 +52,7 @@ return [
         'name'                      =>  'Name',
         'value'                     =>  'Value',
         'actions'                   =>  'Actions',
+        'encrypted'                 =>  'Encrypted',
     ],
 
     'action'               => [

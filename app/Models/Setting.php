@@ -4,6 +4,7 @@ use App\Libraries\Str;
 use App\Libraries\Utils;
 use App\Traits\BaseModelTrait;
 use Arcanedev\Settings\Facades\Setting as BaseSetting;
+use Crypt;
 
 class Setting extends BaseSetting
 {
@@ -11,6 +12,8 @@ class Setting extends BaseSetting
 
     protected $prefix = null;
     protected $delim  = '.';
+
+    private static $ENCRYPTED_PREFIX = ":EnCrYpTeD:";
 
     public function __construct($keyPrefix = null, $delimiter  = '.')
     {
@@ -52,10 +55,14 @@ class Setting extends BaseSetting
         return parent::has($key);
     }
 
-    public function set($key, $value = null)
+    public function set($key, $value = null, $encrypt = false)
     {
         if (!Str::isNullOrEmptyString($this->prefix)) {
             $key = $this->prefix . $this->delim . $key;
+        }
+
+        if ($encrypt) {
+            $value = $this->encrypt($value);
         }
 
         return parent::set($key, $value);
@@ -84,9 +91,55 @@ class Setting extends BaseSetting
     public function get($key, $defaultVal = null)
     {
         $val = $this->underlyingGet($key, $defaultVal);
+
+        if ( $this->isEncrypted($key, $val) ) {
+            $val = $this->decrypt($val);
+        }
+
         $val = Utils::correctType($val);
         return $val;
     }
 
+    /**
+     * @return mixed
+     */
+    public function save()
+    {
+        return parent::save();
+    }
 
+    /**
+     * @param $val
+     * @return bool
+     */
+    public function isEncrypted($key, $val = null)
+    {
+        if (Str::isNullOrEmptyString($val)) {
+            $val = $this->underlyingGet($key);
+        }
+
+        if ( is_string($val) && Str::startsWith($val, self::$ENCRYPTED_PREFIX) ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @param $val
+     * @return string
+     */
+    public function decrypt($val)
+    {
+        return Crypt::decrypt(substr($val, strlen(self::$ENCRYPTED_PREFIX)));
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function encrypt($value)
+    {
+        return self::$ENCRYPTED_PREFIX . Crypt::encrypt($value);
+    }
 }

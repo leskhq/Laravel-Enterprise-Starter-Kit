@@ -12,7 +12,7 @@ return array(
     |
     */
 
-    'enabled' => env('WALLED-GARDEN.ENABLED', false),
+    'enabled' => env('walled-garden.enabled', false),
 
 
     /*

@@ -75,7 +75,7 @@ return [
     | enable them.
     |
     */
-    'enable_user_on_create' => env('AUTH.ENABLE_USER_ON_CREATE', true),
+    'enable_user_on_create' => env('auth.enable_user_on_create', true),
 
 
     /*
@@ -87,7 +87,7 @@ return [
     | submitted, with a validation link.
     |
     */
-    'email_validation' => env('AUTH.EMAIL_VALIDATION', false),
+    'email_validation' => env('auth.email_validation', false),
 
 
     /*
@@ -99,6 +99,6 @@ return [
     | validation test?
     |
     */
-    'enable_user_on_validation' => env('AUTH.ENABLE_USER_ON_VALIDATION', false),
+    'enable_user_on_validation' => env('auth.enable_user_on_validation', false),
 
 ];

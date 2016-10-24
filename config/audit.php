@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'enabled' => env('AUDIT.ENABLED', false),
+    'enabled' => env('audit.enabled', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -23,7 +23,7 @@ return [
     |
     */
 
-    'purge_retention' => env('AUDIT.PURGE_RETENTION', 365),
+    'purge_retention' => env('audit.purge_retention', 365),
 
 ];
 

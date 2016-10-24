@@ -46,7 +46,7 @@
                                     @foreach($settingsFiltered as $key => $value)
                                         <tr>
                                             <td>{!! link_to_route('admin.settings.show', $key, [$key], []) !!}</td>
-                                            <td>{!! link_to_route('admin.settings.show', $value, [$key], []) !!}</td>
+                                            <td>{!! link_to_route('admin.settings.show', \App\Libraries\Str::head($value, 70, "..."), [$key], []) !!}</td>
                                             <td>
                                                 <a href="{!! route('admin.settings.edit', $key) !!}" title="{{ trans('general.button.edit') }}"><i class="fa fa-pencil-square-o"></i></a>
                                                 <a href="{!! route('admin.settings.confirm-delete', $key) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><i class="fa fa-trash-o deletable"></i></a>

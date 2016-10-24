@@ -14,6 +14,17 @@
                 {!! Form::label('value', trans('admin/settings/general.columns.value') ) !!}
                 {!! Form::text('value', $value, ['class' => 'form-control']) !!}
             </div>
+
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <!-- Trick to force cleared checkbox to being posted in form! It will be posted as zero unless checked then posted again as 1 and since only last one count! -->
+                        {!! '<input type="hidden" name="encrypted" value="0">' !!}
+                        {!! Form::checkbox('encrypted', '1', Setting::isEncrypted($key)) !!} {!! trans('admin/settings/general.columns.encrypted') !!}
+                    </label>
+                </div>
+            </div>
+
         </div><!-- /.tab-pane -->
 
     </div><!-- /.tab-content -->

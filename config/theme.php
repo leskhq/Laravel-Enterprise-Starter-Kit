@@ -40,5 +40,5 @@ return array(
     /**
      * Default theme to use.
      */
-    'default' => env('THEME.DEFAULT', 'default'),
+    'default' => env('theme.default', 'default'),
 );

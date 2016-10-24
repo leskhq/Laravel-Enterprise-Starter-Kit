@@ -53,19 +53,17 @@ class SettingDotEnv extends Dotenv
 
         list($key, $value) = static::normaliseEnvironmentVariable($key, $value);
 
-        $key = strtolower($key);
-
         // Filter out some Laravel system or dangerous environment variables
         // They all use the '_' as a word separator.
         $underPos = strpos($key, '_');
         if ($underPos > 0) {
             switch (substr($key, 0, $underPos)) {
-                case "app":
-                case "db":
-                case "cache":
-                case "mail":
-                case "queue":
-                case "session":
+                case "APP":
+                case "DB":
+                case "CACHE":
+                case "MAIL":
+                case "QUEUE":
+                case "SESSION":
                     return $cnt;
             }
         }

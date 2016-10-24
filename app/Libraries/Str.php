@@ -143,8 +143,21 @@ class Str extends BaseStr
      */
     public static function isNullOrEmptyString($question)
     {
-        $question = trim($question);
-        return (!isset($question) || trim($question)==='');
+        $isSet = isset($question);
+        $isNull = is_null($question);
+        $isString = is_string($question);
+
+        if ($isSet && (!$isNull) && $isString) {
+            $question = trim($question);
+        }
+
+        $isEmpty = empty($question);
+
+        if ( (!$isSet) || ($isNull) || ($isEmpty) ) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

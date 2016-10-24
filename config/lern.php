@@ -5,12 +5,12 @@ return [
     /**
      * Enables recording of exception.
      */
-    'enable_record'   => env('LERN.ENABLE_RECORD', false),
+    'enable_record'   => env('lern.enable_record', false),
 
     /**
      * Enables notification of exception.
      */
-    'enable_notify'   => env('LERN.ENABLE_NOTIFY', false),
+    'enable_notify'   => env('lern.enable_notify', false),
 
     'record' => [
         'table' => 'lern_exceptions',
@@ -34,7 +34,7 @@ return [
         /**
          * The default name of the monolog logger channel
          */
-        'channel' => env('LERN.CHANNEL', 'LESK'),
+        'channel' => env('lern.channel', 'LESK'),
 
         /**
          * When using the default message body this will also include the stack trace
@@ -50,8 +50,8 @@ return [
          * Mail settings
          */
         'mail'=>[
-            'to'   => env('LERN.MAIL_RECIPIENT'),
-            'from' => env('MAIL.SYSTEM_SENDER_ADDRESS'),
+            'to'   => env('lern.mail_recipient'),
+            'from' => env('mail.system_sender_address'),
             'smtp' => false,
         ],
 

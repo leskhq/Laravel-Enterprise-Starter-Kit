@@ -66,14 +66,15 @@ class SettingsController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, array('key'   => 'required',
-                                        'value' => 'required'));
+        $this->validate($request, array('key'       => 'required',
+                                        'value'     => 'required',
+                                        'encrypted' => 'required'));
 
         $attributes = $request->all();
 
         Audit::log(Auth::user()->id, trans('admin/settings/general.audit-log.category'), trans('admin/settings/general.audit-log.msg-store', ['key' => $attributes['key']]));
 
-        Setting::set($attributes['key'], $attributes['value']);
+        Setting::set($attributes['key'], $attributes['value'], $attributes['encrypted']);
 
         Flash::success( trans('admin/settings/general.status.created') );
 
@@ -99,18 +100,20 @@ class SettingsController extends Controller
 
     public function update(Request $request)
     {
-        $this->validate($request, [ 'orgKey' => 'required',
-                                    'key'    => 'required',
-                                    'value'  => 'required']);
+        $this->validate($request, [ 'orgKey'    => 'required',
+                                    'key'       => 'required',
+                                    'value'     => 'required',
+                                    'encrypted' => 'required']);
 
         $attributes = $request->all();
         $orgKey = $attributes['orgKey'];
         $key = $attributes['key'];
         $value = $attributes['value'];
+        $encrypted = $attributes['encrypted'];
 
         Audit::log(Auth::user()->id, trans('admin/settings/general.audit-log.category'), trans('admin/settings/general.audit-log.msg-update', ['key' => $key]));
 
-        Setting::set($key, $value);
+        Setting::set($key, $value, $encrypted);
         if ($orgKey != $key) {
             Setting::forget($orgKey);
         }

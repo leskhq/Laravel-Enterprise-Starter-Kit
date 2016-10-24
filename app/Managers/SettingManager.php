@@ -61,9 +61,9 @@ class SettingManager
      * @param null $value
      * @return mixed
      */
-    public function set($key, $value = null)
+    public function set($key, $value = null, $encrypt = false)
     {
-        return (new SettingModel())->set($key, $value);
+        return (new SettingModel())->set($key, $value, $encrypt);
     }
 
     /**
@@ -72,5 +72,23 @@ class SettingManager
     public function all()
     {
         return (new SettingModel())->all();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function save()
+    {
+        return (new SettingModel())->save();
+    }
+
+    /**
+     * @param $key
+     * @param null $val
+     * @return bool
+     */
+    public function isEncrypted($key, $val = null)
+    {
+        return (new SettingModel())->isEncrypted($key, $val);
     }
 }

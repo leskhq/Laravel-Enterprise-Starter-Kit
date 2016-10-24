@@ -25,6 +25,13 @@
                                 {!! Form::label('value', trans('admin/settings/general.columns.value')) !!}
                                 {!! Form::text('value', $value, ['class' => 'form-control', 'readonly']) !!}
                             </div>
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label>
+                                        {!! Form::checkbox('encrypted', '1', Setting::isEncrypted($key), ['disabled']) !!} {!! trans('admin/settings/general.columns.encrypted') !!}
+                                    </label>
+                                </div>
+                            </div>
                         </div><!-- /.tab-pane -->
 
                     </div><!-- /.tab-content -->

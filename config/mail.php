@@ -55,8 +55,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL.SYSTEM_SENDER_ADDRESS', 'system.noreply@lesk.io'),
-        'name'    => env('MAIL.SYSTEM_SENDER_LABEL',   'LESK System')
+        'address' => env('mail.system_sender_address', 'system.noreply@lesk.io'),
+        'name'    => env('mail.system_sender_label',   'LESK System')
     ],
 
     /*
