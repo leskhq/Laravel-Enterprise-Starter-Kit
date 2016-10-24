@@ -53,7 +53,7 @@ class SettingManager
      */
     public function get($key, $defaultVal = null)
     {
-        return (new SettingModel())->get($key);
+        return (new SettingModel())->get($key, $defaultVal);
     }
 
     /**
