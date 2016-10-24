@@ -452,6 +452,17 @@ names to use are the keys used by the configuration and can be located in the ``
 Once a setting is defined, it's value will take precedence over the value held in the configuration files or 
 environment.
 
+Additionally, settings can be encrypted, via the Web admin interface or the Artisan commands (see below). 
+The ```Setting::Get(...)``` method will automatically decrypt any encrypted value before returning it.
+
+to help manage the settings, 4 commands are available via Artisan. These 4 commands are `setting:all`, 
+`setting:forget`, `setting:get` & `setting:set`. 
+
+1. The `setting:get` command will retrieve the setting, decrypt it if required and output it. 
+1. The `setting:all` command will output all settings in raw & encrypted form, it is useful to dump all settings into a `.env` as a backup or to create another instance of the application.
+1. The `setting:set` command allows the creation of settings in encrypted or unencrypted form. If a value is not provided it will be requested. Additionally, if the value is to be encrypted, when it is requested, it will not echo on the screen.
+1. Finally, the `setting:forget` command allows the removal of any setting or group of settings.
+
 ### Audit log
 To enable the optional audit log simply set the *AUDIT_ENABLED* variable to *true* in the *.env* file as shown 
 below:
