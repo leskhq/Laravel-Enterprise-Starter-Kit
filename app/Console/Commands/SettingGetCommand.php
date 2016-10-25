@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Libraries\Arr;
+use App\Libraries\Str;
 use Illuminate\Console\Command;
 use Setting;
 
@@ -40,7 +42,17 @@ class SettingGetCommand extends Command
     {
         try {
             if ($key = $this->argument('key')) {
-                $this->line($key . "=" . Setting::get($key));
+                $value = Setting::get($key);
+                if (Str::isNullOrEmptyString($value)) {
+                    $this->comment("No setting found or empty setting.");
+                } else if (is_array($value)) {
+                    $value = Arr::dot($value);
+                    foreach($value as $key2 => $value2) {
+                        $this->line("$key.$key2=$value2");
+                    }
+                } else {
+                    $this->line($key . "=" . $value);
+                }
             } else {
                 $this->error("Missing 'key' argument.");
             }
