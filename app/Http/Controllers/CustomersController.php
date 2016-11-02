@@ -198,6 +198,7 @@ class CustomersController extends Controller
         $name            = $c->name;
         $address         = $c->address;
         $laundry_address = $c->laundry_address;
+	$ship_address	 = $c->send_address;
         $phone           = $c->phone;
         $type            = $c->type;
 
@@ -208,7 +209,8 @@ class CustomersController extends Controller
           'type'            => $type,
           'phone'           => $phone,
           'address'         => $address,
-          'laundry_address' => $laundry_address
+          'laundry_address' => $laundry_address,
+	  'ship_address'    => $ship_address
         ];
         $return_arr[] = $entry_arr;
       }
