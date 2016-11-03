@@ -6,7 +6,7 @@
     @if($error)
         <div>{{{ $error }}}</div>
     @else
-        {{ $modal_body }}
+        {!! $modal_body !!}
     @endif
 </div>
 <div class="modal-footer">
