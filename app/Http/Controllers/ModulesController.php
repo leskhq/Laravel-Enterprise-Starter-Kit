@@ -145,6 +145,20 @@ class ModulesController extends Controller
         return redirect('/admin/modules');
     }
 
+
+    public function getModalUninitialize($slug)
+    {
+        $error = null;
+
+        $module = \Module::where('slug', $slug)->first();
+
+        $modal_title = trans('admin/modules/general.delete-confirm.title');
+        $modal_route = route('admin.modules.uninitialize', array('slug' => $slug));
+        $modal_body = trans('admin/modules/general.delete-confirm.body', [ 'slug' => $module['slug'], 'name' => $module['name'] ]);
+
+        return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
+    }
+
     /**
      * Uninitialize the modules.
      *

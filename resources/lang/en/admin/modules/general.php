@@ -86,4 +86,9 @@ return [
         'uninitialize'  =>  'Uninitialize',
     ],
 
+    'delete-confirm'              => [
+        'title'   => 'Uninitialize module',
+        'body'    => 'Are you sure that you want to uninitialize the module named ":name"? <br/> In many cases the uninitialize call to a module will have it delete or clean-up all it\'s data from the internal database, causing the module\'s data to be lost. Do you have a backup just in case? This operation may be irreversible. <br/> For more information please refer the the module\'s documentation.',
+    ],
+
 ];

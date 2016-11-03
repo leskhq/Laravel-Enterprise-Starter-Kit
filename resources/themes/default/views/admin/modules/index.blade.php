@@ -48,7 +48,7 @@
                                                     @if ( Module::isEnabled($mod['slug']) )
                                                         <i class="fa fa-thumbs-up text-muted" title="{{ trans('admin/modules/general.error.cant-uninitialize-this-module') }}"></i>
                                                     @else
-                                                        <a href="{!! route('admin.modules.uninitialize', $mod['slug']) !!}" title="{{ trans('admin/modules/general.button.uninitialize') }}"><i class="fa fa-thumbs-up enabled"></i></a>
+                                                        <a href="{!! route('admin.modules.confirm-uninitialize', $mod['slug']) !!}" data-toggle="modal" data-target="#modal_dialog_danger" title="{{ trans('admin/modules/general.button.uninitialize') }}"><i class="fa fa-thumbs-up enabled"></i></a>
                                                     @endif
                                                 @else
                                                     <a href="{!! route('admin.modules.initialize', $mod['slug']) !!}" title="{{ trans('admin/modules/general.button.initialize') }}"><i class="fa fa-thumbs-down disabled"></i></a>
