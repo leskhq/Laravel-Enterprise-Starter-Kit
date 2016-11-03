@@ -577,6 +577,7 @@ A number of modules have already been created, here is the current list:
 |-------------------------------------------------------------------------------------------------|------------------------------------|
 | [Active Directory Inspector](https://github.com/sroutier/LESK-Module_ActiveDirectoryInspector)  | A simple Active Directory browser. |
 | [Reports Users](https://github.com/sroutier/LESK-Module_ReportsUsers)                           | Provides some reports on users and their permissions for admin purpose. |
+| [Reservation](https://github.com/sroutier/LESK-Module_Reservation)                              | Allows the management of reservable items. |
 | [SQL Utils](https://github.com/sroutier/LESK-Module_SQLUtils)                                   | A set of utility functions and classes to help interact with SQL Servers. |
 | [Test and demos](https://github.com/sroutier/LESK-Module_TestsAndDemos)                         | Tests and demos of the ACLs, flash levels and menus. |
 
