@@ -34,8 +34,7 @@ class Setting extends BaseSetting
         $val = parent::get($key);
         // If val is null, try to get value from config or environment.
         if (null === $val) {
-            $envKey = strtoupper($key);
-            $val = Config( $key, env($envKey) );
+            $val = Config( $key, env($key) );
         }
         // Finally if val is still null, assign the default value.
         if (null == $val) {
