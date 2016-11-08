@@ -315,7 +315,7 @@ return [
     |
     */
 
-    'user_filter' => env('LDAP_USER_FILTER', "(&(objectcategory=person)(samaccountname=%username))"),
+    'user_filter' => env('ldap.user_filter', "(&(objectcategory=person)(samaccountname=%username))"),
 
 
 ];
