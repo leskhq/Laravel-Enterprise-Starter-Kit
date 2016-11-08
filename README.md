@@ -553,8 +553,7 @@ are available as sample:
  
 **_NOTE:_** The view is created in a migration, but will only be created (and dropped) in the development environment.
 
-**_NOTE:_** All jqGRids reports are using the base jQuery UI, except the routes report that uses the trontastic theme, 
-to show how easy it is to change jQuery UI theme.
+**_NOTE:_** All jqGRids reports are using the base jQuery UI.
 
 ### Rapyd demo
 To enable the demo mini sub-site that comes with [rapyd-laravel](https://github.com/zofe/rapyd-laravel) uncomment the 
