@@ -2407,16 +2407,16 @@
         },
         {
             "name": "sroutier/lesk-modules",
-            "version": "3.0.7.10",
+            "version": "3.0.7.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sroutier/lesk-modules.git",
-                "reference": "cd05b7e9af90b94ff87a692633c107cb06d671a5"
+                "reference": "b1f0c8cd175f77d3e6d6ead8d66884875b34547e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sroutier/lesk-modules/zipball/cd05b7e9af90b94ff87a692633c107cb06d671a5",
-                "reference": "cd05b7e9af90b94ff87a692633c107cb06d671a5",
+                "url": "https://api.github.com/repos/sroutier/lesk-modules/zipball/b1f0c8cd175f77d3e6d6ead8d66884875b34547e",
+                "reference": "b1f0c8cd175f77d3e6d6ead8d66884875b34547e",
                 "shasum": ""
             },
             "require": {
@@ -2461,7 +2461,7 @@
                 "lesk",
                 "modules"
             ],
-            "time": "2016-09-27 14:51:19"
+            "time": "2016-10-27 15:17:12"
         },
         {
             "name": "swiftmailer/swiftmailer",
