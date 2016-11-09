@@ -936,7 +936,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/432b80084acb401f9f2daba461679ace39cf67df",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/51f6934c19635fa1c69680482522c734a0121463",
                 "reference": "432b80084acb401f9f2daba461679ace39cf67df",
                 "shasum": ""
             },
@@ -2353,12 +2353,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sroutier/eloquent-ldap.git",
-                "reference": "f945119619d5f274de391e2eb024330fc37f119a"
+                "reference": "0418d4fef2b5fd04f56934a21ab0f3c501fdf319"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sroutier/eloquent-ldap/zipball/f945119619d5f274de391e2eb024330fc37f119a",
-                "reference": "f945119619d5f274de391e2eb024330fc37f119a",
+                "url": "https://api.github.com/repos/sroutier/eloquent-ldap/zipball/0418d4fef2b5fd04f56934a21ab0f3c501fdf319",
+                "reference": "0418d4fef2b5fd04f56934a21ab0f3c501fdf319",
                 "shasum": ""
             },
             "require": {
@@ -2383,7 +2383,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPLv3"
+                "GPL-3.0"
             ],
             "authors": [
                 {
@@ -2403,7 +2403,7 @@
                 "ldap",
                 "ldap-eloquent"
             ],
-            "time": "2016-05-02 18:31:54"
+            "time": "2016-11-08 21:26:53"
         },
         {
             "name": "sroutier/lesk-modules",
@@ -4230,7 +4230,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Jeroen-G/laravel-packager/zipball/836b2d0adedfee14e2a76575b77dd16ac5b4cc71",
+                "url": "https://api.github.com/repos/Jeroen-G/laravel-packager/zipball/84dc5f885fcd28fef25c2c01ab93ea6d7a5ecc18",
                 "reference": "836b2d0adedfee14e2a76575b77dd16ac5b4cc71",
                 "shasum": ""
             },
@@ -4278,7 +4278,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/libern/laravel-sql-logging/zipball/b050d9ffcb9b9adc96572dfb04e6364615bb0a37",
+                "url": "https://api.github.com/repos/libern/laravel-sql-logging/zipball/60493551f1426d947d311cfe19aee99208341e7a",
                 "reference": "b050d9ffcb9b9adc96572dfb04e6364615bb0a37",
                 "shasum": ""
             },
