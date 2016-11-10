@@ -75,7 +75,7 @@
 
             <div class="form-group">
                 {!! Form::label('theme', trans('admin/users/general.columns.theme')) !!}
-                {!! Form::select( 'theme', $themes, $theme, [ 'class' => 'select-theme', 'placeholder' => trans('admin/users/general.placeholder.select-theme') ] ) !!}</td>
+                {!! Form::select( 'theme', $themes, $user->settings()->get('theme', null), [ 'class' => 'select-theme', 'placeholder' => trans('admin/users/general.placeholder.select-theme') ] ) !!}</td>
             </div>
 
             <div class="form-group">
@@ -92,7 +92,7 @@
 
             <div class="form-group">
                 {!! Form::label('locale', trans('admin/users/general.columns.locale')) !!}
-                {!! Form::select( 'locale', $locales, $locale, [ 'class' => 'select-locale', 'placeholder' => trans('admin/users/general.placeholder.select-locale') ] ) !!}</td>
+                {!! Form::select( 'locale', $locales, $user->settings()->get('locale', null), [ 'class' => 'select-locale', 'placeholder' => trans('admin/users/general.placeholder.select-locale') ] ) !!}</td>
             </div>
 
         </div><!-- /.tab-pane -->

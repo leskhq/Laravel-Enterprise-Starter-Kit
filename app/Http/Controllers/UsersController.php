@@ -78,8 +78,6 @@ class UsersController extends Controller
 
         $perms = $this->perm->pushCriteria(new PermissionsByNamesAscending())->all();
 
-        $theme = $user->settings()->get('theme', null);
-        $time_zone = $user->settings()->get('time_zone', null);
         $time_format = $user->settings()->get('time_format', null);
         $locales = Setting::get('app.supportedLocales');
         $localeIdent = $user->settings()->get('locale', null);
@@ -89,7 +87,7 @@ class UsersController extends Controller
             $locale = "";
         }
 
-        return view('admin.users.show', compact('user', 'perms', 'theme', 'time_zone', 'time_format', 'locale', 'page_title', 'page_description'));
+        return view('admin.users.show', compact('user', 'perms', 'theme', 'time_format', 'locale', 'page_title', 'page_description'));
     }
 
     /**
@@ -105,7 +103,6 @@ class UsersController extends Controller
 
         $themes = \Theme::getList();
         $themes = Arr::indexToAssoc($themes, true);
-        $theme = $user->settings()->get('theme', null);
 
         $time_zones = \DateTimeZone::listIdentifiers();
         $time_zone = $user->settings()->get('time_zone', null);
@@ -114,9 +111,8 @@ class UsersController extends Controller
         $time_format = $user->settings()->get('time_format', null);
 
         $locales = Setting::get('app.supportedLocales');
-        $locale = $user->settings()->get('locale', null);
 
-        return view('admin.users.create', compact('user', 'perms', 'themes', 'theme', 'time_zones', 'tzKey', 'time_format', 'locale', 'locales', 'page_title', 'page_description'));
+        return view('admin.users.create', compact('user', 'perms', 'themes', 'time_zones', 'tzKey', 'time_format', 'locales', 'page_title', 'page_description'));
     }
 
     /**
@@ -167,7 +163,6 @@ class UsersController extends Controller
 
         $themes = \Theme::getList();
         $themes = Arr::indexToAssoc($themes, true);
-        $theme = $user->settings()->get('theme', null);
 
         $time_zones = \DateTimeZone::listIdentifiers();
         $time_zone = $user->settings()->get('time_zone', null);
@@ -176,9 +171,8 @@ class UsersController extends Controller
         $time_format = $user->settings()->get('time_format', null);
 
         $locales = Setting::get('app.supportedLocales');
-        $locale = $user->settings()->get('locale', null);
 
-        return view('admin.users.edit', compact('user', 'roles', 'perms', 'themes', 'theme', 'time_zones', 'tzKey', 'time_format', 'locale', 'locales', 'page_title', 'page_description'));
+        return view('admin.users.edit', compact('user', 'roles', 'perms', 'themes', 'time_zones', 'tzKey', 'time_format', 'locales', 'page_title', 'page_description'));
     }
 
     static public function ParseUpdateAuditLog($id)
@@ -257,7 +251,7 @@ class UsersController extends Controller
         $page_title = trans('admin/users/general.page.edit.title'); // "Admin | User | Edit";
         $page_description = trans('admin/users/general.page.edit.description', ['full_name' => $user->full_name]); // "Editing user";
 
-        if (!$user->isEditable())
+        if ($user->isRoot())
         {
             abort(403);
         }
@@ -282,7 +276,19 @@ class UsersController extends Controller
         $roles = $this->role->all();
         $perms = $this->perm->all();
 
-        return view('admin.users.edit', compact('user', 'roles', 'perms', 'page_title', 'page_description'));
+        $themes = \Theme::getList();
+        $themes = Arr::indexToAssoc($themes, true);
+        $theme = $att['theme'];
+
+        $time_zones = \DateTimeZone::listIdentifiers();
+        $tzKey = $att['time_zone'];
+
+        $time_format = $att['time_format'];
+
+        $locales = Setting::get('app.supportedLocales');
+        $locale = $att['locale'];
+
+        return view('admin.users.edit', compact('user', 'roles', 'perms', 'themes', 'theme', 'time_zones', 'tzKey', 'time_format', 'locale', 'locales', 'page_title', 'page_description'));
     }
 
     /**
