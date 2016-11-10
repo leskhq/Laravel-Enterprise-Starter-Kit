@@ -33,9 +33,9 @@
     <input class="form-control" readonly="readonly" name="enabled" type="text" value="{!! ($dataArray['enabled']) ? 'TRUE' : 'FALSE' !!}" id="enabled">
 </div>
 
-<div class="form-group">
-    <label for="category">{!! trans('admin/users/general.columns.permissions') !!}</label>
-    @if (array_key_exists('permsObj', $dataArray))
+@if (array_key_exists('permsObj', $dataArray) && (!empty($dataArray['permsObj'])))
+    <div class="form-group">
+        <label for="category">{!! trans('admin/users/general.columns.permissions') !!}</label>
         @foreach($dataArray['permsObj'] as $perm)
             <div class="checkbox">
                 <label>
@@ -43,12 +43,12 @@
                 </label>
             </div>
         @endforeach
-    @endif
-</div>
+    </div>
+@endif
 
-<div class="form-group">
-    <label for="category">{!! trans('admin/users/general.columns.permissions-not-found') !!}</label>
-    @if (array_key_exists('permsNotFound', $dataArray))
+@if (array_key_exists('permsNotFound', $dataArray) && (!empty($dataArray['permsNotFound'])))
+    <div class="form-group">
+        <label for="category">{!! trans('admin/users/general.columns.permissions-not-found') !!}</label>
         @foreach($dataArray['permsNotFound'] as $msg)
             <div class="checkbox">
                 <label>
@@ -56,12 +56,12 @@
                 </label>
             </div>
         @endforeach
-    @endif
-</div>
+    </div>
+@endif
 
-<div class="form-group">
-    <label for="category">{!! trans('admin/users/general.columns.roles') !!}</label>
-    @if (array_key_exists('rolesObj', $dataArray))
+@if (array_key_exists('rolesObj', $dataArray) && (!empty($dataArray['rolesObj'])))
+    <div class="form-group">
+        <label for="category">{!! trans('admin/users/general.columns.roles') !!}</label>
         @foreach($dataArray['rolesObj'] as $role)
             <div class="checkbox">
                 <label>
@@ -69,12 +69,12 @@
                 </label>
             </div>
         @endforeach
-    @endif
-</div>
+    </div>
+@endif
 
-<div class="form-group">
-    <label for="category">{!! trans('admin/users/general.columns.roles-not-found') !!}</label>
-    @if (array_key_exists('rolesNotFound', $dataArray))
+@if (array_key_exists('rolesNotFound', $dataArray) && (!empty($dataArray['rolesNotFound'])))
+    <div class="form-group">
+        <label for="category">{!! trans('admin/users/general.columns.roles-not-found') !!}</label>
         @foreach($dataArray['rolesNotFound'] as $msg)
             <div class="checkbox">
                 <label>
@@ -82,5 +82,5 @@
                 </label>
             </div>
         @endforeach
-    @endif
-</div>
+    </div>
+@endif
