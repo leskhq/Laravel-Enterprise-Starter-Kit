@@ -583,11 +583,19 @@ A number of modules have already been created, here is the current list:
 #### Module conventions
 In order to avoid conflicts some naming conventions are recommended below:
 
-**Module name:** The module name should be composed of the prefix "LESK-Module" followed by the module namespace as defined in the ```composer.json``` of the module. Both parts should be separated by an under-score "_". For example, "LESK-Module_ActiveDirectoryInspector" in the case of the "Active Directory Inspector" module.
+**Module name:** The module name should be composed of the prefix "LESK-Module" followed by the module namespace as 
+defined in the ```composer.json``` of the module. Both parts should be separated by an under-score "_". For 
+example, "LESK-Module_ActiveDirectoryInspector" in the case of the "Active Directory Inspector" module.
 
-**Module tables:** Keeping in mind the limitations of the underlying RDBMS systems, in particular, Orable DB limits database objects names to 30 byes. Module table names should be composed of the prefix "mod", followed by a unique and short identifier for the module for example "ad-insp" and finally the name of the table. All parts should be separated by an under-score "_". The total length should remain under 30 characters. For example, the full table name for the module could be "mod_ad-insp_users" or "mod_ad-insp_groups"
+**Module tables:** Keeping in mind the limitations of the underlying RDBMS systems, in particular, Orable DB limits 
+database objects names to 30 bytes. Module table names should be composed of the prefix "mod", followed by a unique 
+and short identifier for the module for example "adinsp" and finally the name of the table. All parts should 
+be separated by an under-score "_". The total length should remain under 30 characters. For example, the 
+full table name for the module could be "mod_adinsp_users" or "mod_adinsp_groups"
 
-**Module settings:** Module settings should be composed of the prefix "MODULES" followed by the capitalized slug as defined in the ```composer.json``` of the module and finally the setting variable itself. All parts should be separated by a period ".". For example two settings for the "Active Directory Inspector" module are "MODULES.ACTIVE_DIRECTORY_INSPECTOR.ACCOUNT_SUFFIX" and "MODULES.ACTIVE_DIRECTORY_INSPECTOR.PORT".
+**Module settings:** Module settings should be composed of the lowercase slug of the module, followed by the setting 
+variable itself. All parts should be separated by a period ".". For example two settings for the "Active Directory 
+Inspector" module are "active_directory_inspector.account_suffix" and "active_directory_inspector.port".
 
 Aditional documentation can be found on the [lesk-modules](https://github.com/sroutier/lesk-modules) and look at a 
 concrete example such as the [Active Directory Inspector](https://github.com/sroutier/LESK-Module_ActiveDirectoryInspector) module for more details.  
