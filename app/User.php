@@ -462,7 +462,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             $this->save();
             // Send email.
             Mail::send(['html' => 'emails.html.email_validation', 'text' => 'emails.text.email_validation'], ['user' => $this], function ($message) {
-                $message->from(Setting::get('mail.from.address'), Setting::get('mail.from.name'));
+                $message->from(Setting::get('mail.system_sender_address'), Setting::get('mail.system_sender_label'));
                 $message->to($this->email, $this->full_name)->subject(trans('emails.email_validation.subject', ['first_name' => $this->first_name]));
             });
         }
@@ -476,7 +476,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         if (Setting::get('app.email_notifications')) {
             // Send an email to the user to notify him of the password change.
             Mail::send(['html' => 'emails.html.password_changed', 'text' => 'emails.text.password_changed'], ['user' => $this], function ($message) {
-                $message->from(Setting::get('mail.from.address'), Setting::get('mail.from.name'));
+                $message->from(Setting::get('mail.system_sender_address'), Setting::get('mail.system_sender_label'));
                 $message->to($this->email, $this->full_name)->subject(trans('emails.password_changed.subject'));
             });
         }
