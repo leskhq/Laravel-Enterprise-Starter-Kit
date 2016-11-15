@@ -17,7 +17,9 @@ return [
         'created'                   => 'Setting successfully created',
         'updated'                   => 'Setting successfully updated',
         'deleted'                   => 'Setting successfully deleted',
-        'loaded'                    => 'Successfully loaded :number settings from \'.env\' file.',
+        'settings-loaded'           => 'Successfully loaded :number settings from :env file.',
+        'no-settings-loaded'        => 'Nothing loaded from :env settings file.',
+        'settings-file-not-found'   => 'Could not find :env settings file.',
         'no-setting-selected'       => 'No setting selected.',
     ],
 

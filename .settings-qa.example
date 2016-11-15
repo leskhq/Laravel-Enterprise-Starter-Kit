@@ -1,0 +1,70 @@
+# Settings file for the QA environment.
+
+app.url=http://localhost
+app.home_route=welcome
+app.long_name=<b>Laravel</b> ESK
+app.short_name=LESK
+app.tag_line=Anything you want
+app.copyright_line=<strong>Copyright &copy; 2015 <a href="#">Company</a>.</strong> All rights reserved.
+app.allow_registration=true
+app.context_help_area=true
+app.notification_area=true
+app.search_box=false
+app.extended_user_menu=true
+app.user_profile_link=true
+app.right_sidebar=true
+app.email_notifications_enabled=false
+app.time_format=24
+
+sql-logging.log=false
+sql-logging.log_request=true
+
+mail.system_sender_address=system.noreply@lesk.io
+mail.system_sender_label=LESK System
+
+lern.enable_record=true
+lern.enable_notify=true
+lern.channel=LESK
+lern.mail_recipient=lesk.admin@email.com
+
+theme.default=default
+
+walled-garden.enabled=false
+
+auth.enable_user_on_create=true
+auth.email_validation=false
+auth.enable_user_on_validation=false
+
+ldap.enabled=true
+ldap.debug=false
+ldap.server_type=MSAD
+ldap.create_accounts=true
+ldap.replicate_group_membership=true
+ldap.resync_on_login=true
+ldap.group_model=App\Models\Role
+ldap.label_internal=internal
+ldap.label_ldap=ldap
+ldap.account_suffix=@company.com
+ldap.base_dn=DC=department,DC=company,DC=com
+ldap.server=ldapsrv01.company.com
+ldap.port=389
+ldap.user_name=ldap_reader
+ldap.password=PaSsWoRd
+ldap.return_real_primary_group=true
+ldap.secured=false
+ldap.secured_port=636
+ldap.recursive_groups=true
+ldap.sso=false
+ldap.username_field=samaccountname
+ldap.email_field=userprincipalname
+ldap.first_name_field=givenname
+ldap.last_name_field=sn
+ldap.user_filter=(&(objectcategory=person)(samaccountname=%username))
+
+audit.enabled=true
+audit.purge_retention=365
+
+errors.purge_retention=30
+
+## Menu-Builder options
+menu-builder.framework_handler=App\Handlers\LESKSecuredMenuHandler

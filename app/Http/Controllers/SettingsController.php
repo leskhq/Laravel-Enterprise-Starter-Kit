@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App\Libraries\FlashLevel;
 use App\Libraries\SettingDotEnv;
 use App\Libraries\Utils;
 use App\Repositories\AuditRepository as Audit;
@@ -149,9 +150,20 @@ class SettingsController extends Controller
 
     public function load()
     {
-        $cnt = SettingDotEnv::load($this->app->environmentPath(), $this->app->environmentFile());
+        $envName = env('APP_ENV', 'production');
+        $settingsFileName = ".settings-" . $envName;
+        $settingsPath = $this->app->environmentPath();
 
-        Flash::success( trans('admin/settings/general.status.loaded', ['number' => $cnt]) );
+        if (\File::exists($settingsPath . '/' . $settingsFileName)) {
+            $cnt = SettingDotEnv::load($settingsPath, $settingsFileName);
+            if (0 == $cnt) {
+                Utils::flashAndAudit(trans('admin/settings/general.audit-log.category'), trans('admin/settings/general.status.no-settings-loaded', ['env' => $envName]), FlashLevel::WARNING);
+            } else {
+                Utils::flashAndAudit(trans('admin/settings/general.audit-log.category'), trans('admin/settings/general.status.settings-loaded', ['number' => $cnt, 'env' => $envName]), FlashLevel::SUCCESS);
+            }
+        } else {
+            Utils::flashAndAudit(trans('admin/settings/general.audit-log.category'), trans('admin/settings/general.status.settings-file-not-found', ['env' => $envName]), FlashLevel::ERROR);
+        }
 
         return redirect('/admin/settings');
 
