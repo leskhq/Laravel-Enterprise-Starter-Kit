@@ -287,6 +287,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             $this->last_name = $attributes['last_name'];
         }
         if ( array_key_exists('username', $attributes) ) {
+            if ( $attributes['username'] != $this->username ) {
+                // Forget settings asociated to previous username. New settings will be saved bellow.
+                Setting::forget($this->settings()->prefix());
+            }
             $this->username = $attributes['username'];
         }
         if ( array_key_exists('email', $attributes) ) {
@@ -409,7 +413,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             // Get the value from the HTTP atributes
             $setting_selected = $attributes[$settingKey];
             // If not null set it otherwise forget it.
-            if (!Str::isNullOrEmptyString($setting_selected)) {
+            if ('' != trim($setting_selected)) {
                 // If a array of values was provided, look up the real value by using the index.
                 if (!is_null($valuesArr)) {
                     $setting_value = $valuesArr[$setting_selected];

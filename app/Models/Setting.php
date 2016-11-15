@@ -141,4 +141,9 @@ class Setting extends BaseSetting
     {
         return self::$ENCRYPTED_PREFIX . Crypt::encrypt($value);
     }
+
+    public function prefix()
+    {
+        return $this->prefix;
+    }
 }
