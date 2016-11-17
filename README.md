@@ -245,19 +245,23 @@ npm install
 ### Basic configuration
 
 #### Create your *.env* file
-Create a *.env* file from the *.env.example* supplied.
+Create a *.env* file from the example supplied.
 
-For a Development environment use:
+For example in the Development environment use:
 ```
 cp .env.example-dev .env
 ```
 
-For a other environments, such as QA and Production use:
+#### Create your *.settings* file
+Create a *.settings* file from the example supplied.
+
+For example in the Development environment use:
 ```
-cp .env.example-qa .env
+cp .settings-development.example .settings-development
 ```
 
-**_NOTE:_** Do not use the environment file for the development environment in any other environment as this will cause a lot of failures in the bootstrap and kernel part of the application due to some dependencies being dynamically injected for the development environment only.
+**_NOTE 1:_** Do not use the environment files for the development environment in any other environment as this will cause a lot of failures in the bootstrap and kernel part of the application due to some dependencies being dynamically injected for the development environment only.
+**_NOTE 2:_** No example is provided for the production environment as you should carefully craft your own version based on the example from QA.
 
 ### Basic configuration
 
