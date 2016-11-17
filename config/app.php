@@ -299,7 +299,7 @@ return [
     | this array to grant expanded functionality to your applications.
     |
     */
-    'providers' => [
+    'providers' => array(
 
         /*
          * Laravel Framework Service Providers...
@@ -353,8 +353,9 @@ return [
         Creativeorange\Gravatar\GravatarServiceProvider::class,
         Tylercd100\LERN\LERNServiceProvider::class,
         Arcanedev\Settings\SettingsServiceProvider::class,
+        Libern\SqlLogging\SqlLoggingServiceProvider::class
 
-    ],
+    ),
 
     /*
     |--------------------------------------------------------------------------
