@@ -261,6 +261,7 @@ cp .settings-development.example .settings-development
 ```
 
 **_NOTE 1:_** Do not use the environment files for the development environment in any other environment as this will cause a lot of failures in the bootstrap and kernel part of the application due to some dependencies being dynamically injected for the development environment only.
+
 **_NOTE 2:_** No example is provided for the production environment as you should carefully craft your own version based on the example from QA.
 
 ### Basic configuration
