@@ -20,6 +20,7 @@ foreach ($sales as $key => $sale):
             {!! link_to_route('admin.sales.show', $sale->id.'-'.date("d-m-Y", strtotime($sale->order_date)), $sale->id) !!}
         </td>
         <td>{{ $sale->customer->name }}</td>
+	<td>{{ Helpers::getCustomerTypeDisplayName($sale->customer->type) }}</td>
         <td>{{ $sale->order_date }}</td>
         <td>{{ $sale->transfer_date }}</td>
         <td>

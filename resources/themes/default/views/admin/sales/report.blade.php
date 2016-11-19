@@ -33,6 +33,7 @@
                             <tr>
                                 <th>No PO</th>
                                 <th>Customer</th>
+				<th>Tipe Customer</th>
                                 <th>Tanggal Order</th>
                                 <th>Tanggal Transfer</th>
                                 <th>Status</th>

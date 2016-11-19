@@ -48,6 +48,16 @@ class CustomersController extends Controller
 	})->export('csv');
     }
 
+    public function exportSales($id) {
+        Excel::create('Customer', function($excel) use($id) {
+            $excel->sheet('Customer', function($sheet) use($id) {
+                $sales = $this->sale->findAllBy('customer_id', $id);
+		$customerName = $this->customer->findBy('id', $id)->name;
+                $sheet->loadView('admin.customers.excel-sales', ['sales' => $sales,'id'=>$id,'name'=>$customerName]);
+            });
+        })->download('xls');
+    }
+
     public function indexByType($id)
     {
 	$tipe = $id;

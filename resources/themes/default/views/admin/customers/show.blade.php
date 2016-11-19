@@ -26,7 +26,8 @@
                             <b>Since</b> <a class="pull-right">{{ $customer->created_at }}</a>
                         </li>
                     </ul>
-
+			
+		    <a href="{{ route('admin.customers.export-sales', $customer->id) }}" class="btn btn-info btn-block" title="{{ trans('general.button.export') }}"><b> Export Sales </b></a>
                     <a href="{{ route('admin.customers.confirm-delete', $customer->id) }}" class="btn btn-danger btn-block" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><b> Delete </b></a>
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
