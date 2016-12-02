@@ -13,7 +13,7 @@ return array(
         'fallback' => 'identicon',
 
         // would you like to return a https://... image
-        'secure' => false,
+        'secure' => true,
 
         // Gravatar allows users to self-rate their images so that they can indicate if an image
         // is appropriate for a certain audience. By default, only 'G' rated images are displayed
