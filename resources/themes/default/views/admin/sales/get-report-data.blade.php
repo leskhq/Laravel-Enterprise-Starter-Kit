@@ -43,7 +43,7 @@ foreach ($sales as $key => $sale):
 endforeach; ?>
 <tr>
   <td>{{ $no-1 }}</td>
-  <td colspan=4>
+  <td colspan=5>
     {{ trans('admin/sales/general.columns.total') }}
   </td>
   <td>{{ Helpers::reggo($chemicals) }}</td>
