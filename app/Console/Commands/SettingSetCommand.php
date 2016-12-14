@@ -56,6 +56,8 @@ class SettingSetCommand extends Command
                         $value = $this->ask('Enter value:');
                         $message = "Setting [$key] set to [$value].";
                     }
+                } else {
+                    $message = "Setting [$key] set to [$value].";
                 }
 
                 Setting::set($key, $value, $encrypt);
