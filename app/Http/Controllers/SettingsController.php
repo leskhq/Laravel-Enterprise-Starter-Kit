@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App\Exceptions\FileNotFoundException;
 use App\Libraries\FlashLevel;
 use App\Libraries\SettingDotEnv;
 use App\Libraries\Utils;
@@ -151,17 +152,15 @@ class SettingsController extends Controller
     public function load()
     {
         $envName = env('APP_ENV', 'production');
-        $settingsFileName = ".settings-" . $envName;
-        $settingsPath = $this->app->environmentPath();
 
-        if (\File::exists($settingsPath . '/' . $settingsFileName)) {
-            $cnt = SettingDotEnv::load($settingsPath, $settingsFileName);
+        try {
+            $cnt = Setting::load($envName);
             if (0 == $cnt) {
                 Utils::flashAndAudit(trans('admin/settings/general.audit-log.category'), trans('admin/settings/general.status.no-settings-loaded', ['env' => $envName]), FlashLevel::WARNING);
             } else {
                 Utils::flashAndAudit(trans('admin/settings/general.audit-log.category'), trans('admin/settings/general.status.settings-loaded', ['number' => $cnt, 'env' => $envName]), FlashLevel::SUCCESS);
             }
-        } else {
+        } catch (FileNotFoundException $fnfx) {
             Utils::flashAndAudit(trans('admin/settings/general.audit-log.category'), trans('admin/settings/general.status.settings-file-not-found', ['env' => $envName]), FlashLevel::ERROR);
         }
 

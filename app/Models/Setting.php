@@ -1,7 +1,10 @@
 <?php namespace App\Models;
 
+use App\Exceptions\FileNotFoundException;
+use App\Libraries\Arr;
 use App\Libraries\Str;
 use App\Libraries\Utils;
+use App\Libraries\SettingDotEnv;
 use App\Traits\BaseModelTrait;
 use Arcanedev\Settings\Facades\Setting as BaseSetting;
 use Crypt;
@@ -44,6 +47,33 @@ class Setting extends BaseSetting
         return $val;
     }
 
+    public function load($envName)
+    {
+        $cnt = 0;
+
+        $settingsFileName = ".settings-" . $envName;
+        $settingsPath = self::$app->environmentPath();
+        $settingsFullFileName = $settingsPath . '/' . $settingsFileName;
+
+        if (\File::exists($settingsFullFileName)) {
+            $cnt = SettingDotEnv::load($settingsPath, $settingsFileName);
+        } else {
+            throw new FileNotFoundException($settingsFullFileName);
+        }
+
+        return $cnt;
+    }
+
+    public function clear()
+    {
+        $settings = Setting::all();
+        $settings = Arr::dot($settings);
+
+        foreach($settings as $key => $value) {
+            $this->forget($key);
+        }
+        $this->save();
+    }
 
     public function has($key)
     {

@@ -17,6 +17,8 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\SettingAllCommand::class,
         \App\Console\Commands\SettingGetCommand::class,
         \App\Console\Commands\SettingSetCommand::class,
+        \App\Console\Commands\SettingLoadCommand::class,
+        \App\Console\Commands\SettingClearCommand::class,
         \App\Console\Commands\SettingForgetCommand::class,
     ];
 

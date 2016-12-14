@@ -5,21 +5,21 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Setting;
 
-class SettingForgetCommand extends Command
+class SettingClearCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'setting:forget {key}';
+    protected $signature = 'setting:clear';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Forget the given setting key';
+    protected $description = 'Clear and forget all settings';
 
     /**
      * Create a new command instance.
@@ -39,13 +39,9 @@ class SettingForgetCommand extends Command
     public function handle()
     {
         try {
-            if ($key = $this->argument('key')) {
-                Setting::forget($key);
-                Setting::save();
-                $this->info("Setting [$key] has  been forgotten.");
-            } else {
-                $this->error("Missing 'key' argument.");
-            }
+            Setting::clear();
+            Setting::save();
+            $this->info("Settings cleared.");
         } catch (\Exception $ex) {
             $this->error("Exception: ". $ex->getMessage());
             $this->error("Stack trace: ". $ex->getTraceAsString());

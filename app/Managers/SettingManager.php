@@ -28,6 +28,16 @@ class SettingManager
         $this->app = $app;
     }
 
+    public function load($envName)
+    {
+        return (new SettingModel())->load($envName);
+    }
+
+    public function clear()
+    {
+        return (new SettingModel())->clear();
+    }
+
     /**
      * @param $key
      * @return mixed
