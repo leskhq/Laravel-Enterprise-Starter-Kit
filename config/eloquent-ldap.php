@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'enabled' => env('ldap.enabled', false),
+    'enabled' => env('eloquent-ldap.enabled', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -23,7 +23,7 @@ return [
     |
     */
 
-    'debug' => env('ldap.debug', 'false'),
+    'debug' => env('eloquent-ldap.debug', 'false'),
 
     /*
     |--------------------------------------------------------------------------
@@ -35,7 +35,7 @@ return [
     |
     */
 
-    'server_type' => env('ldap.server_type', 'MSAD'),
+    'server_type' => env('eloquent-ldap.server_type', 'MSAD'),
 
     /*
     |--------------------------------------------------------------------------
@@ -48,7 +48,7 @@ return [
     |
     */
 
-    'create_accounts' => env('ldap.create_accounts', true),
+    'create_accounts' => env('eloquent-ldap.create_accounts', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -64,7 +64,7 @@ return [
     |
     */
 
-    'replicate_group_membership' => env('ldap.replicate_group_membership', true),
+    'replicate_group_membership' => env('eloquent-ldap.replicate_group_membership', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -79,7 +79,7 @@ return [
     |
     */
 
-    'resync_on_login' => env('ldap.resync_on_login', true),
+    'resync_on_login' => env('eloquent-ldap.resync_on_login', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -94,7 +94,7 @@ return [
     |
     */
 
-    'group_model' => env('ldap.group_model', App\Models\Group::class),
+    'group_model' => env('eloquent-ldap.group_model', App\Models\Group::class),
 
     /*
     |--------------------------------------------------------------------------
@@ -108,7 +108,7 @@ return [
     |
     */
 
-    'label_internal' => env('ldap.label_internal', 'internal'),
+    'label_internal' => env('eloquent-ldap.label_internal', 'internal'),
 
     /*
     |--------------------------------------------------------------------------
@@ -120,7 +120,7 @@ return [
     |
     */
 
-    'label_ldap' => env('ldap.label_ldap', 'ldap'),
+    'label_ldap' => env('eloquent-ldap.label_ldap', 'ldap'),
 
     /*
     |--------------------------------------------------------------------------
@@ -133,7 +133,7 @@ return [
     |
     */
 
-    'account_suffix' => env('ldap.account_suffix', "@company.com"),
+    'account_suffix' => env('eloquent-ldap.account_suffix', "@company.com"),
 
     /*
     |--------------------------------------------------------------------------
@@ -144,7 +144,7 @@ return [
     |
     */
 
-    'base_dn' => env('ldap.base_dn', "DC=department,DC=company,DC=com"),
+    'base_dn' => env('eloquent-ldap.base_dn', "DC=department,DC=company,DC=com"),
 
     /*
     |--------------------------------------------------------------------------
@@ -156,7 +156,7 @@ return [
     |
     */
 
-    'server' => [ env('ldap.server', "ldapsrv01.company.com") ],
+    'server' => [ env('eloquent-ldap.server', "ldapsrv01.company.com") ],
 
     /*
     |--------------------------------------------------------------------------
@@ -167,7 +167,7 @@ return [
     |
     */
 
-    'port' => env('ldap.port', 389),
+    'port' => env('eloquent-ldap.port', 389),
 
     /*
     |--------------------------------------------------------------------------
@@ -178,7 +178,7 @@ return [
     |
     */
 
-    'user_name' => env('ldap.user_name', "ldap_reader"),
+    'user_name' => env('eloquent-ldap.user_name', "ldap_reader"),
 
     /*
     |--------------------------------------------------------------------------
@@ -189,7 +189,7 @@ return [
     |
     */
 
-    'password' => env('ldap.password', "PaSsWoRd"),
+    'password' => env('eloquent-ldap.password', "PaSsWoRd"),
 
     /*
     |--------------------------------------------------------------------------
@@ -201,7 +201,7 @@ return [
     |
     */
 
-    'return_real_primary_group' => env('ldap.return_real_primary_group', true),
+    'return_real_primary_group' => env('eloquent-ldap.return_real_primary_group', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -215,7 +215,7 @@ return [
     |
     */
 
-    'secured' => env('ldap.secured', false),
+    'secured' => env('eloquent-ldap.secured', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -226,7 +226,7 @@ return [
     |
     */
 
-    'secured_port' => env('ldap.secured_port', 636),
+    'secured_port' => env('eloquent-ldap.secured_port', 636),
 
     /*
     |--------------------------------------------------------------------------
@@ -239,7 +239,7 @@ return [
     |
     */
 
-    'recursive_groups' => env('ldap.recursive_groups', false),
+    'recursive_groups' => env('eloquent-ldap.recursive_groups', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -253,7 +253,7 @@ return [
     |
     */
 
-    'sso' => env('ldap.sso', false),
+    'sso' => env('eloquent-ldap.sso', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -264,7 +264,7 @@ return [
     |
     */
 
-    'username_field' => env('ldap.username_field', "samaccountname"),
+    'username_field' => env('eloquent-ldap.username_field', "samaccountname"),
 
     /*
     |--------------------------------------------------------------------------
@@ -275,7 +275,7 @@ return [
     |
     */
 
-    'email_field' => env('ldap.email_field', "userprincipalname"),
+    'email_field' => env('eloquent-ldap.email_field', "userprincipalname"),
 
     /*
     |--------------------------------------------------------------------------
@@ -286,7 +286,7 @@ return [
     |
     */
 
-    'first_name_field' => env('ldap.first_name_field', "givenname"),
+    'first_name_field' => env('eloquent-ldap.first_name_field', "givenname"),
 
     /*
     |--------------------------------------------------------------------------
@@ -297,7 +297,7 @@ return [
     |
     */
 
-    'last_name_field' => env('ldap.last_name_field', "sn"),
+    'last_name_field' => env('eloquent-ldap.last_name_field', "sn"),
 
 
     /*
@@ -315,7 +315,7 @@ return [
     |
     */
 
-    'user_filter' => env('ldap.user_filter', "(&(objectcategory=person)(samaccountname=%username))"),
+    'user_filter' => env('eloquent-ldap.user_filter', "(&(objectcategory=person)(samaccountname=%username))"),
 
 
 ];

@@ -383,10 +383,10 @@ Some important hard-set rules to note are:
     * A user cannot disable or delete his own currently logged in user.
 
 ### LDAP/AD authentication.
-To enable the optional LDAP/AD authentication module, set the *LDAP_ENABLED* variable to *true* in the *.env* file as shown 
-below:
+To enable the optional LDAP/AD authentication module, set the *eloquent-ldap.enabled* variable to *true* in the *.env*
+file as shown below:
 ````
-LDAP.ENABLED=true
+eloquent-ldap.enabled=true
 ````
 By default the LDAP/AD authentication module is set to off or false, as it requires some extra configuration on your part.
 For more information on how to configure the module, refer to documentation of the underlying package at 
@@ -619,7 +619,7 @@ far back, in days, exceptions are kept when purging. By default any exception ol
 
 Context sensitive help can be enabled by setting the configuration option ```APP_CONTEXT_HELP_AREA``` to true. When context sensitive help is enabled, a question mark (?) appears in the top-right area of the Web application. The question mark is either dimmed and disabled, or lit and enabled dependint on whether context sensitive help is available or not. For example on the home page the question mark will be dimmed and disabled but on the User edit page it will be lit and enabled. When clicked on, a small box will appear with the content of the context help inside. The help box can be dismissed by clicking anywhere outside the box.
 
-To create a new context sensitive help box, simply create a blade file under the ```resources/themes/default/views/context_help/``` folder followed by a struture representing the name of your route. For example the user edit page is accessed by the ```admin.users.edit``` route so create a blade page named ```edit.blade.php``` under ```resources/themes/default/views/context_help/admin/users/``` and it will automatically be loaded and shown when a user click on the question mark (?) icon.
+To create a new context sensitive help box, simply create a blade file under the ```resources/themes/default/views/context_help/``` folder followed by a structure representing the name of your route. For example the user edit page is accessed by the ```admin.users.edit``` route so create a blade page named ```edit.blade.php``` under ```resources/themes/default/views/context_help/admin/users/``` and it will automatically be loaded and shown when a user click on the question mark (?) icon.
 
 Module can also create context sensitive help by following the same principle but they must also set the __context__ parameter when they call the parent __constructor__, here is how the (Active Directory Inspector)[https://github.com/sroutier/LESK-Module_ActiveDirectoryInspector] module sets it, notice the 3rd parameter in the ```parent::__construct()``` call:
 ```
@@ -632,7 +632,6 @@ Module can also create context sensitive help by following the same principle bu
     {
         parent::__construct($app, $audit, "activedirectoryinspector");
         $this->app = $app;
-        $this->ldapConfig = $this->app['config']['activedirectoryinspector'];
     }
 ...
 ```
