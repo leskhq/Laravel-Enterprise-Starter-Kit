@@ -13,7 +13,7 @@ app.search_box=false
 app.extended_user_menu=true
 app.user_profile_link=true
 app.right_sidebar=true
-app.email_notifications_enabled=false
+app.email_notifications=false
 app.time_format=24
 
 sql-logging.log=false
