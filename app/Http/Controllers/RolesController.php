@@ -43,6 +43,8 @@ class RolesController extends Controller
         $this->role = $role;
         $this->permission = $permission;
         $this->user = $user;
+        // Set default crumbtrail for controller.
+        session(['crumbtrail.leaf' => 'roles']);
     }
 
     /**

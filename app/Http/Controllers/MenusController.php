@@ -7,11 +7,23 @@ use App\Repositories\AuditRepository as Audit;
 use Auth;
 use DB;
 use Flash;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class MenusController extends Controller
 {
+    /**
+     * @param Application $app
+     * @param Audit $audit
+     */
+    public function __construct(Application $app, Audit $audit)
+    {
+        parent::__construct($app, $audit);
+        // Set default crumbtrail for controller.
+        session(['crumbtrail.leaf' => 'menus']);
+    }
+
 
     /**
      * @return \Illuminate\View\View

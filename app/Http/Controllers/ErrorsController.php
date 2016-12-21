@@ -24,6 +24,8 @@ class ErrorsController extends Controller {
     {
         parent::__construct($app, $audit);
         $this->error = $error;
+        // Set default crumbtrail for controller.
+        session(['crumbtrail.leaf' => 'error']);
     }
 
     /**
@@ -72,7 +74,6 @@ class ErrorsController extends Controller {
         $page_title = trans('admin/error/general.page.show.title');
         $page_description = trans('admin/error/general.page.show.description', ['error_id' => $error->id]);
 
-        session(['crumbtrail.leaf' => 'error']);
         return view('admin.errors.show', compact('error', 'errorData', 'page_title', 'page_description'));
     }
 

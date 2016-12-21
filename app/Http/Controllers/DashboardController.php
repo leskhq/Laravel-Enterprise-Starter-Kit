@@ -1,8 +1,22 @@
 <?php namespace App\Http\Controllers;
 
 
+use Illuminate\Contracts\Foundation\Application;
+use App\Repositories\AuditRepository as Audit;
+
 class DashboardController extends Controller
 {
+    /**
+     * @param Application $app
+     * @param Audit $audit
+     */
+    public function __construct(Application $app, Audit $audit)
+    {
+        parent::__construct($app, $audit);
+        // Set default crumbtrail for controller.
+        session(['crumbtrail.leaf' => 'dashboard']);
+    }
+
 
     public function index() {
         $data['tasks'] = [

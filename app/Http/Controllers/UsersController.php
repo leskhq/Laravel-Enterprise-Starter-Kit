@@ -48,6 +48,8 @@ class UsersController extends Controller
         $this->user  = $user;
         $this->role  = $role;
         $this->perm  = $perm;
+        // Set default crumbtrail for controller.
+        session(['crumbtrail.leaf' => 'users']);
     }
 
     /**
@@ -589,6 +591,8 @@ class UsersController extends Controller
         $locales = Setting::get('app.supportedLocales');
         $locale = $user->settings()->get('locale');
 
+        // Unset default crumbtrail set in controller ctor.
+        session()->pull('crumbtrail.leaf');
         return view('user.profile', compact('user', 'perms', 'themes', 'theme', 'time_zones', 'tzKey', 'time_format', 'locale', 'locales', 'readOnlyIfLDAP', 'page_title', 'page_description'));
     }
 

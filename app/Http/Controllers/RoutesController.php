@@ -37,6 +37,8 @@ class RoutesController extends Controller
         parent::__construct($app, $audit);
         $this->route = $route;
         $this->permission = $permission;
+        // Set default crumbtrail for controller.
+        session(['crumbtrail.leaf' => 'routes']);
     }
 
     /**

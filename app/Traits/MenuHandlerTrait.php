@@ -169,6 +169,12 @@ trait MenuHandlerTrait
         try {
             $bContinue = true;
 
+            // Get crumbtrail leaf node from session in case a controller wants to force it.
+            // Use session()->pull() to unset/reset the variable after each use.
+            if (session()->has('crumbtrail.leaf')) {
+                $leaf = session()->pull('crumbtrail.leaf');
+            }
+
             $leaf    = $this->GetLeafMenuItem($leaf);
             $topNode = $this->getMenuItem($topNode);
 
@@ -314,12 +320,12 @@ trait MenuHandlerTrait
      */
     public function getLeafMenuItem( $leaf = null )
     {
-        // Get crumbtrail leaf node from session in case a controller wants to force it.
-        // Use session()->pull() to unset/reset the variable after each use.
-        if (session()->has('crumbtrail.leaf')) {
-            $leaf = session()->pull('crumbtrail.leaf');
-        }
-
+//        // Get crumbtrail leaf node from session in case a controller wants to force it.
+//        // Use session()->pull() to unset/reset the variable after each use.
+//        if (session()->has('crumbtrail.leaf')) {
+//            $leaf = session()->pull('crumbtrail.leaf');
+//        }
+//
         // Get the leaf menu item from the value passed in.
         try {
             $leaf = $this->getMenuItem($leaf);

@@ -4,12 +4,25 @@ use App\Http\Requests;
 use App\Repositories\AuditRepository as Audit;
 use Artisan;
 use Auth;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 use Laracasts\Flash\Flash;
 use Sroutier\LESKModules\Facades\Module;
 
 class ModulesController extends Controller
 {
+    /**
+     * @param Application $app
+     * @param Audit $audit
+     */
+    public function __construct(Application $app, Audit $audit)
+    {
+        parent::__construct($app, $audit);
+        // Set default crumbtrail for controller.
+        session(['crumbtrail.leaf' => 'modules']);
+    }
+
+
     /**
      * Display the list of modules.
      *

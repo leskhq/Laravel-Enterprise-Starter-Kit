@@ -18,6 +18,8 @@ class SettingsController extends Controller
     public function __construct(Application $app, Audit $audit)
     {
         parent::__construct($app, $audit);
+        // Set default crumbtrail for controller.
+        session(['crumbtrail.leaf' => 'setting']);
     }
 
     public function index()

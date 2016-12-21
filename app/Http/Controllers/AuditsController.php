@@ -4,9 +4,22 @@ use App\Repositories\AuditRepository as Audit;
 use App\Repositories\Criteria\Audit\AuditByCreatedDateDescending;
 use App\Repositories\Criteria\Audit\AuditCreatedBefore;
 use Auth;
+use Illuminate\Contracts\Foundation\Application;
 use Setting;
 
 class AuditsController extends Controller {
+
+    /**
+     * @param Application $app
+     * @param Audit $audit
+     */
+    public function __construct(Application $app, Audit $audit)
+    {
+        parent::__construct($app, $audit);
+        // Set default crumbtrail for controller.
+        session(['crumbtrail.leaf' => 'audit']);
+    }
+
 
     /**
      * @return \Illuminate\View\View

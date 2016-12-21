@@ -1,12 +1,25 @@
 <?php namespace App\Http\Controllers;
 
+use App\Repositories\AuditRepository as Audit;
 use Exception;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 use Redirect;
 use Setting;
 
 class HomeController extends Controller
 {
+    /**
+     * @param Application $app
+     * @param Audit $audit
+     */
+    public function __construct(Application $app, Audit $audit)
+    {
+        parent::__construct($app, $audit);
+        // Set default crumbtrail for controller.
+        session(['crumbtrail.leaf' => 'home']);
+    }
+
     /**
      * @return \Illuminate\Http\RedirectResponse
      */

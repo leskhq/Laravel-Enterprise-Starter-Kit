@@ -158,7 +158,7 @@ class LESKSecuredMenuHandler implements MenuHandlerInterface
         return $url;
     }
 
-    public function getLeafMenuItem( Menu $leaf = null )
+    public function getLeafMenuItem( $leaf = null )
     {
         // Get the leaf menu item from the value passed in.
         try {
