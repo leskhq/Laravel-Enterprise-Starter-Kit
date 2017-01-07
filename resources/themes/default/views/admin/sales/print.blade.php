@@ -159,14 +159,15 @@
 		Diskon
 	</div>
 	<div class='tengah'>
-		{{ Helpers::reggo($sale->discount) }}
+		{{ $sale->discount }}%
 	</div>
 	<div class='clearboth'></div>
 	<div class='kiri'>
 		Total
 	</div>
 	<div class='tengah'>
-		<b>{{ Helpers::reggo(($nom-$sale->discount) + $sale->shipping_fee + $sale->packing_fee) }}</b>
+	<?php $potongan = round($sale->discount/100*$nom) ?>
+		<b>{{ Helpers::reggo($nom-$potongan + $sale->shipping_fee + $sale->packing_fee) }}</b>
 	</div>
 	<div class='clearboth'></div>
 	<div class='kiri'>

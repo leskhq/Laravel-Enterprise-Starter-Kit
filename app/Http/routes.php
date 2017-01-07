@@ -40,6 +40,8 @@ Route::group(['middleware' => 'authorize'], function () {
 
     // Site administration section
     Route::group(['prefix' => 'admin'], function () {
+	// partners
+        \App\Http\Controllers\PartnersController::routes();
         // Expedition routes
         Route::get(   'expeditions',                       ['as' => 'admin.expeditions.index',          'uses' => 'ExpeditionsController@index']);
         Route::post(  'expeditions',                       ['as' => 'admin.expeditions.store',          'uses' => 'ExpeditionsController@store']);

@@ -37,6 +37,8 @@ class Customer extends Model
             return 'Mitra BO Murni';
         } elseif ( $this->type == 7 ) {
             return 'Investor';
-        }
+        } elseif ( $this->type == 8 ) {
+	    return 'Trainee';
+	}
     }
 }

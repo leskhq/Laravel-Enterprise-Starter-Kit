@@ -125,8 +125,14 @@
       <td></td>
     </tr><tr>
       <td></td>
+      <td>Diskon</td>
+      <td colspan="3">{{ $sale->discount }}%</td>
+      <td></td>
+    </tr><tr>
+      <td></td>
       <td>TOTAL</td>
-      <td colspan="3">{{ Helpers::reggo(($nom-$sale->discount) + $sale->shipping_fee + $sale->packing_fee) }}</td>
+	<?php $potongan = round($sale->discount/100*$nom); ?>
+      <td colspan="3">{{ Helpers::reggo(($nom-$potongan) + $sale->shipping_fee + $sale->packing_fee) }}</td>
       <td></td>
     </tr><tr>
       <td></td>

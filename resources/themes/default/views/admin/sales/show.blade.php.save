@@ -132,9 +132,9 @@
                     </tr>
                     <tr>
                         <th>{{ trans('admin/sales/general.columns.total') }}:</th>
-			<?php $potongan = round($sale->discount/100*$sale->nominal); ?>
+			<php $potongan = $sale->discount/100 * $sale->nominal; ?>
                         <td>{{
-                            Helpers::reggo( $sale->nominal-$potongan + $sale->shipping_fee + $sale->packing_fee )
+                            Helpers::reggo(($sale->nominal-$potongan) + $sale->shipping_fee + $sale->packing_fee)
                         }}</td>
                     </tr>
                 </table>
