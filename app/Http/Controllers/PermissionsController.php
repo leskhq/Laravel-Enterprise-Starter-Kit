@@ -23,8 +23,28 @@ class PermissionsController extends Controller {
     public function __construct(Permission $permission, Role $role, Route $route)
     {
         $this->permission = $permission;
-        $this->role = $role;
-        $this->route = $route;
+        $this->role       = $role;
+        $this->route      = $route;
+    }
+
+    static function routes() {
+        \Route::group(['prefix' => 'permissions'], function () {
+            \Route::get(   '/generate',                      'PermissionsController@generate')          ->name('admin.permissions.generate');
+            \Route::post(  '/enableSelected',                'PermissionsController@enableSelected')    ->name('admin.permissions.enable-selected');
+            \Route::post(  '/disableSelected',               'PermissionsController@disableSelected')   ->name('admin.permissions.disable-selected');
+            \Route::post(  '/',                              'PermissionsController@store')             ->name('admin.permissions.store');
+            \Route::get(   '/',                              'PermissionsController@index')             ->name('admin.permissions.index');
+            \Route::get(   '/create',                        'PermissionsController@create')            ->name('admin.permissions.create');
+            \Route::get(   '/{permissionId}',                'PermissionsController@show')              ->name('admin.permissions.show');
+            \Route::patch( '/{permissionId}',                'PermissionsController@update')            ->name('admin.permissions.patch');
+            \Route::put(   '/{permissionId}',                'PermissionsController@update')            ->name('admin.permissions.update');
+            \Route::delete('/{permissionId}',                'PermissionsController@destroy')           ->name('admin.permissions.destroy');
+            \Route::get(   '/{permissionId}/edit',           'PermissionsController@edit')              ->name('admin.permissions.edit');
+            \Route::get(   '/{permissionId}/confirm-delete', 'PermissionsController@getModalDelete')    ->name('admin.permissions.confirm-delete');
+            \Route::get(   '/{permissionId}/delete',         'PermissionsController@destroy')           ->name('admin.permissions.delete');
+            \Route::get(   '/{permissionId}/enable',         'PermissionsController@enable')            ->name('admin.permissions.enable');
+            \Route::get(   '/{permissionId}/disable',        'PermissionsController@disable')           ->name('admin.permissions.disable');
+        });
     }
 
     /**

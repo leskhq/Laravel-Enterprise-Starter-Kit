@@ -20,6 +20,20 @@ class MaterialsController extends Controller
         $this->material = $material;
     }
 
+    static function routes() {
+        \Route::group(['prefix' => 'materials'], function () {
+            \Route::get(  '/',                     'MaterialsController@index')             ->name('admin.materials.index');
+            \Route::post( '/',                     'MaterialsController@store')             ->name('admin.materials.store');
+            \Route::patch('/{mId}',                'MaterialsController@update')            ->name('admin.materials.update');
+            \Route::get(  '/create',               'MaterialsController@create')            ->name('admin.materials.create');
+            \Route::get(  '/out-of-stock',         'MaterialsController@outOfStock')        ->name('admin.materials.out-of-stock');
+            \Route::post( '/createPurchaseOrder',  'MaterialsController@createSelected')    ->name('admin.materials.order-selected');
+            \Route::get(  '/{mId}/edit',           'MaterialsController@edit')              ->name('admin.materials.edit');
+            \Route::get(  '/{mId}/delete',         'MaterialsController@destroy')           ->name('admin.materials.delete');
+            \Route::get(  '/{mId}/confirm-delete', 'MaterialsController@getModalDelete')    ->name('admin.materials.confirm-delete');
+        });
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +41,7 @@ class MaterialsController extends Controller
      */
     public function index()
     {
-        $materials = $this->material->all();
+        $materials        = $this->material->all();
 
         $page_title       = trans('admin/materials/general.page.index.title');
         $page_description = trans('admin/materials/general.page.index.description');
@@ -84,9 +98,9 @@ class MaterialsController extends Controller
      */
     public function edit($id)
     {
-        $material = $this->material->find($id);
-
-        $page_title = trans('admin/materials/general.page.edit.title');
+        $material         = $this->material->find($id);
+        
+        $page_title       = trans('admin/materials/general.page.edit.title');
         $page_description = trans('admin/materials/general.page.edit.description');
 
         return view('admin.materials.edit', compact('page_title', 'page_description', 'material'));
@@ -133,8 +147,8 @@ class MaterialsController extends Controller
      */
     public function getModalDelete($id)
     {
-        $error = null;
-
+        $error    = null;
+        
         $material = $this->material->find($id);
 
         $modal_title = trans('admin/materials/dialog.delete-confirm.title');

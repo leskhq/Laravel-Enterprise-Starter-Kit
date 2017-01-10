@@ -26,7 +26,22 @@ class CustomersController extends Controller
     public function __construct(Customer $customer, Sale $sale)
     {
         $this->customer = $customer;
-        $this->sale = $sale;
+        $this->sale     = $sale;
+    }
+
+    static function routes() {
+        \Route::group(['prefix' => 'customers'], function () {
+            \Route::post( '/',                     'CustomersController@store')         ->name('admin.customers.store');
+            \Route::get(  '/search',               'CustomersController@search')        ->name('admin.customers.search');
+            \Route::get(  '/{ccId}',               'CustomersController@show')          ->name('admin.customers.show');
+            \Route::patch('/{ccId}',               'CustomersController@update')        ->name('admin.customers.update');
+            \Route::get(  '/{ccId}/delete',        'CustomersController@destroy')       ->name('admin.customers.delete');
+            \Route::get(  '/{ccId}/type',          'CustomersController@indexByType')   ->name('admin.customers.index');
+            \Route::get(  '/{ccId}/export',       'CustomersController@export')         ->name('admin.customers.export');
+            \Route::get(  '/{ccId}/export-sales', 'CustomersController@exportSales')    ->name('admin.customers.export-sales');
+            \Route::get(  '/{ccId}/update-status', 'CustomersController@updateStatus')  ->name('admin.customers.update-status');
+            \Route::get(  '/{ccId}/confirm-delete','CustomersController@getModalDelete')->name('admin.customers.confirm-delete');
+        });
     }
 
     /**

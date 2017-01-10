@@ -12,6 +12,18 @@ use Artisan;
 
 class ModulesController extends Controller
 {
+    static function routes() {
+        \Route::group(['prefix' => 'modules'], function () {
+            \Route::get(  '/',                    'ModulesController@index')            ->name('admin.modules.index');
+            \Route::get(  '/{slug}/initialize',   'ModulesController@initialize')       ->name('admin.modules.initialize');
+            \Route::get(  '/{slug}/uninitialize', 'ModulesController@uninitialize')     ->name('admin.modules.uninitialize');
+            \Route::get(  '/{slug}/enable',       'ModulesController@enable')           ->name('admin.modules.enable');
+            \Route::get(  '/{slug}/disable',      'ModulesController@disable')          ->name('admin.modules.disable');
+            \Route::post( '/enableSelected',      'ModulesController@enableSelected')   ->name('admin.modules.enable-selected');
+            \Route::post( '/disableSelected',     'ModulesController@disableSelected')  ->name('admin.modules.disable-selected');
+            \Route::get(  '/optimize',            'ModulesController@optimize')         ->name('admin.modules.optimize');
+        });
+    }
     /**
      * Display the list of modules.
      *

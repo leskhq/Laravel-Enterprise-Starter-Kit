@@ -43,6 +43,27 @@ class SalesController extends Controller
         $this->material   = $material;
     }
 
+    static function routes() {
+        \Route::group(['prefix' => 'sales'], function () {
+            \Route::get(  '/',                     'SalesController@index')             ->name('admin.sales.index');
+            \Route::post( '/',                     'SalesController@store')             ->name('admin.sales.store');
+            \Route::get(  '/create',               'SalesController@create')            ->name('admin.sales.create');
+            \Route::get(  '/report',               'SalesController@report')            ->name('admin.sales.report');
+            \Route::post( '/export',               'SalesController@export')            ->name('admin.sales.export');
+            \Route::get(  '/{sId}',                'SalesController@show')              ->name('admin.sales.show');
+            \Route::patch('/{sId}',                'SalesController@update')            ->name('admin.sales.update');
+            \Route::get(  '/{sId}/edit',           'SalesController@edit')              ->name('admin.sales.edit');
+            \Route::get(  '/{sId}/excel',          'SalesController@excel')             ->name('admin.sales.excel');
+            \Route::get(  '/{sId}/print',          'SalesController@printTemp')         ->name('admin.sales.print');
+            \Route::get(  '/{sId}/delete',         'SalesController@destroy')           ->name('admin.sales.delete');
+            \Route::post( '/getReportData',        'SalesController@getReportData')     ->name('admin.sales.get-report-data');
+            \Route::post( '/select-by-status',     'SalesController@selectByStatus')    ->name('admin.sales.select-by-status');
+            \Route::post( '/{sId}/update-status',  'SalesController@updateStatus')      ->name('admin.sales.update-status');
+            \Route::get(  '/{sId}/confirm-delete', 'SalesController@getModalDelete')    ->name('admin.sales.confirm-delete');
+            \Route::get(  '/{sId}/formula',        'SalesController@formula')           ->name('admin.sales.formula');
+        });
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -55,7 +76,7 @@ class SalesController extends Controller
             ->pushCriteria(new SalesByTransferDateDescending())
             ->all();
 
-        $page_title = trans('admin/sales/general.page.index.title');
+        $page_title       = trans('admin/sales/general.page.index.title');
         $page_description = trans('admin/sales/general.page.index.description');
 
         return view('admin.sales.index', compact('sales', 'page_title', 'page_description'));
@@ -68,7 +89,7 @@ class SalesController extends Controller
      */
     public function create()
     {
-        $page_title = trans('admin/sales/general.page.create.title');
+        $page_title       = trans('admin/sales/general.page.create.title');
         $page_description = trans('admin/sales/general.page.create.description');
 
         return view('admin.sales.create', compact('page_title', 'page_description'));
@@ -142,9 +163,9 @@ class SalesController extends Controller
      */
     public function show($id)
     {
-        $sale = $this->sale->pushCriteria(new SalesWithSaleDetails())->find($id);
-
-        $page_title = trans('admin/sales/general.page.show.title');
+        $sale             = $this->sale->pushCriteria(new SalesWithSaleDetails())->find($id);
+        
+        $page_title       = trans('admin/sales/general.page.show.title');
         $page_description = trans('admin/sales/general.page.show.description', ['name' => $sale->customer->name]);
 
         return view('admin.sales.show', compact('sale', 'page_title', 'page_description'));
@@ -158,9 +179,9 @@ class SalesController extends Controller
      */
     public function edit($id)
     {
-        $sale = $this->sale->find($id);
-
-        $page_title = trans('admin/sales/general.page.edit.title');
+        $sale             = $this->sale->find($id);
+        
+        $page_title       = trans('admin/sales/general.page.edit.title');
         $page_description = trans('admin/sales/general.page.edit.description', ['name' => $sale->customer->name]);
 
         return view('admin.sales.edit', compact('page_title', 'page_description', 'sale'));
@@ -231,9 +252,9 @@ class SalesController extends Controller
 
     public function updateStatus($id)
     {
-        $status = $_POST['status'];
-
-        $sale = $this->sale->find($id);
+        $status       = $_POST['status'];
+        
+        $sale         = $this->sale->find($id);
         $sale->status = $status;
         $sale->save();
     }
@@ -261,13 +282,13 @@ class SalesController extends Controller
      */
     public function getModalDelete($id)
     {
-        $error = null;
-
-        $sale = $this->sale->find($id);
-
+        $error       = null;
+        
+        $sale        = $this->sale->find($id);
+        
         $modal_title = trans('admin/sales/dialog.delete-confirm.title');
         $modal_route = route('admin.sales.delete', array('id' => $sale->id));
-        $modal_body = trans('admin/sales/dialog.delete-confirm.body', ['id' => $sale->id, 'name' => $sale->customer->name]);
+        $modal_body  = trans('admin/sales/dialog.delete-confirm.body', ['id' => $sale->id, 'name' => $sale->customer->name]);
 
         return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
 
@@ -309,7 +330,7 @@ class SalesController extends Controller
 
     public function report()
     {
-        $page_title = trans('admin/sales/general.page.report.title');
+        $page_title       = trans('admin/sales/general.page.report.title');
         $page_description = trans('admin/sales/general.page.report.description');
 
         return view('admin.sales.report', compact('page_title', 'page_description'));
@@ -356,7 +377,7 @@ class SalesController extends Controller
                         'no'                 => $no,
                         'total'              => $total,
                         'total_shipping_fee' => $total_shipping_fee,
-			'total_packing_fee'  => $total_packing_fee,
+                        'total_packing_fee'  => $total_packing_fee,
                         'chemicalIndex'      => $chemicalIndex,
                         'materialIndex'      => $materialIndex
                     ]);
@@ -396,7 +417,18 @@ class SalesController extends Controller
             }
         }
 
-        return view('admin.sales.get-report-data', compact('sales', 'chemicalIndex', 'materialIndex', 'chemicals', 'materials', 'equipments', 'no', 'total', 'total_shipping_fee', 'total_packing_fee'));
+        return view('admin.sales.get-report-data', compact(
+                'sales',
+                'chemicalIndex',
+                'materialIndex',
+                'chemicals',
+                'materials',
+                'equipments',
+                'no',
+                'total',
+                'total_shipping_fee',
+                'total_packing_fee'
+            ));
     }
 
     public function formula($id)
@@ -407,7 +439,7 @@ class SalesController extends Controller
         $newVar = [];
         $x      = 1;
 
-        $page_title = trans('admin/sales/general.page.formula.title');
+        $page_title       = trans('admin/sales/general.page.formula.title');
         $page_description = trans('admin/sales/general.page.formula.description', ['name' => $sale->customer->name]);
 
         foreach ($sale->saleDetails as $key => $d) {

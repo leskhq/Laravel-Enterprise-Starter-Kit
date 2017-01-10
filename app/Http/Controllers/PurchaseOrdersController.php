@@ -37,6 +37,23 @@ class PurchaseOrdersController extends Controller
         $this->material            = $material;
     }
 
+    static function routes() {
+        \Route::group(['prefix' => 'purchase-orders'], function () {
+            \Route::get(  '/',                      'PurchaseOrdersController@index')           ->name('admin.purchase-orders.index');
+            \Route::post( '/',                      'PurchaseOrdersController@store')           ->name('admin.purchase-orders.store');
+            \Route::get(  '/search',                'PurchaseOrdersController@search')          ->name('admin.purchase-orders.search');
+            \Route::get(  '/create',                'PurchaseOrdersController@create')          ->name('admin.purchase-orders.create');
+            \Route::get(  '/{poId}',                'PurchaseOrdersController@show')            ->name('admin.purchase-orders.show');
+            \Route::patch('/{poId}',                'PurchaseOrdersController@update')          ->name('admin.purchase-orders.update');
+            \Route::get(  '/{poId}/edit',           'PurchaseOrdersController@edit')            ->name('admin.purchase-orders.edit');
+            \Route::get(  '/{poId}/delete',         'PurchaseOrdersController@destroy')         ->name('admin.purchase-orders.delete');
+            \Route::get(  '/{poId}/get-details',    'PurchaseOrdersController@getDetails')      ->name('admin.purchase-orders.get-details');
+            \Route::post( '/{poId}/update-status',  'PurchaseOrdersController@updateStatus')    ->name('admin.purchase-orders.update-status');
+            \Route::get(  '/{poId}/check-all',      'PurchaseOrdersController@checkAll')        ->name('admin.purchase-orders.check-all');
+            \Route::get(  '/{poId}/confirm-delete', 'PurchaseOrdersController@getModalDelete')  ->name('admin.purchase-orders.confirm-delete');
+        });
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -44,10 +61,10 @@ class PurchaseOrdersController extends Controller
      */
     public function index()
     {
-        $purchaseOrders = $this->purchaseOrder->pushCriteria(new PurchaseOrdersByCreatedAtDescending())->all();
-        $pending = $this->purchaseOrder->pushCriteria(new PurchaseOrdersWhereStatus())->all();
-        $materials = $this->material->pushCriteria(new MaterialsOutOfStock())->all();
-
+        $purchaseOrders   = $this->purchaseOrder->pushCriteria(new PurchaseOrdersByCreatedAtDescending())->all();
+        $pending          = $this->purchaseOrder->pushCriteria(new PurchaseOrdersWhereStatus())->all();
+        $materials        = $this->material->pushCriteria(new MaterialsOutOfStock())->all();
+        
         $page_title       = trans('admin/purchase-orders/general.page.index.title');
         $page_description = trans('admin/purchase-orders/general.page.index.description');
 
@@ -67,7 +84,7 @@ class PurchaseOrdersController extends Controller
      */
     public function create()
     {
-        $page_title = trans('admin/purchase-orders/general.page.create.title');
+        $page_title       = trans('admin/purchase-orders/general.page.create.title');
         $page_description = trans('admin/purchase-orders/general.page.create.description');
 
         return view('admin.purchase-orders.create', compact('page_title', 'page_description'));
@@ -121,7 +138,7 @@ class PurchaseOrdersController extends Controller
             ->pushCriteria(new PurchaseOrdersWithSuppliers())
             ->find($id);
 
-        $page_title = trans('admin/purchase-orders/general.page.show.title');
+        $page_title       = trans('admin/purchase-orders/general.page.show.title');
         $page_description = trans('admin/purchase-orders/general.page.show.description', ['name' => $purchaseOrder->supplier->name]);
 
         return view('admin.purchase-orders.show', compact('page_title', 'page_description', 'purchaseOrder'));
@@ -135,9 +152,9 @@ class PurchaseOrdersController extends Controller
      */
     public function edit($id)
     {
-        $purchaseOrder = $this->purchaseOrder->find($id);
-
-        $page_title = trans('admin/purchase-orders/general.page.edit.title');
+        $purchaseOrder    = $this->purchaseOrder->find($id);
+        
+        $page_title       = trans('admin/purchase-orders/general.page.edit.title');
         $page_description = trans('admin/purchase-orders/general.page.edit.description', ['name' => $purchaseOrder->supplier->name]);
 
         return view('admin.purchase-orders.edit', compact('page_title', 'page_description', 'purchaseOrder'));
@@ -204,13 +221,13 @@ class PurchaseOrdersController extends Controller
      */
     public function getModalDelete($id)
     {
-        $error = null;
-
+        $error         = null;
+        
         $purchaseOrder = $this->purchaseOrder->find($id);
-
-        $modal_title = trans('admin/purchase-orders/dialog.delete-confirm.title');
-        $modal_route = route('admin.purchase-orders.delete', array('id' => $purchaseOrder->id));
-        $modal_body  = trans('admin/purchase-orders/dialog.delete-confirm.body', ['id' => $purchaseOrder->id, 'name' => $purchaseOrder->supplier->name]);
+        
+        $modal_title   = trans('admin/purchase-orders/dialog.delete-confirm.title');
+        $modal_route   = route('admin.purchase-orders.delete', array('id' => $purchaseOrder->id));
+        $modal_body    = trans('admin/purchase-orders/dialog.delete-confirm.body', ['id' => $purchaseOrder->id, 'name' => $purchaseOrder->supplier->name]);
 
         return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
 
@@ -252,14 +269,14 @@ class PurchaseOrdersController extends Controller
     public function getDetails($id)
     {
         $purchaseOrder = $this->purchaseOrder->pushCriteria(new PurchaseOrdersWithDetails())->find($id);
-        $materials = [];
+        $materials     = [];
 
         foreach ($purchaseOrder->purchaseOrderDetails as $key => $material) {
-            $materials[$key]['id']         = $material->material_id;
-            $materials[$key]['name']       = $material->material->name;
-            $materials[$key]['price']      = $material->material->price;
-            $materials[$key]['quantity']   = $material->quantity;
-            $materials[$key]['total']      = $material->total;
+            $materials[$key]['id']          = $material->material_id;
+            $materials[$key]['name']        = $material->material->name;
+            $materials[$key]['price']       = $material->material->price;
+            $materials[$key]['quantity']    = $material->quantity;
+            $materials[$key]['total']       = $material->total;
             $materials[$key]['description'] = $material->description;
         }
 

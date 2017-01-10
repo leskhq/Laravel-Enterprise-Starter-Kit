@@ -42,6 +42,15 @@ class MenusController extends Controller {
 //        $this->permission = $permission;
 //    }
 
+    static function routes() {
+        \Route::group(['prefix' => 'routes'], function () {
+            \Route::post( '/',                        'MenusController@save')           ->name('admin.menus.save');
+            \Route::get(  '/',                        'MenusController@index')          ->name('admin.menus.index');
+            \Route::get(  '/getData/{menuId}',        'MenusController@getData')        ->name('admin.menus.get-data');
+            \Route::get(  '/{menuId}/confirm-delete', 'MenusController@getModalDelete') ->name('admin.menus.confirm-delete');
+            \Route::get(  '/{menuId}/delete',         'MenusController@destroy')        ->name('admin.menus.delete');
+        });
+    }
 
     /**
      * @return \Illuminate\View\View

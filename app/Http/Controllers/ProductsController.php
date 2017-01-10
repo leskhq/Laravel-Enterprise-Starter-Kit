@@ -42,9 +42,24 @@ class ProductsController extends Controller
      */
     public function __construct(Product $product, Supplier $supplier, Perfume $perfume)
     {
-        $this->product = $product;
+        $this->product  = $product;
         $this->supplier = $supplier;
-        $this->perfume = $perfume;
+        $this->perfume  = $perfume;
+    }
+
+    static function routes() {
+        \Route::group(['prefix' => 'products'], function () {
+            \Route::post( '/',                      'ProductsController@store')         ->name('admin.products.store');
+            \Route::get(  '/create',                'ProductsController@create')        ->name('admin.products.create');
+            \Route::get(  '/search',                'ProductsController@search')        ->name('admin.products.search');
+            \Route::get(  '/getInfo',               'ProductsController@getInfo')       ->name('admin.products.get-info');
+            \Route::get(  '/aromaSearch',           'ProductsController@aromaSearch')   ->name('admin.products.aroma-search');
+            \Route::patch('/{proId}',               'ProductsController@update')        ->name('admin.products.update');
+            \Route::get(  '/{proId}/cat',           'ProductsController@index')         ->name('admin.products.index');
+            \Route::get(  '/{proId}/edit',          'ProductsController@edit')          ->name('admin.products.edit');
+            \Route::get(  '/{proId}/delete',        'ProductsController@destroy')       ->name('admin.products.delete');
+            \Route::get(  '/{proId}/confirm-delete','ProductsController@getModalDelete')->name('admin.products.confirm-delete');
+        });
     }
 
     /**
@@ -54,8 +69,10 @@ class ProductsController extends Controller
      */
     public function index($id, Request $request)
     {
-        $sortBy = $request->input('sortBy');
-        $orderBy = $request->input('orderBy');
+        $sortBy           = $request->input('sortBy');
+        $orderBy          = $request->input('orderBy');
+        $page_title       = trans('admin/products/general.page.index.title');
+        $page_description = trans('admin/products/general.page.index.description');
 
         if ($sortBy && $orderBy) {
             $products = $this->product->pushCriteria(new ProductWhereCategoryLike($id))->pushCriteria(new ProductOrderByColumn($sortBy, $orderBy))->all();
@@ -63,8 +80,6 @@ class ProductsController extends Controller
             $products = $this->product->pushCriteria(new ProductWhereCategoryLike($id))->pushCriteria(new ProductsByNamesAscending)->all();
         }
 
-        $page_title = trans('admin/products/general.page.index.title');
-        $page_description = trans('admin/products/general.page.index.description');
 
         return view('admin.products.index', compact('page_title', 'page_description', 'products', 'id', 'sortBy', 'orderBy'));
     }
@@ -82,7 +97,7 @@ class ProductsController extends Controller
             $perfumes[$p->id] = $p->name;
         }
 
-        $page_title = trans('admin/products/general.page.create.title');
+        $page_title       = trans('admin/products/general.page.create.title');
         $page_description = trans('admin/products/general.page.create.description');
 
         return view('admin.products.create', compact('page_title', 'page_description', 'perfumes'));
@@ -124,16 +139,15 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        $product = $this->product->pushCriteria(new ProductsWithSuppliers())->find($id);
-
-        $perfumes = [];
+        $product          = $this->product->pushCriteria(new ProductsWithSuppliers())->find($id);
+        $perfumes         = [];
+        $page_title       = trans('admin/products/general.page.edit.title');
+        $page_description = trans('admin/products/general.page.edit.description', ['full_name' => $product->name]);
 
         foreach ($this->perfume->all() as $p) {
             $perfumes[$p->id] = $p->name;
         }
 
-        $page_title = trans('admin/products/general.page.edit.title');
-        $page_description = trans('admin/products/general.page.edit.description', ['full_name' => $product->name]);
 
         return view('admin.products.edit', compact('page_title', 'page_description', 'product', 'perfumes'));
     }
@@ -179,13 +193,13 @@ class ProductsController extends Controller
      */
     public function getModalDelete($id)
     {
-        $error = null;
-
-        $product = $this->product->find($id);
-
+        $error       = null;
+        
+        $product     = $this->product->find($id);
+        
         $modal_title = trans('admin/products/dialog.delete-confirm.title');
         $modal_route = route('admin.products.delete', array('id' => $product->id));
-        $modal_body = trans('admin/products/dialog.delete-confirm.body', ['id' => $product->id, 'full_name' => $product->name]);
+        $modal_body  = trans('admin/products/dialog.delete-confirm.body', ['id' => $product->id, 'full_name' => $product->name]);
 
         return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
 
@@ -194,16 +208,16 @@ class ProductsController extends Controller
     public function getInfo(Request $request)
     {
         $return_arr = null;
-
-        $term = $request->input('term');
-
-        $products = $this->product->pushCriteria(new ProductWhereNameLike($term))->all();
+        
+        $term       = $request->input('term');
+        
+        $products   = $this->product->pushCriteria(new ProductWhereNameLike($term))->all();
 
         foreach ($products as $p) {
-            $id = $p->id;
+            $id   = $p->id;
             $name = $p->name;
 
-            $entry_arr = [ 'id' => $id, 'value' => $name];
+            $entry_arr    = [ 'id' => $id, 'value' => $name];
             $return_arr[] = $entry_arr;
         }
 

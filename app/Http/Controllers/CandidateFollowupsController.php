@@ -32,6 +32,16 @@ class CandidateFollowupsController extends Controller
         $this->candidateFollowup = $candidateFollowup;
     }
 
+    static function routes() {
+        \Route::group(['prefix' => 'candidate-followups'], function () {
+            \Route::get(  '/',                       'CandidateFollowupsController@index')          ->name('admin.candidate-followups.index');
+            \Route::post( '/',                       'CandidateFollowupsController@store')          ->name('admin.candidate-followups.store');
+            \Route::get(  '/{ccfId}/delete',         'CandidateFollowupsController@destroy')        ->name('admin.candidate-followups.delete');
+            \Route::post( '/select-by-type',         'CandidateFollowupsController@selectByType')   ->name('admin.candidate-followups.select-by-type');
+            \Route::get(  '/{ccfId}/confirm-delete', 'CandidateFollowupsController@getModalDelete') ->name('admin.candidate-followups.confirm-delete');
+        });
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -40,9 +50,9 @@ class CandidateFollowupsController extends Controller
     public function index()
     {
         $candidateFollowups = $this->candidateFollowup->pushCriteria(new FollowupsWithCandidates())->pushCriteria(new CandidateFollowupsByCreatedAtDescending())->all();
-
-        $page_title = trans('admin/customer-candidates/followup.page.index.title');
-        $page_description = trans('admin/customer-candidates/followup.page.index.description');
+        
+        $page_title         = trans('admin/customer-candidates/followup.page.index.title');
+        $page_description   = trans('admin/customer-candidates/followup.page.index.description');
 
         return view('admin.customer-candidates.followups-index', compact('candidateFollowups', 'page_title', 'page_description'));
     }
@@ -131,22 +141,26 @@ class CandidateFollowupsController extends Controller
      */
     public function getModalDelete($id)
     {
-        $error = null;
-
+        $error             = null;
+        
         $candidateFollowup = $this->candidateFollowup->find($id);
-
-        $modal_title = trans('admin/customer-candidates/followup-dialog.delete-confirm.title');
-
-        $modal_route = route('admin.candidate-followups.delete', array('id' => $candidateFollowup->id));
-
-        $modal_body = trans('admin/customer-candidates/followup-dialog.delete-confirm.body', ['id' => $candidateFollowup->id, 'full_name' => $candidateFollowup->customerCandidate->name]);
+        
+        $modal_title       = trans('admin/customer-candidates/followup-dialog.delete-confirm.title');
+        
+        $modal_route       = route('admin.candidate-followups.delete', ['id' => $candidateFollowup->id]);
+        
+        $modal_body        = trans('admin/customer-candidates/followup-dialog.delete-confirm.body', 
+            [
+                'id'        => $candidateFollowup->id,
+                'full_name' => $candidateFollowup->customerCandidate->name
+            ]);
 
         return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
 
     }
 
     public function selectByType() {
-        $type = $_POST['query'];
+        $type               = $_POST['query'];
 
         $candidateFollowups = CustomerCandidate::select(DB::raw('customer_candidates.*, count(*) as `aggregate`'))
         ->join('customer_candidate_followups', 'customer_candidates.id', '=', 'customer_candidate_followups.customer_candidate_id')

@@ -29,6 +29,22 @@ class FormulasController extends Controller
         $this->material      = $material;
     }
 
+    static function routes() {
+        \Route::group(['prefix' => 'formulas'], function () {
+            \Route::get(  '/',                     'FormulasController@index')              ->name('admin.formulas.index');
+            \Route::post( '/',                     'FormulasController@store')              ->name('admin.formulas.store');
+            \Route::get(  '/create',               'FormulasController@create')             ->name('admin.formulas.create');
+            \Route::get(  '/search',               'FormulasController@materialSearch')     ->name('admin.formulas.search');
+            \Route::get(  '/{fId}',                'FormulasController@show')               ->name('admin.formulas.show');
+            \Route::patch('/{fId}',                'FormulasController@update')             ->name('admin.formulas.update');
+            \Route::get(  '/{fId}/edit',           'FormulasController@edit')               ->name('admin.formulas.edit');
+            \Route::get(  '/{fId}/delete',         'FormulasController@destroy')            ->name('admin.formulas.delete');
+            \Route::post( '/add-purchase-order',   'FormulasController@addPurchaseOrder')   ->name('admin.formulas.add-porder');
+            \Route::get(  '/{fId}/get-materials',  'FormulasController@getMaterials')       ->name('admin.formulas.get-materials');
+            \Route::get(  '/{fId}/confirm-delete', 'FormulasController@getModalDelete')     ->name('admin.formulas.confirm-delete');
+        });
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -86,9 +102,9 @@ class FormulasController extends Controller
      */
     public function show($id)
     {
-        $formula = $this->formula->pushCriteria(new FormulasWithFormulaDetails())->find($id);
-
-        $page_title = trans('admin/formulas/general.page.show.title');
+        $formula          = $this->formula->pushCriteria(new FormulasWithFormulaDetails())->find($id);
+        
+        $page_title       = trans('admin/formulas/general.page.show.title');
         $page_description = trans('admin/formulas/general.page.show.description', ['name' => $formula->product->name]);
 
         return view('admin.formulas.show', compact('page_title', 'page_description', 'formula'));
@@ -102,9 +118,9 @@ class FormulasController extends Controller
      */
     public function edit($id)
     {
-        $formula = $this->formula->pushCriteria(new FormulasWithFormulaDetails())->find($id);
-
-        $page_title = trans('admin/formulas/general.page.edit.title');
+        $formula          = $this->formula->pushCriteria(new FormulasWithFormulaDetails())->find($id);
+        
+        $page_title       = trans('admin/formulas/general.page.edit.title');
         $page_description = trans('admin/formulas/general.page.edit.description', ['name' => $formula->product->name]);
 
         return view('admin.formulas.edit', compact('page_title', 'page_description'))->with('formula', $formula);
@@ -120,7 +136,7 @@ class FormulasController extends Controller
     public function update(Request $request, $id)
     {
         $formula = $this->formula->find($id);
-        $data = $request->input('material');
+        $data    = $request->input('material');
 
         foreach ($formula->formulaDetails as $key => $detail) {
             $this->formulaDetail->delete($detail->id);
@@ -154,8 +170,8 @@ class FormulasController extends Controller
     public function materialSearch(Request $request)
     {
         $return_arr = null;
-
-        $query = $request->input('term');
+        
+        $query      = $request->input('term');
 
         if ($query == '') {
             $query = $request->input('query');
@@ -183,8 +199,8 @@ class FormulasController extends Controller
      */
     public function getModalDelete($id)
     {
-        $error = null;
-
+        $error   = null;
+        
         $formula = $this->formula->find($id);
 
         $modal_title = trans('admin/formulas/dialog.delete-confirm.title');
@@ -197,7 +213,7 @@ class FormulasController extends Controller
 
     public function getMaterials($id)
     {
-        $formula = $this->formula->pushCriteria(new FormulasWithFormulaDetails())->find($id);
+        $formula   = $this->formula->pushCriteria(new FormulasWithFormulaDetails())->find($id);
         $materials = [];
 
         foreach ($formula->formulaDetails as $key => $material) {

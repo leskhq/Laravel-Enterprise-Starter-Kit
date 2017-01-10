@@ -36,9 +36,30 @@ class RolesController extends Controller {
      */
     public function __construct(Role $role, Permission $permission, User $user)
     {
-        $this->role = $role;
+        $this->role       = $role;
         $this->permission = $permission;
-        $this->user = $user;
+        $this->user       = $user;
+    }
+
+    static function routes() {
+        \Route::group(['prefix' => 'roles'], function () {
+            \Route::post(   '/enableSelected',          'RolesController@enableSelected')   ->name('admin.roles.enable-selected');
+            \Route::post(   '/disableSelected',         'RolesController@disableSelected')  ->name('admin.roles.disable-selected');
+            \Route::get(    '/search',                  'RolesController@searchByName')     ->name('admin.roles.search');
+            \Route::post(   '/getInfo',                 'RolesController@getInfo')          ->name('admin.roles.get-info');
+            \Route::post(   '/',                        'RolesController@store')            ->name('admin.roles.store');
+            \Route::get(    '/',                        'RolesController@index')            ->name('admin.roles.index');
+            \Route::get(    '/create',                  'RolesController@create')           ->name('admin.roles.create');
+            \Route::get(    '/{roleId}',                'RolesController@show')             ->name('admin.roles.show');
+            \Route::patch(  '/{roleId}',                'RolesController@update')           ->name('admin.roles.patch');
+            \Route::put(    '/{roleId}',                'RolesController@update')           ->name('admin.roles.update');
+            \Route::delete( '/{roleId}',                'RolesController@destroy')          ->name('admin.roles.destroy');
+            \Route::get(    '/{roleId}/edit',           'RolesController@edit')             ->name('admin.roles.edit');
+            \Route::get(    '/{roleId}/confirm-delete', 'RolesController@getModalDelete')   ->name('admin.roles.confirm-delete');
+            \Route::get(    '/{roleId}/delete',         'RolesController@destroy')          ->name('admin.roles.delete');
+            \Route::get(    '/{roleId}/enable',         'RolesController@enable')           ->name('admin.roles.enable');
+            \Route::get(    '/{roleId}/disable',        'RolesController@disable')          ->name('admin.roles.disable');
+        });
     }
 
     /**

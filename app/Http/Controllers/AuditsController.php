@@ -25,8 +25,17 @@ class AuditsController extends Controller {
      */
     public function __construct(App $app, Audit $audit)
     {
-        $this->app = $app;
+        $this->app   = $app;
         $this->audit = $audit;
+    }
+
+    static function routes() {
+        \Route::group(['prefix' => 'audit'], function () {
+            \Route::get( '/',                 'AuditsController@index')     ->name('admin.audit.index');
+            \Route::get( '/purge',            'AuditsController@purge')     ->name('admin.audit.purge');
+            \Route::get( '/{auditId}/replay', 'AuditsController@replay')    ->name('admin.audit.replay');
+            \Route::get( '/{auditId}/show',   'AuditsController@show')      ->name('admin.audit.show');
+        });
     }
 
     /**

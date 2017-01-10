@@ -27,8 +27,22 @@ class OutletsController extends Controller
     public function __construct(Outlet $outlet, User $user, Role $role)
     {
         $this->outlet = $outlet;
-        $this->user = $user;
-        $this->role = $role;
+        $this->user   = $user;
+        $this->role   = $role;
+    }
+
+    static function routes() {
+        \Route::group(['prefix' => 'outlets'], function () {
+            \Route::get(  '/',                     'OutletsController@index')           ->name('admin.outlets.index');
+            \Route::post( '/',                     'OutletsController@store')           ->name('admin.outlets.store');
+            \Route::get(  '/search',               'OutletsController@search')          ->name('admin.outlets.search');
+            \Route::get(  '/create',               'OutletsController@create')          ->name('admin.outlets.create');
+            \Route::get(  '/{oId}',                'OutletsController@show')            ->name('admin.outlets.show');
+            \Route::patch('/{oId}',                'OutletsController@update')          ->name('admin.outlets.update');
+            \Route::get(  '/{oId}/excel',          'OutletsController@excel')           ->name('admin.outlets.excel');
+            \Route::get(  '/{oId}/delete',         'OutletsController@destroy')         ->name('admin.outlets.delete');
+            \Route::get(  '/{oId}/confirm-delete', 'OutletsController@getModalDelete')  ->name('admin.outlets.confirm-delete');
+        });
     }
 
     /**
@@ -38,8 +52,8 @@ class OutletsController extends Controller
      */
     public function index()
     {
-        $user = $this->user->find(Auth::user()->id);
-
+        $user             = $this->user->find(Auth::user()->id);
+        
         $page_title       = trans('admin/outlets/general.page.index.title');
         $page_description = trans('admin/outlets/general.page.index.description');
 
@@ -77,7 +91,7 @@ class OutletsController extends Controller
             return redirect()->route('admin.outlets.index');
         }
 
-        $page_title = trans('admin/outlets/general.page.create.title');
+        $page_title       = trans('admin/outlets/general.page.create.title');
         $page_description = trans('admin/outlets/general.page.create.description');
 
         return view('admin.outlets.create', compact('page_title', 'page_description'));
@@ -113,7 +127,7 @@ class OutletsController extends Controller
             ->pushCriteria(new OutletsWithOutletSaleDailies())
             ->find($id);
 
-        $page_title = trans('admin/outlets/general.page.show.title');
+        $page_title       = trans('admin/outlets/general.page.show.title');
         $page_description = trans('admin/outlets/general.page.show.description', ['name' => $outlet->name]);
 
         if (Auth::user()->username == 'indri') {
@@ -199,13 +213,13 @@ class OutletsController extends Controller
      */
     public function getModalDelete($id)
     {
-        $error = null;
-
-        $outlet = $this->outlet->find($id);
-
+        $error       = null;
+        
+        $outlet      = $this->outlet->find($id);
+        
         $modal_title = trans('admin/outlets/dialog.delete-confirm.title');
         $modal_route = route('admin.outlets.delete', array('id' => $outlet->id));
-        $modal_body = trans('admin/outlets/dialog.delete-confirm.body', ['id' => $outlet->id, 'name' => $outlet->name]);
+        $modal_body  = trans('admin/outlets/dialog.delete-confirm.body', ['id' => $outlet->id, 'name' => $outlet->name]);
 
         return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
 

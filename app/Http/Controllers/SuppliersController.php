@@ -23,6 +23,19 @@ class SuppliersController extends Controller
         $this->supplier = $supplier;
     }
 
+    static function routes() {
+        \Route::group(['prefix' => 'suppliers'], function () {
+            \Route::get(  '',                        'SuppliersController@index')         ->name('admin.suppliers.index');
+            \Route::post( '',                        'SuppliersController@store')         ->name('admin.suppliers.store');
+            \Route::get(  '/create',                 'SuppliersController@create')        ->name('admin.suppliers.create');
+            \Route::get(  '/search',                 'SuppliersController@search')        ->name('admin.suppliers.search');
+            \Route::patch('/{suppId}',               'SuppliersController@update')        ->name('admin.suppliers.update');
+            \Route::get(  '/{suppId}/edit',          'SuppliersController@edit')          ->name('admin.suppliers.edit');
+            \Route::get(  '/{suppId}/delete',        'SuppliersController@destroy')       ->name('admin.suppliers.delete');
+            \Route::get(  '/{suppId}/confirm-delete','SuppliersController@getModalDelete')->name('admin.suppliers.confirm-delete');
+        });
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -30,9 +43,9 @@ class SuppliersController extends Controller
      */
     public function index()
     {
-        $suppliers = $this->supplier->pushCriteria(new SuppliersByNamesAscending)->all();
-
-        $page_title = trans('admin/suppliers/general.page.index.title');
+        $suppliers        = $this->supplier->pushCriteria(new SuppliersByNamesAscending)->all();
+        
+        $page_title       = trans('admin/suppliers/general.page.index.title');
         $page_description = trans('admin/suppliers/general.page.index.description');
 
         return view('admin.suppliers.index', compact('page_title', 'page_description', 'suppliers'));
@@ -45,7 +58,7 @@ class SuppliersController extends Controller
      */
     public function create()
     {
-        $page_title = trans('admin/suppliers/general.page.create.title');
+        $page_title       = trans('admin/suppliers/general.page.create.title');
         $page_description = trans('admin/suppliers/general.page.create.description');
 
         return view('admin.suppliers.create', compact('page_title', 'page_description'));
@@ -87,9 +100,9 @@ class SuppliersController extends Controller
      */
     public function edit($id)
     {
-        $supplier = $this->supplier->find($id);
-
-        $page_title = trans('admin/suppliers/general.page.edit.title');
+        $supplier         = $this->supplier->find($id);
+        
+        $page_title       = trans('admin/suppliers/general.page.edit.title');
         $page_description = trans('admin/suppliers/general.page.edit.description', ['name' => $supplier->name]);
 
         return view('admin.suppliers.edit', compact('page_title', 'page_description', 'supplier'));
@@ -136,13 +149,13 @@ class SuppliersController extends Controller
      */
     public function getModalDelete($id)
     {
-        $error = null;
-
-        $supplier = $this->supplier->find($id);
-
+        $error       = null;
+        
+        $supplier    = $this->supplier->find($id);
+        
         $modal_title = trans('admin/suppliers/dialog.delete-confirm.title');
         $modal_route = route('admin.suppliers.delete', array('id' => $supplier->id));
-        $modal_body = trans('admin/suppliers/dialog.delete-confirm.body', ['id' => $supplier->id, 'name' => $supplier->name]);
+        $modal_body  = trans('admin/suppliers/dialog.delete-confirm.body', ['id' => $supplier->id, 'name' => $supplier->name]);
 
         return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
 
@@ -151,8 +164,8 @@ class SuppliersController extends Controller
     public function search(Request $request)
     {
         $return_arr = null;
-
-        $query = $request->input('term');
+        
+        $query      = $request->input('term');
 
         if ($query == '') {
             $query = $request->input('query');
@@ -161,10 +174,10 @@ class SuppliersController extends Controller
         $suppliers = $this->supplier->pushCriteria(new SupplierWhereNameLike($query))->all();
 
         foreach ($suppliers as $e) {
-            $id = $e->id;
+            $id   = $e->id;
             $name = $e->name;
 
-            $entry_arr = [ 'id' => $id, 'text' => $name, 'value' => $name];
+            $entry_arr    = [ 'id' => $id, 'text' => $name, 'value' => $name];
             $return_arr[] = $entry_arr;
         }
 
