@@ -14,23 +14,22 @@ var elixir = require('laravel-elixir');
 // TODO: Include all other CSS and JS files: JQuery, Bootstrap, Select2, etc...
 elixir(function(mix) {
     // Compile our SASS file to CSS.
-    mix.sass('app.scss');
+    // mix.sass('app.scss');
     // Combine the various CSS into one.
-    mix.styles([
-        //'vendor.css',
-        'app.css',
-    ], 'public/css/all.css', 'public/css');
+    // mix.styles([
+    //     //'vendor.css',
+    //     'app.css',
+    // ], 'public/css/all.css', 'public/css');
 
     // Compile our Coffee file to JS.
-    mix.coffee('app.coffee');
+    // mix.coffee('app.coffee');
     // Combine the various JS into one.
-    mix.scripts([
-       //'vendor.js',
-        'modal.js',
-        'app.js',
-    ], null, 'public/js');
+    // mix.scripts([
+    //    //'vendor.js',
+    //     'modal.js',
+    //     'app.js',
+    // ], null, 'public/js');
 
     // Enable cache busting versions.
-    mix.version(['public/css/all.css', 'public/js/all.js']);
-
+    // mix.version(['public/css/all.css', 'public/js/all.js']);
 });
