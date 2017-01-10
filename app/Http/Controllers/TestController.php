@@ -13,6 +13,9 @@ use App\Repositories\AuditRepository as Audit;
 
 class TestController extends Controller
 {
+    public function test_online_shop() {
+        return view('welcome');
+    }
 
     public function test_acl_home()
     {
