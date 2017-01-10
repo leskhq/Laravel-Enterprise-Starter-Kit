@@ -26,6 +26,20 @@ class ExpeditionsController extends Controller
         $this->expedition = $expedition;
     }
 
+    static function routes() {
+        \Route::group(['prefix' => 'expeditions'], function () {
+            \Route::get(  '/',                     'ExpeditionsController@index')         ->name('admin.expeditions.index');
+            \Route::post( '/',                     'ExpeditionsController@store')         ->name('admin.expeditions.store');
+            \Route::get(  '/create',               'ExpeditionsController@create')        ->name('admin.expeditions.create');
+            \Route::get(  '/search',               'ExpeditionsController@search')        ->name('admin.expeditions.search');
+            \Route::get(  '/{exId}',               'ExpeditionsController@show')          ->name('admin.expeditions.show');
+            \Route::patch('/{exId}',               'ExpeditionsController@update')        ->name('admin.expeditions.update');
+            \Route::get(  '/{exId}/edit',          'ExpeditionsController@edit')          ->name('admin.expeditions.edit');
+            \Route::get(  '/{exId}/delete',        'ExpeditionsController@destroy')       ->name('admin.expeditions.delete');
+            \Route::get(  '/{exId}/confirm-delete','ExpeditionsController@getModalDelete')->name('admin.expeditions.confirm-delete');
+        });
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -33,9 +47,8 @@ class ExpeditionsController extends Controller
      */
     public function index()
     {
-        $expeditions = $this->expedition->all();
-
-        $page_title = trans('admin/expeditions/general.page.index.title');
+        $expeditions      = $this->expedition->all();
+        $page_title       = trans('admin/expeditions/general.page.index.title');
         $page_description = trans('admin/expeditions/general.page.index.description');
 
         return view('admin.expeditions.index', compact('expeditions', 'page_title', 'page_description'));
@@ -48,7 +61,7 @@ class ExpeditionsController extends Controller
      */
     public function create()
     {
-        $page_title = trans('admin/expeditions/general.page.create.title');
+        $page_title       = trans('admin/expeditions/general.page.create.title');
         $page_description = trans('admin/expeditions/general.page.create.description');
 
         return view('admin.expeditions.create', compact('page_title', 'page_description'));
@@ -79,9 +92,8 @@ class ExpeditionsController extends Controller
      */
     public function show($id)
     {
-        $expedition = $this->expedition->find($id);
-
-        $page_title = trans('admin/expeditions/general.page.show.title');
+        $expedition       = $this->expedition->find($id);
+        $page_title       = trans('admin/expeditions/general.page.show.title');
         $page_description = trans('admin/expeditions/general.page.show.description', ['name' => $expedition->name]);
 
         return view('admin.expeditions.show', compact('page_title', 'page_description', 'expedition'));
@@ -95,9 +107,8 @@ class ExpeditionsController extends Controller
      */
     public function edit($id)
     {
-        $expedition = $this->expedition->find($id);
-
-        $page_title = trans('admin/expeditions/general.page.edit.title');
+        $expedition       = $this->expedition->find($id);
+        $page_title       = trans('admin/expeditions/general.page.edit.title');
         $page_description = trans('admin/expeditions/general.page.edit.description', ['name' => $expedition->name]);
 
         return view('admin.expeditions.edit', compact('page_title', 'page_description', 'expedition'));
@@ -138,23 +149,23 @@ class ExpeditionsController extends Controller
 
     public function getModalDelete($id)
     {
-        $error = null;
-
-        $expedition = $this->expedition->find($id);
-
+        $error       = null;
+        
+        $expedition  = $this->expedition->find($id);
+        
         $modal_title = trans('admin/expeditions/dialog.delete-confirm.title');
         $modal_route = route('admin.expeditions.delete', array('id' => $expedition->id));
-        $modal_body = trans('admin/expeditions/dialog.delete-confirm.body', ['id' => $expedition->id, 'full_name' => $expedition->name]);
+        $modal_body  = trans('admin/expeditions/dialog.delete-confirm.body', ['id' => $expedition->id, 'full_name' => $expedition->name]);
 
         return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
     }
 
     public function search(Request $request)
     {
-        $return_arr = null;
-
-        $query = $request->input('term');
-
+        $return_arr  = null;
+        
+        $query       = $request->input('term');
+        
         $expeditions = $this->expedition->pushCriteria(new ExpeditionWhereNameLike($query))->all();
 
         foreach ($expeditions as $e) {

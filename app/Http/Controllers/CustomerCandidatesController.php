@@ -59,6 +59,20 @@ class CustomerCandidatesController extends Controller
         $this->customerFollowup  = $customerFollowup;
     }
 
+    static function routes() {
+        \Route::group(['prefix' => 'customer-candidates'], function () {
+            \Route::get(  '/',                     'CustomerCandidatesController@index')         ->name('admin.customer-candidates.index');
+            \Route::post( '/',                     'CustomerCandidatesController@store')         ->name('admin.customer-candidates.store');
+            \Route::get(  '/create',               'CustomerCandidatesController@create')        ->name('admin.customer-candidates.create');
+            \Route::get(  '/{ccId}',               'CustomerCandidatesController@show')          ->name('admin.customer-candidates.show');
+            \Route::patch('/{ccId}',               'CustomerCandidatesController@update')        ->name('admin.customer-candidates.update');
+            \Route::get(  '/{ccId}/delete',        'CustomerCandidatesController@destroy')       ->name('admin.customer-candidates.delete');
+            \Route::get(  '/{ccId}/change',        'CustomerCandidatesController@change')        ->name('admin.customer-candidates.change');
+            \Route::get(  '/{ccId}/update-status', 'CustomerCandidatesController@updateStatus')  ->name('admin.customer-candidates.update-status');
+            \Route::get(  '/{ccId}/confirm-delete','CustomerCandidatesController@getModalDelete')->name('admin.customer-candidates.confirm-delete');
+        });
+    }
+
     /**
      * Display a listing of the resource.
      *

@@ -50,6 +50,29 @@ class UsersController extends Controller {
         $this->audit = $audit;
     }
 
+    static function routes() {
+        \Route::group(['prefix' => 'users'], function () {
+            \Route::post(  '/enableSelected',          'UsersController@enableSelected')    ->name('admin.users.enable-selected');
+            \Route::post(  '/disableSelected',         'UsersController@disableSelected')   ->name('admin.users.disable-selected');
+            \Route::get(   '/search',                  'UsersController@searchByName')      ->name('admin.users.search');
+            \Route::get(   '/list',                    'UsersController@listByPage')        ->name('admin.users.list');
+            \Route::post(  '/getInfo',                 'UsersController@getInfo')           ->name('admin.users.get-info');
+            \Route::post(  '/',                        'UsersController@store')             ->name('admin.users.store');
+            \Route::get(   '/',                        'UsersController@index')             ->name('admin.users.index');
+            \Route::get(   '/create',                  'UsersController@create')            ->name('admin.users.create');
+            \Route::get(   '/{userId}',                'UsersController@show')              ->name('admin.users.show');
+            \Route::patch( '/{userId}',                'UsersController@update')            ->name('admin.users.patch');
+            \Route::put(   '/{userId}',                'UsersController@update')            ->name('admin.users.update');
+            \Route::delete('/{userId}',                'UsersController@destroy')           ->name('admin.users.destroy');
+            \Route::get(   '/{userId}/edit',           'UsersController@edit')              ->name('admin.users.edit');
+            \Route::get(   '/{userId}/confirm-delete', 'UsersController@getModalDelete')    ->name('admin.users.confirm-delete');
+            \Route::get(   '/{userId}/delete',         'UsersController@destroy')           ->name('admin.users.delete');
+            \Route::get(   '/{userId}/enable',         'UsersController@enable')            ->name('admin.users.enable');
+            \Route::get(   '/{userId}/disable',        'UsersController@disable')           ->name('admin.users.disable');
+            \Route::get(   '/{userId}/replayEdit',     'UsersController@replayEdit')        ->name('admin.users.replay-edit');
+        });
+    }
+
     /**
      * @return \Illuminate\View\View
      */
@@ -57,10 +80,10 @@ class UsersController extends Controller {
     {
         Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-index'));
 
-        $page_title = trans('admin/users/general.page.index.title'); // "Admin | Users";
+        $page_title       = trans('admin/users/general.page.index.title'); // "Admin | Users";
         $page_description = trans('admin/users/general.page.index.description'); // "List of users";
-
-        $users = $this->user->pushCriteria(new UsersWithRoles())->pushCriteria(new UsersByUsernamesAscending())->paginate(10);
+        
+        $users            = $this->user->pushCriteria(new UsersWithRoles())->pushCriteria(new UsersByUsernamesAscending())->paginate(10);
         return view('admin.users.index', compact('users', 'page_title', 'page_description'));
     }
 
@@ -69,16 +92,16 @@ class UsersController extends Controller {
      */
     public function show($id)
     {
-        $user = $this->user->find($id);
+        $user             = $this->user->find($id);
 
         Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-show', ['username' => $user->username]));
 
-        $page_title = trans('admin/users/general.page.show.title'); // "Admin | User | Show";
+        $page_title       = trans('admin/users/general.page.show.title'); // "Admin | User | Show";
         $page_description = trans('admin/users/general.page.show.description', ['full_name' => $user->full_name]); // "Displaying user";
-
-//        $roleCollection = \App\Models\Role::take(10)->get(['id', 'display_name'])->lists('display_name', 'id');
-//        $roleList = [''=>''] + $roleCollection->all();
-        $perms = $this->perm->pushCriteria(new PermissionsByNamesAscending())->all();
+        
+        // $roleCollection   = \App\Models\Role::take(10)->get(['id', 'display_name'])->lists('display_name', 'id');
+        // $roleList         = [''=>''] + $roleCollection->all();
+        $perms            = $this->perm->pushCriteria(new PermissionsByNamesAscending())->all();
 
         return view('admin.users.show', compact('user', 'perms', 'page_title', 'page_description'));
     }
@@ -88,14 +111,14 @@ class UsersController extends Controller {
      */
     public function create()
     {
-        $page_title = trans('admin/users/general.page.create.title'); // "Admin | User | Create";
+        $page_title       = trans('admin/users/general.page.create.title'); // "Admin | User | Create";
         $page_description = trans('admin/users/general.page.create.description'); // "Creating a new user";
-
-        $perms = $this->perm->pushCriteria(new PermissionsByNamesAscending())->all();
-        $user = new \App\User();
-//        $userRoles = $user->roles;
-//        $roleCollection = \App\Models\Role::take(10)->get(['id', 'display_name'])->lists('display_name', 'id');
-//        $roleList = [''=>''] + $roleCollection->all();
+        
+        $perms            = $this->perm->pushCriteria(new PermissionsByNamesAscending())->all();
+        $user             = new \App\User();
+        // $userRoles        = $user->roles;
+        // $roleCollection   = \App\Models\Role::take(10)->get(['id', 'display_name'])->lists('display_name', 'id');
+        // $roleList         = [''=>''] + $roleCollection->all();
 
         return view('admin.users.create', compact('user', 'perms', 'page_title', 'page_description'));
     }
@@ -140,24 +163,24 @@ class UsersController extends Controller {
 
         Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-edit', ['username' => $user->username]));
 
-        $page_title = trans('admin/users/general.page.edit.title'); // "Admin | User | Edit";
+        $page_title       = trans('admin/users/general.page.edit.title'); // "Admin | User | Edit";
         $page_description = trans('admin/users/general.page.edit.description', ['full_name' => $user->full_name]); // "Editing user";
-
-        $roles = $this->role->pushCriteria(new RolesByNamesAscending())->all();
-        $perms = $this->perm->pushCriteria(new PermissionsByNamesAscending())->all();
+        
+        $roles            = $this->role->pushCriteria(new RolesByNamesAscending())->all();
+        $perms            = $this->perm->pushCriteria(new PermissionsByNamesAscending())->all();
 
         return view('admin.users.edit', compact('user', 'roles', 'perms', 'page_title', 'page_description'));
     }
 
     static public function ParseUpdateAuditLog($id)
     {
-        $permsObj = [];
-        $permsNoFound = [];
-        $rolesObj = [];
+        $permsObj      = [];
+        $permsNoFound  = [];
+        $rolesObj      = [];
         $rolesNotFound = [];
-
-        $audit   = \App\Models\Audit::find($id);
-        $dataAtt = json_decode($audit->data, true);
+        
+        $audit         = \App\Models\Audit::find($id);
+        $dataAtt       = json_decode($audit->data, true);
 
         // Lookup and load the perms that we can still find, otherwise add to an separate array.
         if (array_key_exists('perms', $dataAtt)) {
@@ -171,7 +194,7 @@ class UsersController extends Controller {
                 }
             }
         }
-        $dataAtt['permsObj'] = $permsObj;
+        $dataAtt['permsObj']      = $permsObj;
         $dataAtt['permsNotFound'] = $permsNoFound;
 
         // Lookup and load the roles that we can still find, otherwise add to an separate array.
@@ -187,7 +210,7 @@ class UsersController extends Controller {
                 }
             }
         }
-        $dataAtt['rolesObj'] = $rolesObj;
+        $dataAtt['rolesObj']      = $rolesObj;
         $dataAtt['rolesNotFound'] = $rolesNotFound;
 
         // Add the file name of the partial (blade) that will render this data.
@@ -210,10 +233,10 @@ class UsersController extends Controller {
         // Loading the audit in question.
         $audit = $this->audit->find($id);
         // Getting the attributes from the data fields.
-        $att = json_decode($audit->data, true);
+        $att   = json_decode($audit->data, true);
         // Finding the user to operate on from the id field that was populated in the
         // edit action that created this audit record.
-        $user = $this->user->find($att['id']);
+        $user  = $this->user->find($att['id']);
 
         if (null == $user) {
             Flash::warning( trans('admin/users/general.error.user_not_found', [ 'id' => $att['id'] ]) );
@@ -222,7 +245,7 @@ class UsersController extends Controller {
 
         Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-replay-edit', ['username' => $user->username]));
 
-        $page_title = trans('admin/users/general.page.edit.title'); // "Admin | User | Edit";
+        $page_title       = trans('admin/users/general.page.edit.title'); // "Admin | User | Edit";
         $page_description = trans('admin/users/general.page.edit.description', ['full_name' => $user->full_name]); // "Editing user";
 
         if (!$user->isEditable())
@@ -233,10 +256,10 @@ class UsersController extends Controller {
         // Setting user attributes with values from audit log to replay the requested action.
         // Password is not replayed.
         $user->first_name = $att['first_name'];
-        $user->last_name = $att['last_name'];
-        $user->username = $att['username'];
-        $user->email = $att['email'];
-        $user->enabled = $att['enabled'];
+        $user->last_name  = $att['last_name'];
+        $user->username   = $att['username'];
+        $user->email      = $att['email'];
+        $user->enabled    = $att['enabled'];
         if (array_key_exists('selected_roles', $att)) {
             $aRoleIDs = explode(",", $att['selected_roles']);
             $user->roles()->sync($aRoleIDs);
@@ -281,11 +304,11 @@ class UsersController extends Controller {
         }
 
         // Get a copy of the attributes that we will modify to save for a replay.
-        $replayAtt = $attributes;
+        $replayAtt       = $attributes;
         // Add the id of the current user for the replay action.
         $replayAtt["id"] = $id;
         // Create log entry with replay data.
-        $tmp = Audit::log( Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-update', ['username' => $user->username]),
+        $tmp             = Audit::log( Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-update', ['username' => $user->username]),
             $replayAtt, "App\Http\Controllers\UsersController::ParseUpdateAuditLog", "admin.users.replay-edit" );
 
 
@@ -346,7 +369,7 @@ class UsersController extends Controller {
     {
         $error = null;
 
-        $user = $this->user->find($id);
+        $user  = $this->user->find($id);
 
         if (!$user->isdeletable())
         {
@@ -473,8 +496,8 @@ class UsersController extends Controller {
     public function searchByName(Request $request)
     {
         $return_arr = null;
-
-        $query = $request->input('query');
+        
+        $query      = $request->input('query');
 
         if ($request->input('term')) {
             $query = $request->input('term');
@@ -483,10 +506,10 @@ class UsersController extends Controller {
         $users = $this->user->pushCriteria(new UsersWhereFirstNameOrLastNameOrUsernameLike($query))->all();
 
         foreach ($users as $user) {
-            $id = $user->id;
+            $id         = $user->id;
             $first_name = $user->first_name;
-            $last_name = $user->last_name;
-            $username = $user->username;
+            $last_name  = $user->last_name;
+            $username   = $user->username;
 
             $entry_arr = [ 'id' => $id, 'text' => "$first_name $last_name ($username)", 'value' => $username];
             $return_arr[] = $entry_arr;
@@ -514,7 +537,7 @@ class UsersController extends Controller {
      */
     public function getInfo(Request $request)
     {
-        $id = $request->input('id');
+        $id   = $request->input('id');
         $user = $this->user->find($id);
 
         return $user;

@@ -34,8 +34,31 @@ class RoutesController extends Controller {
      */
     public function __construct(Route $route, Permission $permission)
     {
-        $this->route = $route;
+        $this->route      = $route;
         $this->permission = $permission;
+    }
+
+    static function routes() {
+        \Route::group(['prefix' => 'routes'], function () {
+            \Route::get(   '/load',                     'RoutesController@load')            ->name('admin.routes.load');
+            \Route::post(  '/enableSelected',           'RoutesController@enableSelected')  ->name('admin.routes.enable-selected');
+            \Route::post(  '/disableSelected',          'RoutesController@disableSelected') ->name('admin.routes.disable-selected');
+            \Route::post(  '/savePerms',                'RoutesController@savePerms')       ->name('admin.routes.save-perms');
+            \Route::get(   '/search',                   'RoutesController@searchByName')    ->name('admin.routes.search');
+            \Route::post(  '/getInfo',                  'RoutesController@getInfo')         ->name('admin.routes.get-info');
+            \Route::post(  '/',                         'RoutesController@store')           ->name('admin.routes.store');
+            \Route::get(   '/',                         'RoutesController@index')           ->name('admin.routes.index');
+            \Route::get(   '/create',                   'RoutesController@create')          ->name('admin.routes.create');
+            \Route::get(   '/{routeId}',                'RoutesController@show')            ->name('admin.routes.show');
+            \Route::patch( '/{routeId}',                'RoutesController@update')          ->name('admin.routes.patch');
+            \Route::put(   '/{routeId}',                'RoutesController@update')          ->name('admin.routes.update');
+            \Route::delete('/{routeId}',                'RoutesController@destroy')         ->name('admin.routes.destroy');
+            \Route::get(   '/{routeId}/edit',           'RoutesController@edit')            ->name('admin.routes.edit');
+            \Route::get(   '/{routeId}/confirm-delete', 'RoutesController@getModalDelete')  ->name('admin.routes.confirm-delete');
+            \Route::get(   '/{routeId}/delete',         'RoutesController@destroy')         ->name('admin.routes.delete');
+            \Route::get(   '/{routeId}/enable',         'RoutesController@enable')          ->name('admin.routes.enable');
+            \Route::get(   '/{routeId}/disable',        'RoutesController@disable')         ->name('admin.routes.disable');
+        });
     }
 
     /**
