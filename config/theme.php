@@ -11,7 +11,7 @@ return array(
     |
     */
 
-        'path'         => base_path('resources/themes'),
+    'path'         => base_path('resources/themes'),
     /*
     |--------------------------------------------------------------------------
     | Path to directory with assets
@@ -21,7 +21,7 @@ return array(
     |
     */
 
-        'assets_path'  => 'assets/themes',
+    'assets_path'  => 'assets/themes',
     /*
     |--------------------------------------------------------------------------
     | A pieces of theme collections
@@ -32,11 +32,11 @@ return array(
     |
     */
 
-        'containerDir' => array(
-            'layout'  => 'layouts',
-            'partial' => 'partials',
-            'view'    => 'views',
-        ),
+    'containerDir' => array(
+        'layout'  => 'layouts',
+        'partial' => 'partials',
+        'view'    => 'views',
+    ),
 
 
 );
