@@ -4,33 +4,33 @@ return [
 
     'button'              => [
         'cancel'            => 'Cancel',
-        'close'             => 'Close',
-        'save'              => 'Save',
-        'create'            => 'Create',
-        'delete'            => 'Delete',
-        'clear'             => 'Clear',
+        'close'             => 'Tutup',
+        'save'              => 'Simpan',
+        'create'            => 'Tambah',
+        'delete'            => 'Hapus',
+        'clear'             => 'Bersihkan',
         'edit'              => 'Edit',
         'ok'                => 'OK',
-        'display'           => 'Show details',
+        'display'           => 'Tampilkan Detail',
         'replay'            => 'Replay',
-        'update'            => 'Update',
+        'update'            => 'Perbarui',
         'enable'            => 'Enable',
         'enabled'           => 'Enabled',
         'disable'           => 'Disable',
         'disabled'          => 'Disabled',
         'toggle-select'     => 'Toggle checkboxes',
         'remove-role'       => 'Remove role',
-        'status'            => 'Change Status',
+        'status'            => 'Ubah Status',
         'print'             => 'Print'
     ],
 
     'columns'             => [
         'id'                => 'ID',
-        'name'              => 'Name',
-        'description'       => 'Description',
-        'created'           => 'Created',
-        'updated'           => 'Updated',
-        'actions'           => 'Actions',
+        'name'              => 'Nama',
+        'description'       => 'Deskripsi',
+        'created'           => 'Dibuat',
+        'updated'           => 'Diperbarui',
+        'actions'           => 'Aksi',
     ],
 
     'status'              => [
@@ -39,8 +39,8 @@ return [
 
     'page'              => [
         'search'           => [
-            'title'         => 'Search',
-            'description'   => 'Search summary for: :keyword'
+            'title'         => 'Cari',
+            'description'   => 'Hasil pencarian dari: :keyword'
         ]
     ],
 
