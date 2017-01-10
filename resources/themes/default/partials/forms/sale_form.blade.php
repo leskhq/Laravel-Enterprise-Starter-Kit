@@ -218,16 +218,16 @@
                                     </td>
 
                                     <td>
-                                        {!! Form::text('item['. $x .'][description]', '', ['placeholder' => 'description', 'class' => 'aroma form-control', 'id' => 'aroma'. $x .'']) !!}
+                                        {!! Form::text('item['. $x .'][description]', '', ['placeholder' => 'deskripsi', 'class' => 'aroma form-control', 'id' => 'aroma'. $x .'']) !!}
                                     </td>
 
                                     <td>
                                         {!! Form::hidden('item['. $x .'][price]', '', ['id' => 'price'. $x .'']) !!}
-                                        {!! Form::text('price', '', ['placeholder' => 'price', 'class' => 'form-control', 'id' => 'displayPrice'. $x .'', 'disabled']) !!}
+                                        {!! Form::text('price', '', ['placeholder' => 'harga', 'class' => 'form-control', 'id' => 'displayPrice'. $x .'', 'disabled']) !!}
                                     </td>
 
                                     <td>
-                                        {!! Form::text('item['. $x .'][quantity]', '', ['placeholder' => 'quantity', 'class' => 'form-control Qty', 'id' => 'Qty'. $x .'']) !!}
+                                        {!! Form::text('item['. $x .'][quantity]', '', ['placeholder' => 'jumlah', 'class' => 'form-control Qty', 'id' => 'Qty'. $x .'']) !!}
                                     </td>
 
                                     <td>
@@ -237,7 +237,7 @@
 
                                     <td>
                                         {!! Form::hidden('item['. $x .'][weight]', '', ['id' => 'weight'. $x .'']) !!}
-                                        {!! Form::text('weight', '', ['placeholder' => 'weight', 'class' => 'form-control sumWeight', 'id' => 'displayWeight'. $x .'', 'disabled']) !!}
+                                        {!! Form::text('weight', '', ['placeholder' => 'berat', 'class' => 'form-control sumWeight', 'id' => 'displayWeight'. $x .'', 'disabled']) !!}
                                     </td>
 
                                     <td id='jer{{$x}}' class='qtyJer' value='' colspan="2" style="text-align: center;">
