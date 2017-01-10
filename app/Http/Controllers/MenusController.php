@@ -43,7 +43,7 @@ class MenusController extends Controller {
 //    }
 
     static function routes() {
-        \Route::group(['prefix' => 'routes'], function () {
+        \Route::group(['prefix' => 'menus'], function () {
             \Route::post( '/',                        'MenusController@save')           ->name('admin.menus.save');
             \Route::get(  '/',                        'MenusController@index')          ->name('admin.menus.index');
             \Route::get(  '/getData/{menuId}',        'MenusController@getData')        ->name('admin.menus.get-data');
