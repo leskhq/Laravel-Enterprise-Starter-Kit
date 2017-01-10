@@ -39,31 +39,31 @@ return [
         'index'              => [
             'title'             => 'Admin | Penjualan',
             'description'       => 'Daftar penjualan',
-            'table-title'       => 'Penjualan list',
+            'table-title'       => 'Daftar penjualan',
         ],
         'show'              => [
             'title'             => 'Admin | Penjualan | Tampilkan',
             'description'       => 'Menampilkan penjualan: :name',
-            'section-title'     => 'Penjualan details'
+            'section-title'     => 'Detail penjualan'
         ],
         'create'            => [
             'title'            => 'Admin | Penjualan | Tambah',
             'description'      => 'Tambah penjualan baru',
-            'section-title'    => 'New penjualan'
+            'section-title'    => 'Tambah penjualan'
         ],
         'edit'              => [
             'title'            => 'Admin | Penjualan | Edit',
             'description'      => 'Edit penjualan: :name',
             'section-title'    => 'Edit penjualan'
         ],
-        'report'              => [
-            'title'            => 'Admin | Penjualans | Laporan',
+        'report'            => [
+            'title'            => 'Admin | Penjualan | Laporan',
             'description'      => 'Laporan penjualan',
             'section-title'    => 'Laporan'
         ],
-        'formula'             => [
-            'title'             => 'Admin | Penjualan | Formula',
-            'description'       => 'Formula dari Penjualan: :name'
+        'formula'           => [
+            'title'            => 'Admin | Penjualan | Formula',
+            'description'      => 'Formula dari Penjualan: :name'
         ],
     ],
 
