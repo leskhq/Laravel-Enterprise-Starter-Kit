@@ -31,39 +31,6 @@ class DashboardController extends Controller
     }
 
     public function index() {
-        $data['tasks'] = [
-            [
-                'name' => 'Design New Dashboard',
-                'progress' => '87',
-                'color' => 'danger'
-            ],
-            [
-                'name' => 'Create Home Page',
-                'progress' => '76',
-                'color' => 'warning'
-            ],
-            [
-                'name' => 'Some Other Task',
-                'progress' => '32',
-                'color' => 'success'
-            ],
-            [
-                'name' => 'Start Building Website',
-                'progress' => '56',
-                'color' => 'info'
-            ],
-            [
-                'name' => 'Develop an Awesome Algorithm',
-                'progress' => '10',
-                'color' => 'success'
-            ],
-            [
-                'name' => 'Analyse data',
-                'progress' => '37',
-                'color' => 'warning'
-            ],
-        ];
-
         $newCustomersCount = Customer::where(DB::raw('YEAR(created_at)'), Carbon::now()->year)
             ->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
             ->count();
@@ -163,8 +130,7 @@ class DashboardController extends Controller
             'salesThisMonthCount',
             'incomeThisMountTotal',
             'saleDetails',
-            'saleDetailsLastMonth'))
-        ->with($data);
+            'saleDetailsLastMonth'));
     }
 
     public function search(Request $request) {
