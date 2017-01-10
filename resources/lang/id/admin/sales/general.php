@@ -39,17 +39,17 @@ return [
         'index'              => [
             'title'             => 'Admin | Penjualan',
             'description'       => 'Daftar penjualan',
-            'table-title'       => 'Penjualan list',
+            'table-title'       => 'Daftar penjualan',
         ],
         'show'              => [
             'title'             => 'Admin | Penjualan | Tampilkan',
             'description'       => 'Menampilkan penjualan: :name',
-            'section-title'     => 'Penjualan details'
+            'section-title'     => 'Detail penjualan'
         ],
         'create'            => [
             'title'            => 'Admin | Penjualan | Tambah',
             'description'      => 'Tambah penjualan baru',
-            'section-title'    => 'New penjualan'
+            'section-title'    => 'Penjualan baru'
         ],
         'edit'              => [
             'title'            => 'Admin | Penjualan | Edit',
@@ -57,7 +57,7 @@ return [
             'section-title'    => 'Edit penjualan'
         ],
         'report'              => [
-            'title'            => 'Admin | Penjualans | Laporan',
+            'title'            => 'Admin | Penjualan | Laporan',
             'description'      => 'Laporan penjualan',
             'section-title'    => 'Laporan'
         ],
