@@ -49,7 +49,7 @@ return [
         'create'            => [
             'title'            => 'Admin | Penjualan | Tambah',
             'description'      => 'Tambah penjualan baru',
-            'section-title'    => 'Tambah penjualan'
+            'section-title'    => 'Penjualan baru'
         ],
         'edit'              => [
             'title'            => 'Admin | Penjualan | Edit',
