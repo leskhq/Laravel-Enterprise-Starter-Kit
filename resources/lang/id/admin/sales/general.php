@@ -56,14 +56,14 @@ return [
             'description'      => 'Edit penjualan: :name',
             'section-title'    => 'Edit penjualan'
         ],
-        'report'              => [
+        'report'            => [
             'title'            => 'Admin | Penjualan | Laporan',
             'description'      => 'Laporan penjualan',
             'section-title'    => 'Laporan'
         ],
-        'formula'             => [
-            'title'             => 'Admin | Penjualan | Formula',
-            'description'       => 'Formula dari Penjualan: :name'
+        'formula'           => [
+            'title'            => 'Admin | Penjualan | Formula',
+            'description'      => 'Formula dari Penjualan: :name'
         ],
     ],
 
