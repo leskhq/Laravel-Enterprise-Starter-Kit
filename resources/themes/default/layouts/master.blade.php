@@ -20,7 +20,7 @@
     <link rel="shortcut icon" href="{{asset('favicon.png')}}">
 
     <!-- Application CSS-->
-    <link href="{{ asset(elixir('css/all.css')) }}" rel="stylesheet" type="text/css" />
+    {{-- <link href="{{ asset(elixir('css/all.css')) }}" rel="stylesheet" type="text/css" /> --}}
 
     <!-- Head -->
     @include('partials._head')
