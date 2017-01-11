@@ -31,6 +31,5 @@ elixir(function(mix) {
     ], null, 'public/js');
 
     // Enable cache busting versions.
-    mix.version(['public/css/all.css', 'public/js/all.js']);
-
+    // mix.version(['public/css/all.css', 'public/js/all.js']);
 });

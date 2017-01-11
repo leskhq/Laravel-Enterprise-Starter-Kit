@@ -1,1 +1,1 @@
-{"version":3,"sources":["app.coffee"],"names":[],"mappings":"AACA;EAAA,IAAsB,8CAAtB;IAAA,KAAA,CAAM,YAAN,EAAA;;AAAA","file":"app.js","sourceRoot":"/source/","sourcesContent":["# Replace with your actual code!\nalert \"I knew it!\" if elvis?\n\n"]}
+{"version":3,"file":"app.js","sources":["app.coffee"],"names":[],"mappings":"AACA;EAAA,IAAsB,8CAAtB;IAAA,KAAA,CAAM,YAAN,EAAA;;AAAA","sourcesContent":["# Replace with your actual code!\nalert \"I knew it!\" if elvis?\n\n"]}
