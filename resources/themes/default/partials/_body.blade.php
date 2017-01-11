@@ -39,6 +39,6 @@ desired effect
     </div>
 
     <!-- Application JS-->
-    <script src="{{ asset(elixir('js/all.js')) }}"></script>
+    {{-- <script src="{{ asset(elixir('js/all.js')) }}"></script> --}}
 
 </body>
