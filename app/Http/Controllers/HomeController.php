@@ -59,12 +59,4 @@ class HomeController extends Controller
         return \Redirect::route($homeRouteName);
     }
 
-    public function welcome() {
-
-        $page_title = "Welcome";
-        $page_description = "This is the welcome page";
-
-        return view('welcome', compact('page_title', 'page_description'));
-    }
-
 }
