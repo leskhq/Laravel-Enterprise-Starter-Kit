@@ -18,8 +18,6 @@ Route::get( 'faust',                  ['as' => 'faust',                'uses' =>
 
 // Application routes...
 Route::get( '/',       ['as' => 'backslash',   'uses' => 'HomeController@index']);
-Route::get( 'home',    ['as' => 'home',        'uses' => 'HomeController@index']);
-Route::get( 'welcome', ['as' => 'welcome',     'uses' => 'HomeController@welcome']);
 
 // Routes in this group must be authorized.
 Route::group(['middleware' => 'authorize'], function () {
