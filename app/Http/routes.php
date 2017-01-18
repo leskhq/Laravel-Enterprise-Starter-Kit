@@ -18,12 +18,20 @@ Route::get( 'faust',                  ['as' => 'faust',                'uses' =>
 
 // Application routes...
 Route::get( '/',       ['as' => 'backslash',   'uses' => 'HomeController@index']);
+Route::get( 'home',    ['as' => 'home',        'uses' => 'HomeController@index']);
+
+// Store
+Route::get( 'store',    'HomeController@storeFront')->name('store.front');
+Route::get( 'cart',     'HomeController@storeCart')->name('store.cart');
 
 // Routes in this group must be authorized.
 Route::group(['middleware' => 'authorize'], function () {
     // Application routes...
     Route::get( 'dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
     Route::get( 'search',    ['as' => 'search',    'uses' => 'DashboardController@search']);
+
+    // Member routes
+    Route::get( 'checkout', 'HomeController@checkout')->name('store.member.checkout');
 
     // Site administration section
     Route::group(['prefix' => 'admin'], function () {
