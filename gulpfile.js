@@ -1,35 +1,35 @@
+process.env.DISABLE_NOTIFIER = true;
 var elixir = require('laravel-elixir');
-
-/*
- |--------------------------------------------------------------------------
- | Elixir Asset Management
- |--------------------------------------------------------------------------
- |
- | Elixir provides a clean, fluent API for defining some basic Gulp tasks
- | for your Laravel application. By default, we are compiling the Less
- | file for our application, as well as publishing vendor resources.
- |
- */
 
 // TODO: Include all other CSS and JS files: JQuery, Bootstrap, Select2, etc...
 elixir(function(mix) {
     // Compile our SASS file to CSS.
-    mix.sass('app.scss');
+    mix.sass('d-shop/style.scss', 'resources/assets/css/');
     // Combine the various CSS into one.
     mix.styles([
-        //'vendor.css',
-        'app.css',
-    ], 'public/css/all.css', 'public/css');
+        'd-shop/font-awesome.css',
+        'd-shop/bootstrap.css',
+        'd-shop/jquery.smartmenus.bootstrap.css',
+        'd-shop/jquery.simpleLens.css',
+        'd-shop/slick.css',
+        'd-shop/nouislider.css',
+        'style.css'
+    ], 'public/css/store.css');
 
     // Compile our Coffee file to JS.
-    mix.coffee('app.coffee');
+    // mix.coffee('app.coffee');
     // Combine the various JS into one.
     mix.scripts([
-       //'vendor.js',
-        'modal.js',
-        'app.js',
-    ], null, 'public/js');
+        'd-shop/bootstrap.js',
+        'd-shop/jquery.smartmenus.js',
+        'd-shop/jquery.smartmenus.bootstrap.js',
+        'd-shop/jquery.simpleGallery.js',
+        'd-shop/jquery.simpleLens.js',
+        'd-shop/slick.js',
+        'd-shop/nouislider.js',
+        'd-shop/custom.js'
+    ], 'public/js/d-shop/store.js');
 
     // Enable cache busting versions.
-    // mix.version(['public/css/all.css', 'public/js/all.js']);
+    // mix.version(['css/store.css', 'js/store.js']);
 });

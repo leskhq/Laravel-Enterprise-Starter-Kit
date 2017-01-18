@@ -41,8 +41,8 @@ class HomeController extends Controller
 
             if ($user) {
                 $homeCandidateName = config('app.home_route');
-                $homeRoute = $this->route->findBy('name', $homeCandidateName);
-                $homePerm = $homeRoute->permission;
+                $homeRoute         = $this->route->findBy('name', $homeCandidateName);
+                $homePerm          = $homeRoute->permission;
                 if ($user->can($homePerm->name)) {
                     $homeRouteName = $homeCandidateName;
                 } else {
@@ -57,6 +57,18 @@ class HomeController extends Controller
         catch (\Exception $ex) { } // Eat the exception will default to the welcome route.
 
         return \Redirect::route($homeRouteName);
+    }
+
+    public function storeFront() {
+        return view('front.index');
+    }
+
+    public function storeCart() {
+        return view('front.cart');
+    }
+
+    public function checkout() {
+        return view('front.checkout');
     }
 
 }

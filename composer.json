@@ -36,12 +36,13 @@
         "laracasts/flash": "~1.3",
         "zizaco/entrust": "dev-laravel-5",
         "bosnadev/repositories": "0.*",
-        "sroutier/eloquent-ldap": "^1.0@dev",
+        "sroutier/eloquent-ldap": "0.1.6",
         "zofe/rapyd": "2.1.*",
         "baum/baum": "~1.1",
-        "sroutier/l51esk-modules": "^3.0",
+        "sroutier/l51esk-modules": "3.0.7.7",
 
-        "maatwebsite/excel": "~2.1.0"
+        "maatwebsite/excel": "~2.1.0",
+        "darryldecode/cart": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
