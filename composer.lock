@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1e60d78393171d3582656f1a83eab794",
-    "content-hash": "fef8bea32e3fe826a459b6cf5424ec6d",
+    "hash": "077b967f244def1ad008a78152b3210a",
+    "content-hash": "1725fe0427ff625c06547c74b2dfecde",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -812,12 +812,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "300447350919043cd3594d9456263eead15624bb"
+                "reference": "9af1743afcf3476f3131284ca79219151f0144eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/300447350919043cd3594d9456263eead15624bb",
-                "reference": "300447350919043cd3594d9456263eead15624bb",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/9af1743afcf3476f3131284ca79219151f0144eb",
+                "reference": "9af1743afcf3476f3131284ca79219151f0144eb",
                 "shasum": ""
             },
             "require": {
@@ -876,7 +876,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2017-01-16 23:25:02"
+            "time": "2017-01-17 20:57:12"
         },
         {
             "name": "doctrine/inflector",

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Category;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -29,6 +31,10 @@ class Product extends Model
     */
     public $timestamps = false;
 
+    public function categories() {
+        return $this->belongsTo('App\Models\Category');
+    }
+
     public function perfume()
     {
         return $this->belongsTo('App\Models\Perfume');
@@ -47,5 +53,15 @@ class Product extends Model
     public function formula()
     {
         return $this->belongsTo('App\Models\Formula');
+    }
+
+    public function scopeCategorized($query, Category $category=null) {
+        if ( is_null($category) ) return $query->with('categories');
+        
+        $categoryIds = $category->getDescendantsAndSelf()->lists('id');
+
+        return $query->with('categories')
+            ->where('category_id', $categoryIds);
+
     }
 }
