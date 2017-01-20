@@ -22,14 +22,16 @@ return [
   ],
 
   'product-categories' => [
-    '1' => 'Detergent & Perfume',
-    '2' => 'Anti Noda & Spotter',
-    '3' => 'Produk Rumah Tangga',
-    '4' => 'Produk Otomotif',
-    '5' => 'Perlengkapan',
-    '6' => 'Bibit Parfum',
-    '7' => 'Bahan Baku',
-    '8' => 'Parfum'
+    '2' => 'Barang Setengah Jadi',
+    '5' => 'Chemical Otomotif',
+    '6' => 'Chemical Rumahan',
+    '7' => 'Deterjen',
+    '8' => 'Parfum',
+    '9' => 'Chemical Laundry',
+    '10' => 'Bibit Parfum',
+    '11' => 'Bahan Mentah',
+    '12' => 'Peralatan',
+    '13' => 'Perlengkapan'
   ],
 
   'product-status' => [

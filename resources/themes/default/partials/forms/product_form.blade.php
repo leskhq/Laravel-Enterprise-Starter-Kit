@@ -1,6 +1,6 @@
 <div class="form-group">
-    {!! Form::label('category', trans('admin/products/general.columns.category')) !!}
-    {!! Form::select('category', config('constant.product-categories'), null, ['class' => 'form-control']) !!}
+    {!! Form::label('category_id', trans('admin/products/general.columns.category')) !!}
+    {!! Form::select('category_id', config('constant.product-categories'), null, ['class' => 'form-control']) !!}
 </div>
 
 <div class="form-group">

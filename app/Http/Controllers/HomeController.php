@@ -60,7 +60,9 @@ class HomeController extends Controller
     }
 
     public function storeFront() {
-        return view('front.index');
+        $node = \App\Models\Category::where('slug', 'chemical-laundry')->first();
+        // return view('test_custom_variables', compact('node'));
+        return view('front.index', compact('node'));
     }
 
     public function storeCart() {
