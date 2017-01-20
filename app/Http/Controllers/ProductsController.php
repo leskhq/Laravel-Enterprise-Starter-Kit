@@ -173,9 +173,11 @@ class ProductsController extends Controller
 
         $this->product->update($data, $id);
 
+        $slug = \App\Models\Category::find($data['category_id'])->slug;
+
         Flash::success( trans('admin/products/general.status.updated') );
 
-        return redirect()->route('admin.products.index', $data['category']);
+        return redirect()->route('admin.products.index-category', $slug);
     }
 
     /**
