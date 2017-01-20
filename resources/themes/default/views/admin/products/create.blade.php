@@ -24,7 +24,7 @@
 
           <div class="form-group">
             {!! Form::submit( trans('general.button.create'), ['class' => 'btn btn-primary'] ) !!}
-            <a href="{!! route('admin.products.index',1) !!}" title="{{ trans('general.button.cancel') }}" class='btn btn-default'>{{ trans('general.button.cancel') }}</a>
+            <a href="{!! route('admin.products.index-category','detergent') !!}" title="{{ trans('general.button.cancel') }}" class='btn btn-default'>{{ trans('general.button.cancel') }}</a>
           </div>
 
           {!! Form::close() !!}
