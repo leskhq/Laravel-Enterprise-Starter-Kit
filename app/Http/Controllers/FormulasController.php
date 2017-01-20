@@ -147,6 +147,8 @@ class FormulasController extends Controller
             $this->formulaDetail->create($m);
         }
 
+        $this->formula->update(['updated_at' => date("Y-m-d H:i:s")], $id);
+
         Flash::success( trans('admin/formulas/general.status.updated') );
 
         return redirect()->route('admin.formulas.show', $id);
