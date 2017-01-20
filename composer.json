@@ -1,28 +1,23 @@
 {
-    "name": "sroutier/laravel-5.1-enterprise-starter-kit",
-    "description": "A Starter project based on Laravel 5.1 with theme support, optional LDAP/AD authentication, dynamic route authorization, etc...",
+    "name": "lcapp",
+    "description": "laundrycleanique web app",
     "keywords": [
       "framework",
-      "laravel",
-      "starter kit",
-      "template",
-      "theme",
-      "LDAP",
-      "Active Directory"
+      "laravel"
     ],
-    "homepage": "https://github.com/sroutier/laravel-5.1-enterprise-starter-kit",
+    "homepage": "https://github.com/shittyc0de/lc-app",
     "license": "GPL-3.0",
     "authors": [
       {
-        "name": "Sebastien Routier",
-        "email": "sroutier@gmail.com"
+        "name": "Aquino Tegar",
+        "email": "aquinotgr00@gmail.com"
       }
     ],
     "type": "project",
     "repositories": [
       {
         "type": "vcs",
-        "url": "https://github.com/sroutier/laravel-5.1-enterprise-starter-kit"
+        "url": "https://github.com/shittyc0de/lc-app"
       }
     ],
     "require": {
@@ -42,7 +37,8 @@
         "sroutier/l51esk-modules": "3.0.7.7",
 
         "maatwebsite/excel": "~2.1.0",
-        "darryldecode/cart": "dev-master"
+        "darryldecode/cart": "dev-master",
+        "baum/baum": "~1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

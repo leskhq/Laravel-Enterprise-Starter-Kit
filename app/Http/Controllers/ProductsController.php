@@ -55,6 +55,7 @@ class ProductsController extends Controller
             \Route::get(  '/getInfo',               'ProductsController@getInfo')       ->name('admin.products.get-info');
             \Route::get(  '/aromaSearch',           'ProductsController@aromaSearch')   ->name('admin.products.aroma-search');
             \Route::patch('/{proId}',               'ProductsController@update')        ->name('admin.products.update');
+            \Route::get(  '{slug}',                 'ProductsController@indexCategory') ->name('admin.products.index-category');
             \Route::get(  '/{proId}/cat',           'ProductsController@index')         ->name('admin.products.index');
             \Route::get(  '/{proId}/edit',          'ProductsController@edit')          ->name('admin.products.edit');
             \Route::get(  '/{proId}/delete',        'ProductsController@destroy')       ->name('admin.products.delete');
@@ -82,6 +83,13 @@ class ProductsController extends Controller
 
 
         return view('admin.products.index', compact('page_title', 'page_description', 'products', 'id', 'sortBy', 'orderBy'));
+    }
+
+    public function indexCategory($slug) {
+        $node = \App\Models\Category::where('slug', $slug)->first();
+        $parent = $node->parent()->first();
+        $products = \App\Models\Product::where('category_id', $node->id)->get();
+        return view('admin.products.test-index', compact('parent', 'products', 'slug'));
     }
 
     /**

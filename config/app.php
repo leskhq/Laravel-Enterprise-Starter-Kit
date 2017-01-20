@@ -297,7 +297,8 @@ return [
         Sroutier\L51ESKModules\ModulesServiceProvider::class,
 
         Maatwebsite\Excel\ExcelServiceProvider::class,
-
+        Darryldecode\Cart\CartServiceProvider::class,
+        Baum\Providers\BaumServiceProvider::class,
     ],
 
     /*
@@ -358,6 +359,7 @@ return [
         'Module'      => Sroutier\L51ESKModules\Facades\Module::class,
 
         'Excel'       => Maatwebsite\Excel\Facades\Excel::class,
+        'Cart'        => Darryldecode\Cart\Facades\CartFacade::class,
     ],
 
 ];
