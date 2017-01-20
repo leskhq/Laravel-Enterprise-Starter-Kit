@@ -156,7 +156,6 @@ class ProductsController extends Controller
             $perfumes[$p->id] = $p->name;
         }
 
-
         return view('admin.products.edit', compact('page_title', 'page_description', 'product', 'perfumes'));
     }
 
