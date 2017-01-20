@@ -83,7 +83,8 @@ img {
   padding: 12px 18px;
   color: #fff;
   border: 1px solid #ff6666;
-  transition: all 0.5s; }
+  transition: all 0.5s;
+  margin-bottom: 15px; }
   .aa-browse-btn span {
     margin-left: 5px; }
   .aa-browse-btn:hover, .aa-browse-btn:focus {
@@ -826,14 +827,13 @@ img {
     #aa-product .aa-product-area .aa-product-inner {
       display: inline;
       float: left;
-      width: 100%; }
+      width: 100%;
+      text-align: center;
+      padding-bottom: 35px; }
       #aa-product .aa-product-area .aa-product-inner .aa-product-catg {
         float: left;
         margin: 0;
         width: 100%; }
-      #aa-product .aa-product-area .aa-product-inner #men, #aa-product .aa-product-area .aa-product-inner #electronics, #aa-product .aa-product-area .aa-product-inner #women, #aa-product .aa-product-area .aa-product-inner #sports {
-        text-align: center;
-        padding-bottom: 35px; }
 
 .aa-product-nav {
   display: inline-block;
@@ -892,8 +892,6 @@ img {
 
 .aa-product-catg {
   margin-left: -54px; }
-  .aa-product-catg .firstt {
-    margin-left: 0px; }
   .aa-product-catg li {
     display: block;
     float: left;
@@ -911,6 +909,8 @@ img {
     .aa-product-catg li:hover .aa-product-hvr-content {
       -webkit-transform: translateX(0%);
       transform: translateX(0%); }
+    .aa-product-catg li:first-child {
+      margin-left: 0px; }
     .aa-product-catg li figure {
       position: relative;
       height: 300px; }

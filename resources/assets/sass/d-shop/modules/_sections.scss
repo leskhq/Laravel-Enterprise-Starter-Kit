@@ -371,15 +371,12 @@
 			display: inline;
 			float: left;
 			width: 100%;
+			text-align: center;
+			padding-bottom: 35px;
 			.aa-product-catg{
 				float: left;
 				margin: 0;
 				width: 100%;
-			}
-			
-			#men, #electronics, #women, #sports{
-				text-align: center;
-				padding-bottom: 35px;	
 			}
 			
 		}
@@ -455,9 +452,6 @@
 }			
 .aa-product-catg{
 	margin-left: -54px;
-	.firstt{
-		margin-left: 0px;
-	}
 	li{
 		display: block;
 		float: left;
@@ -480,7 +474,10 @@
 				@include transform(translateX(0%));
 			}
 
-		}				
+		}
+		&:first-child{
+			margin-left: 0px;
+		}			
 		figure{
 			position: relative;
 			height: 300px;

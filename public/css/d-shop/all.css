@@ -9614,8 +9614,7 @@ img {
   padding: 12px 18px;
   color: #fff;
   border: 1px solid #ff6666;
-  transition: all 0.5s;
-  margin-bottom: 15px; }
+  transition: all 0.5s; }
   .aa-browse-btn span {
     margin-left: 5px; }
   .aa-browse-btn:hover, .aa-browse-btn:focus {
@@ -10358,13 +10357,14 @@ img {
     #aa-product .aa-product-area .aa-product-inner {
       display: inline;
       float: left;
-      width: 100%;
-      text-align: center;
-      padding-bottom: 35px; }
+      width: 100%; }
       #aa-product .aa-product-area .aa-product-inner .aa-product-catg {
         float: left;
         margin: 0;
         width: 100%; }
+      #aa-product .aa-product-area .aa-product-inner #men, #aa-product .aa-product-area .aa-product-inner #electronics, #aa-product .aa-product-area .aa-product-inner #women, #aa-product .aa-product-area .aa-product-inner #sports {
+        text-align: center;
+        padding-bottom: 35px; }
 
 .aa-product-nav {
   display: inline-block;
@@ -12849,4 +12849,4 @@ img {
 
 /*# sourceMappingURL=style.css.map */
 
-/*# sourceMappingURL=store.css.map */
+/*# sourceMappingURL=all.css.map */
