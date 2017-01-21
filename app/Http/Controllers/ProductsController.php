@@ -125,7 +125,7 @@ class ProductsController extends Controller
 
         Flash::success( trans('admin/products/general.status.created') );
 
-        return redirect()->route('admin.products.index', $data['category']);
+        return redirect()->route('admin.products.index-category', 'detergent');
     }
 
     /**
