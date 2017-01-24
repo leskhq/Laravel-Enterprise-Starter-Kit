@@ -1,6 +1,8 @@
 <?php namespace App\Libraries;
 
 
+use InvalidArgumentException;
+
 class FlashLevel
 {
     const INFO = 200;

@@ -44,8 +44,7 @@ class WalledGarden
         // Redirect to the login page if the user is not authenticated and the site
         // is configured as a walled garden, except if the request is going to a page
         // or route that is exempt from authentication.
-        if ( $walled_garden_enabled )
-        {
+        if ( $walled_garden_enabled ) {
             $authenticated = $this->auth->check();
             if (!$authenticated) {
                 $requestURI = $request->getUri();

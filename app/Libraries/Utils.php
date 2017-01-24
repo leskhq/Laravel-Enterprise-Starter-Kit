@@ -1,5 +1,6 @@
 <?php namespace App\Libraries;
 
+use App\Libraries\Str;
 use App\Repositories\AuditRepository as Audit;
 use App\User;
 use Auth;
@@ -11,8 +12,6 @@ use Setting;
 
 class Utils
 {
-
-
     /**
      * Transform the input string into function 1, 2 or 3 parameters.
      * Used in Blade template to call the str_head, str_tail and
@@ -80,7 +79,7 @@ class Utils
      * a boolean, float or integer converts it and return that value.
      * Otherwise simply return the inout variable unchanged.
      *
-     * @param $value
+     * @param $value The value to convert.
      * @return bool|float|int|misc
      */
     public static function correctType($value)
@@ -93,7 +92,7 @@ class Utils
             } elseif (is_int($value)) {
                 $value = intval($value);
             }
-        } catch (Exception $ex) {}
+        } catch (\Exception $ex) {}
 
         return $value;
     }
