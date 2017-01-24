@@ -11,9 +11,23 @@ return [
     | choose a path that's outside of your public directory, you will need to
     | copy your module assets (CSS, images, etc.) to your public directory.
     |
+    | See 'path_public_assets' setting.
     */
 
-    'path' => app_path('Modules'),
+    'path' => app_path('Modules'), // Set to app/Modules
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Path to public assets
+    |--------------------------------------------------------------------------
+    |
+    | Define the path where the public assets of each module will be deployed to
+    | to be available under the public directory.
+    |
+    */
+
+    'path_public_assets' => public_path('vendor/lesk-modules'), // Set to public/vendor/lesk-modules
 
     /*
 	|--------------------------------------------------------------------------
