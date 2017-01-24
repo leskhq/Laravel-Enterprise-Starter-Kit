@@ -8,6 +8,7 @@ storage/
 # Package development #
 #######################
 /app/Modules/
+/public/vendor/
 
 # Configuration testing #
 #########################
