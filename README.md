@@ -580,6 +580,7 @@ A number of modules have already been created, here is the current list:
 | Name                                                                                            | Description                        |
 |-------------------------------------------------------------------------------------------------|------------------------------------|
 | [Active Directory Inspector](https://github.com/sroutier/LESK-Module_ActiveDirectoryInspector)  | A simple Active Directory browser. |
+| [Legacy Client Support][https://github.com/sroutier/LESK-Module_LegacyClientSupport]            | Provide a way to block or warn users to upgrade, based on the Web Browser used. |
 | [Reports Users](https://github.com/sroutier/LESK-Module_ReportsUsers)                           | Provides some reports on users and their permissions for admin purpose. |
 | [Reservation](https://github.com/sroutier/LESK-Module_Reservation)                              | Allows the management of reservable items. |
 | [SQL Utils](https://github.com/sroutier/LESK-Module_SQLUtils)                                   | A set of utility functions and classes to help interact with SQL Servers. |
