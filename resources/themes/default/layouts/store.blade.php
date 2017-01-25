@@ -23,7 +23,7 @@
 
         <!-- Main style sheet -->
         {{-- <link href="css/style.css" rel="stylesheet"> --}}
-        <link rel="stylesheet" href="css/store.css">
+        <link rel="stylesheet" href="css/app.css">
         {{-- <link rel="stylesheet" href="{{ elixir('css/style.css') }}"> --}}
 
         <!-- Google Font -->
@@ -82,71 +82,72 @@
 
             <!-- start header bottom  -->
             <div class="aa-header-bottom">
-              <div class="container">
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="aa-header-bottom-area">
-                      <!-- logo  -->
-                      <div class="aa-logo">
-                        <!-- Text based logo -->
-                        <a href="index.html">
-                          <span class="fa fa-shopping-cart"></span>
-                          <p>daily<strong>Shop</strong> <span>Your Shopping Partner</span></p>
-                        </a>
-                        <!-- img based logo -->
-                        <!-- <a href="index.html"><img src="img/logo.jpg" alt="logo img"></a> -->
-                      </div>
-                      <!-- / logo  -->
-                       <!-- cart box -->
-                      <div class="aa-cartbox">
-                        <a class="aa-cart-link" href="cart">
-                          <span class="fa fa-shopping-basket"></span>
-                          <span class="aa-cart-title">SHOPPING CART</span>
-                          <span class="aa-cart-notify">2</span>
-                        </a>
-                        <div class="aa-cartbox-summary">
-                          <ul>
-                            <li>
-                              <a class="aa-cartbox-img" href="#"><img src="https://i.imgsafe.org/8317aeed6d.jpg" alt="img"></a>
-                              <div class="aa-cartbox-info">
-                                <h4><a href="#">Product Name</a></h4>
-                                <p>1 x $250</p>
-                              </div>
-                              <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
-                            </li>
-                            <li>
-                              <a class="aa-cartbox-img" href="#"><img src="https://i.imgsafe.org/8317aeed6d.jpg" alt="img"></a>
-                              <div class="aa-cartbox-info">
-                                <h4><a href="#">Product Name</a></h4>
-                                <p>1 x $250</p>
-                              </div>
-                              <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
-                            </li>                    
-                            <li>
-                              <span class="aa-cartbox-total-title">
-                                Total
-                              </span>
-                              <span class="aa-cartbox-total-price">
-                                $500
-                              </span>
-                            </li>
-                          </ul>
-                          <a class="aa-cartbox-checkout aa-primary-btn" href="checkout.html">Checkout</a>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="aa-header-bottom-area">
+                                <!-- logo  -->
+                                <div class="aa-logo">
+                                    <!-- Text based logo -->
+                                    <a href="/store">
+                                        <span class="fa fa-shopping-cart"></span>
+                                        <p>daily<strong>Shop</strong> <span>Your Shopping Partner</span></p>
+                                    </a>
+                                    <!-- img based logo -->
+                                    <!-- <a href="index.html"><img src="img/logo.jpg" alt="logo img"></a> -->
+                                </div>
+                                <!-- / logo  -->
+                                <!-- cart box -->
+                                <div class="aa-cartbox">
+                                    <a class="aa-cart-link" href="cart">
+                                        <span class="fa fa-shopping-basket"></span>
+                                        <span class="aa-cart-title">SHOPPING CART</span>
+                                        <span class="aa-cart-notify">
+                                            @if(Cart::isEmpty()) 0 @endif
+                                            {{ Cart::getContent()->count() }}
+                                        </span>
+                                    </a>
+                                    <div class="aa-cartbox-summary">
+                                        @if(!Cart::isEmpty())
+                                        <ul>
+                                            @foreach(Cart::getContent() as $value)
+                                            <li>
+                                                <a class="aa-cartbox-img" href="#"><img src="https://i.imgsafe.org/8317aeed6d.jpg" alt="img"></a>
+                                                <div class="aa-cartbox-info">
+                                                    <h4><a href="#">{{ $value->name }}</a></h4>
+                                                    <p>{{ $value->quantity }} x {{ Helpers::reggo($value->price) }}</p>
+                                                </div>
+                                                <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
+                                            </li>
+                                            @endforeach
+                                            <li>
+                                                <span class="aa-cartbox-total-title">
+                                                    Total
+                                                </span>
+                                                <span class="aa-cartbox-total-price">
+                                                    {{ Helpers::reggo(Cart::getTotal()) }}
+                                                </span>
+                                            </li>
+                                        </ul>
+                                        <a class="aa-cartbox-checkout aa-primary-btn" href="/cart">Keranjang</a>
+                                        @else
+                                            belum ada item
+                                        @endif
+                                    </div>
+                                </div>
+                                <!-- / cart box -->
+                                <!-- search box -->
+                                <div class="aa-search-box">
+                                    <form action="">
+                                        <input type="text" name="" id="" placeholder="Search here ex. 'man' ">
+                                        <button type="submit"><span class="fa fa-search"></span></button>
+                                    </form>
+                                </div>
+                              <!-- / search box -->             
+                            </div>
                         </div>
-                      </div>
-                      <!-- / cart box -->
-                      <!-- search box -->
-                      <div class="aa-search-box">
-                        <form action="">
-                          <input type="text" name="" id="" placeholder="Search here ex. 'man' ">
-                          <button type="submit"><span class="fa fa-search"></span></button>
-                        </form>
-                      </div>
-                      <!-- / search box -->             
                     </div>
-                  </div>
                 </div>
-              </div>
             </div>
             <!-- / header bottom  -->
         </header>
@@ -336,9 +337,13 @@
     <script type="text/javascript" src="js/d-shop/slick.js"></script>
     <!-- Price picker slider -->
     <script type="text/javascript" src="js/d-shop/nouislider.js"></script>
+
+    <script src="/js/modal.js"></script>
   
     <!-- Custom js -->
-    <script src="js/d-shop/custom.js"></script> 
+    <script src="js/d-shop/custom.js"></script>
+
+    @yield('bottom_scripts')
 
     </body>
 </html>

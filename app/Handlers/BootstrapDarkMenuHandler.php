@@ -19,14 +19,15 @@ class BootstrapDarkMenuHandler implements MenuHandlerInterface
     // TODO: RenderLeftAlignmentGroup
     // TODO: RenderRightAlignmentGroup
 
-    public $MENU_PARTIAL_VIEW   = 'partials._bootstrap-dark-menu';
-    public $MENU_HEADER         = "<ul class='nav navbar-nav'>";
-    public $MENU_FOOTER         = "</ul>";
-    public $MENU_ITEM_SEPARATOR = "<li role='separator' class='divider'></li>";
-    public $MENU_ITEM_INACTIVE  = "<li><a href='@URL@'><i class='@ICON@'></i>&nbsp;@LABEL@</a></li>";
-    public $MENU_ITEM_ACTIVE    = "<li class='active'><a href='@URL@'><i class='@ICON@'></i>&nbsp;@LABEL@<span class='sr-only'>(current)</span></a></li>";
-    public $MENU_GROUP_START    = "<li class='dropdown'><a href='@URL@' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><i class='@ICON@'></i>&nbsp;@LABEL@<span class='caret'></span></a><ul class='dropdown-menu'>";
-    public $MENU_GROUP_END      = "</ul></li>";
+    public $MENU_PARTIAL_VIEW       = 'partials._bootstrap-dark-menu';
+    public $MENU_HEADER             = "<ul class='nav navbar-nav'>";
+    public $MENU_FOOTER             = "</ul>";
+    public $MENU_ITEM_SEPARATOR     = "<li role='separator' class='divider'></li>";
+    public $MENU_ITEM_INACTIVE      = "<li><a href='@URL@'><i class='@ICON@'></i>&nbsp;@LABEL@</a></li>";
+    public $MENU_ITEM_ACTIVE        = "<li class='active'><a href='@URL@'><i class='@ICON@'></i>&nbsp;@LABEL@<span class='sr-only'>(current)</span></a></li>";
+    public $MENU_GROUP_START_OPENED = "<li class='dropdown'><a href='@URL@' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><i class='@ICON@'></i>&nbsp;@LABEL@<span class='caret'></span></a><ul class='dropdown-menu'>";
+    public $MENU_GROUP_START_CLOSED = "<li class='dropdown'><a href='@URL@' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'><i class='@ICON@'></i>&nbsp;@LABEL@<span class='caret'></span></a><ul class='dropdown-menu'>";
+    public $MENU_GROUP_END          = "</ul></li>";
 
     public $TRAIL_PARTIAL_VIEW           = 'partials._bootstrap-light-trail';
     public $TRAIL_HEADER                 = "<ol class='breadcrumb'>";

@@ -58,19 +58,4 @@ class HomeController extends Controller
 
         return \Redirect::route($homeRouteName);
     }
-
-    public function storeFront() {
-        $node = \App\Models\Category::where('slug', 'chemical-laundry')->first();
-        // return view('test_custom_variables', compact('node'));
-        return view('front.index', compact('node'));
-    }
-
-    public function storeCart() {
-        return view('front.cart');
-    }
-
-    public function checkout() {
-        return view('front.checkout');
-    }
-
 }

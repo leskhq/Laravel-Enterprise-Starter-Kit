@@ -26,76 +26,73 @@
 				<div class="col-md-10 col-md-offset-1">
 					<div class="cart-view-area">
 						<div class="cart-view-table">
-							<form action="">
-								<div class="table-responsive">
-									<table class="table">
-										<thead>
-											<tr>
-												<th></th>
-												<th>Product</th>
-												<th>Price</th>
-												<th>Quantity</th>
-												<th>Total</th>
-												<th></th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td><img src="https://i.imgsafe.org/877ef1a551.png" alt="img"></td>
-												<td><a class="aa-cart-title" href="#">Polo T-Shirt</a></td>
-												<td>$250</td>
-												<td><input class="aa-cart-quantity" type="number" value="1"></td>
-												<td>$250</td>
-												<td><a class="remove" href="#"><fa class="fa fa-close"></fa></a></td>
-											</tr>
-											<tr>
-												<td><img src="https://i.imgsafe.org/877ef1a551.png" alt="img"></td>
-												<td><a class="aa-cart-title" href="#">Polo T-Shirt</a></td>
-												<td>$150</td>
-												<td><input class="aa-cart-quantity" type="number" value="1"></td>
-												<td>$150</td>
-												<td><a class="remove" href="#"><fa class="fa fa-close"></fa></a></td>
-											</tr>
-											<tr>
-												<td><img src="https://i.imgsafe.org/877ef1a551.png" alt="img"></td>
-												<td><a class="aa-cart-title" href="#">Polo T-Shirt</a></td>
-												<td>$50</td>
-												<td><input class="aa-cart-quantity" type="number" value="1"></td>
-												<td>$50</td>
-												<td><a class="remove" href="#"><fa class="fa fa-close"></fa></a></td>
-											</tr>
-											<tr>
-												<td colspan="6" class="aa-cart-view-bottom">
-													<div class="aa-cart-coupon">
+							@if(!Cart::isEmpty())
+								{!! Form::open(['url' => '/update-cart', 'method' => 'patch']) !!}
+									<div class="table-responsive">
+										<table class="table">
+											<thead>
+												<tr>
+													<th></th>
+													<th>Product</th>
+													<th>Price</th>
+													<th>Quantity</th>
+													<th>Total</th>
+													<th></th>
+												</tr>
+											</thead>
+											<tbody>
+												@foreach($cart as $value)
+												<tr>
+													<td><img src="https://i.imgsafe.org/877ef1a551.png" alt="img"></td>
+													<td>
+														<a class="aa-cart-title" href="#">{{ $value->name }}</a>
+														 ({{ $value->attributes->aroma_name ?: 'polos' }})
+													</td>
+													<td>{{ Helpers::reggo($value->price) }}</td>
+													<td><input name="quantity[{{$value->id}}]" class="aa-cart-quantity" type="number" value="{{ $value->quantity }}"></td>
+													<td>{{ Helpers::reggo($value->price*$value->quantity) }}</td>
+													<td><a class="remove" href="{{ route('store.remove-cart-item', $value->id) }}"><fa class="fa fa-close"></fa></a></td>
+												</tr>
+												@endforeach
+												<tr>
+													<td colspan="6" class="aa-cart-view-bottom">
+														<div class="aa-cart-coupon">
 														<input class="aa-coupon-code" type="text" placeholder="Coupon">
 														<input class="aa-cart-view-btn" type="submit" value="Apply Coupon">
-													</div>
-													<input class="aa-cart-view-btn" type="submit" value="Update Cart">
-												</td>
-											</tr>
-										</tbody>
-									</table>
+														</div>
+														<button class="aa-cart-view-btn" type="submit">Perbarui Keranjang</button>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								{!! Form::close() !!}
+								<div class="row">
+									<!-- Cart Total view -->
+									<div class="col-md-6 col-md-offset-3 text-center">
+										<a href="/store" class="aa-cart-view-btn">Lanjut Belanja</a>
+										<h4 class="text-left">Cart Totals</h4>
+										<table class="aa-totals-table">
+											<tbody>
+												<tr>
+													<th>Subtotal</th>
+													<td class="text-center">{{ Helpers::reggo(Cart::getSubTotal()) }}</td>
+												</tr>
+												<tr>
+													<th>Total</th>
+													<td class="text-center">{{ Helpers::reggo(Cart::getTotal()) }}</td>
+												</tr>
+											</tbody>
+										</table>
+										<a href="#" class="aa-cart-view-btn">Proced to Checkout</a>
+									</div>
 								</div>
-							</form>
-							<div class="row">
-								<!-- Cart Total view -->
+							@else
 								<div class="col-md-6 col-md-offset-3 text-center">
-									<h4 class="text-left">Cart Totals</h4>
-									<table class="aa-totals-table">
-										<tbody>
-											<tr>
-												<th>Subtotal</th>
-												<td class="text-center">$450</td>
-											</tr>
-											<tr>
-												<th>Total</th>
-												<td class="text-center">$450</td>
-											</tr>
-										</tbody>
-									</table>
-									<a href="#" class="aa-cart-view-btn">Proced to Checkout</a>
+									<h4>Belum ada item di keranjang silahkan</h4>
+									<a href="/store" class="aa-cart-view-btn">Belanja</a>
 								</div>
-							</div>
+							@endif
 						</div>
 					</div>
 				</div>

@@ -461,7 +461,13 @@
 		width: 20.5%;
 		position: relative;	
 		overflow: hidden;
-		&:hover{						
+		&:first-child{
+			margin-left: 0px;
+		}
+		&:first-of-type{
+			margin-left: 0px;
+		}
+		&:hover{
 			figure{
 				.aa-product-img{
 					background-color: rgba(0,0,0,0.5);
@@ -473,11 +479,7 @@
 			.aa-product-hvr-content{						
 				@include transform(translateX(0%));
 			}
-
 		}
-		&:first-child{
-			margin-left: 0px;
-		}			
 		figure{
 			position: relative;
 			height: 300px;
@@ -1867,7 +1869,7 @@
 							}
 							.aa-cart-quantity{
 								padding: 5px;
-								width: 50px;
+								width: 70px;
 								margin: 0 1px;
 							}							
 						}

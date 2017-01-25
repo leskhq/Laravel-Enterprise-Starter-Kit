@@ -73,17 +73,18 @@ trait MenuHandlerTrait
 
         try {
             $topNode = $this->getMenuItem($topNode);
+            $menuBranch = $this->getMenuBranch();
 
             $variables   = $this->getVariables($topNode);
             $menuContent = $this->replaceVars($this->MENU_HEADER, $variables);
 
             if($includeTopNode) {
-                $menuContent .= $this->renderMenuItem($topNode, $variables);
+                $menuContent .= $this->renderMenuItem($topNode, $variables, $menuBranch);
             }
             else {
                 $children = $topNode->children;
                 foreach($children as $child) {
-                    $menuContent .= $this->renderMenuItem($child, $variables);
+                    $menuContent .= $this->renderMenuItem($child, $variables, $menuBranch);
                 }
             }
             $menuContent .= $this->replaceVars($this->MENU_FOOTER, $variables);
@@ -105,7 +106,7 @@ trait MenuHandlerTrait
      *
      * @return string
      */
-    public function renderMenuItem( Menu $item, $variables = [] )
+    public function renderMenuItem( Menu $item, $variables = [], $menuBranch = [] )
     {
         $itemGroupStart  = "";
         $itemGroupContent  = "";
@@ -115,16 +116,21 @@ trait MenuHandlerTrait
         if ($item->enabled) {
             $variables = $this->getVariables($item, $variables);
 
-            $bActive      = ($variables['URL'] == $variables['CURRENT_URL']) ? true : false;
+            $bActive      = in_array($item->name, $menuBranch);
             $bHasChildren = ($item->children->count())                       ? true : false;
             $bIsSeparator = ($item->separator)                               ? true : false;
 
             if ($bHasChildren) {
-                $itemGroupStart = $this->replaceVars($this->MENU_GROUP_START, $variables);
+                if ($bActive) {
+                    $itemGroupStart = $this->replaceVars($this->MENU_GROUP_START_OPENED, $variables);
+                }
+                else {
+                    $itemGroupStart = $this->replaceVars($this->MENU_GROUP_START_CLOSED, $variables);
+                }
 
                 $children = $item->children;
                 foreach($children as $child) {
-                    $itemGroupContent .= $this->renderMenuItem($child, $variables);
+                    $itemGroupContent .= $this->renderMenuItem($child, $variables, $menuBranch);
                 }
 
                 $itemGroupEnd = $this->replaceVars($this->MENU_GROUP_END, $variables);
@@ -274,6 +280,27 @@ trait MenuHandlerTrait
         throw new MenuBuilderMenuItemNotFoundException("Menu item [".$input."] not found.");
     }
 
+    public function getMenuBranch( $leaf = null )
+    {
+        $menuBranch = [];
+        try {
+            // Try to resolve leaf if not already provided.
+            if (!($leaf instanceof Menu)) {
+                $leaf = $this->getLeafMenuItem($leaf);
+            }
+            $continue = true;
+            $pointer = $leaf;
+            while ($continue) {
+                $menuBranch[] = $pointer->name;
+                if ('root' == $pointer->name) {
+                    $continue = false;
+                } else {
+                    $pointer = $pointer->parent;
+                }
+            }
+        } catch (MenuBuilderMenuItemNotFoundException $ex) { }
+        return $menuBranch;
+    }
 
     /**
      * @param null $leaf

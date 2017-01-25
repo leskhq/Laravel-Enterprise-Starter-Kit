@@ -28,14 +28,16 @@ class L51ESKSecuredMenuHandler implements MenuHandlerInterface
         getLeafMenuItem as traitGetLeafMenuItem;
     }
 
-    public $MENU_PARTIAL_VIEW   = 'partials._adminlte-menu-sidebar';
-    public $MENU_HEADER         = "";
-    public $MENU_FOOTER         = "";
-    public $MENU_ITEM_SEPARATOR = "<li role='separator' class='divider'></li>";
-    public $MENU_ITEM_INACTIVE  = "<li><a href='@URL@'><i class='@ICON@'></i>&nbsp;<span>@LABEL@</span></a></li>";
-    public $MENU_ITEM_ACTIVE    = "<li class='active'><a href='@URL@'><i class='@ICON@'></i>&nbsp;<span>@LABEL@</span><span class='sr-only'>(current)</span></a></li>";
-    public $MENU_GROUP_START    = "<li class='treeview'><a href='@URL@'><i class='@ICON@'></i><span>@LABEL@</span><i class='fa fa-angle-left pull-right'></i></a><ul class='treeview-menu'>";
-    public $MENU_GROUP_END      = "</ul></li>";
+    public $MENU_PARTIAL_VIEW       = 'partials._adminlte-menu-sidebar';
+    public $MENU_HEADER             = "";
+    public $MENU_FOOTER             = "";
+    public $MENU_ITEM_SEPARATOR     = "<li role='separator' class='divider'></li>";
+    public $MENU_ITEM_INACTIVE      = "<li><a href='@URL@'><i class='@ICON@'></i>&nbsp;<span>@LABEL@</span></a></li>";
+    public $MENU_ITEM_ACTIVE        = "<li class='active'><a href='@URL@'><i class='@ICON@'></i>&nbsp;<span>@LABEL@</span><span class='sr-only'>(current)</span></a></li>";
+    public $MENU_GROUP_START        = "<li class='treeview'><a href='@URL@'><i class='@ICON@'></i><span>@LABEL@</span><i class='fa fa-angle-left pull-right'></i></a><ul class='treeview-menu'>";
+    public $MENU_GROUP_START_OPENED = "<li class='treeview active'><a href='@URL@'><i class='@ICON@'></i><span>@LABEL@</span><i class='fa fa-angle-down pull-right'></i></a><ul class='treeview-menu menu-open'>";
+    public $MENU_GROUP_START_CLOSED = "<li class='treeview'><a href='@URL@'><i class='@ICON@'></i><span>@LABEL@</span><i class='fa fa-angle-left pull-right'></i></a><ul class='treeview-menu'>";
+    public $MENU_GROUP_END          = "</ul></li>";
 
     public $TRAIL_PARTIAL_VIEW           = 'partials._bootstrap-light-trail';
     public $TRAIL_HEADER                 = "<ol class='breadcrumb'>";
@@ -46,12 +48,12 @@ class L51ESKSecuredMenuHandler implements MenuHandlerInterface
     public $TRAIL_ITEM_INACTIVE_WITH_URL = "<li><a href='@URL@'><i class='@ICON@'></i>&nbsp;@LABEL@</a></li>";
 
 
-    public function renderMenuItem( Menu $item, $variables = [] )
+    public function renderMenuItem( Menu $item, $variables = [], $menuBranch = [] )
     {
         $itemContent = "";
 
         if ($this->currentUserIsAuthorized($item)) {
-            $itemContent = $this->traitRenderMenuItem($item, $variables);
+            $itemContent = $this->traitRenderMenuItem($item, $variables, $menuBranch);
         }
 
         return $itemContent;

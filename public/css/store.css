@@ -10432,6 +10432,8 @@ img {
     width: 20.5%;
     position: relative;
     overflow: hidden; }
+    .aa-product-catg li:first-child {
+      margin-left: 0px; }
     .aa-product-catg li:hover figure .aa-product-img {
       background-color: rgba(0, 0, 0, 0.5); }
     .aa-product-catg li:hover figure .aa-add-card-btn {
@@ -10440,8 +10442,6 @@ img {
     .aa-product-catg li:hover .aa-product-hvr-content {
       -webkit-transform: translateX(0%);
       transform: translateX(0%); }
-    .aa-product-catg li:first-child {
-      margin-left: 0px; }
     .aa-product-catg li figure {
       position: relative;
       height: 300px; }

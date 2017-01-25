@@ -121,11 +121,13 @@ class ProductsController extends Controller
     {
         $data = $request->except(['_token']);
 
+        dd($data);
+
         $this->product->create($data);
 
         Flash::success( trans('admin/products/general.status.created') );
 
-        return redirect()->route('admin.products.index', $data['category']);
+        return redirect()->route('admin.products.index-category', 'detergent');
     }
 
     /**
@@ -191,7 +193,7 @@ class ProductsController extends Controller
 
         Flash::success( trans('admin/products/general.status.deleted') );
 
-        return redirect()->route('admin.products.index', 1);
+        return redirect()->route('admin.products.index-category', 'detergent');
     }
 
     /**

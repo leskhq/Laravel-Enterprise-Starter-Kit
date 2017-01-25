@@ -14,7 +14,7 @@ elixir(function(mix) {
         'd-shop/slick.css',
         'd-shop/nouislider.css',
         'style.css'
-    ], 'public/css/store.css');
+    ], 'public/css/app.css');
 
     // Compile our Coffee file to JS.
     // mix.coffee('app.coffee');
