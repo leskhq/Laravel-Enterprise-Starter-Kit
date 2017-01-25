@@ -936,7 +936,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/432b80084acb401f9f2daba461679ace39cf67df",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/036abc0886367158ac0b06beadf82cee338924ac",
                 "reference": "432b80084acb401f9f2daba461679ace39cf67df",
                 "shasum": ""
             },
@@ -2520,12 +2520,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sroutier/eloquent-ldap.git",
-                "reference": "0418d4fef2b5fd04f56934a21ab0f3c501fdf319"
+                "reference": "eee260ff20182354eef9aa8a0692aa47d2b4ae7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sroutier/eloquent-ldap/zipball/0418d4fef2b5fd04f56934a21ab0f3c501fdf319",
-                "reference": "0418d4fef2b5fd04f56934a21ab0f3c501fdf319",
+                "url": "https://api.github.com/repos/sroutier/eloquent-ldap/zipball/eee260ff20182354eef9aa8a0692aa47d2b4ae7c",
+                "reference": "eee260ff20182354eef9aa8a0692aa47d2b4ae7c",
                 "shasum": ""
             },
             "require": {
@@ -2570,20 +2570,20 @@
                 "ldap",
                 "ldap-eloquent"
             ],
-            "time": "2016-11-08 21:26:53"
+            "time": "2016-12-15 15:26:24"
         },
         {
             "name": "sroutier/lesk-modules",
-            "version": "3.0.7.13",
+            "version": "3.0.7.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sroutier/lesk-modules.git",
-                "reference": "b1f0c8cd175f77d3e6d6ead8d66884875b34547e"
+                "reference": "71c95b35cd24461bd17cd0419e2e311ae52f15c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sroutier/lesk-modules/zipball/b1f0c8cd175f77d3e6d6ead8d66884875b34547e",
-                "reference": "b1f0c8cd175f77d3e6d6ead8d66884875b34547e",
+                "url": "https://api.github.com/repos/sroutier/lesk-modules/zipball/71c95b35cd24461bd17cd0419e2e311ae52f15c7",
+                "reference": "71c95b35cd24461bd17cd0419e2e311ae52f15c7",
                 "shasum": ""
             },
             "require": {
@@ -2628,7 +2628,7 @@
                 "lesk",
                 "modules"
             ],
-            "time": "2016-10-27 15:17:12"
+            "time": "2017-01-25 15:02:13"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -4397,7 +4397,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Jeroen-G/laravel-packager/zipball/836b2d0adedfee14e2a76575b77dd16ac5b4cc71",
+                "url": "https://api.github.com/repos/Jeroen-G/laravel-packager/zipball/84dc5f885fcd28fef25c2c01ab93ea6d7a5ecc18",
                 "reference": "836b2d0adedfee14e2a76575b77dd16ac5b4cc71",
                 "shasum": ""
             },
