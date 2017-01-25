@@ -353,8 +353,8 @@ return [
         Creativeorange\Gravatar\GravatarServiceProvider::class,
         Tylercd100\LERN\LERNServiceProvider::class,
         Arcanedev\Settings\SettingsServiceProvider::class,
-        Libern\SqlLogging\SqlLoggingServiceProvider::class
-
+        Libern\SqlLogging\SqlLoggingServiceProvider::class,
+        Jenssegers\Agent\AgentServiceProvider::class,
     ),
 
     /*
@@ -418,6 +418,7 @@ return [
         'LERN'        => Tylercd100\LERN\Facades\LERN::class,
         // Commented out to force the usage of the Setting model located at app/Models/Setting.php
 //        'Setting'     => Arcanedev\Settings\Facades\Setting::class,
+        'Agent'         => Jenssegers\Agent\Facades\Agent::class,
 
     ],
 

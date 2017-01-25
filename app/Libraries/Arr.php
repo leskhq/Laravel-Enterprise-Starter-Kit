@@ -25,4 +25,25 @@ class Arr extends BaseArr
 
         return array_combine($keys, $values);
     }
+
+    /**
+     * Remove the values provided from the array.
+     * Values can be a single value or an array of values.
+     *
+     * @param array $array
+     * @param array|string $values
+     * @return array
+     */
+    public static function remove_value(array $array, $values)
+    {
+        $values = is_array($values) ? $values : [$values];
+
+        foreach($values as $val) {
+            if(($key = array_search($val, $array)) !== false) {
+                unset($array[$key]);
+            }
+        }
+
+        return $array;
+    }
 }

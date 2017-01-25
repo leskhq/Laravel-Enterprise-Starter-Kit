@@ -44,7 +44,8 @@
         "creativeorange/gravatar": "~1.0",
         "tylercd100/lern": "~3.6.5",
         "arcanedev/settings": "^1.2",
-        "libern/laravel-sql-logging": "^1.0@dev"
+        "libern/laravel-sql-logging": "^1.0@dev",
+        "jenssegers/agent": "^2.4"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
