@@ -15,22 +15,22 @@ class PartnersController extends Controller
 {
     static function routes() {
         \Route::group(['prefix' => 'partners'], function() {
-            \Route::get('/', 'PartnersController@index')->name('admin.partners.index');
-            \Route::get('/create', 'PartnersController@create')->name('admin.partners.create');
-            \Route::post('/store', 'PartnersController@store')->name('admin.partners.store');
-            \Route::get('/{id}/edit', 'PartnersController@edit')->name('admin.partners.edit');
-            \Route::patch('/{id}/update', 'PartnersController@update')->name('admin.partners.update');
-            \Route::delete('/{id}/delete', 'PartnersController@delete')->name('admin.partners.delete');
-            \Route::get('/report', 'PartnersController@report')->name('admin.partners.report');
-            \Route::get('/{id}', 'PartnersController@show')->name('admin.partners.show');
-            \Route::post('/storeFee', 'PartnersController@storeFee')->name('admin.partners.store-fee');
-            \Route::patch('/{id}/updateFee', 'PartnersController@updateFee')->name('admin.partners.update-fee');
-	    \Route::get('/{id}/confirm-delete', ['as' => 'admin.partners.confirm-delete', 'uses' => 'PartnersController@confirmDelete']);
+            \Route::get(    '{id}/type',       'PartnersController@index')     ->name('admin.partners.index');
+            \Route::get(    'create',          'PartnersController@create')    ->name('admin.partners.create');
+            \Route::post(   'store',           'PartnersController@store')     ->name('admin.partners.store');
+            \Route::get(    '{id}/edit',       'PartnersController@edit')      ->name('admin.partners.edit');
+            \Route::patch(  '{id}/update',     'PartnersController@update')    ->name('admin.partners.update');
+            \Route::delete( '{id}/delete',     'PartnersController@delete')    ->name('admin.partners.delete');
+            \Route::get(    'report',          'PartnersController@report')    ->name('admin.partners.report');
+            \Route::get(    '{id}',            'PartnersController@show')      ->name('admin.partners.show');
+            \Route::post(   'storeFee',        'PartnersController@storeFee')  ->name('admin.partners.store-fee');
+            \Route::patch(  '{id}/updateFee',  'PartnersController@updateFee') ->name('admin.partners.update-fee');
+            \Route::get(    '{id}/confirm-delete', ['as' => 'admin.partners.confirm-delete', 'uses' => 'PartnersController@confirmDelete']);
         });
     }
 
-    public function index() {
-        $partners = Partner::all();
+    public function index($id) {
+        $partners = Partner::where('type', $id)->get();
         $page_description = trans('admin/partners/general.page.index.description');
         return view('admin.partners.index', compact('partners', 'page_description'));
     }
