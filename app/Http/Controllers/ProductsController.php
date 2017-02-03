@@ -191,7 +191,7 @@ class ProductsController extends Controller
 
         Flash::success( trans('admin/products/general.status.deleted') );
 
-        return redirect()->route('admin.products.index', 1);
+        return redirect()->route('admin.products.index-category', 'detergent');
     }
 
     /**
@@ -267,7 +267,12 @@ class ProductsController extends Controller
 
         $query      = $request->input('term');
 
-        $perfumes   = $this->perfume->pushCriteria(new PerfumeWhereNameLike($query))->all();
+        // $perfumes   = $this->perfume->pushCriteria(new PerfumeWhereNameLike($query))->all();
+	$perfumes   = \App\Models\Product::where('category_id', 'like', 10)
+                ->where('name', 'like', '%'.$query.'%')
+                ->orderBy('name', 'desc')
+                ->take(10)
+                ->get();
 
         foreach ($perfumes as $perfume) {
             $id              = $perfume->id;
