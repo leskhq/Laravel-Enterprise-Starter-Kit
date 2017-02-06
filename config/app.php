@@ -410,14 +410,14 @@ return [
         'Theme'       => YAAP\Theme\Facades\Theme::class,
         'Entrust'     => Zizaco\Entrust\EntrustFacade::class,
         'MenuBuilder' => App\Facades\MenuBuilderFacade::class,
-        'Setting'     => App\Facades\SettingFacade::class,
         'Module'      => Sroutier\LESKModules\Facades\Module::class,
         'GridRender'  => Mgallegos\LaravelJqgrid\Facades\GridRender::class,
         'GridEncoder' => Mgallegos\LaravelJqgrid\Facades\GridEncoder::class,
         'Gravatar'    => Creativeorange\Gravatar\Facades\Gravatar::class,
         'LERN'        => Tylercd100\LERN\Facades\LERN::class,
-        // Commented out to force the usage of the Setting model located at app/Models/Setting.php
+        // Commented out to force the usage of the custom Setting facade below.
 //        'Setting'     => Arcanedev\Settings\Facades\Setting::class,
+        'Setting'     => App\Facades\SettingFacade::class,
         'Agent'         => Jenssegers\Agent\Facades\Agent::class,
 
     ],

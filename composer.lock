@@ -936,7 +936,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/036abc0886367158ac0b06beadf82cee338924ac",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/f347a83c948275095d627be793d418dc1ea17c58",
                 "reference": "432b80084acb401f9f2daba461679ace39cf67df",
                 "shasum": ""
             },

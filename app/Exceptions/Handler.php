@@ -42,12 +42,12 @@ class Handler extends ExceptionHandler
                 $lernNotifyEnabled = Setting::get('lern.enable_notify');
 
                 if ($lernRecordEnabled) {
-                    app()->make("lern")->record($e); //Record the Exception to the database
+                    LERN::record($e); //Record the Exception to the database
                 }
 
                 if ($lernNotifyEnabled) {
                     $this->setLERNNotificationFormat(); // Set some formatting options
-                    app()->make("lern")->notify($e); //Notify the Exception
+                    LERN::notify($e); //Notify the Exception
                 }
 
             }
