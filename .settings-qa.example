@@ -16,9 +16,6 @@ app.right_sidebar=true
 app.email_notifications=false
 app.time_format=24
 
-sql-logging.log=false
-sql-logging.log_request=true
-
 mail.system_sender_address=system.noreply@lesk.io
 mail.system_sender_label=LESK System
 
