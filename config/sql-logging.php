@@ -9,6 +9,7 @@ return [
       | Enable or disable the SQL logging
       |
      */
-    'log'         => env('sql-logging.log',         false),
-    'log_request' => env('sql-logging.log_request', true),
+
+    'log' => env('SQL_LOG', false),
+    'log_request' => env('SQL_LOG_REQUEST', true),
 ];
