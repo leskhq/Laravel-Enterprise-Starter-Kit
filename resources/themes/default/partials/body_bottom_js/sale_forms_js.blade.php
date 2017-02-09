@@ -115,26 +115,6 @@
             }
         });
 
-        $('.product').change(function() {
-            var currentId = $(this).attr('id').replace('product','');
-
-            $('#product'+currentId).removeAttr('style');
-
-            // empty the product id column
-            $('#productName'+currentId).val('');
-            $('#productName'+currentId).attr('weight', '');
-
-            // empty all the column in the same row.
-            $('#price'+currentId).val('');
-            $('#displayPrice'+currentId).val('');
-            $('#total'+currentId).val('');
-            $('#displayTotal'+currentId).val('');
-            $('#weight'+currentId).val('');
-            $('#displayWeight'+currentId).val('');
-
-            productValidation(currentId);
-        });
-
         function productValidation(currentId) {
             var currentId = currentId;
 

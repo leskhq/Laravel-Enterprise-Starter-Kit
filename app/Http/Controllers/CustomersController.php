@@ -66,8 +66,8 @@ class CustomersController extends Controller
     public function exportSales($id) {
         Excel::create('Customer', function($excel) use($id) {
             $excel->sheet('Customer', function($sheet) use($id) {
-                $sales = $this->sale->findAllBy('customer_id', $id);
-		$customerName = $this->customer->findBy('id', $id)->name;
+                $sales        = $this->sale->findAllBy('customer_id', $id);
+                $customerName = $this->customer->findBy('id', $id)->name;
                 $sheet->loadView('admin.customers.excel-sales', ['sales' => $sales,'id'=>$id,'name'=>$customerName]);
             });
         })->download('xls');
@@ -75,12 +75,12 @@ class CustomersController extends Controller
 
     public function indexByType($id)
     {
-	$tipe = $id;
-        $customers = $this->customer->pushCriteria(new CustomerByCreatedDescending())->findWhere(['type' => $id]);
-
-        $type = Helpers::getCustomerTypeDisplayName($id);
-
-        $page_title = trans('admin/customers/general.page.index.title');
+        $tipe             = $id;
+        $customers        = $this->customer->pushCriteria(new CustomerByCreatedDescending())->findWhere(['type' => $id]);
+        
+        $type             = Helpers::getCustomerTypeDisplayName($id);
+        
+        $page_title       = trans('admin/customers/general.page.index.title');
         $page_description = trans('admin/customers/general.page.index.description', ['type' => $type]);
 
         return view('admin/customers/index', compact('customers', 'page_title', 'page_description', 'tipe'));
@@ -121,10 +121,10 @@ class CustomersController extends Controller
      */
     public function show($id)
     {
-        $customer = $this->customer->pushCriteria(new CustomersWithFollowups())->find($id);
-        $sales = $this->sale->pushCriteria(new SalesByOrderDateDescending())->findWhere(['customer_id' => $id]);
-
-        $page_title = trans('admin/customers/general.page.show.title');
+        $customer         = $this->customer->pushCriteria(new CustomersWithFollowups())->find($id);
+        $sales            = $this->sale->pushCriteria(new SalesByOrderDateDescending())->findWhere(['customer_id' => $id]);
+        
+        $page_title       = trans('admin/customers/general.page.show.title');
         $page_description = trans('admin/customers/general.page.show.description', ['name' => $customer->name]);
 
         return view('admin.customers.show', compact('customer', 'page_title', 'page_description', 'sales'));
@@ -182,13 +182,13 @@ class CustomersController extends Controller
      */
     public function getModalDelete($id)
     {
-        $error = null;
-
-        $customer = $this->customer->find($id);
-
+        $error       = null;
+        
+        $customer    = $this->customer->find($id);
+        
         $modal_title = trans('admin/customers/dialog.delete-confirm.title');
         $modal_route = route('admin.customers.delete', array('id' => $customer->id));
-        $modal_body = trans('admin/customers/dialog.delete-confirm.body', ['id' => $customer->id, 'full_name' => $customer->name]);
+        $modal_body  = trans('admin/customers/dialog.delete-confirm.body', ['id' => $customer->id, 'full_name' => $customer->name]);
 
         return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
 
@@ -213,17 +213,17 @@ class CustomersController extends Controller
 
     public function search(Request $request) {
       $return_arr = null;
-
-      $query = $request->input('term');
-
-      $customers = $this->customer->pushCriteria(new CustomerWhereNameLike($query))->all();
+      
+      $query      = $request->input('term');
+      
+      $customers  = $this->customer->pushCriteria(new CustomerWhereNameLike($query))->all();
 
       foreach ($customers as $c) {
         $id              = $c->id;
         $name            = $c->name;
         $address         = $c->address;
         $laundry_address = $c->laundry_address;
-	$ship_address	 = $c->send_address;
+        $ship_address	 = $c->send_address;
         $phone           = $c->phone;
         $type            = $c->type;
 
@@ -235,7 +235,7 @@ class CustomersController extends Controller
           'phone'           => $phone,
           'address'         => $address,
           'laundry_address' => $laundry_address,
-	  'ship_address'    => $ship_address
+	      'ship_address'    => $ship_address
         ];
         $return_arr[] = $entry_arr;
       }

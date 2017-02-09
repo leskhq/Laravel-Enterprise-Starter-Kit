@@ -99,6 +99,7 @@ class AuthController extends Controller
                 Audit::log(Auth::user()->id, trans('general.audit-log.category-login'), trans('general.audit-log.msg-login-success', ['username' => $user->username]));
 
                 Flash::success("Welcome " . Auth::user()->first_name);
+                flash()->overlay('Notice', 'You are now a Laracasts member!');
                 return redirect()->intended($this->redirectPath());
             }
             else

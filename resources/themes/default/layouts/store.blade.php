@@ -23,7 +23,7 @@
 
         <!-- Main style sheet -->
         {{-- <link href="css/style.css" rel="stylesheet"> --}}
-        <link rel="stylesheet" href="css/app.css">
+        <link rel="stylesheet" href="css/store.css">
         {{-- <link rel="stylesheet" href="{{ elixir('css/style.css') }}"> --}}
 
         <!-- Google Font -->
@@ -36,6 +36,10 @@
           <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
+
+        <style>
+            @yield('top_styles')
+        </style>
       
     </head>
     <body> 
@@ -70,7 +74,13 @@
                                 <div class="aa-header-top-right">
                                     <ul class="aa-head-top-nav-right">
                                         <li class="hidden-xs"><a href="cart.html">My Cart</a></li>
-                                        <li><a href="" data-toggle="modal" data-target="#login-modal">Login</a></li>
+                                        <li>
+                                            @if(Auth::check())
+                                            <a href="profile">halo, {{ Auth::user()->username }}</a>
+                                            @else
+                                            <a href="" data-toggle="modal" data-target="#login-modal">Login</a>
+                                            @endif
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -117,7 +127,7 @@
                                                     <h4><a href="#">{{ $value->name }}</a></h4>
                                                     <p>{{ $value->quantity }} x {{ Helpers::reggo($value->price) }}</p>
                                                 </div>
-                                                <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
+                                                <a class="aa-remove-product" href="{{ route('store.remove-cart-item', $value->id) }}"><span class="fa fa-times"></span></a>
                                             </li>
                                             @endforeach
                                             <li>
@@ -169,8 +179,8 @@
                         <div class="navbar-collapse collapse">
                             <!-- Left nav -->
                             <ul class="nav navbar-nav">
-                                <li><a href="index.html">Home</a></li>
-                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="store">Home</a></li>
+                                <li><a href="contact">Contact</a></li>
                             </ul>
                         </div><!--/.nav-collapse -->
                     </div>
@@ -178,6 +188,8 @@
             </div>
         </section>
         <!-- / menu -->
+
+        @include('flash::message')
   
         @yield('content')
 
@@ -303,16 +315,18 @@
                     <div class="modal-body">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4>Login or Register</h4>
-                        <form class="aa-login-form" action="">
-                            <label for="">Username or Email address<span>*</span></label>
-                            <input type="text" placeholder="Username or email">
+                        <form class="aa-login-form" action="auth/login" method="post">
+                        {!! Form::token() !!}
+                            <label for="">Username<span>*</span></label>
+                            <input name="username" type="text" placeholder="Username">
                             <label for="">Password<span>*</span></label>
-                            <input type="password" placeholder="Password">
+                            <input name="password" type="password" placeholder="Password">
                             <button class="aa-browse-btn" type="submit">Login</button>
-                            <label for="rememberme" class="rememberme"><input type="checkbox" id="rememberme"> Remember me </label>
+                            <label for="rememberme" class="rememberme">
+                            <input name="remember" type="checkbox" id="rememberme"> Remember me </label>
                             <p class="aa-lost-password"><a href="#">Lost your password?</a></p>
                             <div class="aa-register-now">
-                                Don't have an account?<a href="account.html">Register now!</a>
+                                Don't have an account?<a href="daftar">Register now!</a>
                             </div>
                         </form>
                     </div>                        

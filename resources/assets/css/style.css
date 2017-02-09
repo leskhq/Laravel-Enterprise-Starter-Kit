@@ -2099,19 +2099,10 @@ img {
         #checkout .checkout-area .checkout-right .aa-order-summary-area .table {
           border: 1px solid #ccc; }
           #checkout .checkout-area .checkout-right .aa-order-summary-area .table thead tr th {
-            border: 1px solid #ccc;
-            text-align: center; }
-          #checkout .checkout-area .checkout-right .aa-order-summary-area .table tbody tr td {
-            border-right: 1px solid #ccc;
-            text-align: center; }
-            #checkout .checkout-area .checkout-right .aa-order-summary-area .table tbody tr td strong {
-              margin-left: 5px;
-              font-size: 14px; }
-          #checkout .checkout-area .checkout-right .aa-order-summary-area .table tfoot tr th {
-            border-right: 1px solid #ccc;
-            text-align: center; }
-          #checkout .checkout-area .checkout-right .aa-order-summary-area .table tfoot tr td {
-            text-align: center; }
+            border-bottom: 1px solid #ccc; }
+          #checkout .checkout-area .checkout-right .aa-order-summary-area .table tbody tr td strong {
+            margin-left: 5px;
+            font-size: 14px; }
       #checkout .checkout-area .checkout-right .aa-payment-method {
         border: 1px solid #ccc;
         padding: 15px; }

@@ -18,11 +18,11 @@
             </div>
 
             <!-- search form (Optional) -->
-            @if(!Auth::user()->hasRole('outlet-owner'))
+            @if(Auth::user()->can('basic-admin-authenticated'))
                 <form action="{{ route('search') }}" method="get" class="sidebar-form">
                     <div class="input-group">
                         <input type="text" name="term" class="form-control" placeholder="Search..."/>
-                      <span class="input-group-btn">
+                        <span class="input-group-btn">
                         <button type='submit' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
                       </span>
                     </div>

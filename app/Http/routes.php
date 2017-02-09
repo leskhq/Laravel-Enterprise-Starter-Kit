@@ -22,6 +22,8 @@ Route::get( 'home',    ['as' => 'home',        'uses' => 'HomeController@index']
 
 // Store
 \App\Http\Controllers\StoreController::routes();
+// Affiliate Controller
+\App\Http\Controllers\AffController::routes();
 
 // Routes in this group must be authorized.
 Route::group(['middleware' => 'authorize'], function () {
@@ -30,7 +32,10 @@ Route::group(['middleware' => 'authorize'], function () {
     Route::get( 'search',    ['as' => 'search',    'uses' => 'DashboardController@search']);
 
     // Member routes
-    Route::get( 'checkout', 'StoreController@checkout')->name('store.member.checkout');
+    Route::get( 'checkout',        'StoreController@checkout')->name('store.member.checkout');
+
+    // Affiliate Dashboard
+    \App\Http\Controllers\AffController::routes();
 
     // Site administration section
     Route::group(['prefix' => 'admin'], function () {

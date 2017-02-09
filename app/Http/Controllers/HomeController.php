@@ -34,7 +34,7 @@ class HomeController extends Controller
 
     public function index() {
 
-        $homeRouteName = 'login';
+        $homeRouteName = 'store.front';
 
         try {
             $user = Auth::user();
@@ -48,7 +48,7 @@ class HomeController extends Controller
                 } else {
                     // TODO: create check if the user is outlet owner,
                     // and redirect to it's dashboard.
-                    $homeRouteName = 'welcome';
+                    $homeRouteName = 'store.front';
                 }
             }
             // $homeCandidateName = config('app.home_route');

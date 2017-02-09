@@ -23,7 +23,6 @@ desired effect
     <!-- Main body content -->
     @include('partials._body_content')
 
-
     <!-- Footer -->
     @include('partials._footer')
 

@@ -123,6 +123,8 @@ class DashboardController extends Controller
         $page_title = "Dashboard";
         $page_description = "This is the dashboard";
 
+        flash('Welcome Aboard!');
+
         return view('dashboard', compact(
             'page_title',
             'page_description',

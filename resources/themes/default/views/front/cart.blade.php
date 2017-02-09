@@ -48,9 +48,9 @@
 														<a class="aa-cart-title" href="#">{{ $value->name }}</a>
 														 ({{ $value->attributes->aroma_name ?: 'polos' }})
 													</td>
-													<td>{{ Helpers::reggo($value->price) }}</td>
+													<td>{{ Helpers::reggo($value->getPriceWithConditions()) }}</td>
 													<td><input name="quantity[{{$value->id}}]" class="aa-cart-quantity" type="number" value="{{ $value->quantity }}"></td>
-													<td>{{ Helpers::reggo($value->price*$value->quantity) }}</td>
+													<td>{{ Helpers::reggo($value->getPriceSumWithConditions()) }}</td>
 													<td><a class="remove" href="{{ route('store.remove-cart-item', $value->id) }}"><fa class="fa fa-close"></fa></a></td>
 												</tr>
 												@endforeach
@@ -84,7 +84,12 @@
 												</tr>
 											</tbody>
 										</table>
-										<a href="#" class="aa-cart-view-btn">Proced to Checkout</a>
+										@if(Auth::check())
+										<a href="checkout" class="aa-cart-view-btn">Proced to Checkout</a>
+										@else
+										<p>Anda harus login terlebih dahulu untuk melakukan checkout</p>
+										<a href="" data-toggle="modal" data-target="#login-modal" class="aa-cart-view-btn">Login</a>
+										@endif
 									</div>
 								</div>
 							@else

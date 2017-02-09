@@ -2069,16 +2069,16 @@
 					thead{
 						tr{
 							th{
-								border: 1px solid #ccc;
-								text-align: center;
+								border-bottom: 1px solid #ccc;
+								// text-align: center;
 							}
 						}
 					}
 					tbody{
 						tr{
 							td{
-								border-right: 1px solid #ccc;
-								text-align: center;
+								// border-right: 1px solid #ccc;
+								// text-align: center;
 								strong{
 									margin-left: 5px;
 									font-size: 14px;
@@ -2089,11 +2089,11 @@
 					tfoot{
 						tr{
 							th{
-								border-right: 1px solid #ccc;
-								text-align: center;
+								// border-right: 1px solid #ccc;
+								// text-align: center;
 							}
 							td{
-								text-align: center;
+								// text-align: center;
 							}
 						}
 					}

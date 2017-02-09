@@ -45,7 +45,7 @@
 				</div>
 				<p>{{ $product->description }}</p>
 				<div class="aa-prod-quantity">
-					{!! Form::number('quantity', null, ['required']) !!}
+					{!! Form::number('quantity', 1, ['required']) !!}
 					{!! Form::select('aroma_id', $aroma, 'default', ['placeholder' => 'pilih aroma']) !!}
 					<p class="aa-prod-category">
 						Category: <a href="#">Polo T-Shirt</a>

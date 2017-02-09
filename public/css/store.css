@@ -10434,6 +10434,8 @@ img {
     overflow: hidden; }
     .aa-product-catg li:first-child {
       margin-left: 0px; }
+    .aa-product-catg li:first-of-type {
+      margin-left: 0px; }
     .aa-product-catg li:hover figure .aa-product-img {
       background-color: rgba(0, 0, 0, 0.5); }
     .aa-product-catg li:hover figure .aa-add-card-btn {
@@ -11485,7 +11487,7 @@ img {
             color: #ff6666; }
         #cart-view .cart-view-area .cart-view-table .table tbody tr td .aa-cart-quantity {
           padding: 5px;
-          width: 50px;
+          width: 70px;
           margin: 0 1px; }
       #cart-view .cart-view-area .cart-view-table .table tbody tr .aa-cart-view-bottom {
         padding: 10px 0; }
@@ -11628,19 +11630,10 @@ img {
         #checkout .checkout-area .checkout-right .aa-order-summary-area .table {
           border: 1px solid #ccc; }
           #checkout .checkout-area .checkout-right .aa-order-summary-area .table thead tr th {
-            border: 1px solid #ccc;
-            text-align: center; }
-          #checkout .checkout-area .checkout-right .aa-order-summary-area .table tbody tr td {
-            border-right: 1px solid #ccc;
-            text-align: center; }
-            #checkout .checkout-area .checkout-right .aa-order-summary-area .table tbody tr td strong {
-              margin-left: 5px;
-              font-size: 14px; }
-          #checkout .checkout-area .checkout-right .aa-order-summary-area .table tfoot tr th {
-            border-right: 1px solid #ccc;
-            text-align: center; }
-          #checkout .checkout-area .checkout-right .aa-order-summary-area .table tfoot tr td {
-            text-align: center; }
+            border-bottom: 1px solid #ccc; }
+          #checkout .checkout-area .checkout-right .aa-order-summary-area .table tbody tr td strong {
+            margin-left: 5px;
+            font-size: 14px; }
       #checkout .checkout-area .checkout-right .aa-payment-method {
         border: 1px solid #ccc;
         padding: 15px; }
