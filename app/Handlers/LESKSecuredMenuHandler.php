@@ -105,7 +105,7 @@ class LESKSecuredMenuHandler implements MenuHandlerInterface
             }
             // If all checks fail.
             else {
-                Log::info("Authorization denied for menu [" . $item->name . "], guest [" . $guest . "], username [" . $username . "].");
+                Log::warning("Authorization denied for menu [" . $item->name . "], guest [" . $guest . "], username [" . $username . "].");
             }
         }
         // If item has children it may be rendered if any of the children is rendered.
@@ -115,7 +115,7 @@ class LESKSecuredMenuHandler implements MenuHandlerInterface
         }
         // If all checks fail.
         else {
-            Log::info("Menu has no children and/or no permission set for the requested menu [" . $item->name . "], guest [" . $guest . "], username [" . $username . "].");
+            Log::debug("Menu has no children and/or no permission set for the requested menu [" . $item->name . "], guest [" . $guest . "], username [" . $username . "].");
         }
 
         return $authorized;
