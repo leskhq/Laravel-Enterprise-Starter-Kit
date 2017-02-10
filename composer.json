@@ -42,10 +42,10 @@
         "sroutier/lesk-modules": "^3.0",
         "mgallegos/laravel-jqgrid": "1.*",
         "creativeorange/gravatar": "~1.0",
-        "tylercd100/lern": "~3.6.5",
         "arcanedev/settings": "^1.2",
         "libern/laravel-sql-logging": "^1.0@dev",
-        "jenssegers/agent": "^2.4"
+        "jenssegers/agent": "^2.4",
+        "tylercd100/lern": "^3.8.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
