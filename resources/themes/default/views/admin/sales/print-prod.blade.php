@@ -21,6 +21,11 @@
 <div class='orchid' id='keterangan' style="margin-bottom:20px">
 	<table id="allset">
 		<tr>
+			<th>No</th>
+			<td>:</td>
+			<td>PO-{{ $sale->customer->id.'-'.$sale->id.'-'. date("d-m-Y", strtotime($sale->order_date)) }}</td>
+		</tr>
+		<tr>
 			<th>Customer</th>
 			<td>:</td>
 			<td>{{ $sale->customer->name }}</td>
@@ -29,17 +34,6 @@
 			<th>Alamat</th>
 			<td>:</td>
 			<td>{{ $sale->customer->laundry_name or '' }} {{ $sale->address }}</td>
-		</tr>
-		<tr>
-			<th>Tanggal Transfer</th>
-			<td>:</td>
-			<td>
-				@if($sale->transfer_date == '0000-00-00' || $sale->transfer_date == null)
-					{{''}}
-				@else
-					{{ date('l, d F Y', strtotime($sale->transfer_date))}}
-				@endif
-			</td>
 		</tr>
 		<tr>
 			<th>Tanggal Estimasi</th>

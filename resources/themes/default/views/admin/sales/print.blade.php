@@ -31,7 +31,7 @@
 			<tr>
 				<th>No</th>
 				<td>:</td>
-				<td>PO-{{ $sale->id.'-'. date("d-m-Y", strtotime($sale->order_date)) }}</td>
+				<td>PO-{{ $sale->customer->id.'-'.$sale->id.'-'. date("d-m-Y", strtotime($sale->order_date)) }}</td>
 			</tr>
 			<tr>
 				<th>Customer</th>
