@@ -40,7 +40,7 @@
         "zofe/rapyd": "2.1.*",
         "baum/baum": "~1.1",
         "sroutier/lesk-modules": "^3.0",
-        "mgallegos/laravel-jqgrid": "1.*",
+        "mgallegos/laravel-jqgrid": "dev-master#5af60dbfcb7665ed55e0968bf6e822bb4a6aee38",
         "creativeorange/gravatar": "~1.0",
         "arcanedev/settings": "^1.2",
         "libern/laravel-sql-logging": "^1.0@dev",
