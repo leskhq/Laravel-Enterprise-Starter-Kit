@@ -55,6 +55,10 @@ class Product extends Model
         return $this->belongsTo('App\Models\Formula');
     }
 
+    public function storePartnerProducts() {
+        return $this->hasMany('App\Models\StorePartnerProduct');
+    }
+
     public function scopeCategorized($query, Category $category=null) {
         if ( is_null($category) ) return $query->with('categories');
         

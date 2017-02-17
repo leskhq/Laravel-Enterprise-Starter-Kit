@@ -10,6 +10,7 @@ use App\Models\Perfume;
 use App\Models\StoreOrder;
 use App\Models\StoreOrderDetail;
 use App\Models\Affiliate;
+use App\Models\StorePartnerProduct;
 use App\User;
 use Cart;
 use Auth;
@@ -31,7 +32,9 @@ class StoreController extends Controller
         \Route::post( 'add-store-customer-address', 'StoreController@addAddress')    ->name('store.add-customer-address');
         \Route::get(  'confirmation-order',         'StoreController@confirmOrder')  ->name('store.confirm-order')      ->middleware('authorize');
         \Route::post( 'storeOrder',                 'StoreController@storeOrder')    ->name('store.store-order')        ->middleware('authorize');
-        \Route::get(  'profile',                    'StoreController@profile')       ->name('store.profile')            ->middleware('authorize');
+        \Route::get(  'member/{id}',                'StoreController@profile')       ->name('store.profile')            ->middleware('authorize');
+        \Route::get(  'member/{id}/{tab}',          'StoreController@profileTab')    ->name('store.profile.tab')        ->middleware('authorize');
+        \Route::post( 'update-stock',               'StoreController@updateStock')   ->name('store.update-stock')       ->middleware('authorize');
         \Route::get(  'daftar',                     'StoreController@daftar')        ->name('store.daftar');
         \Route::post( 'postDaftar',                 'StoreController@postDaftar')    ->name('store.postDaftar');
     }
@@ -80,10 +83,16 @@ class StoreController extends Controller
             ]);
         }
         // apply promo condition on item-base if the user is affilated by affiliator
-        if (Auth::user()->storeCustomer->aff_id != null) {
+        if (session('aff_link') != null) {
             Cart::update($request->product_id . $request->aroma_id, [
                 'conditions' => $affCondition
             ]);
+        } elseif (Auth::user()) {
+            if (Auth::user()->storeCustomer->aff_id != null) {
+                Cart::update($request->product_id . $request->aroma_id, [
+                    'conditions' => $affCondition
+                ]);
+            }
         }
 
         return redirect('cart');
@@ -155,20 +164,40 @@ class StoreController extends Controller
         return redirect('store');
     }
 
-    public function profile() {
-        $user       = Auth::user();
-        $page_title = 'Profile';
-        $prov       = DB::table('master_provinsi')->lists('nama', 'id');
-        $address    = '';
+    public function profile($id) {
+        $user       = User::find($id);
 
-        if ($user->hasRole('members')) {
-            if ($user->storeCustomer->address != null) {
-                $arr     = explode(',', $user->storeCustomer->address);
-                $address = $arr[0];
+        return view('front.member.profile', compact('id', 'user', 'page_title'));
+    }
+
+    public function profileTab($id, $tab) {
+        $user = User::find($id);
+        if ($tab == 'edit') {
+            $prov       = DB::table('master_provinsi')->lists('nama', 'id');
+            $address    = '';
+
+            if ($user->hasRole('members')) {
+                if ($user->storeCustomer->address != null) {
+                    $arr     = explode(',', $user->storeCustomer->address);
+                    $address = $arr[0];
+                }
             }
-        }
 
-        return view('front.member.profile', compact('user', 'page_title', 'prov', 'address'));
+            return view('front.member.profile-edit', compact('user', 'prov', 'address'));
+        } elseif ($tab == 'aff') {
+            return view('front.member.profile-aff', compact('user'));
+        } elseif ($user->hasRole('partners') && $tab == 'stok') {
+            return view('front.member.profile-stock', compact('user'));
+        }
+    }
+
+    public function updateStock(Request $request) {
+        foreach ($request->stock as $key => $value) {
+            StorePartnerProduct::where('store_partner_id', $request->store_partner_id)
+                ->where('product_id', $key)
+                ->update(['stock' => $value]);
+        }
+        return redirect( route('store.profile', Auth::user()->id) );
     }
 
     public function confirmOrder() {
@@ -204,9 +233,10 @@ class StoreController extends Controller
 
             if (Auth::user()->storeCustomer->aff_id != null) {
                 $aff = Affiliate::find(Auth::user()->storeCustomer->aff_id);
-                $aff->increment('balance', 10/100*$total);
+                $aff->increment('temp_balance', 10/100*$total);
             }
             Cart::clear();
+            session()->flush();
             return redirect('store');
         } catch (Exception $e) {
             return redirect('store');

@@ -16,10 +16,6 @@
                     <a class="btn btn-default btn-sm" href="{{ route('admin.affiliate.create') }}" title="{{ trans('admin/customers/general.button.create') }}">
                         <i class="fa fa-plus-square"></i>
                     </a>
-		            <a class="btn btn-default btn-sm" href="#" title="{{ trans('admin/customers/general.button.export') }}">
-                        Export Excel
-                    </a>
-
                     <div class="box-tools pull-right">
                         <label class="label label-info">5</label>
                         <label class="label label-info"></label>

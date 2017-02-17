@@ -41,12 +41,11 @@
 				<h3>{{ $product->name }}</h3>
 				<div class="aa-price-block">
 					<span class="aa-product-view-price">{{ Helpers::reggo($product->price) }}</span>
-					<p class="aa-product-avilability">Avilability: <span>In stock</span></p>
 				</div>
 				<p>{{ $product->description }}</p>
 				<div class="aa-prod-quantity">
-					{!! Form::number('quantity', 1, ['required']) !!}
-					{!! Form::select('aroma_id', $aroma, 'default', ['placeholder' => 'pilih aroma']) !!}
+					{!! Form::number('quantity', 1, ['required', 'class' => 'form-control']) !!}
+					{!! Form::select('aroma_id', $aroma, 'default', ['placeholder' => 'pilih aroma', 'class' => 'form-control']) !!}
 					<p class="aa-prod-category">
 						Category: <a href="#">Polo T-Shirt</a>
 					</p>

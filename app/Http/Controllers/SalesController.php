@@ -13,6 +13,7 @@ use App\Repositories\Criteria\Sale\SalesWithCustomers;
 use App\Repositories\Criteria\Sale\SalesWithSaleDetails;
 use App\Repositories\Criteria\Sale\SalesByTransferDateDescending;
 use App\Repositories\Criteria\Sale\SalesByTransferDateAscending;
+use App\Repositories\Criteria\Sale\SalesByShipDateAscending;
 use App\Repositories\Criteria\Sale\SalesByOrderDateDescending;
 use App\Repositories\Criteria\Sale\SalesOrderAfter;
 use App\Repositories\Criteria\Sale\SalesOrderBefore;
@@ -57,6 +58,7 @@ class SalesController extends Controller
             \Route::get(  '/{sId}/print',          'SalesController@printTemp')         ->name('admin.sales.print');
             \Route::get(  '/{sId}/delete',         'SalesController@destroy')           ->name('admin.sales.delete');
             \Route::post( '/getReportData',        'SalesController@getReportData')     ->name('admin.sales.get-report-data');
+            \Route::post( '/getReportDataByShipDate', 'SalesController@getReportDataShip')->name('admin.sales.get-report-data-by-ship-date');
             \Route::post( '/select-by-status',     'SalesController@selectByStatus')    ->name('admin.sales.select-by-status');
             \Route::post( '/{sId}/update-status',  'SalesController@updateStatus')      ->name('admin.sales.update-status');
             \Route::get(  '/{sId}/confirm-delete', 'SalesController@getModalDelete')    ->name('admin.sales.confirm-delete');
@@ -404,7 +406,53 @@ class SalesController extends Controller
         $no                 = 1;
         $total              = 0;
         $total_shipping_fee = 0;
-	$total_packing_fee  = 0;
+        $total_packing_fee  = 0;
+        foreach ($sales as $key => $row) {
+            foreach($row->saleDetails as $key => $d) {
+                if(in_array( $d->product->category, $chemicalIndex)) {
+                    $chemicals += $d->total;
+                } elseif (in_array( $d->product->category, $materialIndex)) {
+                    $materials += $d->total;
+                } else {
+                    $equipments += $d->total;
+                }
+            }
+        }
+
+        return view('admin.sales.get-report-data', compact(
+                'sales',
+                'chemicalIndex',
+                'materialIndex',
+                'chemicals',
+                'materials',
+                'equipments',
+                'no',
+                'total',
+                'total_shipping_fee',
+                'total_packing_fee'
+            ));
+    }
+    
+    public function getReportDataShip()
+    {
+        $sales              = $this->sale
+                            ->pushCriteria(new SalesWithSaleDetails())
+                            ->pushCriteria(new SalesByShipDateAscending())
+                            ->pushCriteria(new SalesOrderAfter($_POST['start']))
+                            ->pushCriteria(new SalesOrderBefore($_POST['end']))
+                            ->all();
+
+        $chemicalIndex      = [1,2,3,4,8];
+        $materialIndex      = [6,7];
+
+        $chemicals          = 0;
+        $materials          = 0;
+        $equipments         = 0;
+
+        $no                 = 1;
+        $total              = 0;
+        $total_shipping_fee = 0;
+        $total_packing_fee  = 0;
         foreach ($sales as $key => $row) {
             foreach($row->saleDetails as $key => $d) {
                 if(in_array( $d->product->category, $chemicalIndex)) {

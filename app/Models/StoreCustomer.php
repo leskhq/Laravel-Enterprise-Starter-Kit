@@ -10,6 +10,10 @@ class StoreCustomer extends Model
 
     public $timestamps = false;
 
+    public function name() {
+        return $this->user->first_name .' '. $this->user->last_name;
+    }
+
     public function user() {
     	return $this->belongsTo('App\User');
     }

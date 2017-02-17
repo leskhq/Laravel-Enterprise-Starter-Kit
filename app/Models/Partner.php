@@ -13,5 +13,13 @@ class Partner extends Model
     public function partnerFee() {
         return $this->hasOne('App\Models\PartnerFee');
     }
+
+    public function user() {
+        return $this->hasOne('App\User');
+    }
+
+    public function storePartner() {
+        return $this->hasOne('App\Models\StorePartner');
+    }
 }
 

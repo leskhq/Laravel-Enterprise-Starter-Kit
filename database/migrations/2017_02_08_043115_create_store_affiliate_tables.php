@@ -30,6 +30,7 @@ class CreateStoreAffiliateTables extends Migration
             $table->string('address');
             $table->string('ship_address');
             $table->text('phone');
+            $table->timestamps();
         });
 
         // create store order table

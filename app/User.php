@@ -64,6 +64,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->belongsTo('App\Models\Outlet');
     }
 
+    public function partner() {
+        return $this->hasOne('App\Models\Partner');
+    }
+
     /**
      * Eloquent hook to HasMany relationship between User and Audit
      *

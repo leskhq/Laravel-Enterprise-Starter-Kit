@@ -17,6 +17,7 @@
                         {!! Form::text('start', '', ['class' => 'date form-control', 'placeholder' => 'Starting Date', 'id' => 'start']) !!}
                         {!! Form::text('end', '', ['class' => 'date form-control', 'placeholder' => 'End Date', 'id' => 'end']) !!}
                         <button class="btn btn-primary" id="go">GO</button>
+                        <button class="btn btn-primary" id="go2">By Ship Date</button>
                     </form>
                 </div>
                 <div class="box-header pull-right">
@@ -80,6 +81,28 @@
             var token   = $("#token").val();
             $.ajax({
                 url      : "/admin/sales/getReportData",
+                data     : ({start : start, end : end, _token : token}),
+                type     : 'POST',
+                dataType : 'html',
+                success: function(data){
+                    NProgress.done();
+                    $('#eStart').empty();
+                    $('#eEnd').empty();
+                    $('#eStart').val(start);
+                    $('#eEnd').val(end);
+                    $( "#isi" ).empty();
+                    $( "#isi" ).append( data );
+                }
+            });
+        });
+        $('#go2').click(function(event) {
+            NProgress.start();
+            event.preventDefault();
+            var start   = $("#start").val();
+            var end     = $("#end").val();
+            var token   = $("#token").val();
+            $.ajax({
+                url      : "/admin/sales/getReportDataByShipDate",
                 data     : ({start : start, end : end, _token : token}),
                 type     : 'POST',
                 dataType : 'html',

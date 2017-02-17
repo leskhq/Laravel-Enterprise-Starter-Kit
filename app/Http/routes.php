@@ -34,12 +34,13 @@ Route::group(['middleware' => 'authorize'], function () {
     // Member routes
     Route::get( 'checkout',        'StoreController@checkout')->name('store.member.checkout');
 
-    // Affiliate Dashboard
-    \App\Http\Controllers\AffController::routes();
-
     // Site administration section
     Route::group(['prefix' => 'admin'], function () {
-	   // partners
+        // Affiliate
+        \App\Http\Controllers\AffController::routes();
+        // Store Orders 
+        \App\Http\Controllers\StoreOrdersController::routes();
+	    // partners
         \App\Http\Controllers\PartnersController::routes();
         // Expedition routes
         \App\Http\Controllers\ExpeditionsController::routes();

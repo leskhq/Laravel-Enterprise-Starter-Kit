@@ -59,7 +59,7 @@
 	            stations.append('<option value="default">Choose Address</option>');
 	            stations.append('<option value="' + ui.item.address +'">Rumah: ' + ui.item.address + '</option>');
 	            stations.append('<option value="' + ui.item.laundry_address +'">Laundry: ' + ui.item.laundry_address + '</option>');
-		    stations.append('<option value="' + ui.item.ship_address +'">Kirim: ' + ui.item.ship_address + '</option>');
+		        stations.append('<option value="' + ui.item.ship_address +'">Kirim: ' + ui.item.ship_address + '</option>');
 
 	            // asigning input column from the data that we got above
 	            $('#customer_id').val(ui.item.id);

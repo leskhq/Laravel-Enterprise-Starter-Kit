@@ -9,6 +9,11 @@ use App\Http\Controllers\Controller;
 
 class StoreOrdersController extends Controller
 {
+    static function routes() {
+        \Route::group(['prefix' => 'store-orders'], function () {
+            \Route::get('/',    'StoreOrdersController@index')->name('admin.store-orders.index');
+        });
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +21,8 @@ class StoreOrdersController extends Controller
      */
     public function index()
     {
-        //
+        $orders = \App\Models\StoreOrder::all();
+        return view('admin.store-orders.index', compact('orders'));
     }
 
     /**

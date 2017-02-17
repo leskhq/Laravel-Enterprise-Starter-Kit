@@ -19,11 +19,11 @@ class AffController extends Controller
 {
     static function routes() {
         \Route::get('aff/{link}',     'AffController@affClicked');
-        \Route::group(['prefix' => 'admin', 'middleware' => 'authorize'], function () {
-            \Route::get(  'affiliate',          'AffController@dashboard')->name('admin.affiliate.dashboard');
-            \Route::get(  'affiliate/create',   'AffController@create')   ->name('admin.affiliate.create');
-            \Route::get(  'affiliate/{id}',     'AffController@show')     ->name('admin.affiliate.show');
-            \Route::post( 'affiliate',          'AffController@store')    ->name('admin.affiliate.store');
+        \Route::group(['prefix' => 'affiliate'], function () {
+            \Route::get(  '/',          'AffController@dashboard')->name('admin.affiliate.dashboard');
+            \Route::get(  '/create',    'AffController@create')   ->name('admin.affiliate.create');
+            \Route::get(  '/{id}',      'AffController@show')     ->name('admin.affiliate.show');
+            \Route::post( '/',          'AffController@store')    ->name('admin.affiliate.store');
         });
     }
 

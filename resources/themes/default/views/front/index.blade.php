@@ -136,7 +136,7 @@
 													<figure>
 														<a class="aa-product-img" href="#"><img src="https://i.imgsafe.org/8308b96fbf.png" alt="polo shirt img"></a>
 														<a class="aa-add-card-btn" href="{{ route('store.product-modal', $product->id) }}" data-toggle="modal" data-target="#quick-view-modal">
-															<span class="fa fa-shopping-cart"></span>Add To Cart
+															<span class="fa fa-shopping-cart"></span>Lihat Produk
 														</a>
 														<figcaption>
 															<h4 class="aa-product-title"><a href="#">{{ $product->name }}</a></h4>
@@ -225,6 +225,4 @@
 @endsection
 
 @section('bottom_scripts')
-	<script>
-	</script>
 @endsection

@@ -70,7 +70,7 @@
 						                        </div>
 					                      	</div>
 					                      	<div class="panel-footer">
-					                      		<a href="confirmation-order" class="btn btn-default">Lanjut konfirmasi pesanan</a>
+					                      		<a href="confirmation-order" class="btn btn-default" {{ is_null($user->storeCustomer->address) ? 'disabled':'' }}>Lanjut konfirmasi pesanan</a>
 					                      	</div>
 					                    </div>
 					                </div>

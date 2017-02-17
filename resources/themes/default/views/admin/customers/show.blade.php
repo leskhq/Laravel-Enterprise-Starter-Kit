@@ -66,88 +66,88 @@
                     <li><a href="#orders" data-toggle="tab">Order History</a></li>
                     <li><a href="#settings" data-toggle="tab">Edit</a></li>
                 </ul>
-              <div class="tab-content">
-                <div class="active tab-pane" id="activity">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                              <th>{{ trans('admin/customers/followup.columns.created') }}</th>
-                              <th>{{ trans('admin/customers/followup.columns.content') }}</th>
-                              <th>{{ trans('admin/customers/followup.columns.actions') }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($customer->customerFollowups as $key => $fu)
-                            <tr>
-                                <td>{{ date('d F, Y', strtotime($fu->created_at)) }}</td>
-                                <td>{{ $fu->content }}</td>
-                                <td>
-                                <a href="{!! route('admin.customer-followups.confirm-delete', $fu->id) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><i class="fa fa-trash-o deletable"></i></a>
-                                </td>
-                            </tr>
-                            @endforeach
-                        <tr>
-                            <td colspan="4">{{ trans('admin/customers/followup.page.create.section-title') }}</td>
-                        </tr>
-                        <tr>
-                            {!! Form::open( ['route' => 'admin.customer-followups.store'] ) !!}
-                            {!! Form::hidden( 'customer_id', $customer->id ) !!}
-                            <td>
-                                {!! Form::text( 'content', null, ['class' => 'form-control', 'placeholder' => trans('admin/customers/followup.columns.content')] ) !!}
-                            </td>
-                            <td>
-                                {!! Form::text( 'created_at', null, ['class'=>'date form-control', 'placeholder'=> trans('admin/customers/followup.columns.created')] ) !!}
-                            </td>
-                            <td>
-                                {!! Form::submit( trans('general.button.create'), ['class' => 'btn btn-primary'] ) !!}
-                            </td>
-                            {!! Form::close() !!}
-                        </tr>
-                        </tbody>
-                    </table>
-                </div><!-- /.tab-pane -->
-
-                <div class="tab-pane" id="orders">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>{{ trans('admin/sales/general.columns.id') }}</th>
-                                <th>{{ trans('admin/sales/general.columns.order_date') }}</th>
-                                <th>{{ trans('admin/sales/general.columns.nominal') }}</th>
-                                <th>{{ trans('admin/sales/general.columns.actions') }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($sales as $sale)
+                <div class="tab-content">
+                    <div class="active tab-pane" id="activity">
+                        <table class="table table-striped">
+                            <thead>
                                 <tr>
-                                    <td>{!! link_to_route('admin.sales.show', $sale->id, $sale->id) !!}</td>
-                                    <td>{{ Helpers::date($sale->order_date) }}</td>
-                                    <td>{{ Helpers::reggo($sale->nominal) }}</td>
+                                  <th>{{ trans('admin/customers/followup.columns.created') }}</th>
+                                  <th>{{ trans('admin/customers/followup.columns.content') }}</th>
+                                  <th>{{ trans('admin/customers/followup.columns.actions') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($customer->customerFollowups as $key => $fu)
+                                <tr>
+                                    <td>{{ date('d F, Y', strtotime($fu->created_at)) }}</td>
+                                    <td>{{ $fu->content }}</td>
                                     <td>
-                                        <a href="{!! route('admin.sales.confirm-delete', $sale->id) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}">
-                                            <i class="fa fa-trash-o deletable"></i>
-                                        </a>
+                                    <a href="{!! route('admin.customer-followups.confirm-delete', $fu->id) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><i class="fa fa-trash-o deletable"></i></a>
                                     </td>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div><!-- /.tab-pane -->
+                                @endforeach
+                            <tr>
+                                <td colspan="4">{{ trans('admin/customers/followup.page.create.section-title') }}</td>
+                            </tr>
+                            <tr>
+                                {!! Form::open( ['route' => 'admin.customer-followups.store'] ) !!}
+                                {!! Form::hidden( 'customer_id', $customer->id ) !!}
+                                <td>
+                                    {!! Form::text( 'content', null, ['class' => 'form-control', 'placeholder' => trans('admin/customers/followup.columns.content')] ) !!}
+                                </td>
+                                <td>
+                                    {!! Form::text( 'created_at', null, ['class'=>'date form-control', 'placeholder'=> trans('admin/customers/followup.columns.created')] ) !!}
+                                </td>
+                                <td>
+                                    {!! Form::submit( trans('general.button.create'), ['class' => 'btn btn-primary'] ) !!}
+                                </td>
+                                {!! Form::close() !!}
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div><!-- /.tab-pane -->
 
-                <div class="tab-pane" id="settings">
-                    <div class="box-body">
-                        {!! Form::model($customer, ['route' => ['admin.customers.update', $customer->id], 'method'=>'patch']) !!}
+                    <div class="tab-pane" id="orders">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>{{ trans('admin/sales/general.columns.id') }}</th>
+                                    <th>{{ trans('admin/sales/general.columns.order_date') }}</th>
+                                    <th>{{ trans('admin/sales/general.columns.nominal') }}</th>
+                                    <th>{{ trans('admin/sales/general.columns.actions') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($sales as $sale)
+                                    <tr>
+                                        <td>{!! link_to_route('admin.sales.show', $sale->id, $sale->id) !!}</td>
+                                        <td>{{ Helpers::date($sale->order_date) }}</td>
+                                        <td>{{ Helpers::reggo($sale->nominal) }}</td>
+                                        <td>
+                                            <a href="{!! route('admin.sales.confirm-delete', $sale->id) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}">
+                                                <i class="fa fa-trash-o deletable"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div><!-- /.tab-pane -->
 
-                            @include('partials.forms.customer_form')
+                    <div class="tab-pane" id="settings">
+                        <div class="box-body">
+                            {!! Form::model($customer, ['route' => ['admin.customers.update', $customer->id], 'method'=>'patch']) !!}
 
-                            <div class="form-group">
-                                {!! Form::submit( trans('general.button.edit'), ['class' => 'btn btn-primary', 'id' => 'btn-submit-edit'] ) !!}
-                            </div>
+                                @include('partials.forms.customer_form')
 
-                        {!! Form::close() !!}
-                    </div>
-                </div><!-- /.tab-pane -->
-              </div><!-- /.tab-content -->
+                                <div class="form-group">
+                                    {!! Form::submit( trans('general.button.edit'), ['class' => 'btn btn-primary', 'id' => 'btn-submit-edit'] ) !!}
+                                </div>
+
+                            {!! Form::close() !!}
+                        </div>
+                    </div><!-- /.tab-pane -->
+                </div><!-- /.tab-content -->
             </div><!-- /.nav-tabs-custom -->
         </div><!-- /.col -->
     </div><!-- /.row -->

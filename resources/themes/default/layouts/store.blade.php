@@ -23,7 +23,7 @@
 
         <!-- Main style sheet -->
         {{-- <link href="css/style.css" rel="stylesheet"> --}}
-        <link rel="stylesheet" href="css/store.css">
+        <link rel="stylesheet" href="/css/store.css">
         {{-- <link rel="stylesheet" href="{{ elixir('css/style.css') }}"> --}}
 
         <!-- Google Font -->
@@ -74,13 +74,14 @@
                                 <div class="aa-header-top-right">
                                     <ul class="aa-head-top-nav-right">
                                         <li class="hidden-xs"><a href="cart.html">My Cart</a></li>
-                                        <li>
-                                            @if(Auth::check())
-                                            <a href="profile">halo, {{ Auth::user()->username }}</a>
-                                            @else
-                                            <a href="" data-toggle="modal" data-target="#login-modal">Login</a>
-                                            @endif
-                                        </li>
+                                        @if(Auth::check())
+                                            <li><a href="/member/{{ Auth::user()->id }}">Profile saya</a></li>
+                                            <li><a href="{{ route('logout') }}">Logout</a></li>
+                                        @else
+                                            <li>
+                                                <a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
+                                            </li>
+                                        @endif
                                     </ul>
                                 </div>
                             </div>
@@ -339,23 +340,23 @@
     {{-- <script src="{{ elixir('js/store.js') }}"></script> --}}
 
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/d-shop/bootstrap.js"></script>  
+    <script src="/js/d-shop/bootstrap.js"></script>  
     <!-- SmartMenus jQuery plugin -->
-    <script type="text/javascript" src="js/d-shop/jquery.smartmenus.js"></script>
+    <script type="text/javascript" src="/js/d-shop/jquery.smartmenus.js"></script>
     <!-- SmartMenus jQuery Bootstrap Addon -->
-    <script type="text/javascript" src="js/d-shop/jquery.smartmenus.bootstrap.js"></script>  
+    <script type="text/javascript" src="/js/d-shop/jquery.smartmenus.bootstrap.js"></script>  
     <!-- Product view slider -->
-    <script type="text/javascript" src="js/d-shop/jquery.simpleGallery.js"></script>
-    <script type="text/javascript" src="js/d-shop/jquery.simpleLens.js"></script>
+    <script type="text/javascript" src="/js/d-shop/jquery.simpleGallery.js"></script>
+    <script type="text/javascript" src="/js/d-shop/jquery.simpleLens.js"></script>
     <!-- slick slider -->
-    <script type="text/javascript" src="js/d-shop/slick.js"></script>
+    <script type="text/javascript" src="/js/d-shop/slick.js"></script>
     <!-- Price picker slider -->
-    <script type="text/javascript" src="js/d-shop/nouislider.js"></script>
+    <script type="text/javascript" src="/js/d-shop/nouislider.js"></script>
 
-    <script src="/js/modal.js"></script>
-  
     <!-- Custom js -->
-    <script src="js/d-shop/custom.js"></script>
+    <script src="/js/d-shop/custom.js"></script>
+    
+    <script src="/js/modal.js"></script>
 
     @yield('bottom_scripts')
 
