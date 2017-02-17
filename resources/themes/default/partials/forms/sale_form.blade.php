@@ -122,6 +122,7 @@
                             <th>{{ trans('admin/sales/detail.columns.quantity') }}</th>
                             <th>{{ trans('admin/sales/detail.columns.total') }}</th>
                             <th>{{ trans('admin/sales/detail.columns.weight') }}</th>
+			    <th>Keterangan</th>
                             <th colspan="2" style="text-align: center;">#</th>
                         </tr>
                     </thead>
@@ -155,6 +156,9 @@
                                         {!! Form::hidden('item['. $key .'][weight]', $d->weight, ['id' => 'weight'. $no .'']) !!}
                                         {!! Form::text('weight', $d->weight, ['placeholder' => 'weight', 'class' => 'form-control sumWeight', 'id' => 'displayWeight'. $no .'', 'disabled']) !!}
                                     </td>
+				    <td>
+					{!! Form::text('item['. $key .'][keterangan]', $d->keterangan, ['class' => 'form-control']) !!}
+				    </td>
                                     <td id='jer{{$no}}' class='qtyJer' value=''>
                                         0
                                     </td>
@@ -199,6 +203,10 @@
                                         {!! Form::text('weight', '', ['placeholder' => 'weight', 'class' => 'form-control sumWeight', 'id' => 'displayWeight'. $x .'', 'disabled']) !!}
                                     </td>
 
+				    <td>
+					{!! Form::text('item['. $x .'][keterangan]', '', ['placeholder' => 'keterangan', 'class' => 'form-control']) !!}
+				    </td>
+
                                     <td id='jer{{$x}}' class='qtyJer' value='' colspan="2" style="text-align: center;">
                                         0
                                     </td>
@@ -239,6 +247,10 @@
                                         {!! Form::hidden('item['. $x .'][weight]', '', ['id' => 'weight'. $x .'']) !!}
                                         {!! Form::text('weight', '', ['placeholder' => 'berat', 'class' => 'form-control sumWeight', 'id' => 'displayWeight'. $x .'', 'disabled']) !!}
                                     </td>
+
+				    <td>
+					{!! Form::text('item['. $x .'][keterangan]', '', ['placeholder' => 'keterangan', 'class' => 'form-control']) !!}
+				    </td>
 
                                     <td id='jer{{$x}}' class='qtyJer' value='' colspan="2" style="text-align: center;">
                                         0

@@ -13,7 +13,7 @@ class Product extends Model
     */
     protected $fillable = [
         'name',
-        'category',
+        'category_id',
         'hpp',
         'price',
         'agenresmi_price',

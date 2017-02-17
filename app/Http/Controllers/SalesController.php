@@ -63,6 +63,7 @@ class SalesController extends Controller
             \Route::post( '/{sId}/update-status',  'SalesController@updateStatus')      ->name('admin.sales.update-status');
             \Route::get(  '/{sId}/confirm-delete', 'SalesController@getModalDelete')    ->name('admin.sales.confirm-delete');
             \Route::get(  '/{sId}/formula',        'SalesController@formula')           ->name('admin.sales.formula');
+	    \Route::get(  '{sId}/print-prod',      'SalesController@printProd')         ->name('admin.sales.print-prod');
         });
     }
 
@@ -328,6 +329,10 @@ class SalesController extends Controller
         $sale = $this->sale->find($id);
 
         return view('admin.sales.print', compact('sale'));
+    }
+    public function printProd($id) {
+	$sale = $this->sale->find($id);
+	return view('admin.sales.print-prod', compact('sale'));
     }
 
     public function report()

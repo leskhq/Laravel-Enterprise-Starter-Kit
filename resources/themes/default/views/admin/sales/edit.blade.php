@@ -74,7 +74,7 @@
 
             productValidation(currentId);
         });
-
-        @include('partials.body_bottom_js.sale_forms_js')
     </script>
+
+    @include('partials.body_bottom_js.sale_forms_js')
 @endsection

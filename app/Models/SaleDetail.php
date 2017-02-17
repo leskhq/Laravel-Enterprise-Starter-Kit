@@ -9,7 +9,7 @@ class SaleDetail extends Model
     /**
      * @var array
      */
-    protected $fillable = ['sale_id', 'product_id', 'price', 'price', 'quantity', 'total', 'weight', 'description'];
+    protected $fillable = ['sale_id', 'product_id', 'price', 'price', 'quantity', 'total', 'weight', 'description', 'keterangan'];
 
     /**
      * @var timestamps

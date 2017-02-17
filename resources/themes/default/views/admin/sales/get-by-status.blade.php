@@ -3,6 +3,7 @@
     <td>{!! link_to_route('admin.sales.show', $sale->customer->name, $sale->id) !!}</td>
     <td>{{ Helpers::date($sale->order_date) }}</td>
     <td>{{ Helpers::date($sale->transfer_date) }}</td>
+    <td>{{ Helpers::date($sale->estimation_date) }}</td>
     <td>{{ Helpers::reggo($sale->nominal) }}</td>
     <td>{{ Helpers::reggo(($sale->nominal-$sale->discount)+$sale->shipping_fee+$sale->packing_fee) }}</td>
     <td>
