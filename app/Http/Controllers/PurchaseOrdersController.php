@@ -6,7 +6,6 @@ use App\Repositories\PurchaseOrderRepository as PurchaseOrder;
 use App\Repositories\PurchaseOrderDetailRepository as PurchaseOrderDetail;
 use App\Repositories\MaterialRepository as Material;
 use App\Repositories\Criteria\PurchaseOrder\PurchaseOrdersWithDetails;
-use App\Repositories\Criteria\PurchaseOrder\PurchaseOrdersWithSuppliers;
 use App\Repositories\Criteria\Material\MaterialsOutOfStock;
 use App\Repositories\Criteria\PurchaseOrder\PurchaseOrdersByCreatedAtDescending;
 use App\Repositories\Criteria\PurchaseOrder\PurchaseOrdersWhereStatus;
@@ -45,6 +44,7 @@ class PurchaseOrdersController extends Controller
             \Route::get(  '/create',                'PurchaseOrdersController@create')          ->name('admin.purchase-orders.create');
             \Route::get(  '/{poId}',                'PurchaseOrdersController@show')            ->name('admin.purchase-orders.show');
             \Route::patch('/{poId}',                'PurchaseOrdersController@update')          ->name('admin.purchase-orders.update');
+            \Route::get(  '/{poId}/print',          'PurchaseOrdersController@print')           ->name('admin.purchase-orders.print');
             \Route::get(  '/{poId}/edit',           'PurchaseOrdersController@edit')            ->name('admin.purchase-orders.edit');
             \Route::get(  '/{poId}/delete',         'PurchaseOrdersController@destroy')         ->name('admin.purchase-orders.delete');
             \Route::get(  '/{poId}/get-details',    'PurchaseOrdersController@getDetails')      ->name('admin.purchase-orders.get-details');
@@ -98,7 +98,7 @@ class PurchaseOrdersController extends Controller
      */
     public function store(Request $request)
     {
-        $data          = $request->only(['supplier_id', 'description']);
+        $data          = $request->only('description');
         $data['total'] = 0;
         $items         = $request->only('material');
 
@@ -135,11 +135,10 @@ class PurchaseOrdersController extends Controller
     {
         $purchaseOrder = $this->purchaseOrder
             ->pushCriteria(new PurchaseOrdersWithDetails())
-            ->pushCriteria(new PurchaseOrdersWithSuppliers())
             ->find($id);
 
         $page_title       = trans('admin/purchase-orders/general.page.show.title');
-        $page_description = trans('admin/purchase-orders/general.page.show.description', ['name' => $purchaseOrder->supplier->name]);
+        $page_description = trans('admin/purchase-orders/general.page.show.description', ['name' => 'name']);
 
         return view('admin.purchase-orders.show', compact('page_title', 'page_description', 'purchaseOrder'));
     }
@@ -155,7 +154,7 @@ class PurchaseOrdersController extends Controller
         $purchaseOrder    = $this->purchaseOrder->find($id);
         
         $page_title       = trans('admin/purchase-orders/general.page.edit.title');
-        $page_description = trans('admin/purchase-orders/general.page.edit.description', ['name' => $purchaseOrder->supplier->name]);
+        $page_description = trans('admin/purchase-orders/general.page.edit.description', ['name' => 'name']);
 
         return view('admin.purchase-orders.edit', compact('page_title', 'page_description', 'purchaseOrder'));
     }
@@ -169,7 +168,7 @@ class PurchaseOrdersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data          = $request->only(['supplier_id', 'description']);
+        $data          = $request->only('description');
         $data['total'] = 0;
         $items         = $request->only('material');
         $purchaseOrder = $this->purchaseOrder->pushCriteria(new PurchaseOrdersWithDetails())->find($id);
@@ -227,10 +226,15 @@ class PurchaseOrdersController extends Controller
         
         $modal_title   = trans('admin/purchase-orders/dialog.delete-confirm.title');
         $modal_route   = route('admin.purchase-orders.delete', array('id' => $purchaseOrder->id));
-        $modal_body    = trans('admin/purchase-orders/dialog.delete-confirm.body', ['id' => $purchaseOrder->id, 'name' => $purchaseOrder->supplier->name]);
+        $modal_body    = trans('admin/purchase-orders/dialog.delete-confirm.body', ['id' => $purchaseOrder->id, 'name' => 'name']);
 
         return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
 
+    }
+
+    public function print($id) {
+        $purchaseOrder = $this->purchaseOrder->find($id);
+        return view('admin.purchase-orders.print-po', compact('purchaseOrder'));
     }
 
     public function updateStatus($id)

@@ -12,9 +12,4 @@ class PurchaseOrder extends Model
     {
         return $this->hasMany('App\Models\PurchaseOrderDetail');
     }
-
-    public function supplier()
-    {
-        return $this->belongsTo('App\Models\Supplier');
-    }
 }

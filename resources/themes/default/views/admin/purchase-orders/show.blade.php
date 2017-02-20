@@ -12,20 +12,6 @@
                 <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
 
                 <div class="info-box-content">
-                    <span class="info-box-text">{{ trans('admin/purchase-orders/general.columns.supplier') }}</span>
-                    <span class="info-box-number">{{ $purchaseOrder->supplier->name }}</span>
-                </div>
-                <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-
-        <div class="col-md-3 col-sm-6 col-xs-12">
-            <div class="info-box">
-                <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
-
-                <div class="info-box-content">
                     <span class="info-box-text">{{ trans('admin/purchase-orders/general.columns.status') }}</span>
                     <span class="info-box-number">{{ Helpers::getPurchaseOrderStatusDisplayName($purchaseOrder->status) }}</span>
                 </div>
@@ -83,6 +69,7 @@
                             <th>{{ trans('admin/purchase-orders/general.detail.columns.material') }}</th>
                             <th>{{ trans('admin/purchase-orders/general.detail.columns.quantity') }}</th>
                             <th>{{ trans('admin/purchase-orders/general.detail.columns.total') }}</th>
+                            <th>Supplier</th>
                             <th>{{ trans('admin/purchase-orders/general.detail.columns.description') }}</th>
                             <th>{{ trans('admin/purchase-orders/general.columns.created') }}</th>
                             <th>{{ trans('admin/purchase-orders/general.columns.actions') }}</th>
@@ -94,6 +81,7 @@
                             <th>{{ trans('admin/purchase-orders/general.detail.columns.material') }}</th>
                             <th>{{ trans('admin/purchase-orders/general.detail.columns.quantity') }}</th>
                             <th>{{ trans('admin/purchase-orders/general.detail.columns.total') }}</th>
+                            <th>Supplier</th>
                             <th>{{ trans('admin/purchase-orders/general.detail.columns.description') }}</th>
                             <th>{{ trans('admin/purchase-orders/general.columns.created') }}</th>
                             <th>{{ trans('admin/purchase-orders/general.columns.actions') }}</th>
@@ -102,10 +90,13 @@
                     <tbody>
                         @foreach($purchaseOrder->purchaseOrderDetails as $key => $detail)
                         <tr>
-                            <td style="text-align: center">{!! Form::checkbox('accepted', $detail->status, $detail->accepted, ['class' => 'status', 'id' => $detail->id]) !!}</td>
+                            <td style="text-align: center">
+                                {!! Form::checkbox('accepted', $detail->status, $detail->accepted, ['class' => 'status', 'id' => $detail->id]) !!}
+                            </td>
                             <td>{{ $detail->material->name }}</td>
                             <td>{{ $detail->quantity }}</td>
                             <td>{{ Helpers::reggo($detail->total) }}</td>
+                            <td>{{ $detail->supplier->name }}</td>
                             <td>{{ $detail->description }}</td>
                             <td>{{ $detail->created_at }}</td>
                             <td></td>
@@ -118,6 +109,7 @@
         <!-- /.box-body -->
         <div class="box-footer clearfix no-border">
             <a href="{{ route('admin.purchase-orders.edit', $purchaseOrder->id) }}" class="btn btn-default"><i class="fa fa-edit"></i> {{ trans('general.button.edit') }}</a>
+            <a href="{{ route('admin.purchase-orders.print', $purchaseOrder->id) }}" target="_blank" class="btn btn-default"><i class="fa fa-edit"></i> Print</a>
             <div class="pull-right">
                 <a href="{{ route('admin.purchase-orders.check-all', $purchaseOrder->id) }}" class="btn btn-default"><i class="fa fa-check"></i> {{ trans('general.button.check-all') }}</a>
                 <a href="{{ route('admin.purchase-orders.index') }}" class="btn btn-default"><i class="fa fa-times"></i> {{ trans('general.button.close') }}</a>

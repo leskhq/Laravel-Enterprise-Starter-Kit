@@ -1,10 +1,4 @@
 <div class="form-group">
-    {!! Form::label('supplier', trans('admin/purchase-orders/general.columns.supplier')) !!}
-    {!! Form::hidden('supplier_id', null, ['id' => 'supplier_id']) !!}
-    {!! Form::text('supplier[name]', null, ['class' => 'form-control', 'id' => 'supplier_name']) !!}
-</div>
-
-<div class="form-group">
     {!! Form::label('description', trans('admin/purchase-orders/general.columns.description')) !!}
     {!! Form::textarea('description', null, ['class' => 'form-control', 'rows' => 3]) !!}
 </div>
@@ -20,6 +14,10 @@
                 <input type="number" placeholder="quantity" v-model="newMaterial.quantity" class="form-control">
             </td>
             <td>
+                <input type="hidden" id="supplier_id" v-model="newMaterial.supplier">
+                <input type="text" id="supplier_name" v-model="newMaterial.supplier_name" placeholder="supplier" class="form-control">
+            </td>
+            <td>
                 <input type="text" placeholder="description" v-model="newMaterial.description" class="form-control">
             </td>
             <td>
@@ -32,6 +30,7 @@
             <th>{{ trans('admin/purchase-orders/general.detail.columns.material') }}</th>
             <th>{{ trans('admin/purchase-orders/general.detail.columns.price') }}</th>
             <th>{{ trans('admin/purchase-orders/general.detail.columns.quantity') }}</th>
+            <th>Supplier</th>
             <th>{{ trans('admin/purchase-orders/general.detail.columns.description') }}</th>
             <th>{{ trans('admin/purchase-orders/general.detail.columns.total') }}</th>
             <th>{{ trans('admin/purchase-orders/general.columns.actions') }}</th>
@@ -41,6 +40,10 @@
             <td><input type="text" value="@{{ material.name }}" disabled></td>
             <td><input type="text" value="@{{ material.price }}" disabled></td>
             <td><input type="text" name="material[@{{ $index }}][quantity]" value="@{{ material.quantity }}" v-model="material.quantity"></td>
+            <td>
+                <input type="hidden" name="material[@{{ $index }}][supplier_id]" value="@{{ material.supplier }}">
+                <input type="text" value="@{{ material.supplier_name }}" disabled>
+            </td>
             <td><input type="text" name="material[@{{ $index }}][description]" value="@{{ material.description }}" v-model="material.description"></td>
             <td><input type="text" name="material[@{{ $index }}][total]" value="@{{ material.total = material.price * material.quantity }}"></td>
             <td>

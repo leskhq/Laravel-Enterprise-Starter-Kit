@@ -55,7 +55,6 @@
                             <thead>
                                 <tr>
                                     <th>{{ trans('admin/purchase-orders/general.columns.created') }}</th>
-                                    <th>{{ trans('admin/purchase-orders/general.columns.supplier') }}</th>
                                     <th>{{ trans('admin/purchase-orders/general.columns.status') }}</th>
                                     <th>{{ trans('admin/purchase-orders/general.columns.total') }}</th>
                                     <th>{{ trans('admin/purchase-orders/general.columns.description') }}</th>
@@ -65,7 +64,6 @@
                             <tfoot>
                                 <tr>
                                     <th>{{ trans('admin/purchase-orders/general.columns.created') }}</th>
-                                    <th>{{ trans('admin/purchase-orders/general.columns.supplier') }}</th>
                                     <th>{{ trans('admin/purchase-orders/general.columns.status') }}</th>
                                     <th>{{ trans('admin/purchase-orders/general.columns.total') }}</th>
                                     <th>{{ trans('admin/purchase-orders/general.columns.description') }}</th>
@@ -76,7 +74,6 @@
                                 @foreach($purchaseOrders as $key => $pO)
                                 <tr>
                                     <td>{!! link_to_route('admin.purchase-orders.show', $pO->created_at, $pO->id) !!}</td>
-                                    <td>{{ $pO->supplier->name }}</td>
                                     <td>{{ Helpers::getPurchaseOrderStatusDisplayName($pO->status) }}</td>
                                     <td>{{ Helpers::reggo($pO->total) }}</td>
                                     <td>{{ $pO->description }}</td>

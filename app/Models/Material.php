@@ -27,6 +27,6 @@ class Material extends Model
 
     public function purchaseOrderDetails()
     {
-        return $this->hasMany('App\Models\PurchaseOrderDetail');
+        return $this->belongsToMany('App\Models\PurchaseOrderDetail');
     }
 }

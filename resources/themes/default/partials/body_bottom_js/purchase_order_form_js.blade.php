@@ -14,6 +14,8 @@
             select:function(e, ui){
                 // asigning input column from the data that we got above
                 $('#supplier_id').val(ui.item.id);
+                vm.newMaterial.supplier      = ui.item.id;
+                vm.newMaterial.supplier_name = ui.item.value;
             }
         });
         // details tab
@@ -23,7 +25,7 @@
             autoFocus: true,
             select:function(e,ui){
                 // asigning input column from the data that we got above
-                vm.newMaterial.id = ui.item.id;
+                vm.newMaterial.id    = ui.item.id;
                 vm.newMaterial.price = ui.item.price;
             }
         });
@@ -32,7 +34,16 @@
         el: '#form',
 
         data : {
-            newMaterial: { id: '', name: '', quantity: '', total: 0, description: '', price: 0 },
+            newMaterial: {
+                id: '',
+                name: '',
+                quantity: '',
+                total: 0,
+                supplier: 0,
+                supplier_name: '',
+                description: '',
+                price: 0
+            },
             materials: []
         },
 
@@ -41,7 +52,7 @@
                 if (this.newMaterial.id) {
                     this.newMaterial.total = this.newMaterial.price * this.newMaterial.quantity;
                     this.materials.push(this.newMaterial);
-                    this.newMaterial = { id: '', name: '', quantity: '', total: '', description: '', price: '' };
+                    this.newMaterial = { id: '', name: '', quantity: '', total: '', supplier: '', supplier_name: '', description: '', price: '' };
                 }
             },
             removeMaterial: function (item) {

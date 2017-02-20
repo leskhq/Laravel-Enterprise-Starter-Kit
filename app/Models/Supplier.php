@@ -16,9 +16,9 @@ class Supplier extends Model
         return $this->hasMany('App\Models\Product');
     }
 
-    public function purchaseOrder()
+    public function purchaseOrderDetails()
     {
-        return $this->belongsTo('App\Models\PurchaseOrder');
+        return $this->belongsToMany('App\Models\PurchaseOrder');
     }
 
     public function getCategoryDisplayName() {
