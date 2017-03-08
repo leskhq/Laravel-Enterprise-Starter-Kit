@@ -101,4 +101,15 @@ return [
     */
     'enable_user_on_validation' => env('auth.enable_user_on_validation', false),
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Enable remember token
+    |--------------------------------------------------------------------------
+    |
+    | Should the system allow a user to set the remember token ?
+    |
+    */
+    'enable_remember_token' => env('auth.enable_remember_token', true),
+
 ];

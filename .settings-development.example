@@ -23,6 +23,7 @@ walled-garden.enabled=false
 auth.enable_user_on_create=true
 auth.email_validation=false
 auth.enable_user_on_validation=false
+auth.enable_remember_token=true
 
 eloquent-ldap.enabled=true
 eloquent-ldap.debug=false

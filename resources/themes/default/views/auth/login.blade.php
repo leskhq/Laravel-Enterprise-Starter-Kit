@@ -14,13 +14,15 @@
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
             <div class="row">
-                <div class="col-xs-8">
-                    <div class="checkbox icheck">
-                        <label>
-                            <input type="checkbox" id="remember" name="remember"> Remember Me
-                        </label>
-                    </div>
-                </div><!-- /.col -->
+                @if ( Setting::get('auth.enable_remember_token') )
+                    <div class="col-xs-8">
+                        <div class="checkbox icheck">
+                            <label>
+                                <input type="checkbox" id="remember" name="remember"> Remember Me
+                            </label>
+                        </div>
+                    </div><!-- /.col -->
+                @endif
                 <div class="col-xs-4">
                     <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
                 </div><!-- /.col -->

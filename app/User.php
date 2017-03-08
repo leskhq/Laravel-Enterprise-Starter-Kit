@@ -20,7 +20,11 @@ use Zizaco\Entrust\Traits\EntrustUserTrait as EntrustUserTrait;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract, EloquentLDAPUserInterface
 {
-    use Authenticatable, CanResetPassword;
+    use Authenticatable {
+        Authenticatable::getRememberToken as authenticatableGetRememberToken;
+        Authenticatable::setRememberToken as authenticatableSetRememberToken;
+    }
+    use CanResetPassword;
     use EntrustUserTrait, UserHasPermissionsTrait {
         EntrustUserTrait::hasRole as entrustUserTraitHasRole;
         UserHasPermissionsTrait::can insteadof EntrustUserTrait;
@@ -485,5 +489,49 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             });
         }
     }
+
+
+    /**
+     * Set of method to prevent setting the remember auth token at the user model.
+     * Based on code picked up from: https://laravel.io/index.php/forum/05-21-2014-how-to-disable-remember-token
+     */
+    public function getRememberToken()
+    {
+        if ( Setting::get('auth.enable_remember_token') ) {
+            return $this->authenticatableGetRememberToken();
+        }
+        else {
+            return null; // not supported
+        }
+    }
+
+    public function setRememberToken($value)
+    {
+        if ( Setting::get('auth.enable_remember_token') ) {
+            $this->authenticatableSetRememberToken($value);
+        }
+        else {
+            // not supported
+        }
+    }
+
+    /**
+     * Overrides the method to ignore the remember token.
+     */
+    public function setAttribute($key, $value)
+    {
+        if ( Setting::get('auth.enable_remember_token') ) {
+            parent::setAttribute($key, $value);
+        }
+        else {
+            // Filter out remember token.
+            $isRememberTokenAttribute = $key == $this->getRememberTokenName();
+            if (!$isRememberTokenAttribute)
+            {
+                parent::setAttribute($key, $value);
+            }
+        }
+    }
+
 
 }
