@@ -17,6 +17,8 @@
         </form>
 
         {!! link_to_route('login', 'Sign in', [], ['class' => "text-center"]) !!}<br>
-        {!! link_to_route('register', 'Register a new membership', [], ['class' => "text-center"]) !!}
+        @if (Setting::get('app.allow_registration'))
+            {!! link_to_route('register', 'Register a new membership', [], ['class' => "text-center"]) !!}
+        @endif
 
 @endsection
