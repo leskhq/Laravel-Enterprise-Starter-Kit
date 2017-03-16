@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4a577a2b1b03309c2f3e5a02ae65fdb6",
-    "content-hash": "047d0188eb21676eecad886dd0f430bc",
+    "hash": "7513eb41d5e7211a19d337e7fa98b0f5",
+    "content-hash": "6b7debb8bc1ae3eae6ee4b5d355edc29",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -936,7 +936,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/50bf623418be0feb3282bb50d07a4aea977fb33a",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/e0169b2afc0fcbe047484b852699b095aee12b4f",
                 "reference": "432b80084acb401f9f2daba461679ace39cf67df",
                 "shasum": ""
             },
@@ -1931,16 +1931,16 @@
         },
         {
             "name": "mgallegos/laravel-jqgrid",
-            "version": "dev-master",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mgallegos/laravel-jqgrid.git",
-                "reference": "9a2e2753cdc922ff8ef93afabfa0058d3b604961"
+                "reference": "04926cb6f416151f83b424fde4065bba41e0edbd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mgallegos/laravel-jqgrid/zipball/5af60dbfcb7665ed55e0968bf6e822bb4a6aee38",
-                "reference": "9a2e2753cdc922ff8ef93afabfa0058d3b604961",
+                "url": "https://api.github.com/repos/mgallegos/laravel-jqgrid/zipball/04926cb6f416151f83b424fde4065bba41e0edbd",
+                "reference": "04926cb6f416151f83b424fde4065bba41e0edbd",
                 "shasum": ""
             },
             "require": {
@@ -1974,7 +1974,7 @@
                 "jquery",
                 "laravel"
             ],
-            "time": "2017-02-03 18:01:40"
+            "time": "2017-03-13 21:18:05"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
@@ -4397,7 +4397,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Jeroen-G/laravel-packager/zipball/a813e6deeb09b49908809f24794db90485dd3709",
+                "url": "https://api.github.com/repos/Jeroen-G/laravel-packager/zipball/9f5c2c9e14ff10934e7db832fad49a28a4dba538",
                 "reference": "836b2d0adedfee14e2a76575b77dd16ac5b4cc71",
                 "shasum": ""
             },
@@ -5670,7 +5670,6 @@
         "barryvdh/laravel-debugbar": 20,
         "zizaco/entrust": 20,
         "sroutier/eloquent-ldap": 20,
-        "mgallegos/laravel-jqgrid": 20,
         "libern/laravel-sql-logging": 20,
         "jeroen-g/laravel-packager": 20
     },
