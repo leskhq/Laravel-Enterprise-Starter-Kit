@@ -1,0 +1,72 @@
+---
+layout: default
+head_title: "LESK: Authentication & authorization"
+title: Authentication & authorization
+---
+
+									<div class="row">
+										<div class="12u">
+
+											<p>During the installation the database seeder scripts created a few things to help get started:</p>
+											<ul>
+												<li>The super user <em>root</em>.</li>
+												<li>The roles <em>admins</em> and <em>users</em>.</li>
+												<li>The permissions <em>basic-authenticated</em>, <em>guest-only</em> &amp; <em>open-to-all</em>.</li>
+											</ul>
+
+											<p>Additionally, on a development environment, a few more test users and permissions would have been created.</p>
+
+											<p>The relationship between users, roles & permissions is relatively simple: users are assigned roles (many-to-many) and roles are assigned permissions (many-to-many). This enables a simple role-based permission assignment system. For more information please refer to the documentation of the <a href="https://github.com/zizaco/entrust">zizaco/entrust</a> package. Also while not recommended by authorization best practices, user based permission assignment is supported. Permissions can be directly assigned to individual users if needed.</p>
+
+											<p>Where things get a little more interesting is the addition of the Route model. Not to be confused with the Route from Laravel, the Route model is still closely related to Laravel routes. In fact, all Routes can be automatically built by inspecting the Web site routing table. Initially, if you navigate to the <em>Admin > Security > Routes</em> page, you will be greeted with an empty table. To automatically load all routes defined within the Web site simply click on the load button. After a short delay, the page will reload and you will be able to assign any of the defined permission to each route.</p>
+
+											<p>Once <em>Routes</em> are assigned a single <em>Permission</em> each and permissions are assigned to <em>Roles</em> and finally, <em>Users</em> are granted <em>Roles</em>, then the matching <em>AuthorizeRoute</em> middleware can authorise or block access to all routes for both guest and authenticated users. This feature will probably not be used by any site user or even administrators, but by the site developer(s). In fact, one of the first things that I would recommend is to restrict all routes to the <em>Route</em> management pages to a permission given to developers only. What this feature does is make the authorization process very flexible, powerful and easy to change on the fly.</p>
+
+											<p>Some important hard-set rules to note are:</p>
+
+											<ul class="simple">
+												<li>Except when specifically stated otherwise below, routes, permissions, roles and users can be disabled.</li>
+												<li>Routes
+													<ul class="simple">
+														<li>If a route is either not defined or not assigned any permission, it will not be accessible, except to the root user or any user granted the admins role.</li>
+														<li>Routes to the controllers <em>AuthController</em> and <em>PasswordController</em> are not restricted by the <em>AuthorizeRoute</em>	middleware. Otherwise, users could not log in or reset their passwords.</li>
+														<li>A route assigned the permission <em>open-to-all</em> will be authorise for all users, authenticated or not.</li>
+														<li>A route assigned the permission <em>guest-only</em> will only be authorised for guest users, not for authenticated ones.</li>
+														<li>A route assigned the permission <em>basic-authenticated</em> will be authorised for any user that has logged into the system. No other permission will be required. But the same route will be denied for guest users.</li>
+														<li>Failure to be authorised to access a route will redirect to the error page 403 (access denied).</li>
+														<li>When loading <em>Routes</em> from the Web site routing table, all routes to the <em>AuthController</em> and <em>PasswordController</em>	will be skipped over. Also, any route to the <em>DebugBar</em> will be skipped. If required they can be added by creating a route manually.</li>
+														<li>Disabling a route prevents the route from being accessible or authorised.</li>
+													</ul>
+												</li>
+												<li>Permissions
+													<ul class="simple">
+														<li>The permissions <em>guest-only</em> and <em>basic-authenticated</em> cannot be edited or deleted.</li>
+														<li>A permission that is assigned to a <em>Route</em> or a <em>Role</em> cannot be deleted.</li>
+														<li>The permission <em>guest-only</em> cannot be assigned to any role. It is reserved for guest or un-authenticated users.</li>
+														<li>The permission <em>basic-authenticated</em> is forced onto every role.</li>
+														<li>The permission assignment for the role <em>admins</em> cannot be changed.</li>
+														<li>Disabling a permission prevents it from granting access to any route assigned to that permissions.</li>
+													</ul>
+												</li>
+												<li>Roles
+													<ul class="simple">
+														<li>The roles <em>admins</em> and <em>users</em> cannot be edited or deleted</li>
+														<li>The role <em>users</em> is force onto every user.</li>
+														<li>Disabling a role prevent prevents the users assigned this role from getting the abilities of that role.</li>
+													</ul>
+												</li>
+												<li>Users
+													<ul class="simple">
+														<li>The user <em>root</em> and any user with the <em>admin</em> role are not restricted by the <em>AuthoriseRoute</em> middleware. They	can go anywhere they want, even to routes that are either disabled or not defined.</li>
+														<li>If a user is disabled while he is logged into and using the Web site, he will get automatically logged out the next time he tries to access a route protected by the <em>AuthorizeRoute</em> middleware.</li>
+														<li>The user <em>root</em> cannot be edited or deleted.</li>
+														<li>A user cannot disable or delete his own currently logged in user.</li>
+													</ul>
+												</li>
+											</ul>
+
+										</div>
+									</div>
+
+					              {% include footer.html prev_page="firstlogin" prev_title="First login" next_page="ldapadauthentication" next_title="LDAP/AD authentication" %}
+

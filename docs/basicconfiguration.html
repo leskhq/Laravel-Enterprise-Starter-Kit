@@ -1,0 +1,40 @@
+---
+layout: default
+head_title: "LESK: Basic configuration"
+title: Basic configuration
+---
+
+
+									<div class="row">
+										<div class="12u">
+
+											<h2>Create your .env file</h2>
+											<p>Create a .env file from the example supplied. For example in the Development environment use:</p>
+											<pre><code>cp .env.example-dev .env</code></pre>
+
+											<h2>Create your .settings file</h2>
+											<p>Create a .settings file from the example supplied. For example in the Development environment use:</p>
+											<pre><code>cp .settings-development.example .settings-development</code></pre>
+											<p><strong>NOTE 1:</strong> Do not use the environment files for the development environment in any other environment as this will cause a lot of failures in the bootstrap and kernel part of the application due to some dependencies being dynamically injected into the development environment.</p>
+											<p><strong>NOTE 2:</strong> No example is provided for the production environment as you should carefully craft your own version based on the example from DEV & QA.</p>
+
+											<h2>Generate application key</h2>
+											<p>Generate the unique application key:</p>
+											<pre><code>./artisan key:generate</code></pre>
+
+											<h2>Grant permissions to some directories.</h2>
+											<p>Either grant permission to all users, or just to the Web Server user by making it a member of the group that owns these folders.</p>
+<pre><code>chmod -R ugo+rw storage/
+chmod -R ugo+rw bootstrap/cache/</code></pre>
+
+											<h2>Review default configuration</h2>
+											<p>Review and edit the .env file and all the files under /config. Paying particular attention to /config/app.php and /config/database.php. More details can be found in the Configuring and Documentation section below.</p>
+											<p><strong>Note 3:</strong> By default all settings are set for a development environment, You will want to review and tweak before deploying to Prod.</p>
+
+										</div>
+									</div>
+
+
+					              {% include footer.html prev_page="fetchdependencies" prev_title="Fetch dependencies" next_page="migration" next_title="Migration" %}
+
+

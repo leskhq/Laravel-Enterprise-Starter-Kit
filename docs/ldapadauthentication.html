@@ -1,0 +1,34 @@
+---
+layout: default
+head_title: "LESK: LDAP/AD authentication"
+title: LDAP/AD authentication
+---
+
+
+									<div class="row">
+										<div class="12u">
+
+											<p>To enable the optional LDAP/AD authentication module, set the <em>eloquent-ldap.enabled</em> variable to <em>true</em> in the <em>.env</em>
+											file as shown below:</p>
+
+											<pre><code>eloquent-ldap.enabled=true</code></pre>
+
+											<p>By default, the LDAP/AD authentication module is set to off or false, as it requires some extra configuration on your part.
+											For more information on how to configure the module, refer to the documentation of the underlying package at
+											<a href="https://github.com/sroutier/eloquent-ldap">sroutier/eloquent-ldap</a>. Additionally, every option is explained in the config file
+											<em>/config/eloquent-ldap.php</em>.</p>
+
+											<P>With the LDAP/AD integration enabled, a few features are added:</P>
+
+											<ul>
+												<li>Automatically creates local accounts for LDAP/AD users during initial login.</li>
+												<li>Automatic assignment of users to local roles based on matching LDAP/AD group membership.</li>
+												<li>Automatically refresh role assignment on user login.</li>
+											</ul>
+
+										</div>
+									</div>
+
+
+					              {% include footer.html prev_page="authenticationandauthorization" prev_title="Authentication & authorization" next_page="menusystem" next_title="Menu system" %}
+

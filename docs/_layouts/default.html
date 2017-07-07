@@ -1,0 +1,14 @@
+---
+layout: main
+---
+
+
+            <!-- Content -->
+            <section>
+              <header class="main">
+                <h1>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</h1>
+              </header>
+
+              {{ content }}
+  
+            </section><!-- Content -->

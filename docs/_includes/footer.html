@@ -1,0 +1,23 @@
+                  <!-- Footer to PREVIOUS and NEXT pages. -->
+                  <div class="row">
+                    <div class="12u">
+                      <p>&nbsp;</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="12u">
+                        <ul class="actions">
+                          {% if include.prev_page %}
+                            <li><a href="{{include.prev_page}}.html" class="button big">Previous: {{include.prev_title}}</a></li>
+                          {% else %}
+                            <li><span class="button big disabled">Previous: Home</span></li>
+                          {% endif %}
+                          {% if include.next_page %}
+                            <li><a href="{{include.next_page}}.html" class="button big special">Next: {{include.next_title}}</a></li>
+                          {% else %}
+                            <li><a href="index.html" class="button big special">Return Home</a></li>
+                          {% endif %}
+                        </ul>
+                    </div>
+                  </div>
+

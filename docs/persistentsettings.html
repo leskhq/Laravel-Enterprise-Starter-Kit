@@ -1,0 +1,42 @@
+---
+layout: default
+head_title: "LESK: Persistent settings"
+title: Persistent settings
+---
+									<div class="row">
+										<div class="12u">
+											
+											<p>The Persistent Settings mechanism allows for the easy editing of configuration options using the built-in interface.
+											A distinction is made between the configuration options accessible using the <code>Config</code> class and the settings
+											accessible through the <code>Settings</code> class. When a setting such as the <code>WALLED-GARDEN.ENABLED</code> is requested, the
+											system will first try to return the matching setting, then, if it cannot be found, revert to looking up the
+											same configuration option.</p>
+
+											<p>Initially, the application does not have any settings. The settings can be generated from the Settings Administration
+											page in the Admin menu by clicking on the "Load settings" button. This will read the <code>.env</code> file and create a
+											setting with its value for each valid entry.
+											A setting can also be manually created from the Settings Administration page if the proper name to use is known. The
+											names to use are the keys used by the configuration and can be located in the <code>config</code> directory.
+											Once a setting is defined, it's value will take precedence over the value held in the configuration files or
+											environment.</p>
+
+											<p>Additionally, settings can be encrypted, via the Web admin interface or the Artisan commands (see below).
+											The <code>Setting::Get(...)</code> method will automatically decrypt any encrypted value before returning it.</p>
+
+											<p>to help manage the settings, 4 commands are available via Artisan. These 4 commands are <code>setting:all</code>,
+											<code>setting:forget</code>, <code>setting:get</code> &amp; <code>setting:set</code>.</p>
+
+											<ul>
+												<li>The <code>setting:get</code> command will retrieve the setting, decrypt it if required and output it.</li>
+												<li>The <code>setting:all</code> command will output all settings in raw &amp; encrypted form, it is useful to dump all settings into a <code>.env</code> as a backup or to create another instance of the application.</li>
+												<li>The <code>setting:set</code> command allows the creation of settings in encrypted or unencrypted form. If a value is not provided it will be requested. Additionally, if the value is to be encrypted, when it is requested, it will not echo on the screen.</li>
+												<li>Finally, the <code>setting:forget</code> command allows the removal of any setting or group of settings.</li>
+											</ul>
+
+
+										</div>
+									</div>
+
+
+					              {% include footer.html prev_page="themes" prev_title="Themes" next_page="auditlog" next_title="Audit log" %}
+

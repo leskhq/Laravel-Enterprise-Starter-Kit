@@ -1,0 +1,46 @@
+---
+layout: default
+head_title: "LESK: Menu system"
+title: Menu system
+---
+
+
+									<div class="row">
+										<div class="12u">
+
+											<p>The menus system can be configured with the menu editor included in the administration section under the security group.
+											To edit an existing menu item simply click on it in the menu tree on the left, and edit the entry details, on the right,
+											once loaded. Edit the entry then click on the <em>Save</em> button.
+											To delete an existing menu item simply select it on the menu tree, then once loaded click on the <em>Delete</em> button.
+											To create a new menu item, first click on the <em>Clear</em> button, if you previously had an existing menu entry selected,
+											then fill in the form details following these guidelines:</p>
+
+											<ul>
+												<li><em>Name</em>: The internal and unique name used as a reference. Required field.</li>
+												<li><em>Label</em>: The label shown to the users.</li>
+												<li><em>Position</em>: A number used to sort the menu item amongst it siblings. In the event that two items have the same
+												position value, the items are sorted alphabetically. The position numbers do not have to be sequential, gaps in the
+												numbering can be created to allow for future insertion, or to ensure that an item or branch is placed last, as is the
+												case of the <code>Admin</code> branch.</li>
+												<li><em>Icon</em>: The class of a Font-Awesome icon, with the optional colour qualifier. For example <code>fa fa-bolt</code> or
+												<code>fa fa-warning fa-colour-orange</code></li>
+												<li><em>Separator</em>: Checkbox that indicates if this item is to be a separator. When enabled, the label is not shown so a
+												good label to use is a few dashes (ie: "----"). Also, the item when rendered will not have a URL.</li>
+												<li><em>URL</em>: The URL field is best used to create a menu entry pointing to an external resource, otherwise when rendered
+												the URL should be generated from the associated <em>Route</em>.</li>
+												<li><em>Enabled</em>: Allows to enable or disable any entry. Any disabled entry will not be rendered. Useful to temporally
+												disable an entire branch.</li>
+												<li><em>Parent</em>: List all other menu entries, except separators, to select, as the name indicates the parent of the current
+												entry. This allows setting the hierarchy.</li>
+												<li><em>Route</em>: Associate the current menu entry with an Application Route. This will also give the menu entry both a URL
+												and a Permission.</li>
+												<li><em>Permission</em>: If the item is not associated with a <em>Route</em>, a specific permission can be selected. Best used to secure
+												access to external resources when specified with the <em>URL</em> field.</li>
+											</ul>
+
+										</div>
+									</div>
+
+
+					              {% include footer.html prev_page="ldapadauthentication" prev_title="LDAP/AD authentication" next_page="walledgarden" next_title="Walled garden" %}
+

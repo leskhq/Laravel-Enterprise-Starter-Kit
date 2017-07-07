@@ -1,0 +1,23 @@
+---
+layout: default
+head_title: "LESK: LERN"
+title: LERN
+---
+
+									<div class="row">
+										<div class="12u">
+
+											<p>To enable LERN (Laravel Exception Recorder and Notifier) set the configuration option as shown below:</p>
+
+											<pre><code>LERN.ENABLED=false</code></pre>
+
+											<p>Once enabled, LERN can record exceptions in the table <code>lern_exceptions</code> as well as email them if your mail system is properly
+											configured. A few more options are available to tweak the behaviour of LERN, refer to the <code>lern.php</code> configuration page and the project home page at <a href="https://github.com/tylercd100/lern">tylercd100/lern</a>.
+											All recorded exceptions can be seen in the <em>Error</em> page from the <em>Admin</em> menu. Individual exceptions also can be reviewed and should the need arise, old entries can be deleted with the purge button. The setting <code>ERRORS_PURGE_RETENTION</code> let you configure how
+											far back, in days, exceptions are kept when purging. By default, any exception older than <code>30</code> days is deleted.</p>
+
+										</div>
+									</div>
+
+					              {% include footer.html prev_page="modules" prev_title="Modules" next_page="contextsensitivehelp" next_title="Context sensitive help" %}
+
