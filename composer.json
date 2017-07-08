@@ -1,6 +1,6 @@
 {
-    "name": "sroutier/laravel-enterprise-starter-kit",
-    "description": "A Starter project based on Laravel 5.1 with theme support, optional LDAP/AD authentication, dynamic route authorization, etc...",
+    "name": "leskhq/laravel-enterprise-starter-kit",
+    "description": "A Starter project based on Laravel LST with theme support, optional LDAP/AD authentication, dynamic route authorization, etc...",
     "keywords": [
       "framework",
       "laravel",
@@ -39,7 +39,7 @@
         "sroutier/eloquent-ldap": "^1.0@dev",
         "zofe/rapyd": "2.1.*",
         "baum/baum": "~1.1",
-        "sroutier/lesk-modules": "^3.0",
+        "leskhq/lesk-modules": "^3.0",
         "mgallegos/laravel-jqgrid": "^1.2",
         "creativeorange/gravatar": "~1.0",
         "arcanedev/settings": "^1.2",
