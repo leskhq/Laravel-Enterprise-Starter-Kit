@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7513eb41d5e7211a19d337e7fa98b0f5",
-    "content-hash": "6b7debb8bc1ae3eae6ee4b5d355edc29",
+    "hash": "655dfa04a625bfda67b4e5423afdb8e8",
+    "content-hash": "f4f0c9f4847c24d00190397d6bacd9f3",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -123,6 +123,7 @@
                 "persistent",
                 "setting"
             ],
+            "abandoned": "arcanedev/laravel-settings",
             "time": "2016-04-16 17:19:56"
         },
         {
@@ -936,7 +937,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/e0169b2afc0fcbe047484b852699b095aee12b4f",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/432b80084acb401f9f2daba461679ace39cf67df",
                 "reference": "432b80084acb401f9f2daba461679ace39cf67df",
                 "shasum": ""
             },
@@ -1747,6 +1748,64 @@
             "time": "2016-06-03 19:11:39"
         },
         {
+            "name": "leskhq/lesk-modules",
+            "version": "3.0.7.15",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/leskhq/lesk-modules.git",
+                "reference": "6353fc4cdca2be75a9b7f0ae41e20fd7449bafa2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/leskhq/lesk-modules/zipball/6353fc4cdca2be75a9b7f0ae41e20fd7449bafa2",
+                "reference": "6353fc4cdca2be75a9b7f0ae41e20fd7449bafa2",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/config": "5.1.*|5.2.*",
+                "illuminate/database": "5.1.*|5.2.*",
+                "illuminate/filesystem": "5.1.*|5.2.*",
+                "illuminate/routing": "5.1.*|5.2.*",
+                "illuminate/support": "5.1.*|5.2.*",
+                "php": ">=5.5.9"
+            },
+            "suggest": {
+                "wikimedia/composer-merge-plugin": "Allows the ability to create and merge composer.json files for your individual modules for module-specific dependency management."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Sroutier\\LESKModules\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Shea Lewis",
+                    "email": "shea.lewis89@gmail.com"
+                },
+                {
+                    "name": "Sebastien Routier",
+                    "email": "sroutier@gmail.com"
+                }
+            ],
+            "description": "Module package for Laravel enterprise starter kit",
+            "keywords": [
+                "laravel",
+                "lesk",
+                "modules"
+            ],
+            "time": "2017-07-08 00:36:06"
+        },
+        {
             "name": "libern/laravel-sql-logging",
             "version": "dev-master",
             "source": {
@@ -2356,6 +2415,56 @@
             "time": "2015-05-01 07:00:55"
         },
         {
+            "name": "predis/predis",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nrk/predis.git",
+                "reference": "f0210e38881631afeafb56ab43405a92cafd9fd1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nrk/predis/zipball/f0210e38881631afeafb56ab43405a92cafd9fd1",
+                "reference": "f0210e38881631afeafb56ab43405a92cafd9fd1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
+            },
+            "suggest": {
+                "ext-curl": "Allows access to Webdis when paired with phpiredis",
+                "ext-phpiredis": "Allows faster serialization and deserialization of the Redis protocol"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Predis\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniele Alessandri",
+                    "email": "suppakilla@gmail.com",
+                    "homepage": "http://clorophilla.net"
+                }
+            ],
+            "description": "Flexible and feature-complete Redis client for PHP and HHVM",
+            "homepage": "http://github.com/nrk/predis",
+            "keywords": [
+                "nosql",
+                "predis",
+                "redis"
+            ],
+            "time": "2016-06-16 16:22:20"
+        },
+        {
             "name": "psr/http-message",
             "version": "1.0",
             "source": {
@@ -2571,64 +2680,6 @@
                 "ldap-eloquent"
             ],
             "time": "2016-12-15 15:26:24"
-        },
-        {
-            "name": "sroutier/lesk-modules",
-            "version": "3.0.7.14",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sroutier/lesk-modules.git",
-                "reference": "71c95b35cd24461bd17cd0419e2e311ae52f15c7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sroutier/lesk-modules/zipball/71c95b35cd24461bd17cd0419e2e311ae52f15c7",
-                "reference": "71c95b35cd24461bd17cd0419e2e311ae52f15c7",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/config": "5.1.*|5.2.*",
-                "illuminate/database": "5.1.*|5.2.*",
-                "illuminate/filesystem": "5.1.*|5.2.*",
-                "illuminate/routing": "5.1.*|5.2.*",
-                "illuminate/support": "5.1.*|5.2.*",
-                "php": ">=5.5.9"
-            },
-            "suggest": {
-                "wikimedia/composer-merge-plugin": "Allows the ability to create and merge composer.json files for your individual modules for module-specific dependency management."
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Sroutier\\LESKModules\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Shea Lewis",
-                    "email": "shea.lewis89@gmail.com"
-                },
-                {
-                    "name": "Sebastien Routier",
-                    "email": "sroutier@gmail.com"
-                }
-            ],
-            "description": "Module package for Laravel enterprise starter kit",
-            "keywords": [
-                "laravel",
-                "lesk",
-                "modules"
-            ],
-            "time": "2017-01-25 15:02:13"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -4397,7 +4448,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Jeroen-G/laravel-packager/zipball/9f5c2c9e14ff10934e7db832fad49a28a4dba538",
+                "url": "https://api.github.com/repos/Jeroen-G/laravel-packager/zipball/836b2d0adedfee14e2a76575b77dd16ac5b4cc71",
                 "reference": "836b2d0adedfee14e2a76575b77dd16ac5b4cc71",
                 "shasum": ""
             },
@@ -4440,12 +4491,12 @@
             "version": "0.9.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/padraic/mockery.git",
+                "url": "https://github.com/mockery/mockery.git",
                 "reference": "4db079511a283e5aba1b3c2fb19037c645e70fc2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/mockery/zipball/4db079511a283e5aba1b3c2fb19037c645e70fc2",
+                "url": "https://api.github.com/repos/mockery/mockery/zipball/4db079511a283e5aba1b3c2fb19037c645e70fc2",
                 "reference": "4db079511a283e5aba1b3c2fb19037c645e70fc2",
                 "shasum": ""
             },
@@ -5562,6 +5613,65 @@
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
             "time": "2015-06-21 13:59:46"
+        },
+        {
+            "name": "sroutier/lesk-modules",
+            "version": "3.0.7.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/leskhq/lesk-modules.git",
+                "reference": "71c95b35cd24461bd17cd0419e2e311ae52f15c7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/leskhq/lesk-modules/zipball/71c95b35cd24461bd17cd0419e2e311ae52f15c7",
+                "reference": "71c95b35cd24461bd17cd0419e2e311ae52f15c7",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/config": "5.1.*|5.2.*",
+                "illuminate/database": "5.1.*|5.2.*",
+                "illuminate/filesystem": "5.1.*|5.2.*",
+                "illuminate/routing": "5.1.*|5.2.*",
+                "illuminate/support": "5.1.*|5.2.*",
+                "php": ">=5.5.9"
+            },
+            "suggest": {
+                "wikimedia/composer-merge-plugin": "Allows the ability to create and merge composer.json files for your individual modules for module-specific dependency management."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Sroutier\\LESKModules\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Shea Lewis",
+                    "email": "shea.lewis89@gmail.com"
+                },
+                {
+                    "name": "Sebastien Routier",
+                    "email": "sroutier@gmail.com"
+                }
+            ],
+            "description": "Module package for Laravel enterprise starter kit",
+            "keywords": [
+                "laravel",
+                "lesk",
+                "modules"
+            ],
+            "abandoned": "leskhq/lesk-modules",
+            "time": "2017-01-25 15:02:13"
         },
         {
             "name": "symfony/yaml",

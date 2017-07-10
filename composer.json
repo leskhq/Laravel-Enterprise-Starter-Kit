@@ -10,7 +10,7 @@
       "LDAP",
       "Active Directory"
     ],
-    "homepage": "https://github.com/sroutier/laravel-enterprise-starter-kit",
+    "homepage": "http://lesk.it",
     "license": "GPL-3.0",
     "authors": [
       {
@@ -22,7 +22,7 @@
     "repositories": [
       {
         "type": "vcs",
-        "url": "https://github.com/sroutier/laravel-enterprise-starter-kit"
+        "url": "https://github.com/leskhq/laravel-enterprise-starter-kit"
       }
     ],
     "require": {
@@ -45,7 +45,8 @@
         "arcanedev/settings": "^1.2",
         "libern/laravel-sql-logging": "^1.0@dev",
         "jenssegers/agent": "^2.4",
-        "tylercd100/lern": "^3.8.1"
+        "tylercd100/lern": "^3.8.1",
+        "predis/predis": "^1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
