@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Exceptions\Handler;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Route as LaravelRoute;
@@ -146,15 +147,22 @@ class AuthorizeRoute
         // Else if error code was set abort with that.
         } elseif ( 0 != $errorCode ) {
             if ( !$guest && isset($user) && (!$user->enabled) ) {
-                Log::error("User [" . $user->username . "] disabled, forcing logout.");
+                $msg = "User [" . $user->username . "] disabled, forcing logout.";
+                Log::error($msg); // To LOG
+                (new Handler(Log::getMonolog()))->report(new \Exception($msg)); //To LERN
                 return redirect( route('logout') );
             }
             else {
+                $msg = "Aborting request with error code: " . $errorCode;
+                Log::error($msg); // To LOG
+                (new Handler(Log::getMonolog()))->report(new \Exception($msg)); // To LERN
                 abort($errorCode);
             }
         // Lastly Fallback to error HTTP 500: Internal server error. We should not get to this!
         } else {
-            Log::error("Server error while trying to authorize route, request path [" . $request->path() . "], method [" . $method . "] and action name [" . $actionName . "].");
+            $msg = "Server error while trying to authorize route, request path [" . $request->path() . "], method [" . $method . "] and action name [" . $actionName . "].";
+            Log::error($msg); // To LOG
+            (new Handler(Log::getMonolog()))->report(new \Exception($msg)); // To LERN
             abort(500);
         }
     }
