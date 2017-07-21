@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3a09968acdec01a99dacb2ce2ef8ece8",
+    "content-hash": "c52e1d58963ff6aa49e51805cec21771",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -2291,6 +2291,62 @@
                 "environment"
             ],
             "time": "2016-09-01T10:05:43+00:00"
+        },
+        {
+            "name": "yaap/theme",
+            "version": "dev-l55",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sroutier/Theme.git",
+                "reference": "d415d6776b71dfad67839abd6865cee3dfad7099"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sroutier/Theme/zipball/d415d6776b71dfad67839abd6865cee3dfad7099",
+                "reference": "d415d6776b71dfad67839abd6865cee3dfad7099",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "5.*",
+                "laravel/framework": "5.*",
+                "php": ">=7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "YAAP\\Theme\\ThemeServiceProvider"
+                    ],
+                    "aliases": {
+                        "Theme": "YAAP\\Theme\\Facades\\Theme"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "YAAP\\Theme": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Biluk Andrey",
+                    "email": "yaapis@gmail.com"
+                }
+            ],
+            "description": "Theme support for Laravel 4/5 with assets, theme extends etc.",
+            "keywords": [
+                "asset",
+                "laravel",
+                "layout",
+                "theme"
+            ],
+            "support": {
+                "source": "https://github.com/sroutier/Theme/tree/dev-l55"
+            },
+            "time": "2017-07-21T18:45:00+00:00"
         }
     ],
     "packages-dev": [
@@ -3905,7 +3961,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "barryvdh/laravel-debugbar": 20
+        "barryvdh/laravel-debugbar": 20,
+        "yaap/theme": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
