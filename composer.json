@@ -4,6 +4,12 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/sroutier/Theme"
+        }
+    ],
     "require": {
         "php": ">=7.0.0",
         "barryvdh/laravel-debugbar": "dev-master",
