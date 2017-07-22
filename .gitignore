@@ -1,12 +1,68 @@
-/node_modules
-/public/hot
-/public/storage
-/storage/*.key
-/vendor
-/.idea
-/.vagrant
-Homestead.json
-Homestead.yaml
-npm-debug.log
-yarn-error.log
+# Laravel 5 #
+#############
+/vendor/
 .env
+.env~
+storage/
+
+# Package development #
+#######################
+/app/Modules/
+/public/vendor/
+
+# Configuration testing #
+#########################
+.env.mysql
+.env.pgsql
+.env.sqlite3
+.settings
+.settings-*
+
+# Package development #
+#######################
+packages/
+
+# Test/Dev pages #
+##################
+public/phpinfo.php
+
+# NodeJS #
+##########
+node_modules/
+phantomjsdriver.log
+config.js
+dump.rdb
+npm-debug.log
+
+# JetBrains IDE family #
+########################
+.idea
+config/ide-helper.php
+_ide_helper.php
+ideconfig
+_ide_helper*
+.phpstorm.meta.php
+
+# Sublime files #
+#################
+*.sublime-project
+*.sublime-workspace
+
+#     Logs      #
+#################
+*.log
+*.sql
+
+# include sqlite db resource  #
+###############################
+.sqlite
+
+#     OS generated files         #
+##################################
+.DS_Store
+.DS_Store?
+# ._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
