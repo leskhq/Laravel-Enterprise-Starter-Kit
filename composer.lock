@@ -540,7 +540,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/6af6c8d386424b9064ecc1b1bde7a6a9a1bf81b3",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/3848ebc537f6e99b5accb0bb1ad5994fbf99b80d",
                 "reference": "56f103c69757cc643120a3de9b601262ed1ff2dd",
                 "shasum": ""
             },
@@ -2299,12 +2299,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sroutier/Theme.git",
-                "reference": "e46a121970a69360546693743333da5aebb1506f"
+                "reference": "2efaba9d0a6ded33f270cebd0a61131d639934e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sroutier/Theme/zipball/e46a121970a69360546693743333da5aebb1506f",
-                "reference": "e46a121970a69360546693743333da5aebb1506f",
+                "url": "https://api.github.com/repos/sroutier/Theme/zipball/2efaba9d0a6ded33f270cebd0a61131d639934e7",
+                "reference": "2efaba9d0a6ded33f270cebd0a61131d639934e7",
                 "shasum": ""
             },
             "require": {
@@ -2347,7 +2347,7 @@
             "support": {
                 "source": "https://github.com/sroutier/Theme/tree/l55"
             },
-            "time": "2017-07-21 20:45:10"
+            "time": "2017-07-21 20:53:02"
         }
     ],
     "packages-dev": [
