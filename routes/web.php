@@ -11,11 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
+Route::get('/', 		                                'HomeController@index');
+Route::get('home',      ['as' => 'home',      'uses' => 'HomeController@index']);
+Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
 
-Route::get('/hello', function () {
-    return view('hello');
-});
