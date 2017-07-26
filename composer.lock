@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a2970b55b57587081200735f63216d36",
+    "content-hash": "4ab51a88b9bf018c99a411170e24add7",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -1131,6 +1131,60 @@
                 "psysh"
             ],
             "time": "2017-07-13T13:11:05+00:00"
+        },
+        {
+            "name": "laravelcollective/html",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/LaravelCollective/html.git",
+                "reference": "a47a02b962c7fbef791c36146c3b2fc9b7af038c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/LaravelCollective/html/zipball/a47a02b962c7fbef791c36146c3b2fc9b7af038c",
+                "reference": "a47a02b962c7fbef791c36146c3b2fc9b7af038c",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/http": "5.5.x-dev",
+                "illuminate/routing": "5.5.x-dev",
+                "illuminate/session": "5.5.x-dev",
+                "illuminate/support": "5.5.x-dev",
+                "illuminate/view": "5.5.x-dev",
+                "php": ">=7.0.0"
+            },
+            "require-dev": {
+                "illuminate/database": "5.5.x-dev",
+                "mockery/mockery": "~0.9.4",
+                "phpunit/phpunit": "~5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Collective\\Html\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylorotwell@gmail.com"
+                },
+                {
+                    "name": "Adam Engebretson",
+                    "email": "adam@laravelcollective.com"
+                }
+            ],
+            "description": "HTML and Form Builders for the Laravel Framework",
+            "homepage": "http://laravelcollective.com",
+            "time": "2017-05-22T03:44:19+00:00"
         },
         {
             "name": "league/flysystem",
@@ -4549,6 +4603,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "barryvdh/laravel-debugbar": 20,
+        "laravelcollective/html": 20,
         "yaap/theme": 20
     },
     "prefer-stable": true,
