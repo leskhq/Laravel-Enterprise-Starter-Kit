@@ -12,8 +12,13 @@
 */
 
 
-Route::get('/', 		                                'HomeController@index');
+Route::get('/', 		                         'HomeController@index');
 Route::get('index',     ['as' => 'index',     'uses' => 'HomeController@index']);
 Route::get('home',      ['as' => 'home',      'uses' => 'HomeController@index']);
 Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
+
+// Canned auth routes.
+Auth::routes();
+// Registration terms
+Route::get( 'faust',                    ['as' => 'faust',                   'uses' => 'FaustController@index']);
 

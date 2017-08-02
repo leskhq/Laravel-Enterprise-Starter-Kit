@@ -36,4 +36,11 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    // Hack to have the username as a required field in the validator.
+    // See https://laravel.com/docs/5.4/authentication#included-authenticating
+    public function username()
+    {
+        return 'username';
+    }
 }
