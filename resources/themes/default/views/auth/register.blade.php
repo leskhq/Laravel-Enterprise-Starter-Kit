@@ -6,7 +6,7 @@
         {!! csrf_field() !!}
 
         <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }} has-feedback">
-            <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First name" required/>
+            <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First name" value="{{ old('first_name') }}" required/>
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             @if ($errors->has('first_name'))
                 <span class="help-block">
@@ -16,7 +16,7 @@
         </div>
 
         <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }} has-feedback">
-            <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Last name" required/>
+            <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Last name" value="{{ old('last_name') }}" required/>
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             @if ($errors->has('last_name'))
                 <span class="help-block">
@@ -26,7 +26,7 @@
         </div>
 
         <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }} has-feedback">
-            <input type="text" id="username" name="username" class="form-control" placeholder="username" required/>
+            <input type="text" id="username" name="username" class="form-control" placeholder="username" value="{{ old('username') }}" required/>
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             @if ($errors->has('username'))
                 <span class="help-block">
@@ -36,7 +36,7 @@
         </div>
 
         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} has-feedback">
-            <input type="email" id="email" name="email" class="form-control" placeholder="Email" required autofocus/>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}" required autofocus/>
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             @if ($errors->has('email'))
                 <span class="help-block">
