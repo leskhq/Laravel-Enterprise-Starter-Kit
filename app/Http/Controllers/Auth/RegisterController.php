@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use Flash;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -72,5 +74,11 @@ class RegisterController extends Controller
             'username' => $data['username'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    protected function registered(Request $request, $user)
+    {
+        Flash::success("Welcome " . $user->first_name . ", your account has been created.");
+        redirect($this->redirectPath());
     }
 }
