@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\UserResetPassword;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
@@ -36,4 +37,16 @@ class ResetPasswordController extends Controller
     {
         $this->middleware('guest');
     }
+
+    // Override method to fire event.
+    protected function sendResetResponse($response)
+    {
+        // Grab current user and fire event.
+        $user = auth()->user();
+        event(new UserResetPassword($user));
+
+        return redirect($this->redirectPath())
+            ->with('status', trans($response));
+    }
+
 }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\UserLogin;
+use App\Events\UserLogout;
 use App\Http\Controllers\Controller;
 use Flash;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -46,10 +48,28 @@ class LoginController extends Controller
         return 'username';
     }
 
+    // Overrides method to fire event.
     protected function authenticated(Request $request, $user)
     {
         flash()->success( "Hello " . $user->first_name . "." );
+
+        event(new UserLogin($user));
+
         return redirect()->intended($this->redirectPath());
+    }
+
+    // Overrides method to fire event.
+    public function logout(Request $request)
+    {
+        // Grab current user and fire event.
+        $user = auth()->user();
+        event(new UserLogout($user));
+
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        return redirect('/');
     }
 
 }

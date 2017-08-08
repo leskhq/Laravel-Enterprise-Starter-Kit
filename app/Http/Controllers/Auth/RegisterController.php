@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Events\UserRegistered;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Flash;
 use Illuminate\Http\Request;
@@ -63,7 +64,7 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return \App\Models\User
      */
     protected function create(array $data)
     {
@@ -79,6 +80,9 @@ class RegisterController extends Controller
     protected function registered(Request $request, $user)
     {
         Flash::success("Welcome " . $user->first_name . ", your account has been created.");
+
+        event(new UserRegistered($user));
+
         redirect($this->redirectPath());
     }
 }
