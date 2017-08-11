@@ -177,6 +177,9 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Collective\Html\HtmlServiceProvider::class,
+        Prettus\Repository\Providers\RepositoryServiceProvider::class,
+        Robbo\Presenter\PresenterServiceProvider::class,
+
     ],
 
     /*
