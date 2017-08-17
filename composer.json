@@ -8,6 +8,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/sroutier/Theme"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/sroutier/l5-repository"
         }
     ],
     "require": {
@@ -20,7 +24,7 @@
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "dev-master",
         "league/fractal": "^0.16.0",
-        "prettus/l5-repository": "^2.6",
+        "prettus/l5-repository": "dev-l55",
         "robclancy/presenter": "^1.3",
         "yaap/theme": "dev-l55"
     },

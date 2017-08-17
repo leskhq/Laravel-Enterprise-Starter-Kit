@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d4597dda6e9ee06f9e2b4efab88a4abb",
+    "content-hash": "6f4c08db8691fcbbac02df8eb3131cc1",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -1670,16 +1670,16 @@
         },
         {
             "name": "prettus/l5-repository",
-            "version": "2.6.20",
+            "version": "dev-l55",
             "source": {
                 "type": "git",
-                "url": "https://github.com/andersao/l5-repository.git",
-                "reference": "41fd976226fe5c95ce693a1aeb2d29bbfdea58d3"
+                "url": "https://github.com/sroutier/l5-repository.git",
+                "reference": "ccd4cb261d77ddaaea67c0c9bb73292a2279e13c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/andersao/l5-repository/zipball/41fd976226fe5c95ce693a1aeb2d29bbfdea58d3",
-                "reference": "41fd976226fe5c95ce693a1aeb2d29bbfdea58d3",
+                "url": "https://api.github.com/repos/sroutier/l5-repository/zipball/ccd4cb261d77ddaaea67c0c9bb73292a2279e13c",
+                "reference": "ccd4cb261d77ddaaea67c0c9bb73292a2279e13c",
                 "shasum": ""
             },
             "require": {
@@ -1707,7 +1707,6 @@
                     "Prettus\\Repository\\": "src/Prettus/Repository/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1726,7 +1725,13 @@
                 "model",
                 "repository"
             ],
-            "time": "2017-07-25T20:52:44+00:00"
+            "support": {
+                "email": "contato@andersonandra.de",
+                "issues": "https://github.com/andersao/l5-repository/issues",
+                "wiki": "https://github.com/andersao/l5-repository",
+                "source": "https://github.com/andersao/l5-repository"
+            },
+            "time": "2017-08-12T02:04:40+00:00"
         },
         {
             "name": "prettus/laravel-validation",
@@ -4812,6 +4817,7 @@
     "stability-flags": {
         "barryvdh/laravel-debugbar": 20,
         "laravelcollective/html": 20,
+        "prettus/l5-repository": 20,
         "yaap/theme": 20
     },
     "prefer-stable": true,
