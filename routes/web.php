@@ -12,19 +12,24 @@
 */
 
 
+///////
+// Canned auth routes.
+Auth::routes();
+///////
+// Registration terms
+Route::get( 'faust',                    ['as' => 'faust',                   'uses' => 'FaustController@index']);
+
+///////
+// Home
 Route::get('/', 		                         'HomeController@index');
 Route::get('index',     ['as' => 'index',     'uses' => 'HomeController@index']);
 Route::get('home',      ['as' => 'home',      'uses' => 'HomeController@index']);
 Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
 
-// Canned auth routes.
-Auth::routes();
-// Registration terms
-Route::get( 'faust',                    ['as' => 'faust',                   'uses' => 'FaustController@index']);
-
-
+///////
+// Admin
 Route::prefix('admin')->group(function () {
-//    Route::resource('users', UsersController::class);
+    // Users
     Route::post  ('users',             ['as' => 'admin.users.store',   'uses' => 'UsersController@store'  ]);
     Route::get   ('users',             ['as' => 'admin.users.index',   'uses' => 'UsersController@index'  ]);
     Route::get   ('users/create',      ['as' => 'admin.users.create',  'uses' => 'UsersController@create' ]);
