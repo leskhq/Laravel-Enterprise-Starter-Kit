@@ -6,9 +6,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
+use Laratrust\Traits\LaratrustUserTrait;
 
 class User extends Authenticatable implements Transformable
 {
+    use LaratrustUserTrait;
     use Notifiable;
     use TransformableTrait;
 
