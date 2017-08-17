@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Prettus\Repository\Contracts\Transformable;
+use Prettus\Repository\Traits\TransformableTrait;
 
-class User extends Authenticatable
+class User extends Authenticatable implements Transformable
 {
     use Notifiable;
+    use TransformableTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -15,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'username', 'email', 'password',
+        'first_name', 'last_name', 'username', 'email', 'password', 'auth_type', 'enabled'
     ];
 
     /**
@@ -34,4 +37,26 @@ class User extends Authenticatable
     {
         return $this->first_name . " " . $this->last_name;
     }
+
+    /**
+     * @param $value
+     */
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRoot()
+    {
+        // Protect the root user from edits.
+        if ('root' == $this->username) {
+            return true;
+        }
+        // Otherwise
+        return false;
+    }
+
 }

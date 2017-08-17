@@ -30,5 +30,9 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment() !== 'production') {
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
+
+        // Register Repository service provider
+        $this->app->register(RepositoryServiceProvider::class);
+
     }
 }

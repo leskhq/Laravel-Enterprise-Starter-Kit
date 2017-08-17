@@ -11,6 +11,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        $this->call(ProductionSeeder::class);
+
+        // Example of how to call a seeder script for a given environment.
+        if( App::environment() === 'development' )
+        {
+            $this->call(DevelopmentSeeder::class);
+        }
+
     }
 }
