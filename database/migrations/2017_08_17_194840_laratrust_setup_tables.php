@@ -17,6 +17,8 @@ class LaratrustSetupTables extends Migration
             $table->string('name')->unique();
             $table->string('display_name')->nullable();
             $table->string('description')->nullable();
+            $table->boolean('resync_on_login')->default(false);
+            $table->boolean('enabled')->default(false);
             $table->timestamps();
         });
 
@@ -26,6 +28,7 @@ class LaratrustSetupTables extends Migration
             $table->string('name')->unique();
             $table->string('display_name')->nullable();
             $table->string('description')->nullable();
+            $table->boolean('enabled')->default(false);
             $table->timestamps();
         });
 

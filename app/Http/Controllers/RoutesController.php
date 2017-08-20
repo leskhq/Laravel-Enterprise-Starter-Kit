@@ -8,26 +8,26 @@ use App\Http\Requests;
 use Laracasts\Flash\Flash;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
-use App\Http\Requests\UserCreateRequest;
-use App\Http\Requests\UserUpdateRequest;
-use App\Repositories\UserRepository;
-use App\Validators\UserValidator;
+use App\Http\Requests\RouteCreateRequest;
+use App\Http\Requests\RouteUpdateRequest;
+use App\Repositories\RouteRepository;
+use App\Validators\RouteValidator;
 
 
-class UsersController extends Controller
+class RoutesController extends Controller
 {
 
     /**
-     * @var UserRepository
+     * @var RouteRepository
      */
     protected $repository;
 
     /**
-     * @var UserValidator
+     * @var RouteValidator
      */
     protected $validator;
 
-    public function __construct(UserRepository $repository, UserValidator $validator)
+    public function __construct(RouteRepository $repository, RouteValidator $validator)
     {
         $this->repository = $repository;
         $this->validator  = $validator;
@@ -42,19 +42,19 @@ class UsersController extends Controller
     public function index()
     {
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $users = $this->repository->all();
+        $routes = $this->repository->all();
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $users,
+                'data' => $routes,
             ]);
         }
+        $page_title = trans('admin/routes/general.page.index.title');
+        $page_description = trans('admin/routes/general.page.index.description');
 
-        $page_title = trans('admin/users/general.page.index.title');
-        $page_description = trans('admin/users/general.page.index.description');
+        return view('admin.routes.index', compact('routes', 'page_title', 'page_description'));
 
-        return view('admin.users.index', compact('users', 'page_title', 'page_description'));
     }
 
     /**
@@ -64,34 +64,33 @@ class UsersController extends Controller
      */
     public function create()
     {
+        $route = new \App\Models\Route();
 
-        $user = new \App\Models\User();
+        $page_title = trans('admin/routes/general.page.create.title');
+        $page_description = trans('admin/routes/general.page.create.description');
 
-        $page_title = trans('admin/users/general.page.create.title');
-        $page_description = trans('admin/users/general.page.create.description');
-
-        return view('admin.users.create', compact('user', 'page_title', 'page_description'));
+        return view('admin.routes.create', compact('route', 'page_title', 'page_description'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  UserCreateRequest $request
+     * @param  RouteCreateRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(UserCreateRequest $request)
+    public function store(RouteCreateRequest $request)
     {
 
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $user = $this->repository->create($request->all());
+            $route = $this->repository->create($request->all());
 
             $response = [
-                'message' => 'User created.',
-                'data'    => $user->toArray(),
+                'message' => 'Route created.',
+                'data'    => $route->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -99,7 +98,7 @@ class UsersController extends Controller
                 return response()->json($response);
             }
 
-            Flash::success(trans('admin/users/general.status.created'));
+            Flash::success(trans('admin/routes/general.status.created'));
 
             return redirect()->back()->with('message', $response['message']);
 
@@ -125,19 +124,20 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        $user = $this->repository->find($id);
+
+        $route = $this->repository->find($id);
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $user,
+                'data' => $route,
             ]);
         }
 
-        $page_title = trans('admin/users/general.page.show.title');
-        $page_description = trans('admin/users/general.page.show.description', ['full_name' => $user->full_name]);
+        $page_title = trans('admin/routes/general.page.show.title');
+        $page_description = trans('admin/routes/general.page.show.description', ['name' => $route->name]);
 
-        return view('admin.users.show', compact('user', 'page_title', 'page_description'));
+        return view('admin.routes.show', compact('route', 'page_title', 'page_description'));
     }
 
 
@@ -151,35 +151,35 @@ class UsersController extends Controller
     public function edit($id)
     {
 
-        $user = $this->repository->find($id);
+        $route = $this->repository->find($id);
 
-        $page_title = trans('admin/users/general.page.edit.title');
-        $page_description = trans('admin/users/general.page.edit.description', ['full_name' => $user->full_name]);
+        $page_title = trans('admin/routes/general.page.edit.title');
+        $page_description = trans('admin/routes/general.page.edit.description', ['name' => $route->name]);
 
-        return view('admin.users.edit', compact('user', 'page_title', 'page_description'));
+        return view('admin.routes.edit', compact('route', 'page_title', 'page_description'));
     }
 
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  UserUpdateRequest $request
+     * @param  RouteUpdateRequest $request
      * @param  string            $id
      *
      * @return Response
      */
-    public function update(UserUpdateRequest $request, $id)
+    public function update(RouteUpdateRequest $request, $id)
     {
 
         try {
 
             $this->validator->with($request->all())->setId($id)->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            $user = $this->repository->update($request->all(), $id);
+            $route = $this->repository->update($request->all(), $id);
 
             $response = [
-                'message' => 'User updated.',
-                'data'    => $user->toArray(),
+                'message' => 'Route updated.',
+                'data'    => $route->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -187,7 +187,7 @@ class UsersController extends Controller
                 return response()->json($response);
             }
 
-            Flash::success(trans('admin/users/general.status.updated'));
+            Flash::success(trans('admin/routes/general.status.updated'));
 
             return redirect()->back()->with('message', $response['message']);
 
@@ -220,13 +220,13 @@ class UsersController extends Controller
         if (request()->wantsJson()) {
 
             return response()->json([
-                'message' => 'User deleted.',
+                'message' => 'Route deleted.',
                 'deleted' => $deleted,
             ]);
         }
 
-        Flash::success( trans('admin/users/general.status.deleted') );
+        Flash::success( trans('admin/routes/general.status.deleted') );
 
-        return redirect()->back()->with('message', 'User deleted.');
+        return redirect()->back()->with('message', 'Route deleted.');
     }
 }

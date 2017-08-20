@@ -14,4 +14,14 @@ class HomeController extends Controller
         return view('home', compact('page_title', 'page_description'));
     }
 
+    public function welcome(Request $request)
+    {
+        $page_title = trans('general.text.welcome');
+        $page_description = "This is the welcome page";
+
+//        $request->flashExcept(['password', 'password_confirmation']);
+        $request->session()->reflash();
+        return view('welcome', compact('page_title', 'page_description'));
+    }
+
 }

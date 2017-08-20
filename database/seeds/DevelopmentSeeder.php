@@ -40,7 +40,7 @@ class DevelopmentSeeder extends Seeder
 
         foreach ($userList as $key => $value)
         {
-            $userRoot = $this->user->create([
+            $user = $this->user->create([
                 "first_name"    => $value['first_name'],
                 "last_name"     => $value['last_name'],
                 "username"      => $key,
@@ -49,7 +49,7 @@ class DevelopmentSeeder extends Seeder
                 "auth_type"     => "internal",
                 "enabled"       => true,
             ]);
-            $this->command->warn('User created: '. $userRoot->username);
+            $this->command->info('User created: '. $user->username);
         }
 
 

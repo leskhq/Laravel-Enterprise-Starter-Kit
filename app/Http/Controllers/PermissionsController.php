@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Laracasts\Flash\Flash;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\PermissionCreateRequest;
@@ -50,7 +51,26 @@ class PermissionsController extends Controller
             ]);
         }
 
-        return view('permissions.index', compact('permissions'));
+        $page_title = trans('admin/permissions/general.page.index.title');
+        $page_description = trans('admin/permissions/general.page.index.description');
+
+        return view('admin.permissions.index', compact('permissions', 'page_title', 'page_description'));
+    }
+
+    /**
+     * Show the form for creating the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+
+        $permission = new \App\Models\Permission();
+
+        $page_title = trans('admin/permissions/general.page.create.title');
+        $page_description = trans('admin/permissions/general.page.create.description');
+
+        return view('admin.permissions.create', compact('permission', 'page_title', 'page_description'));
     }
 
     /**
@@ -79,7 +99,10 @@ class PermissionsController extends Controller
                 return response()->json($response);
             }
 
+            Flash::success(trans('admin/permissions/general.status.created'));
+
             return redirect()->back()->with('message', $response['message']);
+
         } catch (ValidatorException $e) {
             if ($request->wantsJson()) {
                 return response()->json([
@@ -111,7 +134,10 @@ class PermissionsController extends Controller
             ]);
         }
 
-        return view('permissions.show', compact('permission'));
+        $page_title = trans('admin/permissions/general.page.show.title');
+        $page_description = trans('admin/permissions/general.page.show.description', ['name' => $permission->name]);
+
+        return view('admin.permissions.show', compact('permission', 'page_title', 'page_description'));
     }
 
 
@@ -127,7 +153,10 @@ class PermissionsController extends Controller
 
         $permission = $this->repository->find($id);
 
-        return view('permissions.edit', compact('permission'));
+        $page_title = trans('admin/permissions/general.page.edit.title');
+        $page_description = trans('admin/permissions/general.page.edit.description', ['name' => $permission->name]);
+
+        return view('admin.permissions.edit', compact('permission', 'page_title', 'page_description'));
     }
 
 
@@ -144,7 +173,7 @@ class PermissionsController extends Controller
 
         try {
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
+            $this->validator->with($request->all())->setId($id)->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
             $permission = $this->repository->update($request->all(), $id);
 
@@ -158,7 +187,10 @@ class PermissionsController extends Controller
                 return response()->json($response);
             }
 
+            Flash::success(trans('admin/permissions/general.status.updated'));
+
             return redirect()->back()->with('message', $response['message']);
+
         } catch (ValidatorException $e) {
 
             if ($request->wantsJson()) {
@@ -192,6 +224,8 @@ class PermissionsController extends Controller
                 'deleted' => $deleted,
             ]);
         }
+
+        Flash::success( trans('admin/permissions/general.status.deleted') );
 
         return redirect()->back()->with('message', 'Permission deleted.');
     }

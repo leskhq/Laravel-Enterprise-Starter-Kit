@@ -3,30 +3,32 @@
 namespace App\Transformers;
 
 use League\Fractal\TransformerAbstract;
-use App\Models\Permission;
+use App\Models\Route;
 
 /**
- * Class PermissionTransformer
+ * Class RouteTransformer
  * @package namespace App\Transformers;
  */
-class PermissionTransformer extends TransformerAbstract
+class RouteTransformer extends TransformerAbstract
 {
 
     /**
-     * Transform the \Permission entity
-     * @param \Permission $model
+     * Transform the \Route entity
+     * @param \Route $model
      *
      * @return array
      */
-    public function transform(Permission $model)
+    public function transform(Route $model)
     {
         return [
             'id'            => (int) $model->id,
 
             /* place your other model properties here */
             'name'          => $model->name,
-            'display_name'  => $model->display_name,
-            'description'   => $model->description,
+            'method'        => $model->method,
+            'path'          => $model->path,
+            'action_name'   => $model->action_name,
+            'permission_id' => (int) $model->permission_id,
             'enabled'       => $model->enabled,
 
             'created_at'    => $model->created_at,

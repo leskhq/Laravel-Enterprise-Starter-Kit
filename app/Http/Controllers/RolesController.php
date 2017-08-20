@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Laracasts\Flash\Flash;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\RoleCreateRequest;
@@ -50,7 +51,26 @@ class RolesController extends Controller
             ]);
         }
 
-        return view('roles.index', compact('roles'));
+        $page_title = trans('admin/roles/general.page.index.title');
+        $page_description = trans('admin/roles/general.page.index.description');
+
+        return view('admin.roles.index', compact('roles', 'page_title', 'page_description'));
+    }
+
+    /**
+     * Show the form for creating the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+
+        $role = new \App\Models\Role();
+
+        $page_title = trans('admin/roles/general.page.create.title');
+        $page_description = trans('admin/roles/general.page.create.description');
+
+        return view('admin.roles.create', compact('role', 'page_title', 'page_description'));
     }
 
     /**
@@ -79,7 +99,10 @@ class RolesController extends Controller
                 return response()->json($response);
             }
 
+            Flash::success(trans('admin/roles/general.status.created'));
+
             return redirect()->back()->with('message', $response['message']);
+
         } catch (ValidatorException $e) {
             if ($request->wantsJson()) {
                 return response()->json([
@@ -111,7 +134,10 @@ class RolesController extends Controller
             ]);
         }
 
-        return view('roles.show', compact('role'));
+        $page_title = trans('admin/roles/general.page.show.title');
+        $page_description = trans('admin/roles/general.page.show.description', ['name' => $role->name]);
+
+        return view('admin.roles.show', compact('role', 'page_title', 'page_description'));
     }
 
 
@@ -127,7 +153,10 @@ class RolesController extends Controller
 
         $role = $this->repository->find($id);
 
-        return view('roles.edit', compact('role'));
+        $page_title = trans('admin/roles/general.page.edit.title');
+        $page_description = trans('admin/roles/general.page.edit.description', ['name' => $role->name]);
+
+        return view('admin.roles.edit', compact('role', 'page_title', 'page_description'));
     }
 
 
@@ -144,7 +173,7 @@ class RolesController extends Controller
 
         try {
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
+            $this->validator->with($request->all())->setId($id)->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
             $role = $this->repository->update($request->all(), $id);
 
@@ -158,7 +187,10 @@ class RolesController extends Controller
                 return response()->json($response);
             }
 
+            Flash::success(trans('admin/roles/general.status.updated'));
+
             return redirect()->back()->with('message', $response['message']);
+
         } catch (ValidatorException $e) {
 
             if ($request->wantsJson()) {
@@ -193,6 +225,8 @@ class RolesController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('message', 'Role deleted.');
+        Flash::success( trans('admin/roles/general.status.deleted') );
+
+        return redirect()->back()->with('message', 'User deleted.');
     }
 }
