@@ -41,14 +41,6 @@ class User extends Authenticatable implements Transformable
     }
 
     /**
-     * @param $value
-     */
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
-
-    /**
      * @return bool
      */
     public function isRoot()
