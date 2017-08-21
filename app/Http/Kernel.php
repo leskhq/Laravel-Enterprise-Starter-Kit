@@ -37,6 +37,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\ThemeSelector::class,
             \App\Http\Middleware\WalledGarden::class,
+            \App\Http\Middleware\AuthorizeRoute::class,
 
         ],
 

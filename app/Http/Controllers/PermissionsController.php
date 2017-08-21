@@ -2,27 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\PermissionRepository;
-use App\Repositories\RoleRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Laracasts\Flash\Flash;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
-use App\Http\Requests\UserCreateRequest;
-use App\Http\Requests\UserUpdateRequest;
-use App\Repositories\UserRepository;
-use App\Validators\UserValidator;
+use App\Http\Requests\PermissionCreateRequest;
+use App\Http\Requests\PermissionUpdateRequest;
+use App\Repositories\PermissionRepository;
+use App\Validators\PermissionValidator;
 
 
-class UsersController extends Controller
+class PermissionsController extends Controller
 {
-
-    /**
-     * @var UserRepository
-     */
-    protected $user;
 
     /**
      * @var PermissionRepository
@@ -30,21 +23,14 @@ class UsersController extends Controller
     protected $permission;
 
     /**
-     * @var RoleRepository
-     */
-    protected $role;
-
-    /**
-     * @var UserValidator
+     * @var PermissionValidator
      */
     protected $validator;
 
-    public function __construct(UserRepository $userRepository, UserValidator $validator, PermissionRepository $permissionRepository, RoleRepository $roleRepository)
+    public function __construct(PermissionRepository $permissionRepository, PermissionValidator $validator)
     {
-        $this->user         = $userRepository;
-        $this->validator    = $validator;
-        $this->permission   = $permissionRepository;
-        $this->role         = $roleRepository;
+        $this->permission = $permissionRepository;
+        $this->validator  = $validator;
     }
 
 
@@ -55,20 +41,20 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $this->user->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $users = $this->user->all();
+        $this->permission->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+        $permissions = $this->permission->all();
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $users,
+                'data' => $permissions,
             ]);
         }
 
-        $page_title = trans('admin/users/general.page.index.title');
-        $page_description = trans('admin/users/general.page.index.description');
+        $page_title = trans('admin/permissions/general.page.index.title');
+        $page_description = trans('admin/permissions/general.page.index.description');
 
-        return view('admin.users.index', compact('users', 'page_title', 'page_description'));
+        return view('admin.permissions.index', compact('permissions', 'page_title', 'page_description'));
     }
 
     /**
@@ -79,33 +65,33 @@ class UsersController extends Controller
     public function create()
     {
 
-        $user = new \App\Models\User();
+        $permission = new \App\Models\Permission();
 
-        $page_title = trans('admin/users/general.page.create.title');
-        $page_description = trans('admin/users/general.page.create.description');
+        $page_title = trans('admin/permissions/general.page.create.title');
+        $page_description = trans('admin/permissions/general.page.create.description');
 
-        return view('admin.users.create', compact('user', 'page_title', 'page_description'));
+        return view('admin.permissions.create', compact('permission', 'page_title', 'page_description'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  UserCreateRequest $request
+     * @param  PermissionCreateRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(UserCreateRequest $request)
+    public function store(PermissionCreateRequest $request)
     {
 
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $user = $this->user->create($request->all());
+            $permission = $this->permission->create($request->all());
 
             $response = [
-                'message' => 'User created.',
-                'data'    => $user->toArray(),
+                'message' => 'Permission created.',
+                'data'    => $permission->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -113,7 +99,7 @@ class UsersController extends Controller
                 return response()->json($response);
             }
 
-            Flash::success(trans('admin/users/general.status.created'));
+            Flash::success(trans('admin/permissions/general.status.created'));
 
             return redirect()->back()->with('message', $response['message']);
 
@@ -139,22 +125,19 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        $user = $this->user->with(['permissions', 'roles'])->find($id);
+        $permission = $this->permission->find($id);
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $user,
+                'data' => $permission,
             ]);
         }
 
-        $permissions = $this->permission->all();
-        $roles       = $this->role->all();
+        $page_title = trans('admin/permissions/general.page.show.title');
+        $page_description = trans('admin/permissions/general.page.show.description', ['name' => $permission->name]);
 
-        $page_title = trans('admin/users/general.page.show.title');
-        $page_description = trans('admin/users/general.page.show.description', ['full_name' => $user->full_name]);
-
-        return view('admin.users.show', compact('user', 'page_title', 'page_description', 'permissions', 'roles'));
+        return view('admin.permissions.show', compact('permission', 'page_title', 'page_description'));
     }
 
 
@@ -168,35 +151,35 @@ class UsersController extends Controller
     public function edit($id)
     {
 
-        $user = $this->user->find($id);
+        $permission = $this->permission->find($id);
 
-        $page_title = trans('admin/users/general.page.edit.title');
-        $page_description = trans('admin/users/general.page.edit.description', ['full_name' => $user->full_name]);
+        $page_title = trans('admin/permissions/general.page.edit.title');
+        $page_description = trans('admin/permissions/general.page.edit.description', ['name' => $permission->name]);
 
-        return view('admin.users.edit', compact('user', 'page_title', 'page_description'));
+        return view('admin.permissions.edit', compact('permission', 'page_title', 'page_description'));
     }
 
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  UserUpdateRequest $request
+     * @param  PermissionUpdateRequest $request
      * @param  string            $id
      *
      * @return Response
      */
-    public function update(UserUpdateRequest $request, $id)
+    public function update(PermissionUpdateRequest $request, $id)
     {
 
         try {
 
             $this->validator->with($request->all())->setId($id)->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            $user = $this->repository->update($request->all(), $id);
+            $permission = $this->permission->update($request->all(), $id);
 
             $response = [
-                'message' => 'User updated.',
-                'data'    => $user->toArray(),
+                'message' => 'Permission updated.',
+                'data'    => $permission->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -204,7 +187,7 @@ class UsersController extends Controller
                 return response()->json($response);
             }
 
-            Flash::success(trans('admin/users/general.status.updated'));
+            Flash::success(trans('admin/permissions/general.status.updated'));
 
             return redirect()->back()->with('message', $response['message']);
 
@@ -232,18 +215,18 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        $deleted = $this->repository->delete($id);
+        $deleted = $this->permission->delete($id);
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'message' => 'User deleted.',
+                'message' => 'Permission deleted.',
                 'deleted' => $deleted,
             ]);
         }
 
-        Flash::success( trans('admin/users/general.status.deleted') );
+        Flash::success( trans('admin/permissions/general.status.deleted') );
 
-        return redirect()->back()->with('message', 'User deleted.');
+        return redirect()->back()->with('message', 'Permission deleted.');
     }
 }

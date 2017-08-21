@@ -2,32 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\PermissionRepository;
-use App\Repositories\RoleRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Laracasts\Flash\Flash;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
-use App\Http\Requests\UserCreateRequest;
-use App\Http\Requests\UserUpdateRequest;
-use App\Repositories\UserRepository;
-use App\Validators\UserValidator;
+use App\Http\Requests\RoleCreateRequest;
+use App\Http\Requests\RoleUpdateRequest;
+use App\Repositories\RoleRepository;
+use App\Validators\RoleValidator;
 
 
-class UsersController extends Controller
+class RolesController extends Controller
 {
-
-    /**
-     * @var UserRepository
-     */
-    protected $user;
-
-    /**
-     * @var PermissionRepository
-     */
-    protected $permission;
 
     /**
      * @var RoleRepository
@@ -35,16 +23,14 @@ class UsersController extends Controller
     protected $role;
 
     /**
-     * @var UserValidator
+     * @var RoleValidator
      */
     protected $validator;
 
-    public function __construct(UserRepository $userRepository, UserValidator $validator, PermissionRepository $permissionRepository, RoleRepository $roleRepository)
+    public function __construct(RoleRepository $roleRepository, RoleValidator $validator)
     {
-        $this->user         = $userRepository;
-        $this->validator    = $validator;
-        $this->permission   = $permissionRepository;
-        $this->role         = $roleRepository;
+        $this->role = $roleRepository;
+        $this->validator  = $validator;
     }
 
 
@@ -55,20 +41,20 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $this->user->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $users = $this->user->all();
+        $this->role->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+        $roles = $this->role->all();
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $users,
+                'data' => $roles,
             ]);
         }
 
-        $page_title = trans('admin/users/general.page.index.title');
-        $page_description = trans('admin/users/general.page.index.description');
+        $page_title = trans('admin/roles/general.page.index.title');
+        $page_description = trans('admin/roles/general.page.index.description');
 
-        return view('admin.users.index', compact('users', 'page_title', 'page_description'));
+        return view('admin.roles.index', compact('roles', 'page_title', 'page_description'));
     }
 
     /**
@@ -79,33 +65,33 @@ class UsersController extends Controller
     public function create()
     {
 
-        $user = new \App\Models\User();
+        $role = new \App\Models\Role();
 
-        $page_title = trans('admin/users/general.page.create.title');
-        $page_description = trans('admin/users/general.page.create.description');
+        $page_title = trans('admin/roles/general.page.create.title');
+        $page_description = trans('admin/roles/general.page.create.description');
 
-        return view('admin.users.create', compact('user', 'page_title', 'page_description'));
+        return view('admin.roles.create', compact('role', 'page_title', 'page_description'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  UserCreateRequest $request
+     * @param  RoleCreateRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(UserCreateRequest $request)
+    public function store(RoleCreateRequest $request)
     {
 
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $user = $this->user->create($request->all());
+            $role = $this->role->create($request->all());
 
             $response = [
-                'message' => 'User created.',
-                'data'    => $user->toArray(),
+                'message' => 'Role created.',
+                'data'    => $role->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -113,7 +99,7 @@ class UsersController extends Controller
                 return response()->json($response);
             }
 
-            Flash::success(trans('admin/users/general.status.created'));
+            Flash::success(trans('admin/roles/general.status.created'));
 
             return redirect()->back()->with('message', $response['message']);
 
@@ -139,22 +125,19 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        $user = $this->user->with(['permissions', 'roles'])->find($id);
+        $role = $this->role->find($id);
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $user,
+                'data' => $role,
             ]);
         }
 
-        $permissions = $this->permission->all();
-        $roles       = $this->role->all();
+        $page_title = trans('admin/roles/general.page.show.title');
+        $page_description = trans('admin/roles/general.page.show.description', ['name' => $role->name]);
 
-        $page_title = trans('admin/users/general.page.show.title');
-        $page_description = trans('admin/users/general.page.show.description', ['full_name' => $user->full_name]);
-
-        return view('admin.users.show', compact('user', 'page_title', 'page_description', 'permissions', 'roles'));
+        return view('admin.roles.show', compact('role', 'page_title', 'page_description'));
     }
 
 
@@ -168,35 +151,35 @@ class UsersController extends Controller
     public function edit($id)
     {
 
-        $user = $this->user->find($id);
+        $role = $this->role->find($id);
 
-        $page_title = trans('admin/users/general.page.edit.title');
-        $page_description = trans('admin/users/general.page.edit.description', ['full_name' => $user->full_name]);
+        $page_title = trans('admin/roles/general.page.edit.title');
+        $page_description = trans('admin/roles/general.page.edit.description', ['name' => $role->name]);
 
-        return view('admin.users.edit', compact('user', 'page_title', 'page_description'));
+        return view('admin.roles.edit', compact('role', 'page_title', 'page_description'));
     }
 
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  UserUpdateRequest $request
+     * @param  RoleUpdateRequest $request
      * @param  string            $id
      *
      * @return Response
      */
-    public function update(UserUpdateRequest $request, $id)
+    public function update(RoleUpdateRequest $request, $id)
     {
 
         try {
 
             $this->validator->with($request->all())->setId($id)->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            $user = $this->repository->update($request->all(), $id);
+            $role = $this->role->update($request->all(), $id);
 
             $response = [
-                'message' => 'User updated.',
-                'data'    => $user->toArray(),
+                'message' => 'Role updated.',
+                'data'    => $role->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -204,7 +187,7 @@ class UsersController extends Controller
                 return response()->json($response);
             }
 
-            Flash::success(trans('admin/users/general.status.updated'));
+            Flash::success(trans('admin/roles/general.status.updated'));
 
             return redirect()->back()->with('message', $response['message']);
 
@@ -232,17 +215,17 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        $deleted = $this->repository->delete($id);
+        $deleted = $this->role->delete($id);
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'message' => 'User deleted.',
+                'message' => 'Role deleted.',
                 'deleted' => $deleted,
             ]);
         }
 
-        Flash::success( trans('admin/users/general.status.deleted') );
+        Flash::success( trans('admin/roles/general.status.deleted') );
 
         return redirect()->back()->with('message', 'User deleted.');
     }

@@ -1,17 +1,20 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Repositories\UserRepository as User;
+use App\Repositories\UserRepository;
+use App\Repositories\PermissionRepository;
 
 class DevelopmentSeeder extends Seeder
 {
 
     protected $user;
+    protected $permission;
 
 
-    public function __construct(User $user)
+    public function __construct(UserRepository $user, PermissionRepository $permission)
     {
         $this->user = $user;
+        $this->permission = $permission;
     }
 
     /**
@@ -40,7 +43,7 @@ class DevelopmentSeeder extends Seeder
 
         foreach ($userList as $key => $value)
         {
-            $userRoot = $this->user->create([
+            $user = $this->user->create([
                 "first_name"    => $value['first_name'],
                 "last_name"     => $value['last_name'],
                 "username"      => $key,
@@ -49,9 +52,13 @@ class DevelopmentSeeder extends Seeder
                 "auth_type"     => "internal",
                 "enabled"       => true,
             ]);
-            $this->command->warn('User created: '. $userRoot->username);
+            $this->command->info('User created: '. $user->username);
         }
 
+        // Grant user01 permission to list users.
+        $user01       = $this->user->findWhere(['username' => 'user01'])->first();
+        $permUserList = $this->permission->findByField('name', 'core.users.list')->first();
+        $user01->attachPermission($permUserList);
 
     }
 }
