@@ -67,22 +67,26 @@
                                             <tr>
                                                 <th>{!! trans('admin/roles/general.columns.name')  !!}</th>
                                                 <th>{!! trans('admin/roles/general.columns.description')  !!}</th>
+                                                <th>{!! trans('admin/roles/general.columns.assigned')  !!}</th>
                                                 <th>{!! trans('admin/roles/general.columns.enabled')  !!}</th>
-                                                <th style="text-align: right">{!! trans('admin/roles/general.columns.actions')  !!}</th>
                                             </tr>
-                                            @foreach($user->roles as $role)
+                                            @foreach($roles as $role)
                                                 <tr>
                                                     <td>{!! link_to_route('admin.roles.show', $role->display_name, [$role->id], []) !!}</td>
                                                     <td>{!! link_to_route('admin.roles.show', $role->description, [$role->id], []) !!}</td>
+                                                    <td>
+                                                        @if($user->hasRole($role->name))
+                                                            <i class="fa fa-check text-green"></i>
+                                                        @else
+                                                            <i class="fa fa-close text-red"></i>
+                                                        @endif
+                                                    </td>
                                                     <td>
                                                         @if($role->enabled)
                                                             <i class="fa fa-check text-green"></i>
                                                         @else
                                                             <i class="fa fa-close text-red"></i>
                                                         @endif
-                                                    </td>
-                                                    <td style="text-align: right">
-                                                        <i class="fa fa-trash-o text-muted"></i>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -100,13 +104,31 @@
                                             <tbody>
                                             <tr>
                                                 <th>{!! trans('admin/users/general.columns.name')  !!}</th>
+                                                <th>{!! trans('admin/users/general.columns.description')  !!}</th>
                                                 <th>{!! trans('admin/users/general.columns.assigned')  !!}</th>
+                                                <th>{!! trans('admin/users/general.columns.effective')  !!}</th>
+                                                <th>{!! trans('admin/users/general.columns.enabled')  !!}</th>
                                             </tr>
                                             @foreach($permissions as $perm)
                                                 <tr>
                                                     <td>{!! link_to_route('admin.permissions.show', $perm->display_name, [$perm->id], []) !!}</td>
+                                                    <td>{!! link_to_route('admin.permissions.show', $perm->description,  [$perm->id], []) !!}</td>
+                                                    <td>
+                                                        @if($user->permissions->contains($perm->id))
+                                                            <i class="fa fa-check text-green"></i>
+                                                        @else
+                                                            <i class="fa fa-close text-red"></i>
+                                                        @endif
+                                                    </td>
                                                     <td>
                                                         @if($user->can($perm->name))
+                                                            <i class="fa fa-check text-green"></i>
+                                                        @else
+                                                            <i class="fa fa-close text-red"></i>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if($perm->enabled)
                                                             <i class="fa fa-check text-green"></i>
                                                         @else
                                                             <i class="fa fa-close text-red"></i>

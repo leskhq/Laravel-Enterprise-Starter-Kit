@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\PermissionRepository;
+use App\Repositories\RoleRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -29,15 +30,21 @@ class UsersController extends Controller
     protected $permission;
 
     /**
+     * @var RoleRepository
+     */
+    protected $role;
+
+    /**
      * @var UserValidator
      */
     protected $validator;
 
-    public function __construct(UserRepository $userRepository, UserValidator $validator, PermissionRepository $permissionRepository)
+    public function __construct(UserRepository $userRepository, UserValidator $validator, PermissionRepository $permissionRepository, RoleRepository $roleRepository)
     {
-        $this->user = $userRepository;
-        $this->validator  = $validator;
-        $this->permission = $permissionRepository;
+        $this->user         = $userRepository;
+        $this->validator    = $validator;
+        $this->permission   = $permissionRepository;
+        $this->role         = $roleRepository;
     }
 
 
@@ -141,12 +148,13 @@ class UsersController extends Controller
             ]);
         }
 
-        $permissions= $this->permission->all();
+        $permissions = $this->permission->all();
+        $roles       = $this->role->all();
 
         $page_title = trans('admin/users/general.page.show.title');
         $page_description = trans('admin/users/general.page.show.description', ['full_name' => $user->full_name]);
 
-        return view('admin.users.show', compact('user', 'page_title', 'page_description', 'permissions'));
+        return view('admin.users.show', compact('user', 'page_title', 'page_description', 'permissions', 'roles'));
     }
 
 
