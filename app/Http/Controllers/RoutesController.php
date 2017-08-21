@@ -20,16 +20,16 @@ class RoutesController extends Controller
     /**
      * @var RouteRepository
      */
-    protected $repository;
+    protected $route;
 
     /**
      * @var RouteValidator
      */
     protected $validator;
 
-    public function __construct(RouteRepository $repository, RouteValidator $validator)
+    public function __construct(RouteRepository $routeRepository, RouteValidator $validator)
     {
-        $this->repository = $repository;
+        $this->route = $routeRepository;
         $this->validator  = $validator;
     }
 
@@ -41,8 +41,8 @@ class RoutesController extends Controller
      */
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $routes = $this->repository->all();
+        $this->route->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+        $routes = $this->route->all();
 
         if (request()->wantsJson()) {
 
@@ -86,7 +86,7 @@ class RoutesController extends Controller
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $route = $this->repository->create($request->all());
+            $route = $this->route->create($request->all());
 
             $response = [
                 'message' => 'Route created.',
@@ -125,7 +125,7 @@ class RoutesController extends Controller
     public function show($id)
     {
 
-        $route = $this->repository->find($id);
+        $route = $this->route->find($id);
 
         if (request()->wantsJson()) {
 
@@ -151,7 +151,7 @@ class RoutesController extends Controller
     public function edit($id)
     {
 
-        $route = $this->repository->find($id);
+        $route = $this->route->find($id);
 
         $page_title = trans('admin/routes/general.page.edit.title');
         $page_description = trans('admin/routes/general.page.edit.description', ['name' => $route->name]);
@@ -175,7 +175,7 @@ class RoutesController extends Controller
 
             $this->validator->with($request->all())->setId($id)->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            $route = $this->repository->update($request->all(), $id);
+            $route = $this->route->update($request->all(), $id);
 
             $response = [
                 'message' => 'Route updated.',
@@ -215,7 +215,7 @@ class RoutesController extends Controller
      */
     public function destroy($id)
     {
-        $deleted = $this->repository->delete($id);
+        $deleted = $this->route->delete($id);
 
         if (request()->wantsJson()) {
 

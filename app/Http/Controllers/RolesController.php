@@ -20,16 +20,16 @@ class RolesController extends Controller
     /**
      * @var RoleRepository
      */
-    protected $repository;
+    protected $role;
 
     /**
      * @var RoleValidator
      */
     protected $validator;
 
-    public function __construct(RoleRepository $repository, RoleValidator $validator)
+    public function __construct(RoleRepository $roleRepository, RoleValidator $validator)
     {
-        $this->repository = $repository;
+        $this->role = $roleRepository;
         $this->validator  = $validator;
     }
 
@@ -41,8 +41,8 @@ class RolesController extends Controller
      */
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $roles = $this->repository->all();
+        $this->role->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+        $roles = $this->role->all();
 
         if (request()->wantsJson()) {
 
@@ -87,7 +87,7 @@ class RolesController extends Controller
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $role = $this->repository->create($request->all());
+            $role = $this->role->create($request->all());
 
             $response = [
                 'message' => 'Role created.',
@@ -125,7 +125,7 @@ class RolesController extends Controller
      */
     public function show($id)
     {
-        $role = $this->repository->find($id);
+        $role = $this->role->find($id);
 
         if (request()->wantsJson()) {
 
@@ -151,7 +151,7 @@ class RolesController extends Controller
     public function edit($id)
     {
 
-        $role = $this->repository->find($id);
+        $role = $this->role->find($id);
 
         $page_title = trans('admin/roles/general.page.edit.title');
         $page_description = trans('admin/roles/general.page.edit.description', ['name' => $role->name]);
@@ -175,7 +175,7 @@ class RolesController extends Controller
 
             $this->validator->with($request->all())->setId($id)->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            $role = $this->repository->update($request->all(), $id);
+            $role = $this->role->update($request->all(), $id);
 
             $response = [
                 'message' => 'Role updated.',
@@ -215,7 +215,7 @@ class RolesController extends Controller
      */
     public function destroy($id)
     {
-        $deleted = $this->repository->delete($id);
+        $deleted = $this->role->delete($id);
 
         if (request()->wantsJson()) {
 

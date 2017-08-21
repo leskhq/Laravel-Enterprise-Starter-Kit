@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\PermissionRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -20,17 +21,23 @@ class UsersController extends Controller
     /**
      * @var UserRepository
      */
-    protected $repository;
+    protected $user;
+
+    /**
+     * @var PermissionRepository
+     */
+    protected $permission;
 
     /**
      * @var UserValidator
      */
     protected $validator;
 
-    public function __construct(UserRepository $repository, UserValidator $validator)
+    public function __construct(UserRepository $userRepository, UserValidator $validator, PermissionRepository $permissionRepository)
     {
-        $this->repository = $repository;
+        $this->user = $userRepository;
         $this->validator  = $validator;
+        $this->permission = $permissionRepository;
     }
 
 
@@ -41,8 +48,8 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $users = $this->repository->all();
+        $this->user->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+        $users = $this->user->all();
 
         if (request()->wantsJson()) {
 
@@ -87,7 +94,7 @@ class UsersController extends Controller
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $user = $this->repository->create($request->all());
+            $user = $this->user->create($request->all());
 
             $response = [
                 'message' => 'User created.',
@@ -125,7 +132,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        $user = $this->repository->find($id);
+        $user = $this->user->with(['permissions', 'roles'])->find($id);
 
         if (request()->wantsJson()) {
 
@@ -134,10 +141,12 @@ class UsersController extends Controller
             ]);
         }
 
+        $permissions= $this->permission->all();
+
         $page_title = trans('admin/users/general.page.show.title');
         $page_description = trans('admin/users/general.page.show.description', ['full_name' => $user->full_name]);
 
-        return view('admin.users.show', compact('user', 'page_title', 'page_description'));
+        return view('admin.users.show', compact('user', 'page_title', 'page_description', 'permissions'));
     }
 
 
@@ -151,7 +160,7 @@ class UsersController extends Controller
     public function edit($id)
     {
 
-        $user = $this->repository->find($id);
+        $user = $this->user->find($id);
 
         $page_title = trans('admin/users/general.page.edit.title');
         $page_description = trans('admin/users/general.page.edit.description', ['full_name' => $user->full_name]);

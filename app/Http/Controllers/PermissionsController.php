@@ -20,16 +20,16 @@ class PermissionsController extends Controller
     /**
      * @var PermissionRepository
      */
-    protected $repository;
+    protected $permission;
 
     /**
      * @var PermissionValidator
      */
     protected $validator;
 
-    public function __construct(PermissionRepository $repository, PermissionValidator $validator)
+    public function __construct(PermissionRepository $permissionRepository, PermissionValidator $validator)
     {
-        $this->repository = $repository;
+        $this->permission = $permissionRepository;
         $this->validator  = $validator;
     }
 
@@ -41,8 +41,8 @@ class PermissionsController extends Controller
      */
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $permissions = $this->repository->all();
+        $this->permission->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+        $permissions = $this->permission->all();
 
         if (request()->wantsJson()) {
 
@@ -87,7 +87,7 @@ class PermissionsController extends Controller
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $permission = $this->repository->create($request->all());
+            $permission = $this->permission->create($request->all());
 
             $response = [
                 'message' => 'Permission created.',
@@ -125,7 +125,7 @@ class PermissionsController extends Controller
      */
     public function show($id)
     {
-        $permission = $this->repository->find($id);
+        $permission = $this->permission->find($id);
 
         if (request()->wantsJson()) {
 
@@ -151,7 +151,7 @@ class PermissionsController extends Controller
     public function edit($id)
     {
 
-        $permission = $this->repository->find($id);
+        $permission = $this->permission->find($id);
 
         $page_title = trans('admin/permissions/general.page.edit.title');
         $page_description = trans('admin/permissions/general.page.edit.description', ['name' => $permission->name]);
@@ -175,7 +175,7 @@ class PermissionsController extends Controller
 
             $this->validator->with($request->all())->setId($id)->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            $permission = $this->repository->update($request->all(), $id);
+            $permission = $this->permission->update($request->all(), $id);
 
             $response = [
                 'message' => 'Permission updated.',
@@ -215,7 +215,7 @@ class PermissionsController extends Controller
      */
     public function destroy($id)
     {
-        $deleted = $this->repository->delete($id);
+        $deleted = $this->permission->delete($id);
 
         if (request()->wantsJson()) {
 
