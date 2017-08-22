@@ -355,6 +355,8 @@ return [
         Arcanedev\Settings\SettingsServiceProvider::class,
         Libern\SqlLogging\SqlLoggingServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
+        Conner\Tagging\Providers\TaggingServiceProvider::class,
+
     ),
 
     /*
