@@ -79,6 +79,9 @@ i.fa-colour-yellow {
   pointer-events: none; }
 
 .sidebar-mini.sidebar-collapse .main-header .logo > .logo-mini {
-  font-size: 13px !important; }
+  font-size: 18px !important; }
+
+.bootstrap-tagsinput {
+  width: 100%; }
 
 /*# sourceMappingURL=app.css.map */
