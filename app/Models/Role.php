@@ -2,6 +2,16 @@
 
 namespace App\Models;
 
+use App\Events\RoleCreated;
+use App\Events\RoleCreating;
+use App\Events\RoleDeleted;
+use App\Events\RoleDeleting;
+use App\Events\RoleRestored;
+use App\Events\RoleRestoring;
+use App\Events\RoleSaved;
+use App\Events\RoleSaving;
+use App\Events\RoleUpdated;
+use App\Events\RoleUpdating;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
@@ -32,7 +42,7 @@ class Role extends LaratrustRole implements Transformable
      *
      * @var array
      */
-    protected $events = [
+    protected $dispatchesEvents = [
         'creating'  => RoleCreating::class,
         'created'   => RoleCreated::class,
         'updating'  => RoleUpdating::class,

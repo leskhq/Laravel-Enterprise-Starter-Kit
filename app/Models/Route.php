@@ -41,7 +41,7 @@ class Route extends Model implements Transformable
      *
      * @var array
      */
-    protected $events = [
+    protected $dispatchesEvents = [
         'creating'  => RouteCreating::class,
         'created'   => RouteCreated::class,
         'updating'  => RouteUpdating::class,

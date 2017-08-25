@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Models\User;
+use App\Models\Permission;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -15,16 +15,16 @@ class PermissionUpdated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $user;
+    public $permission;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(Permission $permission)
     {
-        $this->user = $user;
+        $this->permission = $permission;
     }
 
     /**

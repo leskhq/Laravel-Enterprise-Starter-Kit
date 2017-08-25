@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Models\User;
+use App\Models\Permission;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -15,20 +15,16 @@ class PermissionDeleted
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $attributes;
-
-    public $user;
+    public $permission;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(array $attributes, User $user)
+    public function __construct(Permission $permission)
     {
-        $this->attributes = $attributes;
-
-        $this->user = $user;
+        $this->permission = $permission;
     }
 
     /**

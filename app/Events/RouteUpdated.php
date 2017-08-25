@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Models\User;
+use App\Models\Route;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -15,16 +15,16 @@ class RouteUpdated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $user;
+    public $route;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(Route $route)
     {
-        $this->user = $user;
+        $this->route = $route;
     }
 
     /**

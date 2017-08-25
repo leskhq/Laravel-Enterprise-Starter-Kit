@@ -70,6 +70,20 @@ class ProductionSeeder extends Seeder
 
         ////////////////////////////////////
         ////////////////////////////////////
+        /// Creating ROOT user.
+        $this->command->warn('Creating user root, remember to change the default password.');
+        $userRoot = $this->user->create([
+            "first_name"    => "Root",
+            "last_name"     => "SuperUser",
+            "username"      => "root",
+            "email"         => "root@email.com",
+            'password'      => bcrypt('Password1'),
+            "auth_type"     => "internal",
+            "enabled"       => true,
+        ]);
+
+        ////////////////////////////////////
+        ////////////////////////////////////
         /// Create basic set of permissions
         $permList = [
             'core.guest-only' => [
@@ -374,22 +388,6 @@ class ProductionSeeder extends Seeder
         $this->route->findByField('name', 'admin.users.destroy')->first()
             ->permission()->associate($permUserDelete)
             ->save();
-
-
-        ////////////////////////////////////
-        ////////////////////////////////////
-        /// Creating ROOT user.
-        $this->command->warn('Creating user root, remember to change the default password.');
-        $userRoot = $this->user->create([
-            "first_name"    => "Root",
-            "last_name"     => "SuperUser",
-            "username"      => "root",
-            "email"         => "root@email.com",
-            'password'      => bcrypt('Password1'),
-            "auth_type"     => "internal",
-            "enabled"       => true,
-        ]);
-
 
     }
 

@@ -50,7 +50,7 @@ class User extends Authenticatable implements Transformable
      *
      * @var array
      */
-    protected $events = [
+    protected $dispatchesEvents = [
         'creating'  => UserCreating::class,
         'created'   => UserCreated::class,
         'updating'  => UserUpdating::class,
@@ -130,7 +130,9 @@ class User extends Authenticatable implements Transformable
         if (null == $this->roles()->where('name', $roleName)->first()) {
             // Load the given role and attach it to the user.
             $roleToForce = \App\Models\Role::where('name', $roleName)->first();
-            $this->roles()->attach($roleToForce->id);
+            if (null != $roleToForce) {
+                $this->roles()->attach($roleToForce->id);
+            }
         }
     }
 
@@ -217,7 +219,7 @@ class User extends Authenticatable implements Transformable
      */
     public function postCreateAndUpdateFix()
     {
-        Log::debug('[EVENT] -- postCreateAndUpdateFix. ', ['username' => $this->username]);
+        Log::debug('User.postCreateAndUpdateFix. ', ['username' => $this->username]);
 
         // Force membership to the Users role.
         $this->forceRole('core.users');
@@ -229,8 +231,13 @@ class User extends Authenticatable implements Transformable
             $this->auth_type = 'internal';
         }
 
+        // Temporally disable the event dispatcher to avoid getting in an infinite loop of update events.
+        $dispatcher = $this->getEventDispatcher();
+        $this->unsetEventDispatcher();
         // Save changes.
         $this->save();
+        // Restore event dispatcher.
+        $this->setEventDispatcher($dispatcher);
 
     }
 

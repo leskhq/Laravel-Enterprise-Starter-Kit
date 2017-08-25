@@ -58,6 +58,7 @@ class UserEventSubscriber
     public function onUserCreated(UserCreated $event)
     {
         try {
+            Log::debug('UserEventSubscriber.onUserCreated', ['username' => $event->user->username]);
             $this->user = $event->user;
             $this->user->postCreateAndUpdateFix();
         } catch (\Exception $e) {
@@ -68,6 +69,7 @@ class UserEventSubscriber
     public function onUserUpdated(UserUpdated $event)
     {
         try {
+            Log::debug('UserEventSubscriber.onUserUpdated', ['username' => $event->user->username]);
             $this->user = $event->user;
             $this->user->postCreateAndUpdateFix();
         } catch (\Exception $e) {

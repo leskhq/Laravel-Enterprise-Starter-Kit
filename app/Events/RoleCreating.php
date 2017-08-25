@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Models\User;
+use App\Models\Role;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -15,20 +15,16 @@ class RoleCreating
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $attributes;
-
-    public $user;
+    public $role;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(array $attributes, User $user)
+    public function __construct(Role $role)
     {
-        $this->attributes = $attributes;
-
-        $this->user = $user;
+        $this->role = $role;
     }
 
     /**

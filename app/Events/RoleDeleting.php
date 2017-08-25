@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Models\User;
+use App\Models\Role;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -15,8 +15,6 @@ class RoleDeleting
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $attributes;
-
     public $user;
 
     /**
@@ -24,11 +22,9 @@ class RoleDeleting
      *
      * @return void
      */
-    public function __construct(array $attributes, User $user)
+    public function __construct(Role $role)
     {
-        $this->attributes = $attributes;
-
-        $this->user = $user;
+        $this->role = $role;
     }
 
     /**

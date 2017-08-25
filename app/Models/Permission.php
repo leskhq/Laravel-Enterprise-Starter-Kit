@@ -2,6 +2,18 @@
 
 namespace App\Models;
 
+use App\Events\PermissionCreated;
+use App\Events\PermissionCreating;
+use App\Events\PermissionDeleted;
+use App\Events\PermissionDeleting;
+use App\Events\PermissionRestored;
+use App\Events\PermissionRestoring;
+use App\Events\PermissionSaved;
+use App\Events\PermissionSaving;
+use App\Events\PermissionUpdated;
+use App\Events\PermissionUpdating;
+use App\Libraries\Str;
+use Log;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 use Laratrust\LaratrustPermission;
@@ -32,7 +44,7 @@ class Permission extends LaratrustPermission implements Transformable
      *
      * @var array
      */
-    protected $events = [
+    protected $dispatchesEvents = [
         'creating'  => PermissionCreating::class,
         'created'   => PermissionCreated::class,
         'updating'  => PermissionUpdating::class,
@@ -190,5 +202,57 @@ class Permission extends LaratrustPermission implements Transformable
         }
         $this->save();
     }
+
+    public function forceUserAssignment($userName)
+    {
+        // If the permission is not already assigned to the given user
+        if (null == $this->users()->where('username', $userName)->first()) {
+            // Load the given user and attach it to the permission.
+            $userToForce = \App\Models\User::where('username', $userName)->first();
+            if (null != $userToForce) {
+                $this->users()->attach($userToForce->id);
+            }
+        }
+    }
+
+    public function forceRoleAssignment($roleName)
+    {
+        // If the permission is not already assigned to the given user
+        if (null == $this->roles()->where('name', $roleName)->first()) {
+            // Load the given user and attach it to the permission.
+            $roleToForce = \App\Models\Role::where('name', $roleName)->first();
+            if (null != $roleToForce) {
+                $this->roles()->attach($roleToForce->id);
+            }
+        }
+    }
+
+    /**
+     * Force the membership to the 'core.users' role
+     * and if empty, set the auth_type to the
+     * internal value.
+     * Usually called from the UserEventSubscriber@onUserCreated
+     * handler.
+     */
+    public function postCreateAndUpdateFix()
+    {
+        Log::debug('Permission.postCreateAndUpdateFix. ', ['permission' => $this->name]);
+
+        // Force assignment to the root user.
+        $this->forceUserAssignment('root');
+
+        // Force assignment to the admins.
+        $this->forceRoleAssignment('core.admins');
+
+        // Temporally disable the event dispatcher to avoid getting in an infinite loop of update events.
+        $dispatcher = $this->getEventDispatcher();
+        $this->unsetEventDispatcher();
+        // Save changes.
+        $this->save();
+        // Restore event dispatcher.
+        $this->setEventDispatcher($dispatcher);
+
+    }
+
 
 }

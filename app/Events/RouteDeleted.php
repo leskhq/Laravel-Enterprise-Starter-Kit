@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Models\User;
+use App\Models\Route;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -15,20 +15,16 @@ class RouteDeleted
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $attributes;
-
-    public $user;
+    public $route;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(array $attributes, User $user)
+    public function __construct(Route $route)
     {
-        $this->attributes = $attributes;
-
-        $this->user = $user;
+        $this->route = $route;
     }
 
     /**

@@ -15,8 +15,6 @@ class UserDeleted
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $attributes;
-
     public $user;
 
     /**
@@ -24,10 +22,8 @@ class UserDeleted
      *
      * @return void
      */
-    public function __construct(array $attributes, User $user)
+    public function __construct(User $user)
     {
-        $this->attributes = $attributes;
-
         $this->user = $user;
     }
 
