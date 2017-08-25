@@ -27,7 +27,23 @@ class Role extends LaratrustRole implements Transformable
      */
     protected $hidden = [];
 
-
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $events = [
+        'creating'  => RoleCreating::class,
+        'created'   => RoleCreated::class,
+        'updating'  => RoleUpdating::class,
+        'updated'   => RoleUpdated::class,
+        'saving'    => RoleSaving::class,
+        'saved'     => RoleSaved::class,
+        'deleting'  => RoleDeleting::class,
+        'deleted'   => RoleDeleted::class,
+        'restoring' => RoleRestoring::class,
+        'restored'  => RoleRestored::class,
+    ];
 
     /**
      * @return bool

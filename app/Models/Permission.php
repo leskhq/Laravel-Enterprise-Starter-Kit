@@ -27,6 +27,23 @@ class Permission extends LaratrustPermission implements Transformable
      */
     protected $hidden = [];
 
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $events = [
+        'creating'  => PermissionCreating::class,
+        'created'   => PermissionCreated::class,
+        'updating'  => PermissionUpdating::class,
+        'updated'   => PermissionUpdated::class,
+        'saving'    => PermissionSaving::class,
+        'saved'     => PermissionSaved::class,
+        'deleting'  => PermissionDeleting::class,
+        'deleted'   => PermissionDeleted::class,
+        'restoring' => PermissionRestoring::class,
+        'restored'  => PermissionRestored::class,
+    ];
 
     public function routes()
     {

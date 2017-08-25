@@ -3,7 +3,15 @@
 namespace App\Models;
 
 use App\Events\UserCreated;
+use App\Events\UserCreating;
+use App\Events\UserDeleted;
+use App\Events\UserDeleting;
+use App\Events\UserRestored;
+use App\Events\UserRestoring;
+use App\Events\UserSaved;
+use App\Events\UserSaving;
 use App\Events\UserUpdated;
+use App\Events\UserUpdating;
 use Auth;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,6 +19,7 @@ use Log;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 use Laratrust\Traits\LaratrustUserTrait;
+use App\Libraries\Str;
 
 class User extends Authenticatable implements Transformable
 {
@@ -34,6 +43,24 @@ class User extends Authenticatable implements Transformable
      */
     protected $hidden = [
         'password', 'remember_token',
+    ];
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $events = [
+        'creating'  => UserCreating::class,
+        'created'   => UserCreated::class,
+        'updating'  => UserUpdating::class,
+        'updated'   => UserUpdated::class,
+        'saving'    => UserSaving::class,
+        'saved'     => UserSaved::class,
+        'deleting'  => UserDeleting::class,
+        'deleted'   => UserDeleted::class,
+        'restoring' => UserRestoring::class,
+        'restored'  => UserRestored::class,
     ];
 
     /**
@@ -136,49 +163,6 @@ class User extends Authenticatable implements Transformable
     }
 
     /**
-     * Overwrite Model::create(...) to fire event.
-     *
-     * @param array $attributes
-     * @return \Illuminate\Database\Eloquent\Model|$this
-     */
-    public function create(array $attributes = [])
-    {
-
-        // Call original create method from parent
-        $user = parent::create($attributes);
-
-        event(new UserCreated($user));
-
-        return $user;
-    }
-
-    /**
-     * Force the membership to the 'core.users' role
-     * and if empty, set the auth_type to the
-     * internal value.
-     * Usually called from the UserEventSubscriber@onUserCreated
-     * handler.
-     */
-    public function postCreateFix()
-    {
-        Log::debug("User created: " . $this->username);
-
-        // Force membership to the Users role.
-        $this->forceRole('core.users');
-
-        // If the auth_type is not explicitly set by the call function or module,
-        // set it to the internal value.
-        if (isEmptyOrNullString($this->auth_type)) {
-            // TODO: Get internal type form Settings.
-            $this->auth_type = 'internal';
-        }
-
-        // Save changes.
-        $this->save();
-
-    }
-
-    /**
      * Overwrite Model::update(...) to fire event.
      *
      * to save group membership if included,
@@ -189,6 +173,7 @@ class User extends Authenticatable implements Transformable
      */
     public function update(array $attributes = [], array $options = [])
     {
+        $rc = false;
 
 //        // TODO: Deal with user's Settings
 //        if ( array_key_exists('username', $attributes) ) {
@@ -199,8 +184,7 @@ class User extends Authenticatable implements Transformable
 ////            $this->username = $attributes['username']; // TODO: Is this needed ??
 //        }
 
-        if (parent::update($attributes, $options))
-        {
+        if (parent::update($attributes, $options)) {
 
             event(new UserUpdated($this));
 
@@ -209,11 +193,8 @@ class User extends Authenticatable implements Transformable
             // Assign permission(s)
             $this->assignPermission($attributes);
 
-            return true;
-        } else {
-            return false;
+            $rc = true;
         }
-
 
 //        // TODO: Deal with user's Settings
 //        // Process user settings
@@ -223,21 +204,34 @@ class User extends Authenticatable implements Transformable
 //        $this->processUserSetting('time_format', $attributes);
 //        $this->processUserSetting('locale', $attributes);
 
+        return $rc;
     }
 
+
     /**
-     * Force the membership to the 'core.users' role.
-     * Usually called from the UserEventSubscriber@onUserUpdated
+     * Force the membership to the 'core.users' role
+     * and if empty, set the auth_type to the
+     * internal value.
+     * Usually called from the UserEventSubscriber@onUserCreated
      * handler.
      */
-    public function postUpdateFix()
+    public function postCreateAndUpdateFix()
     {
-        Log::debug("User created: " . $this->username);
+        Log::debug('[EVENT] -- postCreateAndUpdateFix. ', ['username' => $this->username]);
 
-        // Force membership to group 'users'
+        // Force membership to the Users role.
         $this->forceRole('core.users');
+
+        // If the auth_type is not explicitly set by the call function or module,
+        // set it to the internal value.
+        if (Str::isNullOrEmptyString($this->auth_type)) {
+            // TODO: Get internal type form Settings.
+            $this->auth_type = 'internal';
+        }
 
         // Save changes.
         $this->save();
+
     }
+
 }

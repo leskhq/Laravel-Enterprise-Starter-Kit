@@ -2,6 +2,16 @@
 
 namespace App\Models;
 
+use App\Events\RouteCreated;
+use App\Events\RouteCreating;
+use App\Events\RouteDeleted;
+use App\Events\RouteDeleting;
+use App\Events\RouteRestored;
+use App\Events\RouteRestoring;
+use App\Events\RouteSaved;
+use App\Events\RouteSaving;
+use App\Events\RouteUpdated;
+use App\Events\RouteUpdating;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
@@ -26,6 +36,23 @@ class Route extends Model implements Transformable
      */
     protected $hidden = [];
 
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $events = [
+        'creating'  => RouteCreating::class,
+        'created'   => RouteCreated::class,
+        'updating'  => RouteUpdating::class,
+        'updated'   => RouteUpdated::class,
+        'saving'    => RouteSaving::class,
+        'saved'     => RouteSaved::class,
+        'deleting'  => RouteDeleting::class,
+        'deleted'   => RouteDeleted::class,
+        'restoring' => RouteRestoring::class,
+        'restored'  => RouteRestored::class,
+    ];
 
     /**
      * Establish the BelongsTo association to a Permission
@@ -96,36 +123,30 @@ class Route extends Model implements Transformable
             $path = $appRoute->uri();
             $actionName = $appRoute->getActionName();
 
-            // Skip AuthController and PasswordController routes, Those are always authorized.
-            if (!str_contains($actionName, 'AuthController')
-                && !str_contains($actionName, 'PasswordController')
-            ) {
+            // Include only if the name matches the requested Regular Expression.
+            if (preg_match($routeNameRegEx, $name)) {
+                foreach ($methods as $method) {
+                    $route = null;
 
-                // Include only if the name matches the requested Regular Expression.
-                if (preg_match($routeNameRegEx, $name)) {
-                    foreach ($methods as $method) {
-                        $route = null;
+                    if ('HEAD' !== $method                     // Skip method 'HEAD' looks to be duplicated of 'GET'
+                        && !starts_with($path, '_debugbar')
+                    ) { // Skip all DebugBar routes.
 
-                        if ('HEAD' !== $method                     // Skip method 'HEAD' looks to be duplicated of 'GET'
-                            && !starts_with($path, '_debugbar')
-                        ) { // Skip all DebugBar routes.
+                        $route = \App\Models\Route::ofMethod($method)->ofActionName($actionName)->ofPath($path)->first();
 
-                            $route = \App\Models\Route::ofMethod($method)->ofActionName($actionName)->ofPath($path)->first();
-
-                            if (!isset($route)) {
-                                $cnt++;
-                                \App\Models\Route::create([
-                                    'name' => $name,
-                                    'method' => $method,
-                                    'path' => $path,
-                                    'action_name' => $actionName,
-                                    'enabled' => 1,
-                                ]);
-                            }
+                        if (!isset($route)) {
+                            $cnt++;
+                            \App\Models\Route::create([
+                                'name' => $name,
+                                'method' => $method,
+                                'path' => $path,
+                                'action_name' => $actionName,
+                                'enabled' => 1,
+                            ]);
                         }
                     }
-
                 }
+
             }
         }
 

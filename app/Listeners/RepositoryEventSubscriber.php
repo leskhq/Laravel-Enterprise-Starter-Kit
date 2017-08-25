@@ -36,14 +36,23 @@ class RepositoryEventSubscriber
     }
 
     /**
-     * Handle the event.
+     * Register the listeners for the subscriber.
      *
-     * @param  $event
-     * @return void
+     * @param $events
      */
-    public function handle($event)
+    public function subscribe($events)
     {
-        //
+
+        $events->listen(
+            'Prettus\Repository\Events\RepositoryEntityCreated',
+            'App\Listeners\RepositoryEventSubscriber@onEntityCreated'
+        );
+
+        $events->listen(
+            'Prettus\Repository\Events\RepositoryEntityUpdated',
+            'App\Listeners\RepositoryEventSubscriber@onEntityUpdated'
+        );
+
     }
 
     /**
@@ -60,11 +69,15 @@ class RepositoryEventSubscriber
             $this->model = $event->getModel();
             $this->action = $event->GetAction();
 
-            Log::debug("Repository entity created: " . get_class($this->model));
+            Log::debug("[EVENT] -- Repository entity created: " . get_class($this->model));
             switch (get_class($this->model))
             {
                 case 'App\Models\User':
-                    $this->model->postCreateFix();
+                    Log::debug('[EVENT] -- Repository entity onEntityCreated. ', ['username' => $this->model->username]);
+                    $this->model->postCreateAndUpdateFix();
+                    break;
+                case 'App\Models\Permission':
+                    // TODO: Force the permission on ADMINS and ROOT
                     break;
             }
 
@@ -87,38 +100,21 @@ class RepositoryEventSubscriber
             $this->model = $event->getModel();
             $this->action = $event->GetAction();
 
-            Log::debug("Repository entity updated: " . get_class($this->model));
+            Log::debug("[EVENT] -- Repository entity updated: " . get_class($this->model));
             switch (get_class($this->model))
             {
                 case 'App\Models\User':
-                    $this->model->postUpdateFix();
+                    Log::debug('[EVENT] -- Repository entity onEntityUpdated. ', ['username' => $this->model->username]);
+                    $this->model->postCreateAndUpdateFix();
+                    break;
+                case 'App\Models\Permission':
+                    // TODO: Force the permission on ADMINS and ROOT
                     break;
             }
 
         } catch (\Exception $e) {
             Log::error($e->getMessage());
         }
-    }
-
-
-    /**
-     * Register the listeners for the subscriber.
-     *
-     * @param $events
-     */
-    public function subscribe($events)
-    {
-
-        $events->listen(
-            'Prettus\Repository\Events\RepositoryEntityCreated',
-            'App\Listeners\RepositoryEventSubscriber@onEntityCreated'
-        );
-
-        $events->listen(
-            'Prettus\Repository\Events\RepositoryEntityUpdated',
-            'App\Listeners\RepositoryEventSubscriber@onEntityUpdated'
-        );
-
     }
 
 }
