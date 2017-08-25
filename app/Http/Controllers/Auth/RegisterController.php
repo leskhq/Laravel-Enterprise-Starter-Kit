@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Events\UserRegistered;
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Repositories\UserRepository;
 use Flash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -26,6 +27,11 @@ class RegisterController extends Controller
     use RegistersUsers;
 
     /**
+     * @var UserRepository
+     */
+    protected $user;
+
+    /**
      * Where to redirect users after registration.
      *
      * @var string
@@ -37,10 +43,13 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UserRepository $userRepository)
     {
+        $this->user         = $userRepository;
+
         $this->middleware('guest');
     }
+
 
     /**
      * Get a validator for an incoming registration request.
@@ -68,7 +77,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        return $this->user->create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],
