@@ -1,5 +1,7 @@
 # Laravel Enterprise Starter Kit (LESK)
 
+[![Join the chat at https://gitter.im/LESK-DEV/Lobby](https://badges.gitter.im/LESK-DEV/Lobby.svg)](https://gitter.im/LESK-DEV/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
 
