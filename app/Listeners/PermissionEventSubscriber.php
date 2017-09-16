@@ -68,10 +68,10 @@ class PermissionEventSubscriber
         }
     }
 
-    public function onUserUpdated(PermissionUpdated $event)
+    public function onPermissionUpdated(PermissionUpdated $event)
     {
         try {
-            Log::debug("PermissionEventSubscriber.onUserUpdated. ", ['name'=>$event->permission->name]);
+            Log::debug("PermissionEventSubscriber.onPermissionUpdated. ", ['name'=>$event->permission->name]);
             $this->permission = $event->permission;
             $this->permission->postCreateAndUpdateFix();
         } catch (\Exception $e) {
