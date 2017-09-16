@@ -41,7 +41,17 @@
                                     @foreach($modules as $mod)
                                         <tr>
                                             <td>{{ $mod['name'] }}</td>
-                                            <td>{{ $mod['description'] }}</td>
+                                            <td>
+                                                {{ $mod['description'] }}
+                                                @if ( $dependencies[$mod['slug']] )
+                                                    <br /><br />
+                                                    Requires:<br />
+                                                    @foreach ($dependencies[$mod['slug']] as $dep)
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        {{ $dep }}
+                                                    @endforeach
+                                                @endif
+                                            </td>
                                             <td>{{ $mod['order'] }}</td>
                                             <td>
                                                 @if ( Module::isInitialized($mod['slug']) )

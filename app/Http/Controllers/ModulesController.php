@@ -48,7 +48,18 @@ class ModulesController extends Controller
             return $a['order'] < $b['order'] ? -1 : 1;
         });
 
-        return view('admin.modules.index', compact('modules', 'page_title', 'page_description'));
+        foreach ($modules as $module) {
+            $composer_file = __DIR__.'/../../Modules/'.$module['namespace'].'/composer.json';
+            if (file_exists($composer_file)) {
+                $json = json_decode(file_get_contents($composer_file), true);
+                foreach ($json['require'] as $key => $value)
+                    $dependencies[$module['slug']][] = $key." ".$value;
+            } else {
+                $dependencies[$module['slug']] = '';
+            }
+        }
+
+        return view('admin.modules.index', compact('modules', 'dependencies', 'page_title', 'page_description'));
     }
 
     /**
