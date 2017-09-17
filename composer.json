@@ -12,10 +12,15 @@
         {
             "type": "vcs",
             "url": "https://github.com/sroutier/l5-repository"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/sroutier/LaravelSettings.git"
         }
     ],
     "require": {
         "php": ">=7.0.0",
+        "arcanedev/laravel-settings": "dev-l55",
         "barryvdh/laravel-debugbar": "dev-master",
         "doctrine/dbal": "^2.6",
         "fideloper/proxy": "~3.3",
