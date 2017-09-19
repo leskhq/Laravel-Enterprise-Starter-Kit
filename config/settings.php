@@ -54,4 +54,20 @@ return [
         ],
     ],
 
+    /* -----------------------------------------------------------------
+     |  Filter out
+     | -----------------------------------------------------------------
+     | Regular expression of items to filter out of the load function.
+     | Used to prevent dangerous environment variables from being
+     | overwritten by settings.
+     */
+    'filter_out' => [
+        '/^APP_/',
+        '/^DB_/',
+        '/^CACHE_/',
+        '/^MAIL_/',
+        '/^QUEUE_/',
+        '/^SESSION_/',
+    ],
+
 ];

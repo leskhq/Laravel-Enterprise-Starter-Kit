@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sroutier/LaravelSettings.git",
-                "reference": "389926e5bb2dd8223592db46f25cee40b4c32ad0"
+                "reference": "44a68570f1d10ba1e414ef8c3f710b6ba03f508b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sroutier/LaravelSettings/zipball/389926e5bb2dd8223592db46f25cee40b4c32ad0",
-                "reference": "389926e5bb2dd8223592db46f25cee40b4c32ad0",
+                "url": "https://api.github.com/repos/sroutier/LaravelSettings/zipball/44a68570f1d10ba1e414ef8c3f710b6ba03f508b",
+                "reference": "44a68570f1d10ba1e414ef8c3f710b6ba03f508b",
                 "shasum": ""
             },
             "require": {
@@ -25,7 +25,8 @@
                 "php": ">=7.0"
             },
             "require-dev": {
-                "illuminate/redis": "~5.0",
+                "illuminate/redis": "~5.5.0",
+                "orchestra/testbench": "~3.5.0",
                 "phpunit/phpcov": "~4.0",
                 "phpunit/phpunit": "~6.0",
                 "predis/predis": "~1.1"
@@ -35,9 +36,6 @@
             },
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                },
                 "laravel": {
                     "providers": [
                         "Arcanedev\\LaravelSettings\\SettingsServiceProvider"
@@ -56,11 +54,6 @@
                 "psr-4": {
                     "Arcanedev\\LaravelSettings\\Tests\\": "tests/"
                 }
-            },
-            "scripts": {
-                "testbench": [
-                    "composer require --dev \"orchestra/testbench-browser-kit=~3.0\" \"orchestra/database=~3.0\""
-                ]
             },
             "license": [
                 "MIT"
@@ -88,7 +81,7 @@
             "support": {
                 "source": "https://github.com/sroutier/LaravelSettings/tree/l55"
             },
-            "time": "2017-09-17T21:26:17+00:00"
+            "time": "2017-09-19T15:17:43+00:00"
         },
         {
             "name": "arcanedev/support",
@@ -208,7 +201,7 @@
                 "profiler",
                 "webprofiler"
             ],
-            "time": "2017-07-21T13:50:18+00:00"
+            "time": "2017-07-21 13:50:18"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -527,16 +520,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "v2.6.0",
+            "version": "v2.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "498760e55195ccaf08076cb9100a2972ba74c001"
+                "reference": "1a4ee83a5a709555f2c6f9057a3aacf892451c7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/498760e55195ccaf08076cb9100a2972ba74c001",
-                "reference": "498760e55195ccaf08076cb9100a2972ba74c001",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/1a4ee83a5a709555f2c6f9057a3aacf892451c7e",
+                "reference": "1a4ee83a5a709555f2c6f9057a3aacf892451c7e",
                 "shasum": ""
             },
             "require": {
@@ -596,7 +589,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2017-07-23T01:02:22+00:00"
+            "time": "2017-08-28T11:02:56+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -1251,7 +1244,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2017-07-21T13:35:50+00:00"
+            "time": "2017-07-21 13:35:50"
         },
         {
             "name": "laravel/tinker",
@@ -1368,7 +1361,7 @@
             ],
             "description": "HTML and Form Builders for the Laravel Framework",
             "homepage": "http://laravelcollective.com",
-            "time": "2017-05-22T03:44:19+00:00"
+            "time": "2017-05-22 03:44:19"
         },
         {
             "name": "league/flysystem",
@@ -1576,7 +1569,7 @@
                 "debug",
                 "debugbar"
             ],
-            "time": "2017-07-21T13:10:52+00:00"
+            "time": "2017-07-21 13:10:52"
         },
         {
             "name": "monolog/monolog",

@@ -73,7 +73,7 @@
         "post-update-cmd": [
             "php artisan ide-helper:generate",
             "php artisan ide-helper:meta",
-            "php artisan ide-helper:models --nowrite",
+            "php artisan ide-helper:models --write",
             "php artisan optimize"
         ]
     },
