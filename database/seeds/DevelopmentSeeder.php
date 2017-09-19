@@ -49,7 +49,6 @@ class DevelopmentSeeder extends Seeder
                 "username"      => $key,
                 "email"         => $key."@email.com",
                 'password'      => bcrypt('Password1'),
-                "auth_type"     => "internal",
                 "enabled"       => true,
             ]);
             $this->command->info('User created: '. $user->username);

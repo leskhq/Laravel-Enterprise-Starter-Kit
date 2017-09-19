@@ -16,6 +16,35 @@ use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
+/**
+ * App\Models\Route
+ *
+ * @property int $id
+ * @property string|null $name
+ * @property string $method
+ * @property string $path
+ * @property string $action_name
+ * @property int|null $permission_id
+ * @property int $enabled
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property-read \App\Models\Permission|null $permission
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Route disabled()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Route enabled()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Route ofActionName($actionName)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Route ofMethod($method)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Route ofPath($path)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Route whereActionName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Route whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Route whereEnabled($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Route whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Route whereMethod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Route whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Route wherePath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Route wherePermissionId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Route whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Route extends Model implements Transformable
 {
     use TransformableTrait;
