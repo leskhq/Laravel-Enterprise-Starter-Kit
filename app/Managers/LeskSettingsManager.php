@@ -8,6 +8,7 @@ use App\Libraries\Str;
 use App\Libraries\Utils;
 use App\Exceptions\FileNotFoundException;
 use Crypt;
+use Illuminate\Foundation\Application;
 use Settings;
 
 class LeskSettingsManager extends SettingsManager implements SettingsManagerContract
@@ -24,7 +25,7 @@ class LeskSettingsManager extends SettingsManager implements SettingsManagerCont
      *
      * @param  \Illuminate\Foundation\Application  $app
      */
-    public function __construct($app, $keyPrefix = null, $delimiter  = '.')
+    public function __construct(Application $app, $keyPrefix = null, $delimiter  = '.')
     {
         parent::__construct($app);
 
@@ -37,10 +38,6 @@ class LeskSettingsManager extends SettingsManager implements SettingsManagerCont
     private function underlyingGet($key, $defaultVal = null)
     {
         $val = null;
-
-        if (!Str::isNullOrEmptyString($this->prefix)) {
-            $key = $this->prefix . $this->delim . $key;
-        }
 
         // Try to get value from settings
         $val = parent::get($key);
@@ -58,7 +55,10 @@ class LeskSettingsManager extends SettingsManager implements SettingsManagerCont
 
     public function flush()
     {
-        return parent::flush();
+        $ret =  parent::flush();
+        $this->save();
+
+        return $ret;
     }
 
 
@@ -81,7 +81,10 @@ class LeskSettingsManager extends SettingsManager implements SettingsManagerCont
             $value = $this->encrypt($value);
         }
 
-        return parent::set($key, $value);
+        $ret = parent::set($key, $value);
+        $this->save();
+
+        return $ret;
     }
 
     public function forget($key = null)
@@ -94,17 +97,37 @@ class LeskSettingsManager extends SettingsManager implements SettingsManagerCont
             }
         }
 
-        return parent::forget($key);
+        $ret = parent::forget($key);
+        $this->save();
+
+        return $ret;
     }
 
 
     public function all()
     {
-        return parent::all();
+        $ret = null;
+
+        // Get all settings
+        $ret =  parent::all();
+
+        // If the prefix is set, filter out all settings not under that prefix.
+        if (!Str::isNullOrEmptyString($this->prefix)) {
+            $pieces = explode($this->delim, $this->prefix);
+            foreach ($pieces as $part) {
+                $ret = $ret[$part];
+            }
+        }
+
+        return $ret;
     }
 
     public function get($key, $defaultVal = null)
     {
+        if (!Str::isNullOrEmptyString($this->prefix)) {
+            $key = $this->prefix . $this->delim . $key;
+        }
+
         $val = $this->underlyingGet($key, $defaultVal);
 
         if ( $this->isEncrypted($key, $val) ) {
@@ -134,6 +157,10 @@ class LeskSettingsManager extends SettingsManager implements SettingsManagerCont
      */
     public function isEncrypted($key, $val = null)
     {
+        if (!Str::isNullOrEmptyString($this->prefix)) {
+            $key = $this->prefix . $this->delim . $key;
+        }
+
         if (Str::isNullOrEmptyString($val)) {
             $val = $this->underlyingGet($key);
         }

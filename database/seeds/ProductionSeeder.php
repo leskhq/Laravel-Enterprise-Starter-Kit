@@ -78,7 +78,6 @@ class ProductionSeeder extends Seeder
             "username"      => "root",
             "email"         => "root@email.com",
             'password'      => bcrypt('Password1'),
-            "auth_type"     => "internal",
             "enabled"       => true,
         ]);
 

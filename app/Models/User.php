@@ -12,6 +12,7 @@ use App\Events\UserSaved;
 use App\Events\UserSaving;
 use App\Events\UserUpdated;
 use App\Events\UserUpdating;
+use App\Managers\LeskSettingsManager;
 use Auth;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -20,6 +21,7 @@ use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 use Laratrust\Traits\LaratrustUserTrait;
 use App\Libraries\Str;
+use Settings;
 
 /**
  * App\Models\User
@@ -97,11 +99,39 @@ class User extends Authenticatable implements Transformable
     ];
 
     /**
+     * Handle on the users settings class.
+     *
+     * @var Settings
+     */
+    protected $settings = null;
+
+    /**
+     * Return the existing instance of the users settings or create a new one.
+     *
+     * @return Settings
+     */
+    public function settings()
+    {
+        if (null == $this->settings) {
+            $this->settings = new LeskSettingsManager(app(), 'User.' . $this->username);
+        }
+        return $this->settings;
+    }
+
+    /**
      * @return string
      */
     public function getFullNameAttribute($value)
     {
         return $this->first_name . " " . $this->last_name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFullNameAndUsernameAttribute()
+    {
+        return "$this->first_name $this->last_name ($this->username)";
     }
 
     /**
@@ -260,8 +290,7 @@ class User extends Authenticatable implements Transformable
         // If the auth_type is not explicitly set by the call function or module,
         // set it to the internal value.
         if (Str::isNullOrEmptyString($this->auth_type)) {
-            // TODO: Get internal type form Settings.
-            $this->auth_type = 'internal';
+            $this->auth_type = Settings::get('eloquent-ldap.label_internal');
         }
 
         // Temporally disable the event dispatcher to avoid getting in an infinite loop of update events.
