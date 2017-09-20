@@ -17,6 +17,7 @@ This branch contains the very early work to upgrade LESK to Laravel 5.5 and requ
 9. Fractal and presenter pattern.
 10. Protect routes with laratrust and custom middleware.
 11. Fire tons of events on model operations.
+8. Settings
 
 ## What remains to be done
 
@@ -29,7 +30,6 @@ In no particular order:
 5. i18n.
 6. Audit.
 7. Menu and crumbtrail
-8. Settings
 9. LERN.
 10. Tests, tests and more tests.
 11. LERN.
