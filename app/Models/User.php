@@ -303,4 +303,13 @@ class User extends Authenticatable implements Transformable
 
     }
 
+
+    public function postDeleteFix()
+    {
+        Log::debug('User.postDeleteFix. ', ['username' => $this->username]);
+
+        $this->settings()->forget();
+
+    }
+
 }

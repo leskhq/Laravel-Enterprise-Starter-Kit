@@ -115,7 +115,13 @@ class LeskSettingsManager extends SettingsManager implements SettingsManagerCont
         if (!Str::isNullOrEmptyString($this->prefix)) {
             $pieces = explode($this->delim, $this->prefix);
             foreach ($pieces as $part) {
-                $ret = $ret[$part];
+                if (array_key_exists($part, $ret)) {
+                    $ret = $ret[$part];
+                }
+                else {
+                    $ret = null;
+                    break;
+                }
             }
         }
 

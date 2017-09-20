@@ -44,6 +44,11 @@ class SettingAllCommand extends Command
             $settings = Arr::dot($settings);
 
             foreach($settings as $key => $value) {
+                // When the last user is deleted, its settings are forgotten and the 'User' key
+                // contains an empty array that causes an array to string conversion error.
+                if (is_array($value) && empty($value)) {
+                    $value = "";
+                }
                 $this->line("$key=$value");
             }
 
