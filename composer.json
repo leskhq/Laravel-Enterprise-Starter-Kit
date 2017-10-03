@@ -38,7 +38,7 @@
         "predis/predis": "^1.1",
         "prettus/l5-repository": "dev-l55",
         "robclancy/presenter": "^1.3",
-        "santigarcor/laratrust": "4.0.*",
+        "santigarcor/laratrust": "dev-master",
         "yaap/theme": "dev-l55",
         "zofe/rapyd": "dev-l55"
     },

@@ -16,7 +16,8 @@ use App\Libraries\Str;
 use Log;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
-use Laratrust\LaratrustPermission;
+//use Laratrust\LaratrustPermission; // Laratrust 4
+use Laratrust\Models\LaratrustPermission; // Laratrust 5
 
 /**
  * App\Models\Permission
