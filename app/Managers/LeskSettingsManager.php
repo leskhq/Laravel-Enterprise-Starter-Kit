@@ -15,25 +15,7 @@ class LeskSettingsManager extends SettingsManager implements SettingsManagerCont
 {
     protected $app;
 
-    protected $prefix = null;
-    protected $delim  = '.';
-
-    private static $ENCRYPTED_PREFIX = ":EnCrYpTeD:";
-
-    /**
-     * SettingsManager constructor.
-     *
-     * @param  \Illuminate\Foundation\Application  $app
-     */
-    public function __construct(Application $app, $keyPrefix = null, $delimiter  = '.')
-    {
-        parent::__construct($app);
-
-        $this->app = $app;
-        $this->prefix = $keyPrefix;
-        $this->delim = $delimiter;
-
-    }
+    public static $ENCRYPTED_PREFIX = ":EnCrYpTeD:";
 
     private function underlyingGet($key, $defaultVal = null)
     {
@@ -62,21 +44,8 @@ class LeskSettingsManager extends SettingsManager implements SettingsManagerCont
     }
 
 
-    public function has($key)
-    {
-        if (!Str::isNullOrEmptyString($this->prefix)) {
-            $key = $this->prefix . $this->delim . $key;
-        }
-
-        return parent::has($key);
-    }
-
     public function set($key, $value = null, $encrypt = false)
     {
-        if (!Str::isNullOrEmptyString($this->prefix)) {
-            $key = $this->prefix . $this->delim . $key;
-        }
-
         if ($encrypt) {
             $value = $this->encrypt($value);
         }
@@ -87,56 +56,11 @@ class LeskSettingsManager extends SettingsManager implements SettingsManagerCont
         return $ret;
     }
 
-    public function forget($key = null)
-    {
-        if (!Str::isNullOrEmptyString($this->prefix)) {
-            if (!Str::isNullOrEmptyString($key)) {
-                $key = $this->prefix . $this->delim . $key;
-            } else {
-                $key = $this->prefix;
-            }
-        }
-
-        $ret = parent::forget($key);
-        $this->save();
-
-        return $ret;
-    }
-
-
-    public function all()
-    {
-        $ret = null;
-
-        // Get all settings
-        $ret =  parent::all();
-
-        // If the prefix is set, filter out all settings not under that prefix.
-        if (!Str::isNullOrEmptyString($this->prefix)) {
-            $pieces = explode($this->delim, $this->prefix);
-            foreach ($pieces as $part) {
-                if (array_key_exists($part, $ret)) {
-                    $ret = $ret[$part];
-                }
-                else {
-                    $ret = null;
-                    break;
-                }
-            }
-        }
-
-        return $ret;
-    }
-
     public function get($key, $defaultVal = null)
     {
-        if (!Str::isNullOrEmptyString($this->prefix)) {
-            $key = $this->prefix . $this->delim . $key;
-        }
-
         $val = $this->underlyingGet($key, $defaultVal);
 
-        if ( $this->isEncrypted($key, $val) ) {
+        if ( $this->isEncrypted($val) ) {
             $val = $this->decrypt($val);
         }
 
@@ -161,16 +85,8 @@ class LeskSettingsManager extends SettingsManager implements SettingsManagerCont
      * @param $val
      * @return bool
      */
-    public function isEncrypted($key, $val = null)
+    public function isEncrypted($val)
     {
-        if (!Str::isNullOrEmptyString($this->prefix)) {
-            $key = $this->prefix . $this->delim . $key;
-        }
-
-        if (Str::isNullOrEmptyString($val)) {
-            $val = $this->underlyingGet($key);
-        }
-
         if ( is_string($val) && Str::startsWith($val, self::$ENCRYPTED_PREFIX) ) {
             return true;
         } else {
@@ -196,15 +112,9 @@ class LeskSettingsManager extends SettingsManager implements SettingsManagerCont
         return self::$ENCRYPTED_PREFIX . Crypt::encrypt($value);
     }
 
-    public function prefix()
-    {
-        return $this->prefix;
-    }
-
     public function load($envName)
     {
         $nbRead = 0;
-        $settingsArray = [];
         $dotEnv = null;
 
         $settingsFileName = ".settings-" . $envName;
