@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4dbf0e7ba0c2c207b8e3729f1ae8e03a",
+    "content-hash": "92545fdb802de14b8ed534aa2a0c2d21",
     "packages": [
         {
             "name": "arcanedev/laravel-settings",
@@ -931,6 +931,141 @@
                 "zf2"
             ],
             "time": "2017-08-03T18:23:40+00:00"
+        },
+        {
+            "name": "guzzlehttp/psr7",
+            "version": "1.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/psr7.git",
+                "reference": "f5b8a8512e2b58b0071a7280e39f14f72e05d87c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/f5b8a8512e2b58b0071a7280e39f14f72e05d87c",
+                "reference": "f5b8a8512e2b58b0071a7280e39f14f72e05d87c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "psr/http-message": "~1.0"
+            },
+            "provide": {
+                "psr/http-message-implementation": "1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\Psr7\\": "src/"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                },
+                {
+                    "name": "Tobias Schultze",
+                    "homepage": "https://github.com/Tobion"
+                }
+            ],
+            "description": "PSR-7 message implementation that also provides common utility methods",
+            "keywords": [
+                "http",
+                "message",
+                "request",
+                "response",
+                "stream",
+                "uri",
+                "url"
+            ],
+            "time": "2017-03-20T17:10:46+00:00"
+        },
+        {
+            "name": "intervention/image",
+            "version": "2.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Intervention/image.git",
+                "reference": "3603dbcc9a17d307533473246a6c58c31cf17919"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/3603dbcc9a17d307533473246a6c58c31cf17919",
+                "reference": "3603dbcc9a17d307533473246a6c58c31cf17919",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "guzzlehttp/psr7": "~1.1",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9.2",
+                "phpunit/phpunit": "^4.8 || ^5.7"
+            },
+            "suggest": {
+                "ext-gd": "to use GD library based image processing.",
+                "ext-imagick": "to use Imagick based image processing.",
+                "intervention/imagecache": "Caching extension for the Intervention Image library"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Intervention\\Image\\ImageServiceProvider"
+                    ],
+                    "aliases": {
+                        "Image": "Intervention\\Image\\Facades\\Image"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Intervention\\Image\\": "src/Intervention/Image"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oliver Vogel",
+                    "email": "oliver@olivervogel.com",
+                    "homepage": "http://olivervogel.com/"
+                }
+            ],
+            "description": "Image handling and manipulation library with support for Laravel integration",
+            "homepage": "http://image.intervention.io/",
+            "keywords": [
+                "gd",
+                "image",
+                "imagick",
+                "laravel",
+                "thumbnail",
+                "watermark"
+            ],
+            "time": "2017-09-21T16:29:17+00:00"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -2118,6 +2253,56 @@
                 "psr"
             ],
             "time": "2017-02-14T16:28:37+00:00"
+        },
+        {
+            "name": "psr/http-message",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/http-message.git",
+                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Http\\Message\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for HTTP messages",
+            "homepage": "https://github.com/php-fig/http-message",
+            "keywords": [
+                "http",
+                "http-message",
+                "psr",
+                "psr-7",
+                "request",
+                "response"
+            ],
+            "time": "2016-08-06T14:39:51+00:00"
         },
         {
             "name": "psr/log",
@@ -3435,6 +3620,110 @@
                 "source": "https://github.com/sroutier/Theme/tree/l55"
             },
             "time": "2017-07-21T20:53:02+00:00"
+        },
+        {
+            "name": "zofe/burp",
+            "version": "2.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zofe/burp.git",
+                "reference": "f69d1cb1ee498c02f83baa99ccefd379bd1a4325"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zofe/burp/zipball/f69d1cb1ee498c02f83baa99ccefd379bd1a4325",
+                "reference": "f69d1cb1ee498c02f83baa99ccefd379bd1a4325",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Zofe\\Burp\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Felice Ostuni",
+                    "email": "felice.ostuni@gmail.com"
+                }
+            ],
+            "description": "Simple PHP router that works with query-string and uri-segments",
+            "homepage": "https://github.com/zofe/burp",
+            "keywords": [
+                "Simple",
+                "filter",
+                "front controller",
+                "php",
+                "router"
+            ],
+            "time": "2015-03-09T22:51:58+00:00"
+        },
+        {
+            "name": "zofe/rapyd",
+            "version": "2.2.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sroutier/rapyd-laravel.git",
+                "reference": "1fa6d8a7f0895fc4573bc7d3cb25391060d27e68"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sroutier/rapyd-laravel/zipball/1fa6d8a7f0895fc4573bc7d3cb25391060d27e68",
+                "reference": "1fa6d8a7f0895fc4573bc7d3cb25391060d27e68",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.0",
+                "intervention/image": "2.*",
+                "laravelcollective/html": "~5.0",
+                "php": ">=5.4.0",
+                "zofe/burp": "2.*"
+            },
+            "suggest": {
+                "baum/baum": "Allows to use the DataTree widget"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "migrations"
+                ],
+                "psr-4": {
+                    "Zofe\\Rapyd\\": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "zofe",
+                    "email": "felice.ostuni@gmail.com"
+                }
+            ],
+            "description": "crud widgets for laravel, to make an admin in few lines of code",
+            "homepage": "https://github.com/zofe/rapyd-laravel",
+            "keywords": [
+                "admin",
+                "administrator",
+                "backend",
+                "crud",
+                "datatable",
+                "form",
+                "laravel",
+                "rapyd"
+            ],
+            "support": {
+                "source": "https://github.com/sroutier/rapyd-laravel/tree/2.2.7"
+            },
+            "time": "2017-01-24T17:26:09+00:00"
         }
     ],
     "packages-dev": [
