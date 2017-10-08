@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "92545fdb802de14b8ed534aa2a0c2d21",
+    "content-hash": "0c3ffdc649bd666322400b1c4ead58f7",
     "packages": [
         {
             "name": "arcanedev/laravel-settings",
@@ -3671,16 +3671,16 @@
         },
         {
             "name": "zofe/rapyd",
-            "version": "2.2.7",
+            "version": "dev-l55",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sroutier/rapyd-laravel.git",
-                "reference": "1fa6d8a7f0895fc4573bc7d3cb25391060d27e68"
+                "reference": "f1e4496b7b419df5da6198bef241852c6f770941"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sroutier/rapyd-laravel/zipball/1fa6d8a7f0895fc4573bc7d3cb25391060d27e68",
-                "reference": "1fa6d8a7f0895fc4573bc7d3cb25391060d27e68",
+                "url": "https://api.github.com/repos/sroutier/rapyd-laravel/zipball/f1e4496b7b419df5da6198bef241852c6f770941",
+                "reference": "f1e4496b7b419df5da6198bef241852c6f770941",
                 "shasum": ""
             },
             "require": {
@@ -3721,9 +3721,9 @@
                 "rapyd"
             ],
             "support": {
-                "source": "https://github.com/sroutier/rapyd-laravel/tree/2.2.7"
+                "source": "https://github.com/sroutier/rapyd-laravel/tree/l55"
             },
-            "time": "2017-01-24T17:26:09+00:00"
+            "time": "2017-09-20T19:33:43+00:00"
         }
     ],
     "packages-dev": [
@@ -5521,7 +5521,8 @@
         "arcanedev/laravel-settings": 20,
         "barryvdh/laravel-debugbar": 20,
         "prettus/l5-repository": 20,
-        "yaap/theme": 20
+        "yaap/theme": 20,
+        "zofe/rapyd": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
