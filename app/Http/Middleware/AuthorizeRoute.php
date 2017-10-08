@@ -87,7 +87,7 @@ class AuthorizeRoute
             }
             // User has the role 'admins', all is authorized.
             // TODO: Get 'admins' role name from config, and replace all occurrences.
-            elseif (!$guest && isset($user) && $user->hasRole('admins')) {
+            elseif (!$guest && isset($user) && $user->hasRole('core.admins')) {
                 $authorized = true;
                 Log::debug("Authorizing all for role admins.");
             }
