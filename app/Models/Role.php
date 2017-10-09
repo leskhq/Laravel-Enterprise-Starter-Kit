@@ -15,7 +15,8 @@ use App\Events\RoleUpdating;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
-use Laratrust\LaratrustRole;
+//use Laratrust\LaratrustRole; // Laratrust 4
+use Laratrust\Models\LaratrustRole; // Laratrust 5
 
 /**
  * App\Models\Role
