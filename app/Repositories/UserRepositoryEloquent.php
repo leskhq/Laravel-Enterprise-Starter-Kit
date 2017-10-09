@@ -43,4 +43,14 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
+
+    public function create(array $attributes)
+    {
+        if (array_key_exists('password', $attributes)) {
+            $attributes['password'] = bcrypt($attributes['password']);
+        }
+
+        return parent::create($attributes);
+    }
+
 }
