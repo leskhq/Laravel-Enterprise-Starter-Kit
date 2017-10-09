@@ -7,3 +7,26 @@
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+// Colour for Font-Awesome icons.
+i.fa-colour-beige               { color: beige; }
+i.fa-colour-black               { color: black; }
+i.fa-colour-blue                { color: blue; }
+i.fa-colour-brown               { color: brown; }
+i.fa-colour-cyan                { color: cyan; }
+i.fa-colour-fuchsia             { color: fuchsia; }
+i.fa-colour-gold                { color: gold; }
+i.fa-colour-gray                { color: gray; }
+i.fa-colour-green,  i.enabled   { color: green; }
+i.fa-colour-magenta             { color: magenta; }
+i.fa-colour-navy                { color: navy; }
+i.fa-colour-olive               { color: olive; }
+i.fa-colour-orange, i.disabled  { color: orange; }
+i.fa-colour-pink                { color: pink; }
+i.fa-colour-purple              { color: purple; }
+i.fa-colour-red,    i.deletable { color: red; }
+i.fa-colour-silver              { color: silver; }
+i.fa-colour-teal                { color: teal; }
+i.fa-colour-violet              { color: violet }
+i.fa-colour-white               { color: white; }
+i.fa-colour-yellow              { color: yellow; }
