@@ -16,7 +16,14 @@ class ThemeSelector
      */
     public function handle($request, Closure $next)
     {
-        Theme::init(env('DEFAULT_THEME', 'default'));
+        $themeName = 'default';
+        if (\Auth::check()) {
+            $themeName = \Auth::user()->settings()->get('theme.default', 'default');
+        } else {
+            $themeName = \Settings::get('theme.default', 'default');
+        }
+
+        Theme::init($themeName);
 
         return $next($request);
     }

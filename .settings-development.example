@@ -16,6 +16,8 @@ app.right_sidebar=true
 app.email_notifications=false
 app.time_format=24
 
+theme.default=default
+
 sql-logging.log=false
 sql-logging.log_request=true
 
