@@ -12,7 +12,6 @@ use App\Events\UserSaved;
 use App\Events\UserSaving;
 use App\Events\UserUpdated;
 use App\Events\UserUpdating;
-use App\Managers\LeskSettingsManager;
 use Auth;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -55,6 +54,7 @@ use Settings;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUsername($value)
  * @mixin \Eloquent
+ * @property-read string $full_name_and_username
  */
 class User extends Authenticatable implements Transformable
 {
@@ -113,7 +113,7 @@ class User extends Authenticatable implements Transformable
     public function settings()
     {
         if (null == $this->settings) {
-            $this->settings = new LeskSettingsManager(app(), 'User.' . $this->username);
+            $this->settings = new UserSetting(app(), $this);
         }
         return $this->settings;
     }
@@ -297,7 +297,12 @@ class User extends Authenticatable implements Transformable
         $dispatcher = $this->getEventDispatcher();
         $this->unsetEventDispatcher();
         // Save changes.
-        $this->save();
+        try {
+            $rc = $this->save();
+        }
+        catch(\Exception $e){
+            Log::error('User.postCreateAndUpdateFix save failed: . ', ['exception' => $e->getMessage()]);
+        }
         // Restore event dispatcher.
         $this->setEventDispatcher($dispatcher);
 
