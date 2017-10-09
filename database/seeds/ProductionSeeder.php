@@ -77,7 +77,7 @@ class ProductionSeeder extends Seeder
             "last_name"     => "SuperUser",
             "username"      => "root",
             "email"         => "root@email.com",
-            'password'      => bcrypt('Password1'),
+            'password'      => 'Password1',
             "enabled"       => true,
         ]);
 

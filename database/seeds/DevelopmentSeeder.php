@@ -33,11 +33,13 @@ class DevelopmentSeeder extends Seeder
         $userList = [
             'user01' => [
                 'first_name'    => 'User',
-                'last_name'     => 'One'
+                'last_name'     => 'One',
+                'enabled'       => true,
             ],
             'user02' => [
                 'first_name'    => 'User',
-                'last_name'     => 'Two'
+                'last_name'     => 'Two',
+                'enabled'       => false,
             ],
         ];
 
@@ -48,8 +50,8 @@ class DevelopmentSeeder extends Seeder
                 "last_name"     => $value['last_name'],
                 "username"      => $key,
                 "email"         => $key."@email.com",
-                'password'      => bcrypt('Password1'),
-                "enabled"       => true,
+                'password'      => 'Password1',
+                "enabled"       => $value['enabled'],
             ]);
             $this->command->info('User created: '. $user->username);
         }
