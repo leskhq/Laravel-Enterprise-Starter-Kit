@@ -4,9 +4,9 @@
     <!-- Logo -->
     <a href="/index" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>{{-- Setting::get('app.short_name')  | --}} {{ "LESK" }}</b></span>
+      <span class="logo-mini">{{ Settings::get('app.short_name') | "LESK" }}</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>{{-- {!! Setting::get('app.long_name') !!} | --}} {{ "Laravel ESK" }} </b></span>
+      <span class="logo-lg">{!! Settings::get('app.long_name') !!}</span>
     </a>
 
     <!-- Header Navbar -->
