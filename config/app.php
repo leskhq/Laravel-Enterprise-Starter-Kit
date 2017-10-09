@@ -64,7 +64,27 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => env('app.timezone', 'UTC'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Supported locale
+    |--------------------------------------------------------------------------
+    |
+    | List of supported locale for the application. Uncomment and add entries
+    | as needed.
+    |
+    */
+
+    'supportedLocales' => [
+        'en'          => 'English',
+//        'en-AU'       => 'Australian English',
+//        'en-GB'       => 'British English',
+//        'en-US'       => 'U.S. English',
+        'es'          => 'español',
+        'fr'          => 'français',
+//        'fr-CA'       => 'français canadien',
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -77,7 +97,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => env('app.locale', 'en'),
 
     /*
     |--------------------------------------------------------------------------
@@ -90,7 +110,19 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => env('app.fallback_locale', 'en'),
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application theme
+    |--------------------------------------------------------------------------
+    |
+    | The name of the default application theme.
+    |
+    */
+
+    'theme' => env('theme.default', 'default'),
 
     /*
     |--------------------------------------------------------------------------
@@ -176,6 +208,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\SettingsServiceProvider::class,
+        App\Providers\CustomBladeServiceProvider::class,
 
         Collective\Html\HtmlServiceProvider::class,
         Prettus\Repository\Providers\RepositoryServiceProvider::class,

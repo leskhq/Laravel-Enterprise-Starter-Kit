@@ -1,20 +1,14 @@
 <?php namespace App\Libraries;
 
-use App\Libraries\Str;
-//use App\Repositories\AuditRepository as Audit;
-use App\Models\User;
-use Auth;
-use DateTime;
-use DateTimeZone;
-use Flash;
-use Illuminate\Support\Arr;
-//use LERN;
-//use Setting;
 use App\Exceptions\JsonEncodingMaxDepthException;
 use App\Exceptions\JsonEncodingStateMismatchException;
 use App\Exceptions\JsonEncodingSyntaxErrorException;
 use App\Exceptions\JsonEncodingUnexpectedControlCharException;
 use App\Exceptions\JsonEncodingUnknownException;
+use App\Models\User;
+use Auth;
+use Illuminate\Support\Arr;
+use Log;
 
 class Utils
 {
@@ -158,6 +152,61 @@ class Utils
         $parms = explode(',', $expCleaned);
 
         return $parms;
+    }
+
+    /**
+     * @param $expression
+     * @return string
+     */
+    public static function userActionslinks($id): string
+    {
+        $output = 'nil';
+
+        try {
+            if (($user = User::findOrFail($id))) {
+                if (Auth::user()->hasPermission('core.users.update')) {
+                    $output = '<a href="' . route('admin.users.edit', $user->id) . '" title="' . trans('general.button.edit') . '"><i class="fa fa-pencil-square-o"></i></a>';
+                } else {
+                    $output = '<i class="fa fa-pencil-square-o text-muted" title="' . trans('admin/users/general.error.no-permission-to-update-users') . '"></i>';
+                }
+
+                $output .= '&nbsp;';
+
+                if ($user->canBeDisabled()) {
+                    if ($user->enabled) {
+                        if (Auth::user()->hasPermission('core.users.disable')) {
+                            $output .= '<a href="' . route('admin.users.disable', $user->id) . '" title="' . trans('general.button.disable') . '"><i class="fa fa-check-circle-o enabled"></i></a>';
+                        } else {
+                            $output .= '<i class="fa fa-check-circle-o text-muted" title="' . trans('admin/users/general.error.no-permission-to-disable-users') . '"></i>';
+                        }
+                    } else {
+                        if (Auth::user()->hasPermission('core.users.enable')) {
+                            $output .= '<a href="' . route('admin.users.enable', $user->id) . '" title="' . trans('general.button.enable') . '"><i class="fa fa-ban disabled"></i></a>';
+                        } else {
+                            $output .= '<i class="fa fa-ban text-muted" title="' . trans('admin/users/general.error.no-permission-to-enable-users') . '"></i>';
+                        }
+                    }
+                } else {
+                    $output .= '<i class="fa fa-ban text-muted" title="' . trans('admin/users/general.error.cant-be-disabled') . '"></i>';
+                }
+
+                $output .= '&nbsp;';
+
+                if ($user->isDeletable()) {
+                    if (Auth::user()->hasPermission('core.users.delete')) {
+                        $output .= '<a href="' . route('admin.users.confirm-delete', $user->id) . '" data-toggle="modal" data-target="#modal_dialog" title="' . trans('general.button.delete') . '"><i class="fa fa-trash-o deletable"></i></a>';
+                    } else {
+                        $output .= '<i class="fa fa-trash-o text-muted" title="'. trans('admin/users/general.error.no-permission-to-delete-users') .'"></i>';
+                    }
+                } else {
+                    $output .= '<i class="fa fa-trash-o text-muted" title="' . trans('admin/users/general.error.cant-be-deleted') . '"></i>';
+                }
+            }
+        } catch (\Exception $ex) {
+            Log::error("Exception: " . $ex->getMessage());
+            Log::error("Stack trace: " . $ex->getTraceAsString());
+        }
+        return $output;
     }
 
 

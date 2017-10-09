@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Http\Requests;
+use App\Http\Requests\RoleCreateRequest;
+use App\Http\Requests\RoleUpdateRequest;
+use App\Repositories\Criteria\Role\RolesWhereDisplayNameOrDescriptionLike;
+use App\Repositories\RoleRepository;
+use App\Validators\RoleValidator;
+use Illuminate\Http\Request;
 use Laracasts\Flash\Flash;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
-use App\Http\Requests\RoleCreateRequest;
-use App\Http\Requests\RoleUpdateRequest;
-use App\Repositories\RoleRepository;
-use App\Validators\RoleValidator;
 
 
 class RolesController extends Controller
@@ -229,4 +229,43 @@ class RolesController extends Controller
 
         return redirect()->back()->with('message', 'User deleted.');
     }
+
+    /**
+     * @param Request $request
+     *
+     * @return array|static[]
+     */
+    public function searchByName(Request $request)
+    {
+        $return_arr = null;
+
+        $query = $request->input('query');
+
+        $roles = $this->role->pushCriteria(new RolesWhereDisplayNameOrDescriptionLike($query))->all();
+
+        foreach ($roles as $role) {
+            $id = $role->id;
+            $display_name = $role->display_name;
+            $description = $role->description;
+
+            $entry_arr = [ 'id' => $id, 'text' => "$display_name ($description)"];
+            $return_arr[] = $entry_arr;
+        }
+
+        return $return_arr;
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
+    public function getInfo(Request $request)
+    {
+        $id = $request->input('id');
+        $role = $this->role->find($id);
+
+        return $role;
+    }
+
 }
