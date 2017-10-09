@@ -146,6 +146,8 @@ class ProductionSeeder extends Seeder
                     'lo' => 'load',
                     'g'  => 'generate',
                     'p'  => 'purge',
+                    'en' => 'enable',
+                    'di' => 'disable',
                 ],
                 // Defines the roles to create with their assigned permissions.
                 'roles_and_perms' => [
@@ -154,7 +156,7 @@ class ProductionSeeder extends Seeder
                         // Prefix of the permissions name to assign to the above role.
                         'core.permissions' => [
                             // List of suffixes of the permission looked-up against the permissions_map.
-                            'c', 'r', 'u', 'd', 'ls',
+                            'c', 'r', 'u', 'd', 'ls', 'en', 'di',
                         ],
                     ],
                     'core.permissions.reviewer' => [
@@ -164,7 +166,7 @@ class ProductionSeeder extends Seeder
                     ],
                     'core.roles.manager' => [
                         'core.roles' => [
-                            'c', 'r', 'u', 'd', 'ls',
+                            'c', 'r', 'u', 'd', 'ls', 'en', 'di',
                         ],
                     ],
                     'core.roles.reviewer' => [
@@ -174,7 +176,7 @@ class ProductionSeeder extends Seeder
                     ],
                     'core.routes.manager' => [
                         'core.routes' => [
-                            'c', 'r', 'u', 'd', 'ls',
+                            'c', 'r', 'u', 'd', 'ls', 'en', 'di',
                         ],
                     ],
                     'core.routes.reviewer' => [
@@ -184,7 +186,7 @@ class ProductionSeeder extends Seeder
                     ],
                     'core.users.manager' => [
                         'core.users' => [
-                            'c', 'r', 'u', 'd', 'ls',
+                            'c', 'r', 'u', 'd', 'ls', 'en', 'di',
                         ],
                     ],
                     'core.users.reviewer' => [
