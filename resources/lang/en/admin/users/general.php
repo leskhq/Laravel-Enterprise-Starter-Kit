@@ -25,15 +25,20 @@ return [
         'enabled'                   => 'User enabled.',
         'disabled'                  => 'User disabled.',
         'no-user-selected'          => 'No user selected.',
+        'user-update-failed'        => 'User update failed due to: :failure.'
     ],
 
     'error'               => [
-        'cant-be-edited'                => 'User cannot be edited',
-        'cant-be-deleted'               => 'User cannot be deleted',
-        'cant-be-disabled'              => 'User cannot be disabled',
-        'login-failed-user-disabled'    => 'That account has been disabled.',
-        'perm_not_found'                => 'Could not find permission #:id.',
-        'user_not_found'                => 'Could not find user #:id.',
+        'cant-be-edited'                 => 'User cannot be edited',
+        'cant-be-deleted'                => 'User cannot be deleted',
+        'cant-be-disabled'               => 'User cannot be disabled',
+        'login-failed-user-disabled'     => 'That account has been disabled.',
+        'perm_not_found'                 => 'Could not find permission #:id.',
+        'user_not_found'                 => 'Could not find user #:id.',
+        'no-permission-to-create-users'  => 'You do not have the permission to create new users',
+        'no-permission-to-enable-users'  => 'You do not have the permission to enable users',
+        'no-permission-to-disable-users' => 'You do not have the permission to disable users',
+        'no-permission-to-update-users'  => 'You do not have the permission to edit users',
     ],
 
     'page'              => [
@@ -84,6 +89,7 @@ return [
         'time_zone'                 =>  'Time zone',
         'locale'                    =>  'Locale',
         'time_format'               =>  'Time format',
+        'description'               =>  'Description',
     ],
 
     'button'               => [

@@ -1,6 +1,7 @@
 @extends('layouts.master')
 
 @section('head_extra')
+    @include('partials.head_extra_select2_css')
 @endsection
 
 @section('content')
@@ -26,4 +27,8 @@
 @endsection
 
 @section('body_bottom')
+    @include('partials.body_bottom_select2_css')
+    @include('admin.users._body_bottom_select2_js_user_settings')
+    @include('partials.body_bottom_tab_with_state_set_js')
+
 @endsection

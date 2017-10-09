@@ -12,14 +12,14 @@ use App\Events\UserSaved;
 use App\Events\UserSaving;
 use App\Events\UserUpdated;
 use App\Events\UserUpdating;
+use App\Libraries\Str;
 use Auth;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laratrust\Traits\LaratrustUserTrait;
 use Log;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
-use Laratrust\Traits\LaratrustUserTrait;
-use App\Libraries\Str;
 use Settings;
 
 /**
@@ -200,80 +200,6 @@ class User extends Authenticatable implements Transformable
     }
 
     /**
-     * Alias to eloquent many-to-many relation's sync() method.
-     *
-     * @param array $attributes
-     */
-    private function assignMembership(array $attributes = [])
-    {
-        if (array_key_exists('role', $attributes) && ($attributes['role'])) {
-            $this->roles()->sync($attributes['role']);
-        } else {
-            $this->roles()->sync([]);
-        }
-    }
-
-    /**
-     * Alias to eloquent many-to-many relation's sync() method.
-     *
-     * @param array $attributes
-     */
-    private function assignPermission(array $attributes = [])
-    {
-        if (array_key_exists('perms', $attributes) && ($attributes['perms'])) {
-            $this->permissions()->sync($attributes['perms']);
-        } else {
-            $this->permissions()->sync([]);
-        }
-    }
-
-    /**
-     * Overwrite Model::update(...) to fire event.
-     *
-     * to save group membership if included,
-     * or clear it if not. Also force membership to group 'users'.
-     *
-     * @param array $attributes
-     * @return boolean
-     */
-    public function update(array $attributes = [], array $options = [])
-    {
-        $rc = false;
-
-//        // TODO: Deal with user's Settings
-//        if ( array_key_exists('username', $attributes) ) {
-//            if ( $attributes['username'] != $this->username ) {
-//                // Forget settings associated to previous username. New settings will be saved bellow.
-//                Setting::forget($this->settings()->prefix());
-//            }
-////            $this->username = $attributes['username']; // TODO: Is this needed ??
-//        }
-
-        if (parent::update($attributes, $options)) {
-
-            event(new UserUpdated($this));
-
-            // Assign membership(s)
-            $this->assignMembership($attributes);
-            // Assign permission(s)
-            $this->assignPermission($attributes);
-
-            $rc = true;
-        }
-
-//        // TODO: Deal with user's Settings
-//        // Process user settings
-//        $this->processUserSetting('theme', $attributes);
-//        $tzIdentifiers = \DateTimeZone::listIdentifiers();
-//        $this->processUserSetting('time_zone', $attributes, $tzIdentifiers);
-//        $this->processUserSetting('time_format', $attributes);
-//        $this->processUserSetting('locale', $attributes);
-
-        return $rc;
-    }
-
-
-    /**
      * Force the membership to the 'core.users' role
      * and if empty, set the auth_type to the
      * internal value.
@@ -307,7 +233,6 @@ class User extends Authenticatable implements Transformable
         $this->setEventDispatcher($dispatcher);
 
     }
-
 
     public function postDeleteFix()
     {

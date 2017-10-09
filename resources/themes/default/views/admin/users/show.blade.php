@@ -12,15 +12,15 @@
 
                 <!-- Custom Tabs -->
                     <div class="nav-tabs-custom">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a href="#tab_profile" data-toggle="tab" aria-expanded="true">{!! trans('general.tabs.profile') !!}</a></li>
-                            <li class=""><a href="#tab_settings" data-toggle="tab" aria-expanded="false">{!! trans('general.tabs.settings') !!}</a></li>
-                            <li class=""><a href="#tab_roles" data-toggle="tab" aria-expanded="false">{!! trans('general.tabs.roles') !!}</a></li>
-                            <li class=""><a href="#tab_perms" data-toggle="tab" aria-expanded="false">{!! trans('general.tabs.perms') !!}</a></li>
+                        <ul class="nav nav-tabs" id="tabWithState">
+                            <li class="active"><a href="#user_tab_profile" data-toggle="tab" aria-expanded="true">{!! trans('general.tabs.profile') !!}</a></li>
+                            <li class=""><a href="#user_tab_settings" data-toggle="tab" aria-expanded="false">{!! trans('general.tabs.settings') !!}</a></li>
+                            <li class=""><a href="#user_tab_roles" data-toggle="tab" aria-expanded="false">{!! trans('general.tabs.roles') !!}</a></li>
+                            <li class=""><a href="#user_tab_perms" data-toggle="tab" aria-expanded="false">{!! trans('general.tabs.perms') !!}</a></li>
                         </ul>
                         <div class="tab-content">
 
-                            <div class="tab-pane active" id="tab_profile">
+                            <div class="tab-pane active" id="user_tab_profile">
                                 <div class="form-group">
                                     {!! Form::label('first_name', trans('admin/users/general.columns.first_name')) !!}
                                     {!! Form::text('first_name', null, ['class' => 'form-control', 'readonly']) !!}
@@ -47,7 +47,7 @@
                                 </div>
                             </div><!-- /.tab-pane -->
 
-                            <div class="tab-pane" id="tab_settings">
+                            <div class="tab-pane" id="user_tab_settings">
 
                                 <div class="form-group">
                                     <div class="checkbox">
@@ -57,18 +57,39 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group">
+                                    {!! Form::label('settings[theme.default]', trans('admin/users/general.columns.theme')) !!}
+                                    {!! Form::text('settings[theme.default]', $user->settings()->get('theme.default', null), ['class' => 'form-control', 'readonly']) !!}
+                                </div>
+
+                                <div class="form-group">
+                                    {!! Form::label('settings[app.timezone]', trans('admin/users/general.columns.time_zone')) !!}
+                                    {!! Form::text('settings[app.timezone]', $user->settings()->get('app.timezone', null), ['class' => 'form-control', 'readonly']) !!}
+                                </div>
+
+                                <div class="form-group">
+                                    {!! Form::label('settings[app.time_format]', trans('admin/users/general.columns.time_format')) !!}&nbsp;
+                                    <label class="radio-inline"><input type="radio" name="settings[app.time_format]" value="12" {{("12"==$time_format)?'checked="checked"':''}} readonly="readonly">{{trans('admin/users/general.options.12_hours')}}</label>
+                                    <label class="radio-inline"><input type="radio" name="settings[app.time_format]" value="24" {{("24"==$time_format)?'checked="checked"':''}} readonly="readonly">{{trans('admin/users/general.options.24_hours')}}</label>
+                                </div>
+
+                                <div class="form-group">
+                                    {!! Form::label('settings[app.locale]', trans('admin/users/general.columns.locale')) !!}
+                                    {!! Form::text('settings[app.locale]', $locale, ['class' => 'form-control', 'readonly']) !!}
+                                </div>
+
                             </div><!-- /.tab-pane -->
 
-                            <div class="tab-pane" id="tab_roles">
+                            <div class="tab-pane" id="user_tab_roles">
                                 <div class="form-group">
                                     <div class="box-body table-responsive no-padding">
                                         <table class="table table-hover">
                                             <tbody>
                                             <tr>
-                                                <th>{!! trans('admin/roles/general.columns.name')  !!}</th>
-                                                <th>{!! trans('admin/roles/general.columns.description')  !!}</th>
-                                                <th>{!! trans('admin/roles/general.columns.assigned')  !!}</th>
-                                                <th>{!! trans('admin/roles/general.columns.enabled')  !!}</th>
+                                                <th>{!! trans('admin/users/general.columns.name')  !!}</th>
+                                                <th>{!! trans('admin/users/general.columns.description')  !!}</th>
+                                                <th>{!! trans('admin/users/general.columns.assigned')  !!}</th>
+                                                <th>{!! trans('admin/users/general.columns.enabled')  !!}</th>
                                             </tr>
                                             @foreach($roles as $role)
                                                 <tr>
@@ -97,7 +118,7 @@
                                 </div><!-- /.form-group -->
                             </div><!-- /.tab-pane -->
 
-                            <div class="tab-pane" id="tab_perms">
+                            <div class="tab-pane" id="user_tab_perms">
                                 <div class="form-group">
                                     <div class="box-body table-responsive no-padding">
                                         <table class="table table-hover">
@@ -159,4 +180,6 @@
 @endsection
 
 @section('body_bottom')
+    @include('partials.body_bottom_tab_with_state_set_js')
+
 @endsection

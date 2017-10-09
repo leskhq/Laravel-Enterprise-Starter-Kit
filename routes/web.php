@@ -15,6 +15,7 @@
 ///////
 // Canned auth routes.
 Auth::routes();
+
 ///////
 // Registration terms
 Route::get( 'faust',                    ['as' => 'faust',                   'uses' => 'FaustController@index']);
@@ -39,13 +40,15 @@ Route::prefix('admin')->group(function () {
     Route::delete('permissions/{permission}',      ['as' => 'admin.permissions.destroy', 'uses' => 'PermissionsController@destroy']);
     Route::get   ('permissions/{permission}/edit', ['as' => 'admin.permissions.edit',    'uses' => 'PermissionsController@edit'   ]);
     // Roles
-    Route::post  ('roles',             ['as' => 'admin.roles.store',   'uses' => 'RolesController@store'  ]);
-    Route::get   ('roles',             ['as' => 'admin.roles.index',   'uses' => 'RolesController@index'  ]);
-    Route::get   ('roles/create',      ['as' => 'admin.roles.create',  'uses' => 'RolesController@create' ]);
-    Route::patch ('roles/{role}',      ['as' => 'admin.roles.update',  'uses' => 'RolesController@update' ]);
-    Route::get   ('roles/{role}',      ['as' => 'admin.roles.show',    'uses' => 'RolesController@show'   ]);
-    Route::delete('roles/{role}',      ['as' => 'admin.roles.destroy', 'uses' => 'RolesController@destroy']);
-    Route::get   ('roles/{role}/edit', ['as' => 'admin.roles.edit',    'uses' => 'RolesController@edit'   ]);
+    Route::get(   'roles/search',      ['as' => 'admin.roles.search',   'uses' => 'RolesController@searchByName']);
+    Route::post(  'roles/getInfo',     ['as' => 'admin.roles.get-info', 'uses' => 'RolesController@getInfo']);
+    Route::post  ('roles',             ['as' => 'admin.roles.store',    'uses' => 'RolesController@store'  ]);
+    Route::get   ('roles',             ['as' => 'admin.roles.index',    'uses' => 'RolesController@index'  ]);
+    Route::get   ('roles/create',      ['as' => 'admin.roles.create',   'uses' => 'RolesController@create' ]);
+    Route::patch ('roles/{role}',      ['as' => 'admin.roles.update',   'uses' => 'RolesController@update' ]);
+    Route::get   ('roles/{role}',      ['as' => 'admin.roles.show',     'uses' => 'RolesController@show'   ]);
+    Route::delete('roles/{role}',      ['as' => 'admin.roles.destroy',  'uses' => 'RolesController@destroy']);
+    Route::get   ('roles/{role}/edit', ['as' => 'admin.roles.edit',     'uses' => 'RolesController@edit'   ]);
     // Routes
     Route::post  ('routes',              ['as' => 'admin.routes.store',   'uses' => 'RoutesController@store'  ]);
     Route::get   ('routes',              ['as' => 'admin.routes.index',   'uses' => 'RoutesController@index'  ]);
@@ -55,11 +58,17 @@ Route::prefix('admin')->group(function () {
     Route::delete('routes/{route}',      ['as' => 'admin.routes.destroy', 'uses' => 'RoutesController@destroy']);
     Route::get   ('routes/{route}/edit', ['as' => 'admin.routes.edit',    'uses' => 'RoutesController@edit'   ]);
     // Users
-    Route::post  ('users',             ['as' => 'admin.users.store',   'uses' => 'UsersController@store'  ]);
-    Route::get   ('users',             ['as' => 'admin.users.index',   'uses' => 'UsersController@index'  ]);
-    Route::get   ('users/create',      ['as' => 'admin.users.create',  'uses' => 'UsersController@create' ]);
-    Route::patch ('users/{user}',      ['as' => 'admin.users.update',  'uses' => 'UsersController@update' ]);
-    Route::get   ('users/{user}',      ['as' => 'admin.users.show',    'uses' => 'UsersController@show'   ]);
-    Route::delete('users/{user}',      ['as' => 'admin.users.destroy', 'uses' => 'UsersController@destroy']);
-    Route::get   ('users/{user}/edit', ['as' => 'admin.users.edit',    'uses' => 'UsersController@edit'   ]);
+    Route::post(  'users/enableSelected',          ['as' => 'admin.users.enable-selected',  'uses' => 'UsersController@enableSelected']);
+    Route::post(  'users/disableSelected',         ['as' => 'admin.users.disable-selected', 'uses' => 'UsersController@disableSelected']);
+    Route::post  ('users',                         ['as' => 'admin.users.store',            'uses' => 'UsersController@store'  ]);
+    Route::get   ('users',                         ['as' => 'admin.users.index',            'uses' => 'UsersController@index'  ]);
+    Route::get   ('users/create',                  ['as' => 'admin.users.create',           'uses' => 'UsersController@create' ]);
+    Route::patch ('users/{user}',                  ['as' => 'admin.users.update',           'uses' => 'UsersController@update' ]);
+    Route::get   ('users/{user}',                  ['as' => 'admin.users.show',             'uses' => 'UsersController@show'   ]);
+    Route::delete('users/{user}',                  ['as' => 'admin.users.destroy',          'uses' => 'UsersController@destroy']);
+    Route::get   ('users/{user}/edit',             ['as' => 'admin.users.edit',             'uses' => 'UsersController@edit'   ]);
+    Route::get(   'users/{userId}/confirm-delete', ['as' => 'admin.users.confirm-delete',   'uses' => 'UsersController@getModalDelete']);
+    Route::get(   'users/{userId}/delete',         ['as' => 'admin.users.delete',           'uses' => 'UsersController@destroy']);
+    Route::get(   'users/{userId}/enable',         ['as' => 'admin.users.enable',           'uses' => 'UsersController@enable']);
+    Route::get(   'users/{userId}/disable',        ['as' => 'admin.users.disable',          'uses' => 'UsersController@disable']);
 });
