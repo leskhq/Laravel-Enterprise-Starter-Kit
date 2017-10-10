@@ -57,4 +57,12 @@
 @section('body_bottom')
     @include('partials.body_bottom_tab_with_state_reset_js')
 
+    <script language="JavaScript">
+        function toggleCheckbox() {
+            checkboxes = document.getElementsByName('chkUser[]');
+            for(var i=0, n=checkboxes.length;i<n;i++) {
+                checkboxes[i].checked = !checkboxes[i].checked;
+            }
+        }
+    </script>
 @endsection

@@ -64,6 +64,20 @@ class UsersController extends Controller
     {
         $grid = DataGrid::source(User::with(['roles', 'permissions']));
 
+        $grid->add('select', $this->getToggleCheckboxCell())->cell( function( $value, $row) {
+            if ($row instanceof User){
+                if ($row->isRoot()) {
+                    $cellValue = "";
+                } else {
+                    $id = $row->id;
+                    $cellValue = "<input type='checkbox' name='chkUser[]' id='".$id." 'value='".$id."' >";
+                }
+            } else {
+                $cellValue = "";
+            }
+            return $cellValue;
+        });
+
         $grid->add('id','ID', true)->style("width:100px");
 
         if (Auth::user()->hasPermission('core.users.read')) {
@@ -399,6 +413,65 @@ class UsersController extends Controller
     }
 
     /**
+     * @return \Illuminate\View\View
+     */
+    public function enableSelected(Request $request)
+    {
+        $chkUsers = $request->input('chkUser');
+
+//        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-enabled-selected'), $chkUsers);
+
+        if (isset($chkUsers))
+        {
+            foreach ($chkUsers as $user_id)
+            {
+                $user = $this->user->find($user_id);
+                $user->enabled = true;
+                $user->save();
+            }
+            Flash::success(trans('admin/users/general.status.global-enabled'));
+        }
+        else
+        {
+            Flash::warning(trans('admin/users/general.status.no-user-selected'));
+        }
+        return redirect('/admin/users');
+    }
+
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function disableSelected(Request $request)
+    {
+        $chkUsers = $request->input('chkUser');
+
+//        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-disabled-selected'), $chkUsers);
+
+        if (isset($chkUsers))
+        {
+            foreach ($chkUsers as $user_id)
+            {
+                $user = $this->user->find($user_id);
+                if (!$user->canBeDisabled())
+                {
+                    Flash::error(trans('admin/users/general.error.cant-be-disabled'));
+                }
+                else
+                {
+                    $user->enabled = false;
+                    $user->save();
+                }
+            }
+            Flash::success(trans('admin/users/general.status.global-disabled'));
+        }
+        else
+        {
+            Flash::warning(trans('admin/users/general.status.no-user-selected'));
+        }
+        return redirect('/admin/users');
+    }
+
+    /**
      * Save the roles for a user from the attributes submitted.
      *
      * @param User $user
@@ -454,5 +527,13 @@ class UsersController extends Controller
                 }
             }
         }
+    }
+
+    private function getToggleCheckboxCell()
+    {
+        $cell = "<a class=\"btn\" href=\"#\" onclick=\"toggleCheckbox(); return false;\" title=\"". trans('general.button.toggle-select') ."\">
+                                            <i class=\"fa fa-check-square-o\"></i>
+                                        </a>";
+        return $cell;
     }
 }
