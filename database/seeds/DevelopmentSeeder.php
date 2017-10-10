@@ -28,8 +28,7 @@ class DevelopmentSeeder extends Seeder
 
         ////////////////////////////////////
         ////////////////////////////////////
-        $this->command->warn('Creating test users');
-
+        $this->command->warn('Creating core test users.');
         $userList = [
             'user01' => [
                 'first_name'    => 'User',
@@ -42,7 +41,6 @@ class DevelopmentSeeder extends Seeder
                 'enabled'       => false,
             ],
         ];
-
         foreach ($userList as $key => $value)
         {
             $user = $this->user->create([
@@ -55,14 +53,17 @@ class DevelopmentSeeder extends Seeder
             ]);
             $this->command->info('User created: '. $user->username);
         }
-
         // Grant user01 permission to list users.
         $user01         = $this->user->findWhere(['username' => 'user01'])->first();
         $permUserList   = $this->permission->findByField('name', 'core.users.list')->first();
         $permUserShow   = $this->permission->findByField('name', 'core.users.read')->first();
         $permUserCreate = $this->permission->findByField('name', 'core.users.create')->first();
         $user01->attachPermission($permUserList);
+        $user01->attachPermission($permUserShow);
         $user01->attachPermission($permUserCreate);
+        // create 50 users using faker
+        $this->command->warn('Creating 50 test users using faker.');
+        $users = factory(App\Models\User::class, 50)->create();
 
     }
 }
