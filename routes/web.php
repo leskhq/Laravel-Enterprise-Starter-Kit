@@ -60,15 +60,16 @@ Route::prefix('admin')->group(function () {
     // Users
     Route::post(  'users/enableSelected',          ['as' => 'admin.users.enable-selected',  'uses' => 'UsersController@enableSelected']);
     Route::post(  'users/disableSelected',         ['as' => 'admin.users.disable-selected', 'uses' => 'UsersController@disableSelected']);
+    Route::get   ('users/create',                  ['as' => 'admin.users.create',           'uses' => 'UsersController@create' ]);
+    Route::patch ('users/{userId}',                ['as' => 'admin.users.update',           'uses' => 'UsersController@update' ]);
+    Route::get   ('users/{userId}',                ['as' => 'admin.users.show',             'uses' => 'UsersController@show'   ]);
+    Route::delete('users/{userId}',                ['as' => 'admin.users.destroy',          'uses' => 'UsersController@destroy']);
+    Route::get   ('users/{userId}/edit',           ['as' => 'admin.users.edit',             'uses' => 'UsersController@edit'   ]);
+    Route::post  ('users/{userId}/edit',           ['as' => 'admin.users.edit',             'uses' => 'UsersController@edit'   ]);
+    Route::get   ('users/{userId}/confirm-delete', ['as' => 'admin.users.confirm-delete',   'uses' => 'UsersController@getModalDelete']);
+    Route::get   ('users/{userId}/delete',         ['as' => 'admin.users.delete',           'uses' => 'UsersController@destroy']);
+    Route::get   ('users/{userId}/enable',         ['as' => 'admin.users.enable',           'uses' => 'UsersController@enable']);
+    Route::get   ('users/{userId}/disable',        ['as' => 'admin.users.disable',          'uses' => 'UsersController@disable']);
     Route::post  ('users',                         ['as' => 'admin.users.store',            'uses' => 'UsersController@store'  ]);
     Route::get   ('users',                         ['as' => 'admin.users.index',            'uses' => 'UsersController@index'  ]);
-    Route::get   ('users/create',                  ['as' => 'admin.users.create',           'uses' => 'UsersController@create' ]);
-    Route::patch ('users/{user}',                  ['as' => 'admin.users.update',           'uses' => 'UsersController@update' ]);
-    Route::get   ('users/{user}',                  ['as' => 'admin.users.show',             'uses' => 'UsersController@show'   ]);
-    Route::delete('users/{user}',                  ['as' => 'admin.users.destroy',          'uses' => 'UsersController@destroy']);
-    Route::get   ('users/{user}/edit',             ['as' => 'admin.users.edit',             'uses' => 'UsersController@edit'   ]);
-    Route::get(   'users/{userId}/confirm-delete', ['as' => 'admin.users.confirm-delete',   'uses' => 'UsersController@getModalDelete']);
-    Route::get(   'users/{userId}/delete',         ['as' => 'admin.users.delete',           'uses' => 'UsersController@destroy']);
-    Route::get(   'users/{userId}/enable',         ['as' => 'admin.users.enable',           'uses' => 'UsersController@enable']);
-    Route::get(   'users/{userId}/disable',        ['as' => 'admin.users.disable',          'uses' => 'UsersController@disable']);
 });

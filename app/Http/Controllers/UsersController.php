@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Http\Requests\UserCreateRequest;
+use App\Http\Requests\UserEditRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Libraries\Arr;
 use App\Libraries\Str;
@@ -20,6 +21,7 @@ use Laracasts\Flash\Flash;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
 use Settings;
+use URL;
 use Zofe\Rapyd\DataGrid\DataGrid;
 
 
@@ -109,6 +111,8 @@ class UsersController extends Controller
     public function create()
     {
 
+        $previousURL = URL::previous();
+
         $page_title = trans('admin/users/general.page.create.title'); // "Admin | User | Create";
         $page_description = trans('admin/users/general.page.create.description'); // "Creating a new user";
 
@@ -127,7 +131,7 @@ class UsersController extends Controller
 
         $locales = Settings::get('app.supportedLocales');
 
-        return view('admin.users.create', compact('user', 'perms', 'roles', 'themes', 'timezones', 'tzKey', 'time_format', 'locales', 'page_title', 'page_description'));
+        return view('admin.users.create', compact('user', 'perms', 'roles', 'themes', 'timezones', 'tzKey', 'time_format', 'locales', 'page_title', 'page_description', 'previousURL'));
     }
 
     /**
@@ -145,6 +149,8 @@ class UsersController extends Controller
             // Get all attribute from the request.
             $attributes = $request->all();
 
+            $previousURL = $attributes['redirects_to'];
+
             // Validate attributes.
             $this->validator->with($attributes)->passesOrFail(ValidatorInterface::RULE_CREATE);
 
@@ -160,7 +166,7 @@ class UsersController extends Controller
 
             Flash::success(trans('admin/users/general.status.created'));
 
-            return redirect('/admin/users');
+            return redirect($previousURL);
 
         } catch (ValidatorException $e) {
             if ($request->wantsJson()) {
@@ -184,6 +190,8 @@ class UsersController extends Controller
      */
     public function show($id)
     {
+        $previousURL = URL::previous();
+
         $user = $this->user->with(['permissions', 'roles'])->find($id);
 
         $page_title = trans('admin/users/general.page.show.title');
@@ -200,7 +208,7 @@ class UsersController extends Controller
             $locale = "";
         }
 
-        return view('admin.users.show', compact('user', 'page_title', 'page_description', 'permissions', 'roles', 'time_format', 'locale'));
+        return view('admin.users.show', compact('user', 'page_title', 'page_description', 'permissions', 'roles', 'time_format', 'locale', 'previousURL'));
     }
 
 
@@ -211,9 +219,20 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(UserEditRequest $request, $id)
     {
-
+        $previousURL = route('admin.users.index');
+        switch ($request->method()) {
+            // GET is called from index page.
+            case "GET":
+                $previousURL = URL::previous();
+                break;
+            // POST is called from show page.
+            case "POST":
+                $attributes = $request->all();
+                $previousURL = $attributes['redirects_to'];
+                break;
+        }
         $user = $this->user->find($id);
 
         $page_title = trans('admin/users/general.page.edit.title');
@@ -233,7 +252,7 @@ class UsersController extends Controller
 
         $locales = Settings::get('app.supportedLocales');
 
-        return view('admin.users.edit', compact('user', 'roles', 'perms', 'themes', 'timezones', 'tzKey', 'time_format', 'locales', 'page_title', 'page_description'));
+        return view('admin.users.edit', compact('user', 'roles', 'perms', 'themes', 'timezones', 'tzKey', 'time_format', 'locales', 'page_title', 'page_description', 'previousURL'));
     }
 
 
@@ -255,6 +274,8 @@ class UsersController extends Controller
 
             // Validate attributes.
             $this->validator->with($attributes)->setId($id)->passesOrFail(ValidatorInterface::RULE_UPDATE);
+
+            $previousURL = $attributes['redirects_to'];
 
             // Locate user
             $user = $this->user->find($id);
@@ -305,7 +326,7 @@ class UsersController extends Controller
 
             Flash::success(trans('admin/users/general.status.updated'));
 
-            return redirect('/admin/users');
+            return redirect($previousURL);
 
         } catch (ValidatorException $e) {
             Flash::error(trans('admin/users/general.status.user-update-failed', ['failure' => $e->getMessageBag()]));
@@ -355,7 +376,7 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        $deleted = $this->repository->delete($id);
+        $deleted = $this->user->delete($id);
 
         if (request()->wantsJson()) {
 
@@ -376,6 +397,8 @@ class UsersController extends Controller
      */
     public function enable($id)
     {
+        $previousURL = URL::previous();
+
         $user = $this->user->find($id);
 
 //        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-enable', ['username' => $user->username]));
@@ -385,7 +408,7 @@ class UsersController extends Controller
 
         Flash::success(trans('admin/users/general.status.enabled'));
 
-        return redirect('/admin/users');
+        return redirect($previousURL);
     }
 
     /**
@@ -394,6 +417,8 @@ class UsersController extends Controller
      */
     public function disable($id)
     {
+        $previousURL = URL::previous();
+
         $user = $this->user->find($id);
 
         if (!$user->canBeDisabled())
@@ -409,7 +434,7 @@ class UsersController extends Controller
             Flash::success(trans('admin/users/general.status.disabled'));
         }
 
-        return redirect('/admin/users');
+        return redirect($previousURL);
     }
 
     /**
@@ -417,6 +442,8 @@ class UsersController extends Controller
      */
     public function enableSelected(Request $request)
     {
+        $previousURL = URL::previous();
+
         $chkUsers = $request->input('chkUser');
 
 //        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-enabled-selected'), $chkUsers);
@@ -435,7 +462,7 @@ class UsersController extends Controller
         {
             Flash::warning(trans('admin/users/general.status.no-user-selected'));
         }
-        return redirect('/admin/users');
+        return redirect($previousURL);
     }
 
     /**
@@ -443,6 +470,9 @@ class UsersController extends Controller
      */
     public function disableSelected(Request $request)
     {
+
+        $previousURL = URL::previous();
+
         $chkUsers = $request->input('chkUser');
 
 //        Audit::log(Auth::user()->id, trans('admin/users/general.audit-log.category'), trans('admin/users/general.audit-log.msg-disabled-selected'), $chkUsers);
@@ -468,7 +498,7 @@ class UsersController extends Controller
         {
             Flash::warning(trans('admin/users/general.status.no-user-selected'));
         }
-        return redirect('/admin/users');
+        return redirect($previousURL);
     }
 
     /**

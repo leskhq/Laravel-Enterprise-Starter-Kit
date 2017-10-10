@@ -8,9 +8,11 @@
         <div class='col-md-12'>
             <div class="box-body">
 
-                {!! Form::model($user, ['route' => 'admin.users.index', 'method' => 'GET']) !!}
+                {!! Form::model($user, ['route' => ['admin.users.edit', $user->id], 'method' => 'POST', 'id' => 'form_show_user']) !!}
 
-                <!-- Custom Tabs -->
+                    {!! Form::hidden('redirects_to', $previousURL, ['id' => 'redirects_to']) !!}
+
+                    <!-- Custom Tabs -->
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs" id="tabWithState">
                             <li class="active"><a href="#user_tab_profile" data-toggle="tab" aria-expanded="true">{!! trans('general.tabs.profile') !!}</a></li>
@@ -167,8 +169,8 @@
                     </div>
 
                     <div class="form-group">
-                        {!! Form::submit(trans('general.button.close'), ['class' => 'btn btn-primary']) !!}
-                        <a href="{!! route('admin.users.edit', $user->id) !!}" title="{{ trans('general.button.edit') }}" class='btn btn-default'>{{ trans('general.button.edit') }}</a>
+                        {!! Form::button(trans('general.button.close'), ['class' => 'btn btn-primary', 'id' => 'btn-close-show']) !!}
+                        {!! Form::button(trans('general.button.edit'),  ['class' => 'btn btn-default', 'id' => 'btn-call-edit']) !!}
                     </div>
 
                 {!! Form::close() !!}
@@ -181,5 +183,17 @@
 
 @section('body_bottom')
     @include('partials.body_bottom_tab_with_state_set_js')
+
+    <script type="text/javascript">
+        $("#btn-close-show").on("click", function () {
+            // Return to page stored in redirect hidden field.
+            window.location.href = $("#redirects_to").val();
+        });
+
+
+        $("#btn-call-edit").on("click", function () {
+            $("#form_show_user").submit();
+        });
+    </script>
 
 @endsection
