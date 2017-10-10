@@ -11,9 +11,23 @@ let mix = require('laravel-mix');
  |
  */
 
+// Publish JS files.
 mix.js('resources/assets/js/app.js', 'public/js')
+   .js('resources/assets/js/modal.js', 'public/js')
+// Combine JS files.
+   .scripts([
+    'public/js/app.js',
+    'public/js/modal.js'
+], 'public/js/all.js')
+// Compile SCSS files.
    .sass('resources/assets/sass/app.scss', 'public/css')
-   .sourceMaps()
+   .sass('resources/assets/sass/fa-colours.scss', 'public/css')
+// Combine CSS files.
+   .styles([
+    'public/css/app.css',
+    'public/css/fa-colours.css'
+], 'public/css/all.css')
+    .sourceMaps()
     .version();
 
 // if (mix.inProduction()) {
