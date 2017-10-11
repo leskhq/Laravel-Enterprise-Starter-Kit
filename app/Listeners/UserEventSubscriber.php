@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Events\UserCreated;
 use App\Events\UserDeleted;
 use App\Events\UserUpdated;
+use App\Events\UserUpdatedRoles;
 use App\Models\User;
 use Log;
 
@@ -56,6 +57,10 @@ class UserEventSubscriber
             'App\Events\UserDeleted',
             'App\Listeners\UserEventSubscriber@onUserDeleted'
         );
+        $events->listen(
+            'App\Events\UserUpdatedRoles',
+            'App\Listeners\UserEventSubscriber@onUserRolesUpdated'
+        );
 
     }
 
@@ -75,6 +80,17 @@ class UserEventSubscriber
     {
         try {
             Log::debug('UserEventSubscriber.onUserUpdated', ['username' => $event->user->username]);
+            $this->user = $event->user;
+            $this->user->postCreateAndUpdateFix();
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+        }
+    }
+
+    public function onUserRolesUpdated(UserUpdatedRoles $event)
+    {
+        try {
+            Log::debug('UserEventSubscriber.onUserRolesUpdated', ['username' => $event->user->username]);
             $this->user = $event->user;
             $this->user->postCreateAndUpdateFix();
         } catch (\Exception $e) {

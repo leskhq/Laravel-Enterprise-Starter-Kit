@@ -2,6 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserUpdatedPermissions;
+use App\Events\UserUpdatedSettings;
+use App\Events\UserUpdatingPermissions;
+use App\Events\UserUpdatedRoles;
+use App\Events\UserUpdatingRoles;
+use App\Events\UserUpdatingSettings;
 use App\Http\Requests;
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserEditRequest;
@@ -22,6 +28,7 @@ use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
 use Settings;
 use URL;
+use Zofe\Rapyd\DataFilter\DataFilter;
 use Zofe\Rapyd\DataGrid\DataGrid;
 
 
@@ -64,7 +71,12 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $grid = DataGrid::source(User::with(['roles', 'permissions']));
+
+        $filter = DataFilter::source(User::with(['roles', 'permissions']));
+        $filter->text('srch','Search')->scope('freesearch');
+        $filter->build();
+
+        $grid = DataGrid::source($filter);
 
         $grid->add('select', $this->getToggleCheckboxCell())->cell( function( $value, $row) {
             if ($row instanceof User){
@@ -101,7 +113,7 @@ class UsersController extends Controller
         $page_title = trans('admin/users/general.page.index.title');
         $page_description = trans('admin/users/general.page.index.description');
 
-        return view('admin.users.index', compact('grid', 'page_title', 'page_description'));
+        return view('admin.users.index', compact('filter', 'grid', 'page_title', 'page_description'));
     }
     /**
      * Show the form for creating the specified resource.
@@ -509,12 +521,16 @@ class UsersController extends Controller
      */
     private function saveRoles(User $user, array $attributes = [])
     {
+        event(new UserUpdatingRoles($user));
+
         if (array_key_exists('roles', $attributes) && ($attributes['roles'])) {
             $user->roles()->sync($attributes['roles']);
         } else {
             $attributes['role'] = [];
             $user->roles()->sync([]);
         }
+
+        event(new UserUpdatedRoles($user));
 
     }
 
@@ -526,11 +542,15 @@ class UsersController extends Controller
      */
     private function savePermission(User $user, array $attributes = [])
     {
+        event(new UserUpdatingPermissions($user));
+
         if (array_key_exists('perms', $attributes) && ($attributes['perms'])) {
             $user->permissions()->sync($attributes['perms']);
         } else {
             $user->permissions()->sync([]);
         }
+
+        event(new UserUpdatedPermissions($user));
     }
 
     /**
@@ -540,6 +560,8 @@ class UsersController extends Controller
      */
     private function saveSettings(User $user, array $attributes = [])
     {
+        event(new UserUpdatingSettings($user));
+
         if (array_key_exists('settings', $attributes) && ($attributes['settings'])) {
             foreach ($attributes['settings'] as $key => $value) {
                 switch ($key) {
@@ -557,6 +579,9 @@ class UsersController extends Controller
                 }
             }
         }
+
+        event(new UserUpdatedSettings($user));
+
     }
 
     private function getToggleCheckboxCell()

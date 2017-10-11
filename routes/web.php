@@ -70,6 +70,7 @@ Route::prefix('admin')->group(function () {
     Route::get   ('users/{userId}/delete',         ['as' => 'admin.users.delete',           'uses' => 'UsersController@destroy']);
     Route::get   ('users/{userId}/enable',         ['as' => 'admin.users.enable',           'uses' => 'UsersController@enable']);
     Route::get   ('users/{userId}/disable',        ['as' => 'admin.users.disable',          'uses' => 'UsersController@disable']);
-    Route::post  ('users',                         ['as' => 'admin.users.store',            'uses' => 'UsersController@store'  ]);
+    Route::post  ('users/store',                   ['as' => 'admin.users.store',            'uses' => 'UsersController@store'  ]);
     Route::get   ('users',                         ['as' => 'admin.users.index',            'uses' => 'UsersController@index'  ]);
+    Route::post  ('users',                         ['as' => 'admin.users.index',            'uses' => 'UsersController@index'  ]);
 });

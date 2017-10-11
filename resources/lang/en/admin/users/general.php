@@ -45,7 +45,7 @@ return [
         'index'              => [
             'title'             => 'Admin | Users',
             'description'       => 'List of users',
-            'table-title'       => 'User list',
+            'table-title'       => '',
         ],
         'show'              => [
             'title'             => 'Admin | User | Show',

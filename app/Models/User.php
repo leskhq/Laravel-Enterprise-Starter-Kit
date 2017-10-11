@@ -242,4 +242,26 @@ class User extends Authenticatable implements Transformable
 
     }
 
+    public function scopeFreesearch($query, $value)
+    {
+        // search against multiple fields using OR
+        return $query->where('first_name','like','%'.$value.'%')
+            ->orWhere('last_name','like','%'.$value.'%')
+            ->orWhere('username','like','%'.$value.'%')
+            ->orWhere('email','like','%'.$value.'%')
+            // Look into assigned roles
+            ->orWhereHas('roles', function ($q) use ($value) {
+                $q->where('name','like','%'.$value.'%')
+                  ->orWhere('display_name','like','%'.$value.'%')
+                  ->orWhere('description','like','%'.$value.'%');
+            })
+            // Look into assigned permissions
+            ->orWhereHas('permissions', function ($q) use ($value) {
+                $q->where('name','like','%'.$value.'%')
+                  ->orWhere('display_name','like','%'.$value.'%')
+                  ->orWhere('description','like','%'.$value.'%');
+            });
+
+    }
+
 }
