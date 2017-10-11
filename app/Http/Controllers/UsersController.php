@@ -107,7 +107,7 @@ class UsersController extends Controller
         $grid->add('auth_type','Type', true);
         $grid->add( '{!! App\Libraries\Utils::userActionslinks($id) !!}', 'Actions');
 
-        $grid->orderBy('id','asc');
+        $grid->orderBy('username','asc');
         $grid->paginate(10);
 
         $page_title = trans('admin/users/general.page.index.title');
