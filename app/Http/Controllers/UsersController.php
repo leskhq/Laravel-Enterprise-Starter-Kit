@@ -35,6 +35,8 @@ use Zofe\Rapyd\DataGrid\DataGrid;
 class UsersController extends Controller
 {
 
+    //TODO: Protect some users (root) from actions like disable, change perm, etc.??
+
     /**
      * @var UserRepository
      */
@@ -55,10 +57,10 @@ class UsersController extends Controller
      */
     protected $validator;
 
-    public function __construct(UserRepository $userRepository, UserValidator $validator, PermissionRepository $permissionRepository, RoleRepository $roleRepository)
+    public function __construct(UserValidator $validator, UserRepository $userRepository, PermissionRepository $permissionRepository, RoleRepository $roleRepository)
     {
-        $this->user         = $userRepository;
         $this->validator    = $validator;
+        $this->user         = $userRepository;
         $this->permission   = $permissionRepository;
         $this->role         = $roleRepository;
     }
@@ -73,7 +75,7 @@ class UsersController extends Controller
     {
 
         $filter = DataFilter::source(User::with(['roles', 'permissions']));
-        $filter->text('srch','Search')->scope('freesearch');
+        $filter->text('srch','Search against users or their associated roles or permissions')->scope('freesearch');
         $filter->build();
 
         $grid = DataGrid::source($filter);
@@ -172,7 +174,7 @@ class UsersController extends Controller
             // Save role membership(s).
             $this->saveRoles($user, $attributes);
             // Save permission(s).
-            $this->savePermission($user, $attributes);
+            $this->savePermissions($user, $attributes);
             // Save settings.
             $this->saveSettings($user, $attributes);
 
@@ -325,7 +327,7 @@ class UsersController extends Controller
             // Save role membership(s).
             $this->saveRoles($user, $attributes);
             // Save permission(s).
-            $this->savePermission($user, $attributes);
+            $this->savePermissions($user, $attributes);
             // Save settings.
             $this->saveSettings($user, $attributes);
 
@@ -540,7 +542,7 @@ class UsersController extends Controller
      * @param User $user
      * @param array $attributes
      */
-    private function savePermission(User $user, array $attributes = [])
+    private function savePermissions(User $user, array $attributes = [])
     {
         event(new UserUpdatingPermissions($user));
 

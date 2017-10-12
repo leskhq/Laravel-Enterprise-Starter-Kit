@@ -203,8 +203,10 @@ class User extends Authenticatable implements Transformable
      * Force the membership to the 'core.users' role
      * and if empty, set the auth_type to the
      * internal value.
-     * Usually called from the UserEventSubscriber@onUserCreated
-     * handler.
+     *
+     * Usually called from:
+     *      UserEventSubscriber@onUserCreated
+     *      UserEventSubscriber@onUserUpdated
      */
     public function postCreateAndUpdateFix()
     {
@@ -234,6 +236,12 @@ class User extends Authenticatable implements Transformable
 
     }
 
+    /**
+     * Delete user's settings on a delete event.
+     *
+     * Usually called from:
+     *      UserEventSubscriber@onUserDeleted
+     */
     public function postDeleteFix()
     {
         Log::debug('User.postDeleteFix. ', ['username' => $this->username]);

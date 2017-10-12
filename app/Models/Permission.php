@@ -253,11 +253,11 @@ class Permission extends LaratrustPermission implements Transformable
     }
 
     /**
-     * Force the membership to the 'core.users' role
-     * and if empty, set the auth_type to the
-     * internal value.
-     * Usually called from the UserEventSubscriber@onUserCreated
-     * handler.
+     * Force assignment to the 'root' user and
+     * the membership to the 'core.admins' role
+     * Usually called from:
+     *      PermissionEventSubscriber@onPermissionCreated
+     *      PermissionEventSubscriber@onPermissionUpdated
      */
     public function postCreateAndUpdateFix()
     {
