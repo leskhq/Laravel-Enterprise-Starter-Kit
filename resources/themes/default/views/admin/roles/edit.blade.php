@@ -10,11 +10,13 @@
 
                 {!! Form::model( $role, ['route' => ['admin.roles.update', $role->id], 'method' => 'PATCH', 'id' => 'form_edit_role'] ) !!}
 
+                {!! Form::hidden('redirects_to', $previousURL, ['id' => 'redirects_to']) !!}
+
                 @include('admin.roles._role_form')
 
                 <div class="form-group">
                     {!! Form::submit( trans('general.button.update'), ['class' => 'btn btn-primary', 'id' => 'btn-submit-edit'] ) !!}
-                    <a href="{!! route('admin.roles.index') !!}" title="{{ trans('general.button.cancel') }}" class='btn btn-default'>{{ trans('general.button.cancel') }}</a>
+                    {!! Form::button(trans('general.button.cancel'), ['class' => 'btn btn-default', 'id' => 'btn-cancel-edit']) !!}
                 </div>
 
                 {!! Form::close() !!}
@@ -26,4 +28,13 @@
 @endsection
 
 @section('body_bottom')
+    @include('partials.body_bottom_tab_with_state_set_js')
+
+    <script type="text/javascript">
+        $("#btn-cancel-edit").on("click", function () {
+            // Return to page stored in redirect hidden field.
+            window.location.href = $("#redirects_to").val();
+        });
+    </script>
+
 @endsection

@@ -42,13 +42,23 @@ Route::prefix('admin')->group(function () {
     // Roles
     Route::get(   'roles/search',      ['as' => 'admin.roles.search',   'uses' => 'RolesController@searchByName']);
     Route::post(  'roles/getInfo',     ['as' => 'admin.roles.get-info', 'uses' => 'RolesController@getInfo']);
-    Route::post  ('roles',             ['as' => 'admin.roles.store',    'uses' => 'RolesController@store'  ]);
-    Route::get   ('roles',             ['as' => 'admin.roles.index',    'uses' => 'RolesController@index'  ]);
-    Route::get   ('roles/create',      ['as' => 'admin.roles.create',   'uses' => 'RolesController@create' ]);
-    Route::patch ('roles/{role}',      ['as' => 'admin.roles.update',   'uses' => 'RolesController@update' ]);
-    Route::get   ('roles/{role}',      ['as' => 'admin.roles.show',     'uses' => 'RolesController@show'   ]);
-    Route::delete('roles/{role}',      ['as' => 'admin.roles.destroy',  'uses' => 'RolesController@destroy']);
-    Route::get   ('roles/{role}/edit', ['as' => 'admin.roles.edit',     'uses' => 'RolesController@edit'   ]);
+
+    Route::post(  'roles/enableSelected',          ['as' => 'admin.roles.enable-selected',  'uses' => 'RolesController@enableSelected']);
+    Route::post(  'roles/disableSelected',         ['as' => 'admin.roles.disable-selected', 'uses' => 'RolesController@disableSelected']);
+    Route::get   ('roles/create',                  ['as' => 'admin.roles.create',           'uses' => 'RolesController@create' ]);
+    Route::patch ('roles/{roleId}',                ['as' => 'admin.roles.update',           'uses' => 'RolesController@update' ]);
+    Route::get   ('roles/{roleId}',                ['as' => 'admin.roles.show',             'uses' => 'RolesController@show'   ]);
+    Route::delete('roles/{roleId}',                ['as' => 'admin.roles.destroy',          'uses' => 'RolesController@destroy']);
+    Route::get   ('roles/{roleId}/edit',           ['as' => 'admin.roles.edit',             'uses' => 'RolesController@edit'   ]);
+    Route::post  ('roles/{roleId}/edit',           ['as' => 'admin.roles.edit',             'uses' => 'RolesController@edit'   ]);
+    Route::get   ('roles/{roleId}/confirm-delete', ['as' => 'admin.roles.confirm-delete',   'uses' => 'RolesController@getModalDelete']);
+    Route::get   ('roles/{roleId}/delete',         ['as' => 'admin.roles.delete',           'uses' => 'RolesController@destroy']);
+    Route::get   ('roles/{roleId}/enable',         ['as' => 'admin.roles.enable',           'uses' => 'RolesController@enable']);
+    Route::get   ('roles/{roleId}/disable',        ['as' => 'admin.roles.disable',          'uses' => 'RolesController@disable']);
+    Route::post  ('roles/store',                   ['as' => 'admin.roles.store',            'uses' => 'RolesController@store'  ]);
+    Route::get   ('roles',                         ['as' => 'admin.roles.index',            'uses' => 'RolesController@index'  ]);
+    Route::post  ('roles',                         ['as' => 'admin.roles.index',            'uses' => 'RolesController@index'  ]);
+
     // Routes
     Route::post  ('routes',              ['as' => 'admin.routes.store',   'uses' => 'RoutesController@store'  ]);
     Route::get   ('routes',              ['as' => 'admin.routes.index',   'uses' => 'RoutesController@index'  ]);

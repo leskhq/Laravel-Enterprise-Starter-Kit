@@ -97,7 +97,7 @@ class Role extends LaratrustRole implements Transformable
     public function isDeletable()
     {
         // Protect the admins and users roles from deletion
-        if (('admins' == $this->name) || ('users' == $this->name)) {
+        if (('core.admins' == $this->name) || ('core.users' == $this->name)) {
             return false;
         }
 
@@ -187,6 +187,52 @@ class Role extends LaratrustRole implements Transformable
         } else {
             $this->users()->detach();
         }
+    }
+
+    public function scopeFreesearch($query, $value)
+    {
+        // search against multiple fields using OR
+        return $query->where('name','like','%'.$value.'%')
+            ->orWhere('display_name','like','%'.$value.'%')
+            ->orWhere('description','like','%'.$value.'%')
+            // Look into assigned permissions
+            ->orWhereHas('permissions', function ($q) use ($value) {
+                $q->where('name','like','%'.$value.'%')
+                    ->orWhere('display_name','like','%'.$value.'%')
+                    ->orWhere('description','like','%'.$value.'%');
+            })
+            // Look into assigned roles
+            ->orWhereHas('users', function ($q) use ($value) {
+                $q->where('username','like','%'.$value.'%')
+                    ->orWhere('first_name','like','%'.$value.'%')
+                    ->orWhere('last_name','like','%'.$value.'%')
+                    ->orWhere('email','like','%'.$value.'%');
+            });
+
+    }
+
+    /**
+     * Force assignment to the 'basic-authenticated' permission
+     *
+     * Usually called from:
+     *      RoleEventSubscriber@onRoleCreated
+     *      RoleEventSubscriber@onRoleUpdated
+     */
+    public function postCreateAndUpdateFix()
+    {
+        Log::debug('Role.postCreateAndUpdateFix. ', ['role' => $this->name]);
+
+        // Force assignment of the 'basic-authenticated' permission.
+        $this->forcePermission('basic-authenticated');
+
+        // Temporally disable the event dispatcher to avoid getting in an infinite loop of update events.
+        $dispatcher = $this->getEventDispatcher();
+        $this->unsetEventDispatcher();
+        // Save changes.
+        $this->save();
+        // Restore event dispatcher.
+        $this->setEventDispatcher($dispatcher);
+
     }
 
 }

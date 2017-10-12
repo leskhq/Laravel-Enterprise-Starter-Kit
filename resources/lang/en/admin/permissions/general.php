@@ -68,6 +68,8 @@ return [
         'created'                   =>  'Created',
         'updated'                   =>  'Updated',
         'actions'                   =>  'Actions',
+        'assigned'                  =>  'Assigned',
+        'enabled'                   =>  'Enabled',
     ],
 
     'action'               => [

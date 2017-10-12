@@ -5,6 +5,7 @@ use App\Exceptions\JsonEncodingStateMismatchException;
 use App\Exceptions\JsonEncodingSyntaxErrorException;
 use App\Exceptions\JsonEncodingUnexpectedControlCharException;
 use App\Exceptions\JsonEncodingUnknownException;
+use App\Models\Role;
 use App\Models\User;
 use Auth;
 use Illuminate\Support\Arr;
@@ -155,8 +156,9 @@ class Utils
     }
 
     /**
-     * @param $expression
+     * @param $id
      * @return string
+     * @internal param $expression
      */
     public static function userActionslinks($id): string
     {
@@ -200,6 +202,60 @@ class Utils
                     }
                 } else {
                     $output .= '<i class="fa fa-trash-o text-muted" title="' . trans('admin/users/general.error.cant-be-deleted') . '"></i>';
+                }
+            }
+        } catch (\Exception $ex) {
+            Log::error("Exception: " . $ex->getMessage());
+            Log::error("Stack trace: " . $ex->getTraceAsString());
+        }
+        return $output;
+    }
+
+
+    /**
+     * @param $id
+     * @return string
+     * @internal param $expression
+     */
+    public static function roleActionslinks($id): string
+    {
+        $output = 'nil';
+
+        try {
+            if (($role = Role::findOrFail($id))) {
+                if ( ($role->isEditable()) && (Auth::user()->hasPermission('core.roles.update')) ) {
+                    $output = '<a href="' . route('admin.roles.edit', $role->id) . '" title="' . trans('general.button.edit') . '"><i class="fa fa-pencil-square-o"></i></a>';
+                } else {
+                    $output = '<i class="fa fa-pencil-square-o text-muted" title="' . trans('admin/roles/general.error.no-permission-to-update-roles') . '"></i>';
+                }
+
+                $output .= '&nbsp;';
+
+                if ($role->enabled) {
+                    if (Auth::user()->hasPermission('core.roles.disable')) {
+                        $output .= '<a href="' . route('admin.roles.disable', $role->id) . '" title="' . trans('general.button.disable') . '"><i class="fa fa-check-circle-o enabled"></i></a>';
+                    } else {
+                        $output .= '<i class="fa fa-check-circle-o text-muted" title="' . trans('admin/roles/general.error.no-permission-to-disable-roles') . '"></i>';
+                    }
+                } else {
+                    if (Auth::user()->hasPermission('core.roles.enable')) {
+                        $output .= '<a href="' . route('admin.roles.enable', $role->id) . '" title="' . trans('general.button.enable') . '"><i class="fa fa-ban disabled"></i></a>';
+                    } else {
+                        $output .= '<i class="fa fa-ban text-muted" title="' . trans('admin/roles/general.error.no-permission-to-enable-roles') . '"></i>';
+                    }
+                }
+
+
+                $output .= '&nbsp;';
+
+                if ($role->isDeletable()) {
+                    if (Auth::user()->hasPermission('core.roles.delete')) {
+                        $output .= '<a href="' . route('admin.roles.confirm-delete', $role->id) . '" data-toggle="modal" data-target="#modal_dialog" title="' . trans('general.button.delete') . '"><i class="fa fa-trash-o deletable"></i></a>';
+                    } else {
+                        $output .= '<i class="fa fa-trash-o text-muted" title="'. trans('admin/roles/general.error.no-permission-to-delete-roles') .'"></i>';
+                    }
+                } else {
+                    $output .= '<i class="fa fa-trash-o text-muted" title="' . trans('admin/roles/general.error.cant-be-deleted') . '"></i>';
                 }
             }
         } catch (\Exception $ex) {
