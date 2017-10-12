@@ -147,56 +147,56 @@
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
                         <tbody>
-                        <tr>
-                            <th>{!! trans('admin/users/general.columns.name')  !!}</th>
-                            <th>{!! trans('admin/users/general.columns.description')  !!}</th>
-                            <th>{!! trans('admin/users/general.columns.assigned')  !!}</th>
-                            <th>{!! trans('admin/users/general.columns.effective')  !!}</th>
-                            <th>{!! trans('admin/users/general.columns.enabled')  !!}</th>
-                        </tr>
-                        @foreach($perms as $perm)
+                            <tr>
+                                <th>{!! trans('admin/users/general.columns.name')  !!}</th>
+                                <th>{!! trans('admin/users/general.columns.description')  !!}</th>
+                                <th>{!! trans('admin/users/general.columns.assigned')  !!}</th>
+                                <th>{!! trans('admin/users/general.columns.effective')  !!}</th>
+                                <th>{!! trans('admin/users/general.columns.enabled')  !!}</th>
+                            </tr>
+                            @foreach($perms as $perm)
 
-                            @switch($perm->name)
-                                @case("core.guest-only")
-                                @case("core.open-to-all")
-                                @case("core.basic-authenticated")
-                                    <!-- Skipping perm: {{$perm->name}} -->
-                                    @break
+                                @switch($perm->name)
+                                    @case("core.guest-only")
+                                    @case("core.open-to-all")
+                                    @case("core.basic-authenticated")
+                                        <!-- Skipping perm: {{$perm->name}} -->
+                                        @break
 
-                                @default
-                                    <tr>
-                                        <td>{!! link_to_route('admin.permissions.show', $perm->display_name, [$perm->id], []) !!}</td>
-                                        <td>{!! link_to_route('admin.permissions.show', $perm->description,  [$perm->id], []) !!}</td>
-                                        <td>
-                                            @if ( $user->isRoot() )
-                                                {!! Form::checkbox('perms[]', $perm->id, true, ['disabled']) !!}
-                                            @else
-                                                @if($user->permissions->contains($perm->id))
-                                                    {!! Form::checkbox('perms[]', $perm->id, true) !!}
+                                    @default
+                                        <tr>
+                                            <td>{!! link_to_route('admin.permissions.show', $perm->display_name, [$perm->id], []) !!}</td>
+                                            <td>{!! link_to_route('admin.permissions.show', $perm->description,  [$perm->id], []) !!}</td>
+                                            <td>
+                                                @if ( $user->isRoot() )
+                                                    {!! Form::checkbox('perms[]', $perm->id, true, ['disabled']) !!}
                                                 @else
-                                                    {!! Form::checkbox('perms[]', $perm->id, false) !!}
+                                                    @if($user->permissions->contains($perm->id))
+                                                        {!! Form::checkbox('perms[]', $perm->id, true) !!}
+                                                    @else
+                                                        {!! Form::checkbox('perms[]', $perm->id, false) !!}
+                                                    @endif
                                                 @endif
-                                            @endif
 
-                                        </td>
-                                        <td>
-                                            @if($user->can($perm->name))
-                                                <i class="fa fa-check text-green"></i>
-                                            @else
-                                                <i class="fa fa-close text-red"></i>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if($perm->enabled)
-                                                <i class="fa fa-check text-green"></i>
-                                            @else
-                                                <i class="fa fa-close text-red"></i>
-                                            @endif
-                                        </td>
-                                    </tr>
-                            @endswitch
+                                            </td>
+                                            <td>
+                                                @if($user->can($perm->name))
+                                                    <i class="fa fa-check text-green"></i>
+                                                @else
+                                                    <i class="fa fa-close text-red"></i>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($perm->enabled)
+                                                    <i class="fa fa-check text-green"></i>
+                                                @else
+                                                    <i class="fa fa-close text-red"></i>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                @endswitch
 
-                        @endforeach
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
