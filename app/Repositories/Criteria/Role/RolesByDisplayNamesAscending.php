@@ -1,20 +1,19 @@
-<?php namespace App\Repositories\Criteria\Permission;
+<?php namespace App\Repositories\Criteria\Role;
 
 use Prettus\Repository\Contracts\CriteriaInterface;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
-class PermissionsByNamesAscending implements CriteriaInterface {
+class RolesByDisplayNamesAscending implements CriteriaInterface {
 
 
     /**
      * @param $model
-     * @param Repository $repository
-     *
+     * @param RepositoryInterface $repository
      * @return mixed
      */
     public function apply( $model, RepositoryInterface $repository )
     {
-        $model = $model->orderBy('name', 'ASC');
+        $model = $model->orderBy('display_name', 'ASC');
         return $model;
     }
 

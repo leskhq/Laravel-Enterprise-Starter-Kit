@@ -15,8 +15,8 @@ use App\Http\Requests\UserUpdateRequest;
 use App\Libraries\Arr;
 use App\Libraries\Str;
 use App\Models\User;
-use App\Repositories\Criteria\Permission\PermissionsByNamesAscending;
-use App\Repositories\Criteria\Role\RolesByNamesAscending;
+use App\Repositories\Criteria\Permission\PermissionsByDisplayNamesAscending;
+use App\Repositories\Criteria\Role\RolesByDisplayNamesAscending;
 use App\Repositories\PermissionRepository;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserRepository;
@@ -128,8 +128,8 @@ class UsersController extends Controller
         $page_title = trans('admin/users/general.page.create.title'); // "Admin | User | Create";
         $page_description = trans('admin/users/general.page.create.description'); // "Creating a new user";
 
-        $roles = $this->role->pushCriteria(new RolesByNamesAscending())->all();
-        $perms = $this->permission->pushCriteria(new PermissionsByNamesAscending())->all();
+        $roles = $this->role->pushCriteria(new RolesByDisplayNamesAscending())->all();
+        $perms = $this->permission->pushCriteria(new PermissionsByDisplayNamesAscending())->all();
         $user = new \App\Models\User();
 
         $themes = \Theme::getList();
@@ -209,8 +209,8 @@ class UsersController extends Controller
         $page_title = trans('admin/users/general.page.show.title');
         $page_description = trans('admin/users/general.page.show.description', ['full_name' => $user->full_name]);
 
-        $roles = $this->role->pushCriteria(new RolesByNamesAscending())->all();
-        $permissions = $this->permission->pushCriteria(new PermissionsByNamesAscending())->all();
+        $roles = $this->role->pushCriteria(new RolesByDisplayNamesAscending())->all();
+        $permissions = $this->permission->pushCriteria(new PermissionsByDisplayNamesAscending())->all();
         $time_format = $user->settings()->get('app.time_format', null);
         $locales = Settings::get('app.supportedLocales');
         $localeIdent = $user->settings()->get('app.locale', null);
@@ -250,8 +250,8 @@ class UsersController extends Controller
         $page_title = trans('admin/users/general.page.edit.title');
         $page_description = trans('admin/users/general.page.edit.description', ['full_name' => $user->full_name]);
 
-        $roles = $this->role->pushCriteria(new RolesByNamesAscending())->all();
-        $perms = $this->permission->pushCriteria(new PermissionsByNamesAscending())->all();
+        $roles = $this->role->pushCriteria(new RolesByDisplayNamesAscending())->all();
+        $perms = $this->permission->pushCriteria(new PermissionsByDisplayNamesAscending())->all();
 
         $themes = \Theme::getList();
         $themes = Arr::indexToAssoc($themes, true);
