@@ -255,6 +255,12 @@ class User extends Authenticatable implements Transformable
                   ->orWhere('display_name','like','%'.$value.'%')
                   ->orWhere('description','like','%'.$value.'%');
             })
+            // Look into assigned permissions of roles.
+            ->orWhereHas('roles.permissions', function ($q) use ($value) {
+                $q->where('name','like','%'.$value.'%')
+                    ->orWhere('display_name','like','%'.$value.'%')
+                    ->orWhere('description','like','%'.$value.'%');
+            })
             // Look into assigned permissions
             ->orWhereHas('permissions', function ($q) use ($value) {
                 $q->where('name','like','%'.$value.'%')
