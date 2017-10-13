@@ -5,6 +5,7 @@ use App\Exceptions\JsonEncodingStateMismatchException;
 use App\Exceptions\JsonEncodingSyntaxErrorException;
 use App\Exceptions\JsonEncodingUnexpectedControlCharException;
 use App\Exceptions\JsonEncodingUnknownException;
+use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use Auth;
@@ -256,6 +257,59 @@ class Utils
                     }
                 } else {
                     $output .= '<i class="fa fa-trash-o text-muted" title="' . trans('admin/roles/general.error.cant-be-deleted') . '"></i>';
+                }
+            }
+        } catch (\Exception $ex) {
+            Log::error("Exception: " . $ex->getMessage());
+            Log::error("Stack trace: " . $ex->getTraceAsString());
+        }
+        return $output;
+    }
+
+    /**
+     * @param $id
+     * @return string
+     * @internal param $expression
+     */
+    public static function permissionActionslinks($id): string
+    {
+        $output = 'nil';
+
+        try {
+            if (($perm = Permission::findOrFail($id))) {
+                if ( ($perm->isEditable()) && (Auth::user()->hasPermission('core.permissions.update')) ) {
+                    $output = '<a href="' . route('admin.permissions.edit', $perm->id) . '" title="' . trans('general.button.edit') . '"><i class="fa fa-pencil-square-o"></i></a>';
+                } else {
+                    $output = '<i class="fa fa-pencil-square-o text-muted" title="' . trans('admin/permissions/general.error.no-permission-to-update-permissions') . '"></i>';
+                }
+
+                $output .= '&nbsp;';
+
+                if ($perm->enabled) {
+                    if (Auth::user()->hasPermission('core.permissions.disable')) {
+                        $output .= '<a href="' . route('admin.permissions.disable', $perm->id) . '" title="' . trans('general.button.disable') . '"><i class="fa fa-check-circle-o enabled"></i></a>';
+                    } else {
+                        $output .= '<i class="fa fa-check-circle-o text-muted" title="' . trans('admin/permissions/general.error.no-permission-to-disable-permissions') . '"></i>';
+                    }
+                } else {
+                    if (Auth::user()->hasPermission('core.permissions.enable')) {
+                        $output .= '<a href="' . route('admin.permissions.enable', $perm->id) . '" title="' . trans('general.button.enable') . '"><i class="fa fa-ban disabled"></i></a>';
+                    } else {
+                        $output .= '<i class="fa fa-ban text-muted" title="' . trans('admin/permissions/general.error.no-permission-to-enable-permissions') . '"></i>';
+                    }
+                }
+
+
+                $output .= '&nbsp;';
+
+                if ($perm->isDeletable()) {
+                    if (Auth::user()->hasPermission('core.permissions.delete')) {
+                        $output .= '<a href="' . route('admin.permissions.confirm-delete', $perm->id) . '" data-toggle="modal" data-target="#modal_dialog" title="' . trans('general.button.delete') . '"><i class="fa fa-trash-o deletable"></i></a>';
+                    } else {
+                        $output .= '<i class="fa fa-trash-o text-muted" title="'. trans('admin/permissions/general.error.no-permission-to-delete-permissions') .'"></i>';
+                    }
+                } else {
+                    $output .= '<i class="fa fa-trash-o text-muted" title="' . trans('admin/permissions/general.error.cant-be-deleted') . '"></i>';
                 }
             }
         } catch (\Exception $ex) {

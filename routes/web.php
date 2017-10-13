@@ -32,13 +32,21 @@ Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@ind
 // Admin
 Route::prefix('admin')->group(function () {
     // Permissions
-    Route::post  ('permissions',                   ['as' => 'admin.permissions.store',   'uses' => 'PermissionsController@store'  ]);
-    Route::get   ('permissions',                   ['as' => 'admin.permissions.index',   'uses' => 'PermissionsController@index'  ]);
-    Route::get   ('permissions/create',            ['as' => 'admin.permissions.create',  'uses' => 'PermissionsController@create' ]);
-    Route::patch ('permissions/{permission}',      ['as' => 'admin.permissions.update',  'uses' => 'PermissionsController@update' ]);
-    Route::get   ('permissions/{permission}',      ['as' => 'admin.permissions.show',    'uses' => 'PermissionsController@show'   ]);
-    Route::delete('permissions/{permission}',      ['as' => 'admin.permissions.destroy', 'uses' => 'PermissionsController@destroy']);
-    Route::get   ('permissions/{permission}/edit', ['as' => 'admin.permissions.edit',    'uses' => 'PermissionsController@edit'   ]);
+    Route::post(  'permissions/enableSelected',                ['as' => 'admin.permissions.enable-selected',  'uses' => 'PermissionsController@enableSelected']);
+    Route::post(  'permissions/disableSelected',               ['as' => 'admin.permissions.disable-selected', 'uses' => 'PermissionsController@disableSelected']);
+    Route::get   ('permissions/create',                        ['as' => 'admin.permissions.create',           'uses' => 'PermissionsController@create' ]);
+    Route::patch ('permissions/{permissionId}',                ['as' => 'admin.permissions.update',           'uses' => 'PermissionsController@update' ]);
+    Route::get   ('permissions/{permissionId}',                ['as' => 'admin.permissions.show',             'uses' => 'PermissionsController@show'   ]);
+    Route::delete('permissions/{permissionId}',                ['as' => 'admin.permissions.destroy',          'uses' => 'PermissionsController@destroy']);
+    Route::get   ('permissions/{permissionId}/edit',           ['as' => 'admin.permissions.edit',             'uses' => 'PermissionsController@edit'   ]);
+    Route::post  ('permissions/{permissionId}/edit',           ['as' => 'admin.permissions.edit',             'uses' => 'PermissionsController@edit'   ]);
+    Route::get   ('permissions/{permissionId}/confirm-delete', ['as' => 'admin.permissions.confirm-delete',   'uses' => 'PermissionsController@getModalDelete']);
+    Route::get   ('permissions/{permissionId}/delete',         ['as' => 'admin.permissions.delete',           'uses' => 'PermissionsController@destroy']);
+    Route::get   ('permissions/{permissionId}/enable',         ['as' => 'admin.permissions.enable',           'uses' => 'PermissionsController@enable']);
+    Route::get   ('permissions/{permissionId}/disable',        ['as' => 'admin.permissions.disable',          'uses' => 'PermissionsController@disable']);
+    Route::post  ('permissions/store',                         ['as' => 'admin.permissions.store',            'uses' => 'PermissionsController@store'  ]);
+    Route::get   ('permissions',                               ['as' => 'admin.permissions.index',            'uses' => 'PermissionsController@index'  ]);
+    Route::post  ('permissions',                               ['as' => 'admin.permissions.index',            'uses' => 'PermissionsController@index'  ]);
     // Roles
     Route::get(   'roles/search',      ['as' => 'admin.roles.search',   'uses' => 'RolesController@searchByName']);
     Route::post(  'roles/getInfo',     ['as' => 'admin.roles.get-info', 'uses' => 'RolesController@getInfo']);

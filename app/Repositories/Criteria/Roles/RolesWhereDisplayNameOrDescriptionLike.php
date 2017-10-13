@@ -1,4 +1,4 @@
-<?php namespace App\Repositories\Criteria\Role;
+<?php namespace App\Repositories\Criteria\Roles;
 
 use Prettus\Repository\Contracts\CriteriaInterface;
 use Prettus\Repository\Contracts\RepositoryInterface;

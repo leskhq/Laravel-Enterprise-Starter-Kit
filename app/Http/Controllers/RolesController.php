@@ -11,9 +11,9 @@ use App\Http\Requests\RoleCreateRequest;
 use App\Http\Requests\RoleEditRequest;
 use App\Http\Requests\RoleUpdateRequest;
 use App\Models\Role;
-use App\Repositories\Criteria\Permission\PermissionsByDisplayNamesAscending;
-use App\Repositories\Criteria\Role\RolesWhereDisplayNameOrDescriptionLike;
-use App\Repositories\Criteria\User\UsersByUsernamesAscending;
+use App\Repositories\Criteria\Permissions\PermissionsByDisplayNamesAscending;
+use App\Repositories\Criteria\Roles\RolesWhereDisplayNameOrDescriptionLike;
+use App\Repositories\Criteria\Users\UsersByUsernamesAscending;
 use App\Repositories\PermissionRepository;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserRepository;
@@ -330,7 +330,7 @@ class RolesController extends Controller
 
         Flash::success( trans('admin/roles/general.status.deleted') ); // 'Role successfully deleted');
 
-        return redirect()->back()->with('message', 'User deleted.');
+        return redirect()->back()->with('message', 'Role deleted.');
     }
 
     /**

@@ -279,5 +279,34 @@ class Permission extends LaratrustPermission implements Transformable
 
     }
 
+    public function scopeFreesearch($query, $value)
+    {
+        // search against multiple fields using OR
+        return $query->where('name','like','%'.$value.'%')
+            ->orWhere('display_name','like','%'.$value.'%')
+            ->orWhere('description','like','%'.$value.'%')
+            // Look into assigned routes
+            ->orWhereHas('routes', function ($q) use ($value) {
+                $q->where('name','like','%'.$value.'%')
+                    ->orWhere('method','like','%'.$value.'%')
+                    ->orWhere('path','like','%'.$value.'%')
+                    ->orWhere('action_name','like','%'.$value.'%');
+            })
+            // Look into assigned roles
+            ->orWhereHas('roles', function ($q) use ($value) {
+                $q->where('name','like','%'.$value.'%')
+                    ->orWhere('display_name','like','%'.$value.'%')
+                    ->orWhere('description','like','%'.$value.'%');
+            })
+            // Look into assigned users
+            ->orWhereHas('users', function ($q) use ($value) {
+                $q->where('username','like','%'.$value.'%')
+                    ->orWhere('first_name','like','%'.$value.'%')
+                    ->orWhere('last_name','like','%'.$value.'%')
+                    ->orWhere('email','like','%'.$value.'%');
+            });
+
+    }
+
 
 }

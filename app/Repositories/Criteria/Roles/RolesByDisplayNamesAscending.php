@@ -1,9 +1,9 @@
-<?php namespace App\Repositories\Criteria\User;
+<?php namespace App\Repositories\Criteria\Roles;
 
 use Prettus\Repository\Contracts\CriteriaInterface;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
-class UsersByUsernamesAscending implements CriteriaInterface {
+class RolesByDisplayNamesAscending implements CriteriaInterface {
 
 
     /**
@@ -13,7 +13,7 @@ class UsersByUsernamesAscending implements CriteriaInterface {
      */
     public function apply( $model, RepositoryInterface $repository )
     {
-        $model = $model->orderBy('username', 'ASC');
+        $model = $model->orderBy('display_name', 'ASC');
         return $model;
     }
 

@@ -73,6 +73,7 @@ return [
         'updated'                   =>  'Updated',
         'actions'                   =>  'Actions',
         'enabled'                   =>  'Enabled',
+        'assigned'                  =>  'Assigned',
     ],
 
     'action'               => [

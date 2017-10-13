@@ -1,9 +1,9 @@
-<?php namespace App\Repositories\Criteria\Role;
+<?php namespace App\Repositories\Criteria\Routes;
 
 use Prettus\Repository\Contracts\CriteriaInterface;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
-class RolesByDisplayNamesAscending implements CriteriaInterface {
+class RoutesByDisplayNamesAndPathAscending implements CriteriaInterface {
 
 
     /**
@@ -13,7 +13,8 @@ class RolesByDisplayNamesAscending implements CriteriaInterface {
      */
     public function apply( $model, RepositoryInterface $repository )
     {
-        $model = $model->orderBy('display_name', 'ASC');
+        $model = $model->orderBy('name', 'ASC')
+            ->orderBy('path', 'ASC');
         return $model;
     }
 

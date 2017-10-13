@@ -201,7 +201,7 @@ class Role extends LaratrustRole implements Transformable
                     ->orWhere('display_name','like','%'.$value.'%')
                     ->orWhere('description','like','%'.$value.'%');
             })
-            // Look into assigned roles
+            // Look into assigned users
             ->orWhereHas('users', function ($q) use ($value) {
                 $q->where('username','like','%'.$value.'%')
                     ->orWhere('first_name','like','%'.$value.'%')
