@@ -7,6 +7,7 @@ use App\Exceptions\JsonEncodingUnexpectedControlCharException;
 use App\Exceptions\JsonEncodingUnknownException;
 use App\Models\Permission;
 use App\Models\Role;
+use App\Models\Route;
 use App\Models\User;
 use Auth;
 use Illuminate\Support\Arr;
@@ -318,6 +319,53 @@ class Utils
         }
         return $output;
     }
+
+
+    public static function routeActionslinks($id): string
+    {
+        $output = 'nil';
+
+        try {
+            if (($route = Route::findOrFail($id))) {
+                if (Auth::user()->hasPermission('core.routes.update') ) {
+                    $output = '<a href="' . route('admin.routes.edit', $route->id) . '" title="' . trans('general.button.edit') . '"><i class="fa fa-pencil-square-o"></i></a>';
+                } else {
+                    $output = '<i class="fa fa-pencil-square-o text-muted" title="' . trans('admin/routes/general.error.no-permission-to-update-routes') . '"></i>';
+                }
+
+                $output .= '&nbsp;';
+
+                if ($route->enabled) {
+                    if (Auth::user()->hasPermission('core.routes.disable')) {
+                        $output .= '<a href="' . route('admin.routes.disable', $route->id) . '" title="' . trans('general.button.disable') . '"><i class="fa fa-check-circle-o enabled"></i></a>';
+                    } else {
+                        $output .= '<i class="fa fa-check-circle-o text-muted" title="' . trans('admin/routes/general.error.no-permission-to-disable-routes') . '"></i>';
+                    }
+                } else {
+                    if (Auth::user()->hasPermission('core.routes.enable')) {
+                        $output .= '<a href="' . route('admin.routes.enable', $route->id) . '" title="' . trans('general.button.enable') . '"><i class="fa fa-ban disabled"></i></a>';
+                    } else {
+                        $output .= '<i class="fa fa-ban text-muted" title="' . trans('admin/routes/general.error.no-permission-to-enable-routes') . '"></i>';
+                    }
+                }
+
+
+                $output .= '&nbsp;';
+
+                if (Auth::user()->hasPermission('core.routes.delete')) {
+                    $output .= '<a href="' . route('admin.routes.confirm-delete', $route->id) . '" data-toggle="modal" data-target="#modal_dialog" title="' . trans('general.button.delete') . '"><i class="fa fa-trash-o deletable"></i></a>';
+                } else {
+                    $output .= '<i class="fa fa-trash-o text-muted" title="'. trans('admin/routes/general.error.no-permission-to-delete-routes') .'"></i>';
+                }
+
+            }
+        } catch (\Exception $ex) {
+            Log::error("Exception: " . $ex->getMessage());
+            Log::error("Stack trace: " . $ex->getTraceAsString());
+        }
+        return $output;
+    }
+
 
 
     /**

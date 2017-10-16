@@ -214,4 +214,22 @@ class Route extends Model implements Transformable
         return $cnt;
     }
 
+
+    public function scopeFreesearch($query, $value)
+    {
+        // search against multiple fields using OR
+        return $query->where('name','like','%'.$value.'%')
+            ->orWhere('method','like','%'.$value.'%')
+            ->orWhere('path','like','%'.$value.'%')
+            ->orWhere('action_name','like','%'.$value.'%')
+            // Look into assigned permissions
+            ->orWhereHas('permission', function ($q) use ($value) {
+                $q->where('name','like','%'.$value.'%')
+                    ->orWhere('display_name','like','%'.$value.'%')
+                    ->orWhere('description','like','%'.$value.'%');
+            });
+
+    }
+
+
 }

@@ -10,6 +10,8 @@
 
                 {!! Form::model( $route, ['route' => ['admin.routes.update', $route->id], 'method' => 'PATCH', 'id' => 'form_edit_route'] ) !!}
 
+                {!! Form::hidden('redirects_to', $previousURL, ['id' => 'redirects_to']) !!}
+
                 @include('admin.routes._route_form')
 
                 <div class="form-group">

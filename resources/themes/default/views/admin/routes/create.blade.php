@@ -10,6 +10,8 @@
 
                 {!! Form::open( ['route' => 'admin.routes.store', 'id' => 'form_edit_route'] ) !!}
 
+                {!! Form::hidden('redirects_to', $previousURL, ['id' => 'redirects_to']) !!}
+
                 @include('admin.routes._route_form')
 
                 <div class="form-group">

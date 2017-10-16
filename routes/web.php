@@ -66,15 +66,22 @@ Route::prefix('admin')->group(function () {
     Route::post  ('roles/store',                   ['as' => 'admin.roles.store',            'uses' => 'RolesController@store'  ]);
     Route::get   ('roles',                         ['as' => 'admin.roles.index',            'uses' => 'RolesController@index'  ]);
     Route::post  ('roles',                         ['as' => 'admin.roles.index',            'uses' => 'RolesController@index'  ]);
-
     // Routes
-    Route::post  ('routes',              ['as' => 'admin.routes.store',   'uses' => 'RoutesController@store'  ]);
-    Route::get   ('routes',              ['as' => 'admin.routes.index',   'uses' => 'RoutesController@index'  ]);
-    Route::get   ('routes/create',       ['as' => 'admin.routes.create',  'uses' => 'RoutesController@create' ]);
-    Route::patch ('routes/{route}',      ['as' => 'admin.routes.update',  'uses' => 'RoutesController@update' ]);
-    Route::get   ('routes/{route}',      ['as' => 'admin.routes.show',    'uses' => 'RoutesController@show'   ]);
-    Route::delete('routes/{route}',      ['as' => 'admin.routes.destroy', 'uses' => 'RoutesController@destroy']);
-    Route::get   ('routes/{route}/edit', ['as' => 'admin.routes.edit',    'uses' => 'RoutesController@edit'   ]);
+    Route::post(  'routes/enableSelected',           ['as' => 'admin.routes.enable-selected',  'uses' => 'RoutesController@enableSelected']);
+    Route::post(  'routes/disableSelected',          ['as' => 'admin.routes.disable-selected', 'uses' => 'RoutesController@disableSelected']);
+    Route::get   ('routes/create',                   ['as' => 'admin.routes.create',           'uses' => 'RoutesController@create' ]);
+    Route::patch ('routes/{routeId}',                ['as' => 'admin.routes.update',           'uses' => 'RoutesController@update' ]);
+    Route::get   ('routes/{routeId}',                ['as' => 'admin.routes.show',             'uses' => 'RoutesController@show'   ]);
+    Route::delete('routes/{routeId}',                ['as' => 'admin.routes.destroy',          'uses' => 'RoutesController@destroy']);
+    Route::get   ('routes/{routeId}/edit',           ['as' => 'admin.routes.edit',             'uses' => 'RoutesController@edit'   ]);
+    Route::post  ('routes/{routeId}/edit',           ['as' => 'admin.routes.edit',             'uses' => 'RoutesController@edit'   ]);
+    Route::get   ('routes/{routeId}/confirm-delete', ['as' => 'admin.routes.confirm-delete',   'uses' => 'RoutesController@getModalDelete']);
+    Route::get   ('routes/{routeId}/delete',         ['as' => 'admin.routes.delete',           'uses' => 'RoutesController@destroy']);
+    Route::get   ('routes/{routeId}/enable',         ['as' => 'admin.routes.enable',           'uses' => 'RoutesController@enable']);
+    Route::get   ('routes/{routeId}/disable',        ['as' => 'admin.routes.disable',          'uses' => 'RoutesController@disable']);
+    Route::post  ('routes/store',                    ['as' => 'admin.routes.store',            'uses' => 'RoutesController@store'  ]);
+    Route::get   ('routes',                          ['as' => 'admin.routes.index',            'uses' => 'RoutesController@index'  ]);
+    Route::post  ('routes',                          ['as' => 'admin.routes.index',            'uses' => 'RoutesController@index'  ]);
     // Users
     Route::post(  'users/enableSelected',          ['as' => 'admin.users.enable-selected',  'uses' => 'UsersController@enableSelected']);
     Route::post(  'users/disableSelected',         ['as' => 'admin.users.disable-selected', 'uses' => 'UsersController@disableSelected']);
