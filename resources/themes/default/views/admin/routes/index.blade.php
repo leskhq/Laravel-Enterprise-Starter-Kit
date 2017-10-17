@@ -70,7 +70,11 @@
 
                                     {!! Form::select( 'globalPerm', $perms, '', [ 'style' => 'max-width:150px;', 'id' => 'select-global-perm', 'class' => 'select-global-perm', 'placeholder' => trans('admin/routes/general.placeholder.select-permission')] ) !!}
                                 @else
+                                    <a class="btn btn-default btn-sm" disabled="true"  href="#" title="{{ trans('admin/routes/general.action.no-permission-to-save-perms-assignment') }}">
+                                        <i class="fa fa-floppy-o"></i>
+                                    </a>
 
+                                    {!! Form::select( 'globalPerm', [], '', [ 'style' => 'max-width:150px;', 'id' => 'select-global-perm', 'class' => 'select-global-perm', 'placeholder' => trans('admin/routes/general.action.no-permission-to-save-perms-assignment'), 'disabled' => 'true'] ) !!}
             &nbsp;                   @endpermission
 
                             </div> <!-- col-sm-6 -->

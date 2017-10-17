@@ -83,6 +83,7 @@ return [
         'enable-selected'                           => 'Enable selected route',
         'disable-selected'                          => 'Disable selected route',
         'save-perms-assignment'                     => 'Save permission assignments',
+        'no-permission-to-save-perms-assignment'    => 'You do not have permissions to save permission assignment.'
     ],
 
     'placeholder'   => [
