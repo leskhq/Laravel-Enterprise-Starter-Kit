@@ -9,6 +9,7 @@ use App\Events\RoleUpdatingUsers;
 use App\Http\Requests;
 use App\Http\Requests\RoleCreateRequest;
 use App\Http\Requests\RoleEditRequest;
+use App\Http\Requests\RoleIndexRequest;
 use App\Http\Requests\RoleUpdateRequest;
 use App\Models\Role;
 use App\Repositories\Criteria\Permissions\PermissionsByDisplayNamesAscending;
@@ -66,9 +67,10 @@ class RolesController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param RoleIndexRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(RoleIndexRequest $request)
     {
         $filter = DataFilter::source(Role::with(['users', 'permissions']));
         $filter->text('srch','Search against roles or their associated permissions or users')->scope('freesearch');
@@ -76,47 +78,62 @@ class RolesController extends Controller
 
         $grid = DataGrid::source($filter);
 
-        $grid->add('select', $this->getToggleCheckboxCell())->cell( function( $value, $row) {
-            if ($row instanceof Role){
-                if (("core.r.admins" == $row->name) || ("core.r.users" == $row->name)) {
-                    $cellValue = "";
+        // Get all attribute from the request.
+        $attributes = $request->all();
+
+        if ((array_has($attributes, 'export_to_csv')) && ("true" == $attributes['export_to_csv'])) {
+            $grid->add('id', 'ID');
+            $grid->add('name', 'Name');
+            $grid->add('display_name', 'Display Name');
+            $grid->add('description', 'Description');
+            $grid->add('{{ $permissions->count() }}', 'Permissions', false);
+            $grid->add('{{ $users->count() }}', 'Users', false);
+
+            return $grid->buildCSV('export-roles_', 'Y-m-d.His');
+
+        } else {
+
+            $grid->add('select', $this->getToggleCheckboxCell())->cell(function ($value, $row) {
+                if ($row instanceof Role) {
+                    if (("core.r.admins" == $row->name) || ("core.r.users" == $row->name)) {
+                        $cellValue = "";
+                    } else {
+                        $id = $row->id;
+                        $cellValue = "<input type='checkbox' name='chkRole[]' id='" . $id . " 'value='" . $id . "' >";
+                    }
                 } else {
-                    $id = $row->id;
-                    $cellValue = "<input type='checkbox' name='chkRole[]' id='".$id." 'value='".$id."' >";
+                    $cellValue = "";
                 }
+                return $cellValue;
+            });
+
+            $grid->add('id', 'ID', true)->style("width:100px");
+
+            if (Auth::user()->hasPermission('core.p.roles.read')) {
+                $grid->add('{{ link_to_route(\'admin.roles.show\', $name, [$id], []) }}', 'Name', 'name');
             } else {
-                $cellValue = "";
+                $grid->add('name', 'Name', 'name');
             }
-            return $cellValue;
-        });
 
-        $grid->add('id','ID', true)->style("width:100px");
+            if (Auth::user()->hasPermission('core.p.roles.read')) {
+                $grid->add('{{ link_to_route(\'admin.roles.show\', $display_name, [$id], []) }}', 'Display Name', 'display_name');
+            } else {
+                $grid->add('display_name', 'Display name', 'display_name');
+            }
 
-        if (Auth::user()->hasPermission('core.p.roles.read')) {
-            $grid->add('{{ link_to_route(\'admin.roles.show\', $name, [$id], []) }}','Name', 'name');
-        } else {
-            $grid->add('name','Name', 'name');
+            $grid->add('description', 'Description', false);
+            $grid->add('{{ $permissions->count() }}', 'Permissions', false);
+            $grid->add('{{ $users->count() }}', 'Users', false);
+            $grid->add('{!! App\Libraries\Utils::roleActionslinks($id) !!}', 'Actions');
+
+            $grid->orderBy('name', 'asc');
+            $grid->paginate(10);
+
+            $page_title = trans('admin/roles/general.page.index.title');
+            $page_description = trans('admin/roles/general.page.index.description');
+
+            return view('admin.roles.index', compact('filter', 'grid', 'page_title', 'page_description'));
         }
-
-        if (Auth::user()->hasPermission('core.p.roles.read')) {
-            $grid->add('{{ link_to_route(\'admin.roles.show\', $display_name, [$id], []) }}','Display Name', 'display_name');
-        } else {
-            $grid->add('display_name','Display name', 'display_name');
-        }
-
-        $grid->add('description','Description', false);
-        $grid->add('{{ $permissions->count() }}','Permissions', false);
-        $grid->add('{{ $users->count() }}','Users', false);
-        $grid->add( '{!! App\Libraries\Utils::roleActionslinks($id) !!}', 'Actions');
-
-        $grid->orderBy('name','asc');
-        $grid->paginate(10);
-
-        $page_title = trans('admin/roles/general.page.index.title');
-        $page_description = trans('admin/roles/general.page.index.description');
-
-        return view('admin.roles.index', compact('filter', 'grid', 'page_title', 'page_description'));
-
     }
 
     /**
