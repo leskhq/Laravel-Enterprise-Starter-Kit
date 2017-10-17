@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{{-- Setting::get('app.short_name')  | --}} {{ $page_title or "LESK" }}</title>
+    <title>{{ Settings::get('app.short_name') }} | {{ $page_title or "LESK" }}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
@@ -36,7 +36,7 @@
 
 <div class="login-box">
     <div class="login-logo">
-        {{-- {!! Setting::get('app.long_name') !!} | --}} {{ $page_title or "Laravel ESK" }}
+        {{ Settings::get('app.short_name') }} | {{ $page_title or "LESK" }}
     </div><!-- /.login-logo -->
     <div class="login-box-body">
 

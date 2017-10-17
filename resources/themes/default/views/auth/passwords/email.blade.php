@@ -29,7 +29,7 @@
                 </a>
             </div>
         </div>
-        {{-- @if (Setting::get('app.allow_registration')) --}}
+         @if (Settings::get('app.allow_registration'))
             <div class="row">
                 <div class="col-xs-6">
                     <a class="btn btn-link" href="{{ route('register') }}">
@@ -37,6 +37,6 @@
                     </a>
                 </div>
             </div>
-        {{-- @endif --}}
+         @endif
 
 @endsection

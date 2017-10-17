@@ -26,7 +26,7 @@
             </div>
 
             <div class="row">
-                {{-- @if ( Setting::get('auth.enable_remember_token') ) --}}
+                 @if ( Settings::get('auth.enable_remember_token') )
                     <div class="col-xs-8">
                         <div class="checkbox icheck">
                             <label>
@@ -34,7 +34,7 @@
                             </label>
                         </div>
                     </div><!-- /.col -->
-                {{-- @endif --}}
+                 @endif
                 <div class="col-xs-4">
                     <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
                 </div><!-- /.col -->
@@ -48,7 +48,7 @@
                 </a>
             </div>
         </div>
-        {{-- @if (Setting::get('app.allow_registration')) --}}
+         @if (Settings::get('app.allow_registration'))
             <div class="row">
                 <div class="col-xs-6">
                     <a class="btn btn-link" href="{{ route('register') }}">
@@ -56,6 +56,6 @@
                     </a>
                 </div>
             </div>
-        {{-- @endif --}}
+         @endif
 
 @endsection

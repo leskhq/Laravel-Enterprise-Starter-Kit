@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Facades\Settings;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Setting;
@@ -37,10 +38,10 @@ class WalledGarden
     {
         $exempt = false;
 
-        if (class_exists('App\Managers\SettingManager')) {
-            $walled_garden_enabled = Setting::get('walled-garden.enabled');
-            $exemptionPath         = Setting::get('walled-garden.exemptions-path');
-            $exemptionsRegEx       = Setting::get('walled-garden.exemptions-regex');
+        if (class_exists('App\Managers\LeskSettingsManager')) {
+            $walled_garden_enabled = Settings::get('walled-garden.enabled');
+            $exemptionPath         = Settings::get('walled-garden.exemptions-path');
+            $exemptionsRegEx       = Settings::get('walled-garden.exemptions-regex');
         } else {
             $walled_garden_enabled = config('walled-garden.enabled');
             $exemptionPath         = config('walled-garden.exemptions-path');
