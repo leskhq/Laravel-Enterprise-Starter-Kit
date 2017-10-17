@@ -183,6 +183,9 @@ class Route extends Model implements Transformable
     }
 
 
+    /**
+     * @return int
+     */
     public static function deleteLaravelRoutes()
     {
         $laravelRoutes = \Route::getRoutes();

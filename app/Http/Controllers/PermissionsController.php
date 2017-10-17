@@ -96,13 +96,13 @@ class PermissionsController extends Controller
 
         $grid->add('id','ID', true)->style("width:100px");
 
-        if (Auth::user()->hasPermission('core.permissions.read')) {
+        if (Auth::user()->hasPermission('core.p.permissions.read')) {
             $grid->add('{{ link_to_route(\'admin.permissions.show\', $name, [$id], []) }}','Name', 'name');
         } else {
             $grid->add('name','Name', 'name');
         }
 
-        if (Auth::user()->hasPermission('core.permissions.read')) {
+        if (Auth::user()->hasPermission('core.p.permissions.read')) {
             $grid->add('{{ link_to_route(\'admin.permissions.show\', $display_name, [$id], []) }}','Display Name', 'display_name');
         } else {
             $grid->add('display_name','Display name', 'display_name');

@@ -87,7 +87,7 @@ class AuthorizeRoute
             }
             // User has the role 'admins', all is authorized.
             // TODO: Get 'admins' role name from config, and replace all occurrences.
-            elseif (!$guest && isset($user) && $user->hasRole('core.admins')) {
+            elseif (!$guest && isset($user) && $user->hasRole('core.r.admins')) {
                 $authorized = true;
                 Log::debug("Authorizing all for role admins.");
             }
@@ -108,21 +108,21 @@ class AuthorizeRoute
                     if ( isset($appRoute->permission) ) {
                         // Route is open to all.
                         // TODO: Get 'open-to-all' role name from config, and replace all occurrences.
-                        if ( 'core.open-to-all' == $appRoute->permission->name ) {
+                        if ( 'core.p.open-to-all' == $appRoute->permission->name ) {
                             $authorized = true;
-                            Log::debug("Authorizing for route core.open-to-all.");
+                            Log::debug("Authorizing for route core.p.open-to-all.");
                         }
                         // TODO: Get 'guest-only' role name from config, and replace all occurrences.
                         // User is guest/unauthenticated and the route is restricted to guests.
-                        elseif ( $guest && 'core.guest-only' == $appRoute->permission->name ) {
+                        elseif ( $guest && 'core.p.guest-only' == $appRoute->permission->name ) {
                             $authorized = true;
-                            Log::debug("Authorizing for guest user and route core.guest-only.");
+                            Log::debug("Authorizing for guest user and route core.p.guest-only.");
                         }
                         // TODO: Get 'basic-authenticated' role name from config, and replace all occurrences.
                         // The route is available to any authenticated user.
-                        elseif ( !$guest && isset($user) && ($user->enabled) && 'core.basic-authenticated' == $appRoute->permission->name ) {
+                        elseif ( !$guest && isset($user) && ($user->enabled) && 'core.p.basic-authenticated' == $appRoute->permission->name ) {
                             $authorized = true;
-                            Log::debug("Authorizing for authenticated user and route core.basic-authenticated.");
+                            Log::debug("Authorizing for authenticated user and route core.p.basic-authenticated.");
                         }
                         // The user has the permission required by the route.
                         elseif ( !$guest && isset($user) && ($user->enabled) && $user->can($appRoute->permission->name) ) {

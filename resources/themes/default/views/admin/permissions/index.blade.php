@@ -15,7 +15,7 @@
                         <div class="col-sm-6">
                             <h3 class="box-title">{{ trans('admin/permissions/general.page.index.table-title') }}</h3>
 
-                            @permission('core.permissions.create')
+                            @permission('core.p.permissions.create')
                                 <a class="btn btn-default btn-sm" href="{!! route('admin.permissions.create') !!}" title="{{ trans('admin/permissions/general.button.create') }}">
                                     <i class="fa fa-plus-square"></i>
                                 </a>
@@ -25,7 +25,7 @@
                                 </a>
                             @endpermission
 
-                            @permission('core.permissions.enable')
+                            @permission('core.p.permissions.enable')
                                 <a class="btn btn-default btn-sm" href="#" onclick="document.forms['frmPermissionList'].action = '{!! route('admin.permissions.enable-selected') !!}';  document.forms['frmPermissionList'].submit(); return false;" title="{{ trans('general.button.enable') }}">
                                     <i class="fa fa-check-circle-o"></i>
                                 </a>
@@ -35,7 +35,7 @@
                                 </a>
         &nbsp;                   @endpermission
 
-                            @permission('core.permissions.disable')
+                            @permission('core.p.permissions.disable')
                                 <a class="btn btn-default btn-sm" href="#" onclick="document.forms['frmPermissionList'].action = '{!! route('admin.permissions.disable-selected') !!}';  document.forms['frmPermissionList'].submit(); return false;" title="{{ trans('general.button.disable') }}">
                                     <i class="fa fa-ban"></i>
                                 </a>

@@ -47,11 +47,11 @@ class ProductionSeeder extends Seeder
         /// Create basic set of roles
         $this->command->info('Creating permissions and roles.');
         $roleList = [
-            'core.admins' => [
+            'core.r.admins' => [
                 'display_name'  => 'Administrators',
                 'description'   => 'Administrators have no restrictions',
             ],
-            'core.users' => [
+            'core.r.users' => [
                 'display_name'  => 'Users',
                 'description'   => 'All authenticated users',
             ],
@@ -85,15 +85,15 @@ class ProductionSeeder extends Seeder
         ////////////////////////////////////
         /// Create basic set of permissions
         $permList = [
-            'core.guest-only' => [
+            'core.p.guest-only' => [
                 'display_name'  => 'Guest only access',
                 'description'   => 'Only guest users can access these.',
             ],
-            'core.open-to-all' => [
+            'core.p.open-to-all' => [
                 'display_name'  => 'Open to all',
                 'description'   => 'Everyone can access these, even unauthenticated (guest) users.',
             ],
-            'core.basic-authenticated' => [
+            'core.p.basic-authenticated' => [
                 'display_name'  => 'Basic authenticated',
                 'description'   => 'Basic permission after being authenticated.',
             ],
@@ -124,14 +124,18 @@ class ProductionSeeder extends Seeder
          *
          * The first few roles, and its assigned permission, created below are:
          *
-         *      core.permissions.manager
-         *          core.permissions.create
-         *          core.permissions.read
-         *          core.permissions.update
-         *          core.permissions.delete
+         *      core.r.permissions.manager
+         *          core.p.permissions.create
+         *          core.p.permissions.read
+         *          core.p.permissions.update
+         *          core.p.permissions.delete
+         *          core.p.permissions.list
+         *          core.p.permissions.enable
+         *          core.p.permissions.disable
          *
-         *      core.permissions.reviewer
-         *          core.permissions.read
+         *      core.r.permissions.reviewer
+         *          core.p.permissions.read
+         *          core.p.permissions.list
          *
          */
         $permAndRoles =
@@ -148,49 +152,50 @@ class ProductionSeeder extends Seeder
                     'p'  => 'purge',
                     'en' => 'enable',
                     'di' => 'disable',
+                    'ap' => 'assign-perm',
                 ],
                 // Defines the roles to create with their assigned permissions.
                 'roles_and_perms' => [
                     // Name of the role
-                    'core.permissions.manager' => [
+                    'core.r.permissions.manager' => [
                         // Prefix of the permissions name to assign to the above role.
-                        'core.permissions' => [
+                        'core.p.permissions' => [
                             // List of suffixes of the permission looked-up against the permissions_map.
                             'c', 'r', 'u', 'd', 'ls', 'en', 'di',
                         ],
                     ],
-                    'core.permissions.reviewer' => [
-                        'core.permissions' => [
+                    'core.r.permissions.reviewer' => [
+                        'core.p.permissions' => [
                             'r', 'ls',
                         ],
                     ],
-                    'core.roles.manager' => [
-                        'core.roles' => [
+                    'core.r.roles.manager' => [
+                        'core.p.roles' => [
                             'c', 'r', 'u', 'd', 'ls', 'en', 'di',
                         ],
                     ],
-                    'core.roles.reviewer' => [
-                        'core.roles' => [
+                    'core.r.roles.reviewer' => [
+                        'core.p.roles' => [
                             'r', 'ls',
                         ],
                     ],
-                    'core.routes.manager' => [
-                        'core.routes' => [
-                            'c', 'r', 'u', 'd', 'ls', 'en', 'di',
+                    'core.r.routes.manager' => [
+                        'core.p.routes' => [
+                            'c', 'r', 'u', 'd', 'ls', 'en', 'di', 'lo', 'ap',
                         ],
                     ],
-                    'core.routes.reviewer' => [
-                        'core.routes' => [
+                    'core.r.routes.reviewer' => [
+                        'core.p.routes' => [
                             'r', 'ls',
                         ],
                     ],
-                    'core.users.manager' => [
-                        'core.users' => [
+                    'core.r.users.manager' => [
+                        'core.p.users' => [
                             'c', 'r', 'u', 'd', 'ls', 'en', 'di',
                         ],
                     ],
-                    'core.users.reviewer' => [
-                        'core.users' => [
+                    'core.r.users.reviewer' => [
+                        'core.p.users' => [
                             'r', 'ls',
                         ],
                     ],
@@ -198,8 +203,8 @@ class ProductionSeeder extends Seeder
 
                 // Used to list extra roles that are not yet associated with permissions.
                 'roles' => [
-                    'core.admins',
-                    'core.users',
+                    'core.r.admins',
+                    'core.r.users',
                 ],
 
             ];
@@ -236,35 +241,45 @@ class ProductionSeeder extends Seeder
         ////////////////////////////////////
         ////////////////////////////////////
         /// Locate some permissions to assign them.
-        $permGuestOnly          = $this->permission->findByField('name', 'core.guest-only')->first();
-        $permOpenToAll          = $this->permission->findByField('name', 'core.open-to-all')->first();
-        $permBasicAuthenticated = $this->permission->findByField('name', 'core.basic-authenticated')->first();
-        $permPermissionCreate   = $this->permission->findByField('name', 'core.permissions.create')->first();
-        $permPermissionRead     = $this->permission->findByField('name', 'core.permissions.read')->first();
-        $permPermissionUpdate   = $this->permission->findByField('name', 'core.permissions.update')->first();
-        $permPermissionDelete   = $this->permission->findByField('name', 'core.permissions.delete')->first();
-        $permPermissionList     = $this->permission->findByField('name', 'core.permissions.list')->first();
-        $permRoleCreate         = $this->permission->findByField('name', 'core.roles.create')->first();
-        $permRoleRead           = $this->permission->findByField('name', 'core.roles.read')->first();
-        $permRoleUpdate         = $this->permission->findByField('name', 'core.roles.update')->first();
-        $permRoleDelete         = $this->permission->findByField('name', 'core.roles.delete')->first();
-        $permRoleList           = $this->permission->findByField('name', 'core.roles.list')->first();
-        $permRouteCreate         = $this->permission->findByField('name', 'core.routes.create')->first();
-        $permRouteRead           = $this->permission->findByField('name', 'core.routes.read')->first();
-        $permRouteUpdate         = $this->permission->findByField('name', 'core.routes.update')->first();
-        $permRouteDelete         = $this->permission->findByField('name', 'core.routes.delete')->first();
-        $permRouteList           = $this->permission->findByField('name', 'core.routes.list')->first();
-        $permUserCreate         = $this->permission->findByField('name', 'core.users.create')->first();
-        $permUserRead           = $this->permission->findByField('name', 'core.users.read')->first();
-        $permUserUpdate         = $this->permission->findByField('name', 'core.users.update')->first();
-        $permUserDelete         = $this->permission->findByField('name', 'core.users.delete')->first();
-        $permUserList           = $this->permission->findByField('name', 'core.users.list')->first();
+        $permGuestOnly          = $this->permission->findByField('name', 'core.p.guest-only')->first();
+        $permOpenToAll          = $this->permission->findByField('name', 'core.p.open-to-all')->first();
+        $permBasicAuthenticated = $this->permission->findByField('name', 'core.p.basic-authenticated')->first();
+        $permPermissionCreate   = $this->permission->findByField('name', 'core.p.permissions.create')->first();
+        $permPermissionRead     = $this->permission->findByField('name', 'core.p.permissions.read')->first();
+        $permPermissionUpdate   = $this->permission->findByField('name', 'core.p.permissions.update')->first();
+        $permPermissionDelete   = $this->permission->findByField('name', 'core.p.permissions.delete')->first();
+        $permPermissionList     = $this->permission->findByField('name', 'core.p.permissions.list')->first();
+        $permPermissionEnable   = $this->permission->findByField('name', 'core.p.permissions.enable')->first();
+        $permPermissionDisable  = $this->permission->findByField('name', 'core.p.permissions.disable')->first();
+        $permRoleCreate         = $this->permission->findByField('name', 'core.p.roles.create')->first();
+        $permRoleRead           = $this->permission->findByField('name', 'core.p.roles.read')->first();
+        $permRoleUpdate         = $this->permission->findByField('name', 'core.p.roles.update')->first();
+        $permRoleDelete         = $this->permission->findByField('name', 'core.p.roles.delete')->first();
+        $permRoleList           = $this->permission->findByField('name', 'core.p.roles.list')->first();
+        $permRoleEnable         = $this->permission->findByField('name', 'core.p.roles.enable')->first();
+        $permRoleDisable        = $this->permission->findByField('name', 'core.p.roles.disable')->first();
+        $permRouteCreate        = $this->permission->findByField('name', 'core.p.routes.create')->first();
+        $permRouteRead          = $this->permission->findByField('name', 'core.p.routes.read')->first();
+        $permRouteUpdate        = $this->permission->findByField('name', 'core.p.routes.update')->first();
+        $permRouteDelete        = $this->permission->findByField('name', 'core.p.routes.delete')->first();
+        $permRouteList          = $this->permission->findByField('name', 'core.p.routes.list')->first();
+        $permRouteEnable        = $this->permission->findByField('name', 'core.p.routes.enable')->first();
+        $permRouteDisable       = $this->permission->findByField('name', 'core.p.routes.disable')->first();
+        $permRouteLoad          = $this->permission->findByField('name', 'core.p.routes.load')->first();
+        $permRouteAssignPerms   = $this->permission->findByField('name', 'core.p.routes.assign-perm')->first();
+        $permUserCreate         = $this->permission->findByField('name', 'core.p.users.create')->first();
+        $permUserRead           = $this->permission->findByField('name', 'core.p.users.read')->first();
+        $permUserUpdate         = $this->permission->findByField('name', 'core.p.users.update')->first();
+        $permUserDelete         = $this->permission->findByField('name', 'core.p.users.delete')->first();
+        $permUserList           = $this->permission->findByField('name', 'core.p.users.list')->first();
+        $permUserEnable         = $this->permission->findByField('name', 'core.p.users.enable')->first();
+        $permUserDisable        = $this->permission->findByField('name', 'core.p.users.disable')->first();
 
         ////////////////////////////////////
         ////////////////////////////////////
         /// Locate some roles to assign them.
-        $roleAdmins     = $this->role->findByField('name', 'core.admins')->first();
-        $roleUsers      = $this->role->findByField('name', 'core.users')->first();
+        $roleAdmins     = $this->role->findByField('name', 'core.r.admins')->first();
+        $roleUsers      = $this->role->findByField('name', 'core.r.users')->first();
 
         ////////////////////////////////////
         ////////////////////////////////////
@@ -305,6 +320,9 @@ class ProductionSeeder extends Seeder
         $this->route->findByField('name', 'admin.permissions.index')->first()
             ->permission()->associate($permPermissionList)
             ->save();
+        $this->route->findByField('name', 'admin.permissions.indexPost')->first()
+            ->permission()->associate($permPermissionList)
+            ->save();
         $this->route->findByField('name', 'admin.permissions.create')->first()
             ->permission()->associate($permPermissionCreate)
             ->save();
@@ -317,14 +335,38 @@ class ProductionSeeder extends Seeder
         $this->route->findByField('name', 'admin.permissions.edit')->first()
             ->permission()->associate($permPermissionUpdate)
             ->save();
+        $this->route->findByField('name', 'admin.permissions.editPost')->first()
+            ->permission()->associate($permPermissionUpdate)
+            ->save();
         $this->route->findByField('name', 'admin.permissions.update')->first()
             ->permission()->associate($permPermissionUpdate)
+            ->save();
+        $this->route->findByField('name', 'admin.permissions.delete')->first()
+            ->permission()->associate($permPermissionDelete)
             ->save();
         $this->route->findByField('name', 'admin.permissions.destroy')->first()
             ->permission()->associate($permPermissionDelete)
             ->save();
+        $this->route->findByField('name', 'admin.permissions.confirm-delete')->first()
+            ->permission()->associate($permPermissionDelete)
+            ->save();
+        $this->route->findByField('name', 'admin.permissions.disable')->first()
+            ->permission()->associate($permPermissionDisable)
+            ->save();
+        $this->route->findByField('name', 'admin.permissions.enable')->first()
+            ->permission()->associate($permPermissionEnable)
+            ->save();
+        $this->route->findByField('name', 'admin.permissions.disable-selected')->first()
+            ->permission()->associate($permPermissionDisable)
+            ->save();
+        $this->route->findByField('name', 'admin.permissions.enable-selected')->first()
+            ->permission()->associate($permPermissionEnable)
+            ->save();
         /// Roles
         $this->route->findByField('name', 'admin.roles.index')->first()
+            ->permission()->associate($permRoleList)
+            ->save();
+        $this->route->findByField('name', 'admin.roles.indexPost')->first()
             ->permission()->associate($permRoleList)
             ->save();
         $this->route->findByField('name', 'admin.roles.create')->first()
@@ -339,14 +381,38 @@ class ProductionSeeder extends Seeder
         $this->route->findByField('name', 'admin.roles.edit')->first()
             ->permission()->associate($permRoleUpdate)
             ->save();
+        $this->route->findByField('name', 'admin.roles.editPost')->first()
+            ->permission()->associate($permRoleUpdate)
+            ->save();
         $this->route->findByField('name', 'admin.roles.update')->first()
             ->permission()->associate($permRoleUpdate)
             ->save();
         $this->route->findByField('name', 'admin.roles.destroy')->first()
             ->permission()->associate($permRoleDelete)
             ->save();
+        $this->route->findByField('name', 'admin.roles.delete')->first()
+            ->permission()->associate($permRoleDelete)
+            ->save();
+        $this->route->findByField('name', 'admin.roles.confirm-delete')->first()
+            ->permission()->associate($permRoleDelete)
+            ->save();
+        $this->route->findByField('name', 'admin.roles.enable')->first()
+            ->permission()->associate($permRoleEnable)
+            ->save();
+        $this->route->findByField('name', 'admin.roles.disable')->first()
+            ->permission()->associate($permRoleDisable)
+            ->save();
+        $this->route->findByField('name', 'admin.roles.enable-selected')->first()
+            ->permission()->associate($permRoleEnable)
+            ->save();
+        $this->route->findByField('name', 'admin.roles.disable-selected')->first()
+            ->permission()->associate($permRoleDisable)
+            ->save();
         /// Routes
         $this->route->findByField('name', 'admin.routes.index')->first()
+            ->permission()->associate($permRouteList)
+            ->save();
+        $this->route->findByField('name', 'admin.routes.indexPost')->first()
             ->permission()->associate($permRouteList)
             ->save();
         $this->route->findByField('name', 'admin.routes.create')->first()
@@ -361,14 +427,44 @@ class ProductionSeeder extends Seeder
         $this->route->findByField('name', 'admin.routes.edit')->first()
             ->permission()->associate($permRouteUpdate)
             ->save();
+        $this->route->findByField('name', 'admin.routes.editPost')->first()
+            ->permission()->associate($permRouteUpdate)
+            ->save();
         $this->route->findByField('name', 'admin.routes.update')->first()
             ->permission()->associate($permRouteUpdate)
             ->save();
         $this->route->findByField('name', 'admin.routes.destroy')->first()
             ->permission()->associate($permRouteDelete)
             ->save();
+        $this->route->findByField('name', 'admin.routes.delete')->first()
+            ->permission()->associate($permRouteDelete)
+            ->save();
+        $this->route->findByField('name', 'admin.routes.confirm-delete')->first()
+            ->permission()->associate($permRouteDelete)
+            ->save();
+        $this->route->findByField('name', 'admin.routes.enable')->first()
+            ->permission()->associate($permRouteEnable)
+            ->save();
+        $this->route->findByField('name', 'admin.routes.disable')->first()
+            ->permission()->associate($permRouteDisable)
+            ->save();
+        $this->route->findByField('name', 'admin.routes.enable-selected')->first()
+            ->permission()->associate($permRouteEnable)
+            ->save();
+        $this->route->findByField('name', 'admin.routes.disable-selected')->first()
+            ->permission()->associate($permRouteDisable)
+            ->save();
+        $this->route->findByField('name', 'admin.routes.load')->first()
+            ->permission()->associate($permRouteLoad)
+            ->save();
+        $this->route->findByField('name', 'admin.routes.save-perms')->first()
+            ->permission()->associate($permRouteAssignPerms)
+            ->save();
         /// Users
         $this->route->findByField('name', 'admin.users.index')->first()
+            ->permission()->associate($permUserList)
+            ->save();
+        $this->route->findByField('name', 'admin.users.indexPost')->first()
             ->permission()->associate($permUserList)
             ->save();
         $this->route->findByField('name', 'admin.users.create')->first()
@@ -383,11 +479,32 @@ class ProductionSeeder extends Seeder
         $this->route->findByField('name', 'admin.users.edit')->first()
             ->permission()->associate($permUserUpdate)
             ->save();
+        $this->route->findByField('name', 'admin.users.editPost')->first()
+            ->permission()->associate($permUserUpdate)
+            ->save();
         $this->route->findByField('name', 'admin.users.update')->first()
             ->permission()->associate($permUserUpdate)
             ->save();
         $this->route->findByField('name', 'admin.users.destroy')->first()
             ->permission()->associate($permUserDelete)
+            ->save();
+        $this->route->findByField('name', 'admin.users.delete')->first()
+            ->permission()->associate($permUserDelete)
+            ->save();
+        $this->route->findByField('name', 'admin.users.confirm-delete')->first()
+            ->permission()->associate($permUserDelete)
+            ->save();
+        $this->route->findByField('name', 'admin.users.enable')->first()
+            ->permission()->associate($permUserEnable)
+            ->save();
+        $this->route->findByField('name', 'admin.users.disable')->first()
+            ->permission()->associate($permUserDisable)
+            ->save();
+        $this->route->findByField('name', 'admin.users.enable-selected')->first()
+            ->permission()->associate($permUserEnable)
+            ->save();
+        $this->route->findByField('name', 'admin.users.disable-selected')->first()
+            ->permission()->associate($permUserDisable)
             ->save();
 
     }

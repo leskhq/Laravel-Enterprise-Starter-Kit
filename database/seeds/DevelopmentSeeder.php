@@ -63,9 +63,9 @@ class DevelopmentSeeder extends Seeder
         }
         // Grant user01 permission to list users.
         $user01         = $this->user->findWhere(['username' => 'user01'])->first();
-        $permUserList   = $this->permission->findByField('name', 'core.users.list')->first();
-        $permUserShow   = $this->permission->findByField('name', 'core.users.read')->first();
-        $permUserCreate = $this->permission->findByField('name', 'core.users.create')->first();
+        $permUserList   = $this->permission->findByField('name', 'core.p.users.list')->first();
+        $permUserShow   = $this->permission->findByField('name', 'core.p.users.read')->first();
+        $permUserCreate = $this->permission->findByField('name', 'core.p.users.create')->first();
         $user01->attachPermission($permUserList);
         $user01->attachPermission($permUserShow);
         $user01->attachPermission($permUserCreate);

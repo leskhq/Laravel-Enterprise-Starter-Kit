@@ -78,7 +78,7 @@ class RolesController extends Controller
 
         $grid->add('select', $this->getToggleCheckboxCell())->cell( function( $value, $row) {
             if ($row instanceof Role){
-                if (("core.admins" == $row->name) || ("core.users" == $row->name)) {
+                if (("core.r.admins" == $row->name) || ("core.r.users" == $row->name)) {
                     $cellValue = "";
                 } else {
                     $id = $row->id;
@@ -92,13 +92,13 @@ class RolesController extends Controller
 
         $grid->add('id','ID', true)->style("width:100px");
 
-        if (Auth::user()->hasPermission('core.roles.read')) {
+        if (Auth::user()->hasPermission('core.p.roles.read')) {
             $grid->add('{{ link_to_route(\'admin.roles.show\', $name, [$id], []) }}','Name', 'name');
         } else {
             $grid->add('name','Name', 'name');
         }
 
-        if (Auth::user()->hasPermission('core.roles.read')) {
+        if (Auth::user()->hasPermission('core.p.roles.read')) {
             $grid->add('{{ link_to_route(\'admin.roles.show\', $display_name, [$id], []) }}','Display Name', 'display_name');
         } else {
             $grid->add('display_name','Display name', 'display_name');

@@ -200,7 +200,7 @@ class User extends Authenticatable implements Transformable
     }
 
     /**
-     * Force the membership to the 'core.users' role
+     * Force the membership to the 'core.r.users' role
      * and if empty, set the auth_type to the
      * internal value.
      *
@@ -213,7 +213,7 @@ class User extends Authenticatable implements Transformable
         Log::debug('User.postCreateAndUpdateFix. ', ['username' => $this->username]);
 
         // Force membership to the Users role.
-        $this->forceRole('core.users');
+        $this->forceRole('core.r.users');
 
         // If the auth_type is not explicitly set by the call function or module,
         // set it to the internal value.

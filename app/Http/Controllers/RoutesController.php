@@ -41,13 +41,18 @@ class RoutesController extends Controller
      */
     protected $validator;
 
+    /**
+     * RoutesController constructor.
+     * @param RouteValidator $validator
+     * @param PermissionRepository $permissionRepository
+     * @param RouteRepository $routeRepository
+     */
     public function __construct(RouteValidator $validator, PermissionRepository $permissionRepository, RouteRepository $routeRepository)
     {
         $this->validator    = $validator;
         $this->permission   = $permissionRepository;
         $this->route        = $routeRepository;
     }
-
 
     /**
      * Display a listing of the resource.
@@ -56,6 +61,8 @@ class RoutesController extends Controller
      */
     public function index()
     {
+        $perms = $this->permission->pushCriteria(new PermissionsByDisplayNamesAscending())->pluck('display_name', 'id')->all();
+
         $filter = DataFilter::source(Route::with(['permission']));
         $filter->text('srch','Search against routes or their associated permission')->scope('freesearch');
         $filter->build();
@@ -72,21 +79,42 @@ class RoutesController extends Controller
             return $cellValue;
         });
 
-        $grid->add('{{ ($permission)? $permission->display_name : "" }}','Permission', false);
+        $grid->add('permission', 'Permission')->cell( function( $value, $row) use($perms) {
+            if ($row instanceof Route) {
+                $route = $row;
+                $permID = ($route->permission)?$route->permission->id : 0;
+                $cellValue = "";
+                $cellValue .= "<select style='max-width:150px;' class='select-perms' name='perms[".$route->id."]'>";
+                $cellValue .= "   <option value=''>Select permission</option>";
+                foreach ($perms as $key => $val)
+                {
+                    if ($permID == $key) {
+                        $cellValue .= "   <option value='".$key."' selected='selected' '>".$val."</option>";
+                    } else {
+                        $cellValue .= "   <option value='".$key."'>".$val."</option>";
+                    }
+                }
+                $cellValue .= "</select>";
 
-        if (Auth::user()->hasPermission('core.routes.read')) {
+            } else {
+                $cellValue = "";
+            }
+            return $cellValue;
+        });
+
+        if (Auth::user()->hasPermission('core.p.routes.read')) {
             $grid->add('{{ link_to_route(\'admin.routes.show\', $method, [$id], []) }}','Method', 'method');
         } else {
             $grid->add('method','Method', 'method');
         }
 
-        if (Auth::user()->hasPermission('core.routes.read')) {
+        if (Auth::user()->hasPermission('core.p.routes.read')) {
             $grid->add('{{ link_to_route(\'admin.routes.show\', $path, [$id], []) }}','Path', 'path');
         } else {
             $grid->add('path','Path', 'path');
         }
 
-        if (Auth::user()->hasPermission('core.routes.read')) {
+        if (Auth::user()->hasPermission('core.p.routes.read')) {
             $grid->add('{{ ($name) ? link_to_route(\'admin.routes.show\', $name, [$id], []) : "" }}','Name', 'name');
         } else {
             $grid->add('{{ ($name) ? $name : "" }}','Name', 'Name');
@@ -100,7 +128,7 @@ class RoutesController extends Controller
         $page_title = trans('admin/routes/general.page.index.title');
         $page_description = trans('admin/routes/general.page.index.description');
 
-        return view('admin.routes.index', compact('filter', 'grid', 'page_title', 'page_description'));
+        return view('admin.routes.index', compact('filter', 'grid', 'page_title', 'page_description', 'perms'));
 
     }
 
@@ -183,11 +211,9 @@ class RoutesController extends Controller
 
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
+     * @param RouteEditRequest $request
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(RouteEditRequest $request, $id)
     {
@@ -372,6 +398,59 @@ class RoutesController extends Controller
             Flash::success(trans('admin/routes/general.status.global-disabled'));
         } else {
             Flash::warning(trans('admin/routes/general.status.no-route-selected'));
+        }
+        return redirect($previousURL);
+    }
+
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function load()
+    {
+        $nbRoutesLoaded = Route::loadLaravelRoutes('/.*/');
+        $nbRoutesDeleted = Route::deleteLaravelRoutes();
+
+        Flash::success( trans('admin/routes/general.status.synced', ['nbLoaded' => $nbRoutesLoaded, 'nbDeleted' => $nbRoutesDeleted]) );
+        return redirect('/admin/routes');
+    }
+
+
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function savePerms(Request $request)
+    {
+        $previousURL = URL::previous();
+
+        $AuditAtt = $request->all();
+
+        $chkRoute = $request->input('chkRoute');
+        $globalPerm_id = $request->input('globalPerm');
+        $perms = $request->input('perms');
+
+        if (isset($chkRoute) && isset($globalPerm_id))
+        {
+            foreach ($chkRoute as $route_id)
+            {
+                $route = $this->route->find($route_id);
+                $route->permission_id = $globalPerm_id;
+                $route->save();
+            }
+            Flash::success(trans('admin/routes/general.status.global-perms-assigned'));
+        }
+        elseif (isset($perms))
+        {
+            foreach ($perms as $route_id => $perm_id)
+            {
+                $route = $this->route->find($route_id);
+                $route->permission_id = $perm_id;
+                $route->save();
+            }
+            Flash::success(trans('admin/routes/general.status.indiv-perms-assigned'));
+        }
+        else
+        {
+            Flash::warning(trans('admin/routes/general.status.no-permission-changed-detected'));
         }
         return redirect($previousURL);
     }

@@ -1,6 +1,8 @@
 @extends('layouts.master')
 
 @section('head_extra')
+    <!-- Select2 css -->
+    @include('partials.head_extra_select2_css')
 @endsection
 
 @section('content')
@@ -15,35 +17,56 @@
                         <div class="col-sm-6">
                             <h3 class="box-title">{{ trans('admin/routes/general.page.index.table-title') }}</h3>
 
-                            @permission('core.routes.create')
-                            <a class="btn btn-default btn-sm" href="{!! route('admin.routes.create') !!}" title="{{ trans('admin/routes/general.button.create') }}">
-                                <i class="fa fa-plus-square"></i>
-                            </a>
+                            @permission('core.p.routes.create')
+                                <a class="btn btn-default btn-sm" href="{!! route('admin.routes.create') !!}" title="{{ trans('admin/routes/general.button.create') }}">
+                                    <i class="fa fa-plus-square"></i>
+                                </a>
                             @else
                                 <a class="btn btn-default btn-sm" disabled="true"  href="#" title="{{ trans('admin/routes/general.error.no-permission-to-create-routes') }}">
                                     <i class="fa fa-plus-square"></i>
                                 </a>
-                                @endpermission
+                            @endpermission
 
-                                @permission('core.routes.enable')
+                            @permission('core.p.routes.load')
+                                <a class="btn btn-default btn-sm" href="{!! route('admin.routes.load') !!}" title="{{ trans('admin/routes/general.action.load-routes') }}">
+                                    <i class="fa fa-refresh"></i>
+                                </a>
+                            @else
+                                <a class="btn btn-default btn-sm" disabled="true"  href="#" title="{{ trans('admin/routes/general.action.no-permission-to-load-routes') }}">
+                                    <i class="fa fa-refresh"></i>
+                                </a>
+                            @endpermission
+
+                            @permission('core.p.routes.enable')
                                 <a class="btn btn-default btn-sm" href="#" onclick="document.forms['frmRouteList'].action = '{!! route('admin.routes.enable-selected') !!}';  document.forms['frmRouteList'].submit(); return false;" title="{{ trans('general.button.enable') }}">
                                     <i class="fa fa-check-circle-o"></i>
                                 </a>
-                                @else
-                                    <a class="btn btn-default btn-sm" disabled="true"  href="#" title="{{ trans('admin/routes/general.error.no-permission-to-enable-routes') }}">
-                                        <i class="fa fa-check-circle-o"></i>
-                                    </a>
-                                    &nbsp;                   @endpermission
+                            @else
+                                <a class="btn btn-default btn-sm" disabled="true"  href="#" title="{{ trans('admin/routes/general.error.no-permission-to-enable-routes') }}">
+                                    <i class="fa fa-check-circle-o"></i>
+                                </a>
+                            @endpermission
 
-                                    @permission('core.routes.disable')
-                                    <a class="btn btn-default btn-sm" href="#" onclick="document.forms['frmRouteList'].action = '{!! route('admin.routes.disable-selected') !!}';  document.forms['frmRouteList'].submit(); return false;" title="{{ trans('general.button.disable') }}">
-                                        <i class="fa fa-ban"></i>
-                                    </a>
-                                    @else
-                                        <a class="btn btn-default btn-sm" disabled="true"  href="#" title="{{ trans('admin/routes/general.error.no-permission-to-disable-routes') }}">
-                                            <i class="fa fa-ban"></i>
-                                        </a>
-                                        &nbsp;                   @endpermission
+                            @permission('core.p.routes.disable')
+                                <a class="btn btn-default btn-sm" href="#" onclick="document.forms['frmRouteList'].action = '{!! route('admin.routes.disable-selected') !!}';  document.forms['frmRouteList'].submit(); return false;" title="{{ trans('general.button.disable') }}">
+                                    <i class="fa fa-ban"></i>
+                                </a>
+                            @else
+                                <a class="btn btn-default btn-sm" disabled="true"  href="#" title="{{ trans('admin/routes/general.error.no-permission-to-disable-routes') }}">
+                                    <i class="fa fa-ban"></i>
+                                </a>
+        &nbsp;                   @endpermission
+
+                            @permission('core.p.routes.assign-perm')
+                                <a class="btn btn-default btn-sm" href="#" onclick="document.forms['frmRouteList'].action = '{{ route('admin.routes.save-perms') }}';  document.forms['frmRouteList'].submit(); return false;" title="{{ trans('admin/routes/general.action.save-perms-assignment') }}">
+                                    <i class="fa fa-floppy-o"></i>
+                                </a>
+
+                                {!! Form::select( 'globalPerm', $perms, '', [ 'style' => 'max-width:150px;', 'id' => 'select-global-perm', 'class' => 'select-global-perm', 'placeholder' => trans('admin/routes/general.placeholder.select-permission')] ) !!}
+                            @else
+
+        &nbsp;                   @endpermission
+
                         </div> <!-- col-sm-6 -->
 
                         <div class="col-sm-6">
@@ -77,6 +100,7 @@
 
 @section('body_bottom')
     @include('partials.body_bottom_tab_with_state_reset_js')
+    @include('partials.body_bottom_select2_js')
 
     <script language="JavaScript">
         function toggleCheckbox() {
@@ -86,4 +110,17 @@
             }
         }
     </script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            $(".select-global-perm").select2({
+                placeholder: '{{ trans('admin/routes/general.placeholder.select-permission') }}'
+            });
+            $(".select-perms").select2({
+                placeholder: '{{ trans('admin/routes/general.placeholder.select-permission') }}'
+            });
+        });
+    </script>
+
 @endsection

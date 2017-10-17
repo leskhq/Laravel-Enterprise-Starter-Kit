@@ -116,7 +116,7 @@
                                     @if ( $user->isRoot() )
                                         {!! Form::checkbox('roles[]', $role->id, true, ['disabled']) !!}
                                     @else
-                                        @if ("core.users" == $role->name)
+                                        @if ("core.r.users" == $role->name)
                                             {!! Form::checkbox('roles[]', $role->id, true, ['disabled']) !!}
                                         @elseif($user->roles->contains($role->id))
                                             {!! Form::checkbox('roles[]', $role->id, true) !!}
@@ -157,9 +157,9 @@
                             @foreach($perms as $perm)
 
                                 @switch($perm->name)
-                                    @case("core.guest-only")
-                                    @case("core.open-to-all")
-                                    @case("core.basic-authenticated")
+                                    @case("core.p.guest-only")
+                                    @case("core.p.open-to-all")
+                                    @case("core.p.basic-authenticated")
                                         <!-- Skipping perm: {{$perm->name}} -->
                                         @break
 

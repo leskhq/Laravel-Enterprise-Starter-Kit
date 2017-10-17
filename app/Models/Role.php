@@ -97,7 +97,7 @@ class Role extends LaratrustRole implements Transformable
     public function isDeletable()
     {
         // Protect the admins and users roles from deletion
-        if (('core.admins' == $this->name) || ('core.users' == $this->name)) {
+        if (('core.r.admins' == $this->name) || ('core.r.users' == $this->name)) {
             return false;
         }
 

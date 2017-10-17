@@ -254,7 +254,7 @@ class Permission extends LaratrustPermission implements Transformable
 
     /**
      * Force assignment to the 'root' user and
-     * the membership to the 'core.admins' role
+     * the membership to the 'core.r.admins' role
      * Usually called from:
      *      PermissionEventSubscriber@onPermissionCreated
      *      PermissionEventSubscriber@onPermissionUpdated
@@ -267,7 +267,7 @@ class Permission extends LaratrustPermission implements Transformable
         $this->forceUserAssignment('root');
 
         // Force assignment to the admins.
-        $this->forceRoleAssignment('core.admins');
+        $this->forceRoleAssignment('core.r.admins');
 
         // Temporally disable the event dispatcher to avoid getting in an infinite loop of update events.
         $dispatcher = $this->getEventDispatcher();

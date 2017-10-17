@@ -70,9 +70,9 @@
                                             @foreach($permissions as $perm)
 
                                                 @switch($perm->name)
-                                                    @case("core.guest-only")
-                                                    @case("core.open-to-all")
-                                                    @case("core.basic-authenticated")
+                                                    @case("core.p.guest-only")
+                                                    @case("core.p.open-to-all")
+                                                    @case("core.p.basic-authenticated")
                                                         <!-- Skipping perm: {{$perm->name}} -->
                                                         @break
 

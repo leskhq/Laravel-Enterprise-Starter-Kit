@@ -96,7 +96,7 @@ class UsersController extends Controller
 
         $grid->add('id','ID', true)->style("width:100px");
 
-        if (Auth::user()->hasPermission('core.users.read')) {
+        if (Auth::user()->hasPermission('core.p.users.read')) {
             $grid->add('{{ link_to_route(\'admin.users.show\', $username, [$id], []) }}','User name', 'username');
         } else {
             $grid->add('username','User name', 'username');

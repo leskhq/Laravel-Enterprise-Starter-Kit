@@ -168,7 +168,7 @@ class Utils
 
         try {
             if (($user = User::findOrFail($id))) {
-                if (Auth::user()->hasPermission('core.users.update')) {
+                if (Auth::user()->hasPermission('core.p.users.update')) {
                     $output = '<a href="' . route('admin.users.edit', $user->id) . '" title="' . trans('general.button.edit') . '"><i class="fa fa-pencil-square-o"></i></a>';
                 } else {
                     $output = '<i class="fa fa-pencil-square-o text-muted" title="' . trans('admin/users/general.error.no-permission-to-update-users') . '"></i>';
@@ -178,13 +178,13 @@ class Utils
 
                 if ($user->canBeDisabled()) {
                     if ($user->enabled) {
-                        if (Auth::user()->hasPermission('core.users.disable')) {
+                        if (Auth::user()->hasPermission('core.p.users.disable')) {
                             $output .= '<a href="' . route('admin.users.disable', $user->id) . '" title="' . trans('general.button.disable') . '"><i class="fa fa-check-circle-o enabled"></i></a>';
                         } else {
                             $output .= '<i class="fa fa-check-circle-o text-muted" title="' . trans('admin/users/general.error.no-permission-to-disable-users') . '"></i>';
                         }
                     } else {
-                        if (Auth::user()->hasPermission('core.users.enable')) {
+                        if (Auth::user()->hasPermission('core.p.users.enable')) {
                             $output .= '<a href="' . route('admin.users.enable', $user->id) . '" title="' . trans('general.button.enable') . '"><i class="fa fa-ban disabled"></i></a>';
                         } else {
                             $output .= '<i class="fa fa-ban text-muted" title="' . trans('admin/users/general.error.no-permission-to-enable-users') . '"></i>';
@@ -197,7 +197,7 @@ class Utils
                 $output .= '&nbsp;';
 
                 if ($user->isDeletable()) {
-                    if (Auth::user()->hasPermission('core.users.delete')) {
+                    if (Auth::user()->hasPermission('core.p.users.delete')) {
                         $output .= '<a href="' . route('admin.users.confirm-delete', $user->id) . '" data-toggle="modal" data-target="#modal_dialog" title="' . trans('general.button.delete') . '"><i class="fa fa-trash-o deletable"></i></a>';
                     } else {
                         $output .= '<i class="fa fa-trash-o text-muted" title="'. trans('admin/users/general.error.no-permission-to-delete-users') .'"></i>';
@@ -225,7 +225,7 @@ class Utils
 
         try {
             if (($role = Role::findOrFail($id))) {
-                if ( ($role->isEditable()) && (Auth::user()->hasPermission('core.roles.update')) ) {
+                if ( ($role->isEditable()) && (Auth::user()->hasPermission('core.p.roles.update')) ) {
                     $output = '<a href="' . route('admin.roles.edit', $role->id) . '" title="' . trans('general.button.edit') . '"><i class="fa fa-pencil-square-o"></i></a>';
                 } else {
                     $output = '<i class="fa fa-pencil-square-o text-muted" title="' . trans('admin/roles/general.error.no-permission-to-update-roles') . '"></i>';
@@ -234,13 +234,13 @@ class Utils
                 $output .= '&nbsp;';
 
                 if ($role->enabled) {
-                    if (Auth::user()->hasPermission('core.roles.disable')) {
+                    if (Auth::user()->hasPermission('core.p.roles.disable')) {
                         $output .= '<a href="' . route('admin.roles.disable', $role->id) . '" title="' . trans('general.button.disable') . '"><i class="fa fa-check-circle-o enabled"></i></a>';
                     } else {
                         $output .= '<i class="fa fa-check-circle-o text-muted" title="' . trans('admin/roles/general.error.no-permission-to-disable-roles') . '"></i>';
                     }
                 } else {
-                    if (Auth::user()->hasPermission('core.roles.enable')) {
+                    if (Auth::user()->hasPermission('core.p.roles.enable')) {
                         $output .= '<a href="' . route('admin.roles.enable', $role->id) . '" title="' . trans('general.button.enable') . '"><i class="fa fa-ban disabled"></i></a>';
                     } else {
                         $output .= '<i class="fa fa-ban text-muted" title="' . trans('admin/roles/general.error.no-permission-to-enable-roles') . '"></i>';
@@ -251,7 +251,7 @@ class Utils
                 $output .= '&nbsp;';
 
                 if ($role->isDeletable()) {
-                    if (Auth::user()->hasPermission('core.roles.delete')) {
+                    if (Auth::user()->hasPermission('core.p.roles.delete')) {
                         $output .= '<a href="' . route('admin.roles.confirm-delete', $role->id) . '" data-toggle="modal" data-target="#modal_dialog" title="' . trans('general.button.delete') . '"><i class="fa fa-trash-o deletable"></i></a>';
                     } else {
                         $output .= '<i class="fa fa-trash-o text-muted" title="'. trans('admin/roles/general.error.no-permission-to-delete-roles') .'"></i>';
@@ -278,7 +278,7 @@ class Utils
 
         try {
             if (($perm = Permission::findOrFail($id))) {
-                if ( ($perm->isEditable()) && (Auth::user()->hasPermission('core.permissions.update')) ) {
+                if ( ($perm->isEditable()) && (Auth::user()->hasPermission('core.p.permissions.update')) ) {
                     $output = '<a href="' . route('admin.permissions.edit', $perm->id) . '" title="' . trans('general.button.edit') . '"><i class="fa fa-pencil-square-o"></i></a>';
                 } else {
                     $output = '<i class="fa fa-pencil-square-o text-muted" title="' . trans('admin/permissions/general.error.no-permission-to-update-permissions') . '"></i>';
@@ -287,13 +287,13 @@ class Utils
                 $output .= '&nbsp;';
 
                 if ($perm->enabled) {
-                    if (Auth::user()->hasPermission('core.permissions.disable')) {
+                    if (Auth::user()->hasPermission('core.p.permissions.disable')) {
                         $output .= '<a href="' . route('admin.permissions.disable', $perm->id) . '" title="' . trans('general.button.disable') . '"><i class="fa fa-check-circle-o enabled"></i></a>';
                     } else {
                         $output .= '<i class="fa fa-check-circle-o text-muted" title="' . trans('admin/permissions/general.error.no-permission-to-disable-permissions') . '"></i>';
                     }
                 } else {
-                    if (Auth::user()->hasPermission('core.permissions.enable')) {
+                    if (Auth::user()->hasPermission('core.p.permissions.enable')) {
                         $output .= '<a href="' . route('admin.permissions.enable', $perm->id) . '" title="' . trans('general.button.enable') . '"><i class="fa fa-ban disabled"></i></a>';
                     } else {
                         $output .= '<i class="fa fa-ban text-muted" title="' . trans('admin/permissions/general.error.no-permission-to-enable-permissions') . '"></i>';
@@ -304,7 +304,7 @@ class Utils
                 $output .= '&nbsp;';
 
                 if ($perm->isDeletable()) {
-                    if (Auth::user()->hasPermission('core.permissions.delete')) {
+                    if (Auth::user()->hasPermission('core.p.permissions.delete')) {
                         $output .= '<a href="' . route('admin.permissions.confirm-delete', $perm->id) . '" data-toggle="modal" data-target="#modal_dialog" title="' . trans('general.button.delete') . '"><i class="fa fa-trash-o deletable"></i></a>';
                     } else {
                         $output .= '<i class="fa fa-trash-o text-muted" title="'. trans('admin/permissions/general.error.no-permission-to-delete-permissions') .'"></i>';
@@ -327,7 +327,7 @@ class Utils
 
         try {
             if (($route = Route::findOrFail($id))) {
-                if (Auth::user()->hasPermission('core.routes.update') ) {
+                if (Auth::user()->hasPermission('core.p.routes.update') ) {
                     $output = '<a href="' . route('admin.routes.edit', $route->id) . '" title="' . trans('general.button.edit') . '"><i class="fa fa-pencil-square-o"></i></a>';
                 } else {
                     $output = '<i class="fa fa-pencil-square-o text-muted" title="' . trans('admin/routes/general.error.no-permission-to-update-routes') . '"></i>';
@@ -336,13 +336,13 @@ class Utils
                 $output .= '&nbsp;';
 
                 if ($route->enabled) {
-                    if (Auth::user()->hasPermission('core.routes.disable')) {
+                    if (Auth::user()->hasPermission('core.p.routes.disable')) {
                         $output .= '<a href="' . route('admin.routes.disable', $route->id) . '" title="' . trans('general.button.disable') . '"><i class="fa fa-check-circle-o enabled"></i></a>';
                     } else {
                         $output .= '<i class="fa fa-check-circle-o text-muted" title="' . trans('admin/routes/general.error.no-permission-to-disable-routes') . '"></i>';
                     }
                 } else {
-                    if (Auth::user()->hasPermission('core.routes.enable')) {
+                    if (Auth::user()->hasPermission('core.p.routes.enable')) {
                         $output .= '<a href="' . route('admin.routes.enable', $route->id) . '" title="' . trans('general.button.enable') . '"><i class="fa fa-ban disabled"></i></a>';
                     } else {
                         $output .= '<i class="fa fa-ban text-muted" title="' . trans('admin/routes/general.error.no-permission-to-enable-routes') . '"></i>';
@@ -352,7 +352,7 @@ class Utils
 
                 $output .= '&nbsp;';
 
-                if (Auth::user()->hasPermission('core.routes.delete')) {
+                if (Auth::user()->hasPermission('core.p.routes.delete')) {
                     $output .= '<a href="' . route('admin.routes.confirm-delete', $route->id) . '" data-toggle="modal" data-target="#modal_dialog" title="' . trans('general.button.delete') . '"><i class="fa fa-trash-o deletable"></i></a>';
                 } else {
                     $output .= '<i class="fa fa-trash-o text-muted" title="'. trans('admin/routes/general.error.no-permission-to-delete-routes') .'"></i>';
