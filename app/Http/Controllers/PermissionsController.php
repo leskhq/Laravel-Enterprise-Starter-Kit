@@ -9,6 +9,7 @@ use App\Events\PermissionUpdatingRoles;
 use App\Events\PermissionUpdatingRoutes;
 use App\Events\PermissionUpdatingUsers;
 use App\Http\Requests\PermissionEditRequest;
+use App\Http\Requests\PermissionIndexRequest;
 use App\Models\Permission;
 use App\Repositories\Criteria\Roles\RolesByDisplayNamesAscending;
 use App\Repositories\Criteria\Routes\RoutesByIDAscending;
@@ -73,9 +74,10 @@ class PermissionsController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param PermissionIndexRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(PermissionIndexRequest $request)
     {
 
         $filter = DataFilter::source(Permission::with(['users', 'roles', 'routes']));
@@ -84,43 +86,60 @@ class PermissionsController extends Controller
 
         $grid = DataGrid::source($filter);
 
-        $grid->add('select', $this->getToggleCheckboxCell())->cell( function( $value, $row) {
-            if ($row instanceof Permission) {
-                $id = $row->id;
-                $cellValue = "<input type='checkbox' name='chkPerm[]' id='" . $id . " 'value='" . $id . "' >";
+        // Get all attribute from the request.
+        $attributes = $request->all();
+
+        if ((array_has($attributes, 'export_to_csv')) && ("true" == $attributes['export_to_csv'])) {
+            $grid->add('id', 'ID');
+            $grid->add('name', 'Name');
+            $grid->add('display_name', 'Display Name');
+            $grid->add('description', 'Description');
+            $grid->add('{{ $routes->count() }}', 'Routes', false);
+            $grid->add('{{ $roles->count() }}', 'Roles', false);
+            $grid->add('{{ $users->count() }}', 'Users', false);
+
+            return $grid->buildCSV('export-roles_', 'Y-m-d.His');
+
+        } else {
+
+            $grid->add('select', $this->getToggleCheckboxCell())->cell(function ($value, $row) {
+                if ($row instanceof Permission) {
+                    $id = $row->id;
+                    $cellValue = "<input type='checkbox' name='chkPerm[]' id='" . $id . " 'value='" . $id . "' >";
+                } else {
+                    $cellValue = "";
+                }
+                return $cellValue;
+            });
+
+            $grid->add('id', 'ID', true)->style("width:100px");
+
+            if (Auth::user()->hasPermission('core.p.permissions.read')) {
+                $grid->add('{{ link_to_route(\'admin.permissions.show\', $name, [$id], []) }}', 'Name', 'name');
             } else {
-                $cellValue = "";
+                $grid->add('name', 'Name', 'name');
             }
-            return $cellValue;
-        });
 
-        $grid->add('id','ID', true)->style("width:100px");
+            if (Auth::user()->hasPermission('core.p.permissions.read')) {
+                $grid->add('{{ link_to_route(\'admin.permissions.show\', $display_name, [$id], []) }}', 'Display Name', 'display_name');
+            } else {
+                $grid->add('display_name', 'Display name', 'display_name');
+            }
 
-        if (Auth::user()->hasPermission('core.p.permissions.read')) {
-            $grid->add('{{ link_to_route(\'admin.permissions.show\', $name, [$id], []) }}','Name', 'name');
-        } else {
-            $grid->add('name','Name', 'name');
+            $grid->add('description', 'Description', false);
+            $grid->add('{{ $routes->count() }}', 'Routes', false);
+            $grid->add('{{ $roles->count() }}', 'Roles', false);
+            $grid->add('{{ $users->count() }}', 'Users', false);
+            $grid->add('{!! App\Libraries\Utils::permissionActionslinks($id) !!}', 'Actions');
+
+            $grid->orderBy('name', 'asc');
+            $grid->paginate(10);
+
+            $page_title = trans('admin/permissions/general.page.index.title');
+            $page_description = trans('admin/permissions/general.page.index.description');
+
+            return view('admin.permissions.index', compact('filter', 'grid', 'page_title', 'page_description'));
         }
-
-        if (Auth::user()->hasPermission('core.p.permissions.read')) {
-            $grid->add('{{ link_to_route(\'admin.permissions.show\', $display_name, [$id], []) }}','Display Name', 'display_name');
-        } else {
-            $grid->add('display_name','Display name', 'display_name');
-        }
-
-        $grid->add('description','Description', false);
-        $grid->add('{{ $routes->count() }}','Routes', false);
-        $grid->add('{{ $roles->count() }}','Roles', false);
-        $grid->add('{{ $users->count() }}','Users', false);
-        $grid->add( '{!! App\Libraries\Utils::permissionActionslinks($id) !!}', 'Actions');
-
-        $grid->orderBy('name','asc');
-        $grid->paginate(10);
-
-        $page_title = trans('admin/permissions/general.page.index.title');
-        $page_description = trans('admin/permissions/general.page.index.description');
-
-        return view('admin.permissions.index', compact('filter', 'grid', 'page_title', 'page_description'));
     }
 
     /**
