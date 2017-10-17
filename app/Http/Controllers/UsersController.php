@@ -11,6 +11,7 @@ use App\Events\UserUpdatingSettings;
 use App\Http\Requests;
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserEditRequest;
+use App\Http\Requests\UserIndexRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Libraries\Arr;
 use App\Libraries\Str;
@@ -69,53 +70,72 @@ class UsersController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param UserIndexRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(UserIndexRequest $request)
     {
 
         $filter = DataFilter::source(User::with(['roles', 'permissions']));
-        $filter->text('srch','Search against users or their associated roles or permissions')->scope('freesearch');
+        $filter->text('srch', 'Search against users or their associated roles or permissions')->scope('freesearch');
         $filter->build();
 
         $grid = DataGrid::source($filter);
 
-        $grid->add('select', $this->getToggleCheckboxCell())->cell( function( $value, $row) {
-            if ($row instanceof User){
-                if ($row->isRoot()) {
-                    $cellValue = "";
-                } else {
-                    $id = $row->id;
-                    $cellValue = "<input type='checkbox' name='chkUser[]' id='".$id." 'value='".$id."' >";
-                }
-            } else {
-                $cellValue = "";
-            }
-            return $cellValue;
-        });
+        // Get all attribute from the request.
+        $attributes = $request->all();
 
-        $grid->add('id','ID', true)->style("width:100px");
+        if ((array_has($attributes, 'export_to_csv')) && ("true" == $attributes['export_to_csv'])) {
+            $grid->add('id', 'ID');
+            $grid->add('username', 'User name');
+            $grid->add('first_name', 'First Name');
+            $grid->add('last_name', 'Last Name');
+            $grid->add('{{ $roles->count() }}', 'Roles', false);
+            $grid->add('{{ $permissions->count() }}', 'Permissions', false);
+            $grid->add('email', 'Email', true);
+            $grid->add('auth_type', 'Type', true);
 
-        if (Auth::user()->hasPermission('core.p.users.read')) {
-            $grid->add('{{ link_to_route(\'admin.users.show\', $username, [$id], []) }}','User name', 'username');
+            return $grid->buildCSV('export-users_', 'Y-m-d.His');
+
         } else {
-            $grid->add('username','User name', 'username');
+
+            $grid->add('select', $this->getToggleCheckboxCell())->cell(function ($value, $row) {
+                if ($row instanceof User) {
+                    if ($row->isRoot()) {
+                        $cellValue = "";
+                    } else {
+                        $id = $row->id;
+                        $cellValue = "<input type='checkbox' name='chkUser[]' id='" . $id . " 'value='" . $id . "' >";
+                    }
+                } else {
+                    $cellValue = "";
+                }
+                return $cellValue;
+            });
+
+            $grid->add('id', 'ID', true)->style("width:100px");
+
+            if (Auth::user()->hasPermission('core.p.users.read')) {
+                $grid->add('{{ link_to_route(\'admin.users.show\', $username, [$id], []) }}', 'User name', 'username');
+            } else {
+                $grid->add('username', 'User name', 'username');
+            }
+
+            $grid->add('fullname', 'Name', false);
+            $grid->add('{{ $roles->count() }}', 'Roles', false);
+            $grid->add('{{ $permissions->count() }}', 'Permissions', false);
+            $grid->add('email', 'Email', true);
+            $grid->add('auth_type', 'Type', true);
+            $grid->add('{!! App\Libraries\Utils::userActionslinks($id) !!}', 'Actions');
+
+            $grid->orderBy('username', 'asc');
+            $grid->paginate(10);
+
+            $page_title = trans('admin/users/general.page.index.title');
+            $page_description = trans('admin/users/general.page.index.description');
+
+            return view('admin.users.index', compact('filter', 'grid', 'page_title', 'page_description'));
         }
-
-        $grid->add('fullname','Name', false);
-        $grid->add('{{ $roles->count() }}','Roles', false);
-        $grid->add('{{ $permissions->count() }}','Permissions', false);
-        $grid->add('email','Email', true);
-        $grid->add('auth_type','Type', true);
-        $grid->add( '{!! App\Libraries\Utils::userActionslinks($id) !!}', 'Actions');
-
-        $grid->orderBy('username','asc');
-        $grid->paginate(10);
-
-        $page_title = trans('admin/users/general.page.index.title');
-        $page_description = trans('admin/users/general.page.index.description');
-
-        return view('admin.users.index', compact('filter', 'grid', 'page_title', 'page_description'));
     }
     /**
      * Show the form for creating the specified resource.

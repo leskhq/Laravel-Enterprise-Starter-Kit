@@ -14,7 +14,7 @@
 
                 {!! Form::hidden('export_to_csv', "false", ['id' => 'export_to_csv']) !!}
 
-                <button class="hidden_away" type="submit" title="{{ trans('admin/routes/general.action.filter-results') }}" id="btn-hidden-form-submit"></button>
+                <button class="hidden_away" type="submit" title="{{ trans('general.button.filter-results') }}" id="btn-hidden-form-submit"></button>
 
                 <div class="box box-primary">
                     <div class="box-header with-border">
@@ -79,16 +79,16 @@
                                 {!! $filter->open !!}
                                 <div class="input-group custom-search-form">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-default" type="submit" title="{{ trans('admin/routes/general.action.export-results') }}" id="btn-export-to-csv">
+                                        <button class="btn btn-default" type="submit" title="{{ trans('general.button.export-results') }}" id="btn-export-to-csv">
                                             <span class="glyphicon glyphicon-export"></span>
                                         </button>
                                     </span>
                                     {!! $filter->field('srch') !!}
                                     <span class="input-group-btn">
-                                        <button class="btn btn-default" type="submit" title="{{ trans('admin/routes/general.action.filter-results') }}">
+                                        <button class="btn btn-default" type="submit" title="{{ trans('general.button.filter-results') }}">
                                             <span class="glyphicon glyphicon-search"></span>
                                         </button>
-                                        <a href="{!! route('admin.routes.index') !!}" class="btn btn-default" title="{{ trans('admin/routes/general.action.reset-filter') }}">
+                                        <a href="{!! route('admin.routes.index') !!}" class="btn btn-default" title="{{ trans('general.button.reset-filter') }}">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </a>
                                     </span>

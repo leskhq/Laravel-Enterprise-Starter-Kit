@@ -24,6 +24,9 @@ return [
         'disabled'          => 'Disabled',
         'toggle-select'     => 'Toggle checkboxes',
         'remove-role'       => 'Remove role',
+        'filter-results'    => 'Filter results.',
+        'export-results'    => 'Export results as CSV file.',
+        'reset-filter'      => 'Reset filters.',
     ],
 
     'status'              => [
