@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Requests\RouteCreateRequest;
 use App\Http\Requests\RouteEditRequest;
+use App\Http\Requests\RouteIndexRequest;
 use App\Http\Requests\RouteUpdateRequest;
 use App\Models\Route;
 use App\Repositories\Criteria\Permissions\PermissionsByDisplayNamesAscending;
@@ -57,9 +58,10 @@ class RoutesController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param RouteIndexRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(RouteIndexRequest $request)
     {
         $perms = $this->permission->pushCriteria(new PermissionsByDisplayNamesAscending())->pluck('display_name', 'id')->all();
 
@@ -69,66 +71,81 @@ class RoutesController extends Controller
 
         $grid = DataGrid::source($filter);
 
-        $grid->add('select', $this->getToggleCheckboxCell())->cell( function( $value, $row) {
-            if ($row instanceof Route) {
-                $id = $row->id;
-                $cellValue = "<input type='checkbox' name='chkRoute[]' id='" . $id . " 'value='" . $id . "' >";
-            } else {
-                $cellValue = "";
-            }
-            return $cellValue;
-        });
+        // Get all attribute from the request.
+        $attributes = $request->all();
 
-        $grid->add('permission', 'Permission')->cell( function( $value, $row) use($perms) {
-            if ($row instanceof Route) {
-                $route = $row;
-                $permID = ($route->permission)?$route->permission->id : 0;
-                $cellValue = "";
-                $cellValue .= "<select style='max-width:150px;' class='select-perms' name='perms[".$route->id."]'>";
-                $cellValue .= "   <option value=''>Select permission</option>";
-                foreach ($perms as $key => $val)
-                {
-                    if ($permID == $key) {
-                        $cellValue .= "   <option value='".$key."' selected='selected' '>".$val."</option>";
-                    } else {
-                        $cellValue .= "   <option value='".$key."'>".$val."</option>";
-                    }
+        if ( (array_has($attributes, 'export_to_csv')) && ("true" == $attributes['export_to_csv']) ) {
+            $grid->add('{!! $permission->display_name !!}', 'Permission');
+            $grid->add('method', 'Method');
+            $grid->add('path', 'Path');
+            $grid->add('name', 'Name');
+
+            return $grid->buildCSV('export-routes_', 'Y-m-d.His');
+
+        } else {
+
+            $grid->add('select', $this->getToggleCheckboxCell())->cell( function( $value, $row) {
+                if ($row instanceof Route) {
+                    $id = $row->id;
+                    $cellValue = "<input type='checkbox' name='chkRoute[]' id='" . $id . " 'value='" . $id . "' >";
+                } else {
+                    $cellValue = "";
                 }
-                $cellValue .= "</select>";
+                return $cellValue;
+            });
 
+            $grid->add('permission', 'Permission')->cell( function( $value, $row) use($perms) {
+                if ($row instanceof Route) {
+                    $route = $row;
+                    $permID = ($route->permission)?$route->permission->id : 0;
+                    $cellValue = "";
+                    $cellValue .= "<select style='max-width:150px;' class='select-perms' name='perms[".$route->id."]'>";
+                    $cellValue .= "   <option value=''>Select permission</option>";
+                    foreach ($perms as $key => $val)
+                    {
+                        if ($permID == $key) {
+                            $cellValue .= "   <option value='".$key."' selected='selected' '>".$val."</option>";
+                        } else {
+                            $cellValue .= "   <option value='".$key."'>".$val."</option>";
+                        }
+                    }
+                    $cellValue .= "</select>";
+
+                } else {
+                    $cellValue = "";
+                }
+                return $cellValue;
+            });
+
+            if (Auth::user()->hasPermission('core.p.routes.read')) {
+                $grid->add('{{ link_to_route(\'admin.routes.show\', $method, [$id], []) }}','Method', 'method');
             } else {
-                $cellValue = "";
+                $grid->add('method','Method', 'method');
             }
-            return $cellValue;
-        });
 
-        if (Auth::user()->hasPermission('core.p.routes.read')) {
-            $grid->add('{{ link_to_route(\'admin.routes.show\', $method, [$id], []) }}','Method', 'method');
-        } else {
-            $grid->add('method','Method', 'method');
+            if (Auth::user()->hasPermission('core.p.routes.read')) {
+                $grid->add('{{ link_to_route(\'admin.routes.show\', $path, [$id], []) }}','Path', 'path');
+            } else {
+                $grid->add('path','Path', 'path');
+            }
+
+            if (Auth::user()->hasPermission('core.p.routes.read')) {
+                $grid->add('{{ ($name) ? link_to_route(\'admin.routes.show\', $name, [$id], []) : "" }}','Name', 'name');
+            } else {
+                $grid->add('{{ ($name) ? $name : "" }}','Name', 'Name');
+            }
+
+            $grid->add( '{!! App\Libraries\Utils::routeActionslinks($id) !!}', 'Actions');
+
+            $grid->orderBy('path','asc');
+
+            $grid->paginate(20);
+
+            $page_title = trans('admin/routes/general.page.index.title');
+            $page_description = trans('admin/routes/general.page.index.description');
+
+            return view('admin.routes.index', compact('filter', 'grid', 'page_title', 'page_description', 'perms'));
         }
-
-        if (Auth::user()->hasPermission('core.p.routes.read')) {
-            $grid->add('{{ link_to_route(\'admin.routes.show\', $path, [$id], []) }}','Path', 'path');
-        } else {
-            $grid->add('path','Path', 'path');
-        }
-
-        if (Auth::user()->hasPermission('core.p.routes.read')) {
-            $grid->add('{{ ($name) ? link_to_route(\'admin.routes.show\', $name, [$id], []) : "" }}','Name', 'name');
-        } else {
-            $grid->add('{{ ($name) ? $name : "" }}','Name', 'Name');
-        }
-
-        $grid->add( '{!! App\Libraries\Utils::routeActionslinks($id) !!}', 'Actions');
-
-        $grid->orderBy('path','asc');
-        $grid->paginate(20);
-
-        $page_title = trans('admin/routes/general.page.index.title');
-        $page_description = trans('admin/routes/general.page.index.description');
-
-        return view('admin.routes.index', compact('filter', 'grid', 'page_title', 'page_description', 'perms'));
 
     }
 

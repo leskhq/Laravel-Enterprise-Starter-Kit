@@ -83,6 +83,9 @@ return [
         'enable-selected'                           => 'Enable selected route',
         'disable-selected'                          => 'Disable selected route',
         'save-perms-assignment'                     => 'Save permission assignments',
+        'filter-results'                            => 'Filter results.',
+        'export-results'                            => 'Export results as CSV file.',
+        'reset-filter'                              => 'Reset filters.',
     ],
 
     'placeholder'   => [
