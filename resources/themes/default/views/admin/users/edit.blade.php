@@ -30,7 +30,7 @@
 @endsection
 
 @section('body_bottom')
-    @include('partials.body_bottom_select2_css')
+    @include('partials.body_bottom_select2_js')
     @include('admin.users._body_bottom_select2_js_user_settings')
     @include('partials.body_bottom_tab_with_state_set_js')
 
