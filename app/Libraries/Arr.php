@@ -46,4 +46,15 @@ class Arr extends BaseArr
 
         return $array;
     }
+
+    public static function assoc_to_index ($callback, array $arr)
+    {
+        $remapped = array();
+
+        foreach($arr as $k => $v) {
+            $remapped[] = $callback($k, $v);
+        }
+        return $remapped;
+    }
+
 }
