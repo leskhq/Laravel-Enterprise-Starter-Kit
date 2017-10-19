@@ -43,6 +43,14 @@ class LeskSettingsManager extends SettingsManager implements SettingsManagerCont
         return $ret;
     }
 
+    public function forget($key)
+    {
+        $ret =  parent::forget($key);
+        $this->save();
+
+        return $ret;
+    }
+
 
     public function set($key, $value = null, $encrypt = false)
     {
@@ -60,7 +68,7 @@ class LeskSettingsManager extends SettingsManager implements SettingsManagerCont
     {
         $val = $this->underlyingGet($key, $defaultVal);
 
-        if ( $this->isEncrypted($val) ) {
+        if ( $this->isEncrypted($key, $val) ) {
             $val = $this->decrypt($val);
         }
 
@@ -85,8 +93,12 @@ class LeskSettingsManager extends SettingsManager implements SettingsManagerCont
      * @param $val
      * @return bool
      */
-    public function isEncrypted($val)
+    public function isEncrypted($key, $val = null)
     {
+        if (Str::isNullOrEmptyString($val)) {
+            $val = $this->underlyingGet($key);
+        }
+
         if ( is_string($val) && Str::startsWith($val, self::$ENCRYPTED_PREFIX) ) {
             return true;
         } else {
