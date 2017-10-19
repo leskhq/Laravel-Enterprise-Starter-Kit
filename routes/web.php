@@ -32,8 +32,8 @@ Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@ind
 // Admin
 Route::prefix('admin')->group(function () {
     // Permissions
-    Route::post(  'permissions/enableSelected',                ['as' => 'admin.permissions.enable-selected',  'uses' => 'PermissionsController@enableSelected']);
-    Route::post(  'permissions/disableSelected',               ['as' => 'admin.permissions.disable-selected', 'uses' => 'PermissionsController@disableSelected']);
+    Route::post  ('permissions/enableSelected',                ['as' => 'admin.permissions.enable-selected',  'uses' => 'PermissionsController@enableSelected']);
+    Route::post  ('permissions/disableSelected',               ['as' => 'admin.permissions.disable-selected', 'uses' => 'PermissionsController@disableSelected']);
     Route::get   ('permissions/create',                        ['as' => 'admin.permissions.create',           'uses' => 'PermissionsController@create' ]);
     Route::patch ('permissions/{permissionId}',                ['as' => 'admin.permissions.update',           'uses' => 'PermissionsController@update' ]);
     Route::get   ('permissions/{permissionId}',                ['as' => 'admin.permissions.show',             'uses' => 'PermissionsController@show'   ]);
@@ -51,8 +51,8 @@ Route::prefix('admin')->group(function () {
 //    Route::get(   'roles/search',      ['as' => 'admin.roles.search',   'uses' => 'RolesController@searchByName']);
 //    Route::post(  'roles/getInfo',     ['as' => 'admin.roles.get-info', 'uses' => 'RolesController@getInfo']);
 
-    Route::post(  'roles/enableSelected',          ['as' => 'admin.roles.enable-selected',  'uses' => 'RolesController@enableSelected']);
-    Route::post(  'roles/disableSelected',         ['as' => 'admin.roles.disable-selected', 'uses' => 'RolesController@disableSelected']);
+    Route::post  ('roles/enableSelected',          ['as' => 'admin.roles.enable-selected',  'uses' => 'RolesController@enableSelected']);
+    Route::post  ('roles/disableSelected',         ['as' => 'admin.roles.disable-selected', 'uses' => 'RolesController@disableSelected']);
     Route::get   ('roles/create',                  ['as' => 'admin.roles.create',           'uses' => 'RolesController@create' ]);
     Route::patch ('roles/{roleId}',                ['as' => 'admin.roles.update',           'uses' => 'RolesController@update' ]);
     Route::get   ('roles/{roleId}',                ['as' => 'admin.roles.show',             'uses' => 'RolesController@show'   ]);
@@ -67,10 +67,10 @@ Route::prefix('admin')->group(function () {
     Route::get   ('roles',                         ['as' => 'admin.roles.index',            'uses' => 'RolesController@index'  ]);
     Route::post  ('roles',                         ['as' => 'admin.roles.indexPost',        'uses' => 'RolesController@index'  ]);
     // Routes
-    Route::get(   'routes/load',                     ['as' => 'admin.routes.load',             'uses' => 'RoutesController@load']);
-    Route::post(  'routes/enableSelected',           ['as' => 'admin.routes.enable-selected',  'uses' => 'RoutesController@enableSelected']);
-    Route::post(  'routes/disableSelected',          ['as' => 'admin.routes.disable-selected', 'uses' => 'RoutesController@disableSelected']);
-    Route::post(  'routes/savePerms',                ['as' => 'admin.routes.save-perms',       'uses' => 'RoutesController@savePerms']);
+    Route::get   ('routes/load',                     ['as' => 'admin.routes.load',             'uses' => 'RoutesController@load']);
+    Route::post  ('routes/enableSelected',           ['as' => 'admin.routes.enable-selected',  'uses' => 'RoutesController@enableSelected']);
+    Route::post  ('routes/disableSelected',          ['as' => 'admin.routes.disable-selected', 'uses' => 'RoutesController@disableSelected']);
+    Route::post  ('routes/savePerms',                ['as' => 'admin.routes.save-perms',       'uses' => 'RoutesController@savePerms']);
     Route::get   ('routes/create',                   ['as' => 'admin.routes.create',           'uses' => 'RoutesController@create' ]);
     Route::patch ('routes/{routeId}',                ['as' => 'admin.routes.update',           'uses' => 'RoutesController@update' ]);
     Route::get   ('routes/{routeId}',                ['as' => 'admin.routes.show',             'uses' => 'RoutesController@show'   ]);
@@ -85,8 +85,8 @@ Route::prefix('admin')->group(function () {
     Route::get   ('routes',                          ['as' => 'admin.routes.index',            'uses' => 'RoutesController@index'  ]);
     Route::post  ('routes',                          ['as' => 'admin.routes.indexPost',        'uses' => 'RoutesController@index'  ]);
     // Users
-    Route::post(  'users/enableSelected',          ['as' => 'admin.users.enable-selected',  'uses' => 'UsersController@enableSelected']);
-    Route::post(  'users/disableSelected',         ['as' => 'admin.users.disable-selected', 'uses' => 'UsersController@disableSelected']);
+    Route::post  ('users/enableSelected',          ['as' => 'admin.users.enable-selected',  'uses' => 'UsersController@enableSelected']);
+    Route::post  ('users/disableSelected',         ['as' => 'admin.users.disable-selected', 'uses' => 'UsersController@disableSelected']);
     Route::get   ('users/create',                  ['as' => 'admin.users.create',           'uses' => 'UsersController@create' ]);
     Route::patch ('users/{userId}',                ['as' => 'admin.users.update',           'uses' => 'UsersController@update' ]);
     Route::get   ('users/{userId}',                ['as' => 'admin.users.show',             'uses' => 'UsersController@show'   ]);
@@ -100,4 +100,20 @@ Route::prefix('admin')->group(function () {
     Route::post  ('users/store',                   ['as' => 'admin.users.store',            'uses' => 'UsersController@store'  ]);
     Route::get   ('users',                         ['as' => 'admin.users.index',            'uses' => 'UsersController@index'  ]);
     Route::post  ('users',                         ['as' => 'admin.users.indexPost',        'uses' => 'UsersController@index'  ]);
+
+    // Settings routes
+    Route::post  ('settings',                             ['as' => 'admin.settings.store',                   'uses' => 'SettingsController@store']);
+    Route::get   ('settings',                             ['as' => 'admin.settings.index',                   'uses' => 'SettingsController@index']);
+    Route::get   ('settings/load',                        ['as' => 'admin.settings.load',                    'uses' => 'SettingsController@load']);
+    Route::get   ('settings/create',                      ['as' => 'admin.settings.create',                  'uses' => 'SettingsController@create']);
+    Route::get   ('settings/confirm-delete-selected',     ['as' => 'admin.settings.confirm-delete-selected', 'uses' => 'SettingsController@getModalDeleteSelected']);
+    Route::post  ('settings/destroy-selected',            ['as' => 'admin.settings.destroy-selected',        'uses' => 'SettingsController@destroySelected']);
+    Route::get   ('settings/{settingKey}',                ['as' => 'admin.settings.show',                    'uses' => 'SettingsController@show']);
+    Route::patch ('settings/{settingKey}',                ['as' => 'admin.settings.patch',                   'uses' => 'SettingsController@update']);
+    Route::put   ('settings/{settingKey}',                ['as' => 'admin.settings.update',                  'uses' => 'SettingsController@update']);
+    Route::delete('settings/{settingKey}',                ['as' => 'admin.settings.destroy',                 'uses' => 'SettingsController@destroy']);
+    Route::get   ('settings/{settingKey}/edit',           ['as' => 'admin.settings.edit',                    'uses' => 'SettingsController@edit']);
+    Route::get   ('settings/{settingKey}/confirm-delete', ['as' => 'admin.settings.confirm-delete',          'uses' => 'SettingsController@getModalDelete']);
+    Route::get   ('settings/{settingKey}/delete',         ['as' => 'admin.settings.delete',                  'uses' => 'SettingsController@destroy']);
+
 });

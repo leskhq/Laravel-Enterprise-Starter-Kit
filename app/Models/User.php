@@ -278,4 +278,16 @@ class User extends Authenticatable implements Transformable
 
     }
 
+    /**
+     * Scope a query to only include users of a given username
+     *
+     * @param $query
+     * @param $string
+     * @return mixed
+     */
+    public function scopeOfUsername($query, $string)
+    {
+        return $query->where('username', $string);
+    }
+
 }

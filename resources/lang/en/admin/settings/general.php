@@ -14,17 +14,20 @@ return [
     ],
 
     'status'              => [
-        'created'                   => 'Setting successfully created',
-        'updated'                   => 'Setting successfully updated',
-        'deleted'                   => 'Setting successfully deleted',
+        'created'                   => 'Setting successfully created.',
+        'updated'                   => 'Setting successfully updated.',
+        'deleted'                   => 'Setting successfully deleted.',
         'settings-loaded'           => 'Successfully loaded :number settings from :env file.',
         'no-settings-loaded'        => 'Nothing loaded from :env settings file.',
         'settings-file-not-found'   => 'Could not find :env settings file.',
         'no-setting-selected'       => 'No setting selected.',
+        'selected-settings-deleted' => 'Selected settings successfully deleted.',
     ],
 
     'error'               => [
-        'cant-edit-this-setting'   => 'This setting cannot be edited',
+        'cant-edit-this-setting'             => 'This setting cannot be edited',
+        'no-permission-to-delete-settings'   => 'You do not have permissions to delete settings',
+        'no-permission-to-update-settings'   => 'You do not have permissions to edit settings',
     ],
 
     'page'              => [

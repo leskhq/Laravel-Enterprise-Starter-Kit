@@ -12,6 +12,7 @@ use App\Models\User;
 use Auth;
 use Illuminate\Support\Arr;
 use Log;
+use Settings;
 
 class Utils
 {
@@ -61,7 +62,7 @@ class Utils
      */
     public static function FilterOutUserSettings($allSettings)
     {
-        $allNonUserSetting = Arr::where($allSettings, function ($k) {
+        $allNonUserSetting = Arr::where($allSettings, function ($v, $k) {
             if ("User." === substr( $k, 0, 5 ) ) {
                 $kparts = explode('.', $k);
                 $user = User::ofUsername($kparts[1])->first();
@@ -205,6 +206,37 @@ class Utils
                 } else {
                     $output .= '<i class="fa fa-trash-o text-muted" title="' . trans('admin/users/general.error.cant-be-deleted') . '"></i>';
                 }
+            }
+        } catch (\Exception $ex) {
+            Log::error("Exception: " . $ex->getMessage());
+            Log::error("Stack trace: " . $ex->getTraceAsString());
+        }
+        return $output;
+    }
+
+
+    /**
+     * @param $id
+     * @return string
+     * @internal param $expression
+     */
+    public static function settingActionslinks($name): string
+    {
+        $output = 'nil';
+
+        try {
+            if (Auth::user()->hasPermission('core.p.settings.update')) {
+                $output = '<a href="' . route('admin.settings.edit', $name) . '" title="' . trans('general.button.edit') . '"><i class="fa fa-pencil-square-o"></i></a>';
+            } else {
+                $output = '<i class="fa fa-pencil-square-o text-muted" title="' . trans('admin/settings/general.error.no-permission-to-update-settings') . '"></i>';
+            }
+
+            $output .= '&nbsp;';
+
+            if (Auth::user()->hasPermission('core.p.settings.delete')) {
+                $output .= '<a href="' . route('admin.settings.confirm-delete', $name) . '" data-toggle="modal" data-target="#modal_dialog" title="' . trans('general.button.delete') . '"><i class="fa fa-trash-o deletable"></i></a>';
+            } else {
+                $output .= '<i class="fa fa-trash-o text-muted" title="'. trans('admin/settings/general.error.no-permission-to-delete-settings') .'"></i>';
             }
         } catch (\Exception $ex) {
             Log::error("Exception: " . $ex->getMessage());

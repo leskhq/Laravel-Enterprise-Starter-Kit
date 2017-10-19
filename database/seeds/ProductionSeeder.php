@@ -199,6 +199,16 @@ class ProductionSeeder extends Seeder
                             'r', 'ls',
                         ],
                     ],
+                    'core.r.settings.manager' => [
+                        'core.p.settings' => [
+                            'c', 'r', 'u', 'd', 'ls', 'lo',
+                        ],
+                    ],
+                    'core.r.settings.reviewer' => [
+                        'core.p.settings' => [
+                            'r', 'ls',
+                        ],
+                    ],
                 ],
 
                 // Used to list extra roles that are not yet associated with permissions.
