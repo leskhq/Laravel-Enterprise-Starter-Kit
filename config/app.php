@@ -55,6 +55,55 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Long name
+    |--------------------------------------------------------------------------
+    |
+    | The long name for the application displayed on the main menu bar on the
+    | left when it is sized wide.
+    |
+    | NOTE: The long name supports HTML markup for styling.
+    */
+    'long_name' => env('app.long_name', '<b>Laravel</b> ESK'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Short name
+    |--------------------------------------------------------------------------
+    |
+    | The short name for the application, display in the tab or Web browser title
+    | and on the main menu bar on the left when it is sized to a small.
+    |
+    | NOTE: The short name does not support any HTML markup.
+    */
+    'short_name' => env('app.short_name', 'LESK'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Tag line
+    |--------------------------------------------------------------------------
+    |
+    | The tag line appears at the bottom of every page on the right and can be
+    | anything you want.
+    |
+    | NOTE: The tag line supports HTML markup for styling.
+    */
+    'tag_line' => env('app.tag_line', 'Anything you want'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Copyright line
+    |--------------------------------------------------------------------------
+    |
+    | The copyright line appear at the bottom of every page on the left and is
+    | a convenient place to show a copyright notice, but it can also be
+    | anything that you want.
+    |
+    | NOTE: The tag line supports HTML markup for styling.
+    */
+    'copyright_line' => env('app.copyright', '<strong>Copyright &copy; 2017 <a href="#">Company</a>.</strong> All rights reserved.'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
     |
