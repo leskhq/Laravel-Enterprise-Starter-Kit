@@ -29,6 +29,7 @@
         "doctrine/dbal": "^2.6",
         "fideloper/proxy": "~3.3",
         "filp/whoops": "^2.1.4",
+        "jenssegers/agent": "^2.5",
         "laracasts/flash": "^3.0",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",

@@ -44,6 +44,7 @@ use Prettus\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Route wherePermissionId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Route whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Route freesearch($value)
  */
 class Route extends Model implements Transformable
 {

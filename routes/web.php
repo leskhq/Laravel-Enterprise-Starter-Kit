@@ -116,4 +116,10 @@ Route::prefix('admin')->group(function () {
     Route::get   ('settings/{settingKey}/confirm-delete', ['as' => 'admin.settings.confirm-delete',          'uses' => 'SettingsController@getModalDelete']);
     Route::get   ('settings/{settingKey}/delete',         ['as' => 'admin.settings.delete',                  'uses' => 'SettingsController@destroy']);
 
+    // Autdits
+    Route::get   ('audits/{auditId}',               ['as' => 'admin.audits.show',             'uses' => 'AuditsController@show'   ]);
+    Route::post  ('audits/purge',                   ['as' => 'admin.audits.purge',            'uses' => 'AuditsController@purge'  ]);
+    Route::get   ('audits',                         ['as' => 'admin.audits.index',            'uses' => 'AuditsController@index'  ]);
+    Route::post  ('audits',                         ['as' => 'admin.audits.indexPost',        'uses' => 'AuditsController@index'  ]);
+
 });

@@ -39,6 +39,7 @@ use Laratrust\Models\LaratrustRole; // Laratrust 5
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role whereResyncOnLogin($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role freesearch($value)
  */
 class Role extends LaratrustRole implements Transformable
 {
