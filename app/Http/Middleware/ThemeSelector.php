@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Log;
 use Theme;
 
 class ThemeSelector
@@ -22,7 +23,7 @@ class ThemeSelector
         } else {
             $themeName = \Settings::get('theme.default', 'default');
         }
-
+        Log::debug("ThemeSelector: Initializing theme to: ". $themeName);
         Theme::init($themeName);
 
         return $next($request);
