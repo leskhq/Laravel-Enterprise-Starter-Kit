@@ -12,6 +12,6 @@
 <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('general.button.cancel') }}</button>
     @if(!$error)
-        <a href="{{ $modal_route }}" type="button" class="btn btn-primary">{{ trans('general.button.ok') }}</a>
+        <a href="{{ $modal_href }}" onclick="{{ $modal_onclick }}" type="button" class="btn btn-primary">{{ trans('general.button.ok') }}</a>
     @endif
 </div>

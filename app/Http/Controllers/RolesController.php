@@ -320,11 +320,12 @@ class RolesController extends Controller
         $modal_title = trans('admin/roles/dialog.delete-confirm.title');
 
         $role = $this->role->find($id);
-        $modal_route = route('admin.roles.delete', array('id' => $role->id));
+        $modal_onclick = '';
+        $modal_href = route('admin.roles.delete', array('id' => $role->id));
 
         $modal_body = trans('admin/roles/dialog.delete-confirm.body', ['id' => $role->id, 'name' => $role->name]);
 
-        return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
+        return view('modal_confirmation', compact('error', 'modal_href', 'modal_onclick', 'modal_title', 'modal_body'));
     }
 
 

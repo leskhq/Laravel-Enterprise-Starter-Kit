@@ -389,9 +389,10 @@ class UsersController extends Controller
 
         if (Auth::user()->id !== $id) {
             $user = $this->user->find($id);
-            $modal_route = route('admin.users.delete', array('id' => $user->id));
+            $modal_onclick = '';
+            $modal_href = route('admin.users.delete', array('id' => $user->id));
 
-            $modal_body = trans('admin/users/dialog.delete-confirm.body', ['id' => $user->id, 'full_name' => $user->full_name]);
+            return view('modal_confirmation', compact('error', 'modal_href', 'modal_onclick', 'modal_title', 'modal_body'));
         }
         else
         {

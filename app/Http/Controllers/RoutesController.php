@@ -306,11 +306,12 @@ class RoutesController extends Controller
         $modal_title = trans('admin/routes/dialog.delete-confirm.title');
 
         $route = $this->route->find($id);
-        $modal_route = route('admin.routes.delete', array('id' => $route->id));
+        $modal_onclick = '';
+        $modal_href = route('admin.routes.delete', array('id' => $route->id));
 
         $modal_body = trans('admin/routes/dialog.delete-confirm.body', ['id' => $route->id, 'name' => $route->name]);
 
-        return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
+        return view('modal_confirmation', compact('error', 'modal_href', 'modal_onclick', 'modal_title', 'modal_body'));
     }
 
     /**
