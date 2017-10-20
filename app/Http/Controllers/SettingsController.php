@@ -170,6 +170,7 @@ class SettingsController extends Controller
         return redirect('/admin/settings');
 
     }
+
     /**
      * Delete Confirm
      *

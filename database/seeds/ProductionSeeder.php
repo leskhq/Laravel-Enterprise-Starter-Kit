@@ -209,6 +209,16 @@ class ProductionSeeder extends Seeder
                             'r', 'ls',
                         ],
                     ],
+                    'core.r.audits.manager' => [
+                        'core.p.audits' => [
+                            'r', 'ls', 'p',
+                        ],
+                    ],
+                    'core.r.audits.reviewer' => [
+                        'core.p.audits' => [
+                            'r', 'ls',
+                        ],
+                    ],
                 ],
 
                 // Used to list extra roles that are not yet associated with permissions.

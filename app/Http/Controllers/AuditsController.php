@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AuditIndexRequest;
 use App\Models\Audit;
 use App\Repositories\AuditRepository;
+use App\Repositories\Criteria\Audits\AuditsCreatedBefore;
 use App\Repositories\UserRepository;
 use Auth;
 use Illuminate\Http\Request;
+use Settings;
 use Zofe\Rapyd\DataFilter\DataFilter;
 use Zofe\Rapyd\DataGrid\DataGrid;
 
@@ -36,6 +38,9 @@ class AuditsController extends Controller
      */
     public function index(AuditIndexRequest $request)
     {
+
+        $purge_retention = Settings::get('audit.purge_retention');
+
         $filter = DataFilter::source(Audit::with(['user']));
         $filter->text('srch', 'Search audit or their associated users.')->scope('freesearch');
         $filter->build();
@@ -85,9 +90,41 @@ class AuditsController extends Controller
             $page_title = trans('admin/audits/general.page.index.title');
             $page_description = trans('admin/audits/general.page.index.description');
 
-            return view('admin.audits.index', compact('filter', 'grid', 'page_title', 'page_description'));
+            return view('admin.audits.index', compact('filter', 'grid', 'purge_retention', 'page_title', 'page_description'));
         }
 
     }
+
+    public function getModalPurge(Request $request)
+    {
+        $error = null;
+
+        $purge_retention = Settings::get('audit.purge_retention');
+        $modal_title = trans('admin/audits/dialog.purge.title');
+        $modal_href = route('admin.audits.purge');
+        $modal_onclick = "";
+        $modal_body = trans('admin/audits/dialog.purge.body', ['retention_period' => $purge_retention]);
+
+        return view('modal_confirmation', compact('error', 'modal_href', 'modal_onclick', 'modal_title', 'modal_body'));
+
+    }
+
+    public function purge()
+    {
+        $purge_retention = Settings::get('audit.purge_retention');
+        $purge_date = (new \DateTime())->modify("- $purge_retention day");
+        $auditsToDelete = $this->audit->pushCriteria(new AuditsCreatedBefore($purge_date))->all();
+
+        foreach( $auditsToDelete as $audit) {
+            // The AuditRepository located at $this->audit is changed to a instance of the
+            // QueryBuilder when we run a query as done above. So we had to revert to some
+            // Magic to get a handle of the model...
+            $this->audit->delete($audit->id);
+//            $this->app->make($this->audit->model())->destroy($audit->id);
+        }
+
+        return \Redirect::route('admin.audits.index');
+    }
+
 
 }

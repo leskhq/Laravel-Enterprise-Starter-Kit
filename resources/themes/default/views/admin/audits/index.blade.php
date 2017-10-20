@@ -20,15 +20,15 @@
                             <div class="col-sm-6">
                                 <h3 class="box-title">{{ trans('admin/users/general.page.index.table-title') }}</h3>
 
-                                @permission('core.p.audits.purge')
-                                <a class="btn btn-default btn-sm" href="{!! route('admin.audits.purge') !!}" title="{{ trans('admin/audits/general.action.purge') }}">
-                                    <i class="fa fa-refresh"></i>
-                                </a>
-                                @else
-                                    <a class="btn btn-default btn-sm" disabled="true"  href="#" title="{{ trans('admin/audits/general.action.no-permission-to-purge-audits') }}">
-                                        <i class="fa fa-refresh"></i>
-                                    </a>
-                                @endpermission
+                                    @permission('core.p.audits.purge')
+                                        <a class="btn btn-default btn-sm" href="{!! route('admin.audits.confirm-purge') !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('admin/audits/general.action.purge', ['purge_retention' => $purge_retention]) }}">
+                                            <i class="fa fa-refresh"></i>
+                                        </a>
+                                    @else
+                                        <a class="btn btn-default btn-sm" disabled="true"  href="#" title="{{ trans('admin/audits/general.action.no-permission-to-purge-audits') }}">
+                                            <i class="fa fa-refresh"></i>
+                                        </a>
+                                    @endpermission
                             </div> <!-- col-sm-6 -->
 
                             <div class="col-sm-6">
