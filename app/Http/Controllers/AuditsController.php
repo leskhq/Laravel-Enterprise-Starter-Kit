@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AuditIndexRequest;
 use App\Models\Audit;
 use App\Repositories\AuditRepository;
 use App\Repositories\UserRepository;
@@ -33,7 +34,7 @@ class AuditsController extends Controller
     /**
      *
      */
-    public function index()
+    public function index(AuditIndexRequest $request)
     {
         $filter = DataFilter::source(Audit::with(['user']));
         $filter->text('srch', 'Search audit or their associated users.')->scope('freesearch');
@@ -41,25 +42,51 @@ class AuditsController extends Controller
 
         $grid = DataGrid::source($filter);
 
+        // Get all attribute from the request.
+        $attributes = $request->all();
 
-        if (Auth::user()->hasPermission('core.p.audits.read')) {
-            $grid->add('{{ link_to_route(\'admin.audits.show\', $user->username, [$id], []) }}', 'User name', '$user->username');
+        if ((array_has($attributes, 'export_to_csv')) && ("true" == $attributes['export_to_csv'])) {
+            $grid->add('id', 'ID');
+            $grid->add('user.username', 'User name');
+            $grid->add('method', 'Method');
+            $grid->add('path', 'Path');
+            $grid->add('route_name', 'Route name');
+            $grid->add('route_action', 'Route action');
+            $grid->add('query', 'Query');
+            $grid->add('data', 'Data');
+            $grid->add('userAgent', 'User agent');
+            $grid->add('device', 'Device');
+            $grid->add('platform', 'Platform');
+            $grid->add('browser', 'Browser');
+            $grid->add('isDesktop', 'Is desktop');
+            $grid->add('isMobile', 'Is mobile');
+            $grid->add('isPhone', 'Is phone');
+            $grid->add('isTablet', 'Is tablet');
+            $grid->add('created_at', 'Create at');
+            $grid->add('updated_at', 'Updated at');
+
+            return $grid->buildCSV('export-audits_', 'Y-m-d.His');
+
         } else {
-            $grid->add('user.username', 'User name', 'user.username');
+
+            if (Auth::user()->hasPermission('core.p.audits.read')) {
+                $grid->add('{{ link_to_route(\'admin.audits.show\', $user->username, [$id], []) }}', 'User name', '$user->username');
+            } else {
+                $grid->add('user.username', 'User name', 'user.username');
+            }
+
+            $grid->add('method', 'Method', 'method');
+            $grid->add('route_action', 'Action', 'route_action');
+            $grid->add('created_at', 'Date', 'created_at');
+
+            $grid->orderBy('created_at', 'desc');
+            $grid->paginate(20);
+
+            $page_title = trans('admin/audits/general.page.index.title');
+            $page_description = trans('admin/audits/general.page.index.description');
+
+            return view('admin.audits.index', compact('filter', 'grid', 'page_title', 'page_description'));
         }
-
-        $grid->add('method', 'Method', 'method');
-        $grid->add('route_action', 'Action', 'route_action');
-        $grid->add('created_at', 'Date', 'created_at');
-
-        $grid->orderBy('created_at', 'desc');
-        $grid->paginate(20);
-
-        $page_title = trans('admin/audits/general.page.index.title');
-        $page_description = trans('admin/audits/general.page.index.description');
-
-        return view('admin.audits.index', compact('filter', 'grid', 'page_title', 'page_description'));
-
 
     }
 
