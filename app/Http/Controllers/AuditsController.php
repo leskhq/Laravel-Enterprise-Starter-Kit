@@ -118,11 +118,7 @@ class AuditsController extends Controller
         $auditsToDelete = $this->audit->pushCriteria(new AuditsCreatedBefore($purge_date))->all();
 
         foreach( $auditsToDelete as $audit) {
-            // The AuditRepository located at $this->audit is changed to a instance of the
-            // QueryBuilder when we run a query as done above. So we had to revert to some
-            // Magic to get a handle of the model...
             $this->audit->delete($audit->id);
-//            $this->app->make($this->audit->model())->destroy($audit->id);
         }
 
         return \Redirect::route('admin.audits.index');
