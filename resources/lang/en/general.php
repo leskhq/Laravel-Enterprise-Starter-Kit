@@ -47,6 +47,7 @@ return [
         'data'              => 'Data',
         'profile'           => 'Profile',
         'settings'          => 'Settings',
+        'raw'               => 'Raw',
     ],
 
     'error'              => [

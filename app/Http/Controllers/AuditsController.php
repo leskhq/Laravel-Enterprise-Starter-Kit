@@ -76,15 +76,20 @@ class AuditsController extends Controller
 
             if (Auth::user()->hasPermission('core.p.audits.read')) {
                 $grid->add('{{ ($user)?link_to_route(\'admin.audits.show\', $user->username, [$id], []):"" }}', 'User name', '$user->username');
+                $grid->add('{{ ($method)?link_to_route(\'admin.audits.show\', $method, [$id], []):"" }}', 'Method', 'method');
+                $grid->add('{{ ($route_action)?link_to_route(\'admin.audits.show\', $route_action, [$id], []):"" }}', 'Action', 'route_action');
+                $grid->add('{{ ($query)?link_to_route(\'admin.audits.show\', $query, [$id], []):"" }}', 'Query', 'query');
+                $grid->add('{{ ($data)?link_to_route(\'admin.audits.show\', $data, [$id], []):"" }}', 'Data', 'data');
+                $grid->add('{{ ($created_at)?link_to_route(\'admin.audits.show\', $created_at, [$id], []):"" }}', 'Date', 'created_at');
             } else {
                 $grid->add('user.username', 'User name', 'user.username');
+                $grid->add('method', 'Method', 'method');
+                $grid->add('route_action', 'Action', 'route_action');
+                $grid->add('query', 'Query', 'query');
+                $grid->add('data', 'Data', 'data');
+                $grid->add('created_at', 'Date', 'created_at');
             }
 
-            $grid->add('method', 'Method', 'method');
-            $grid->add('route_action', 'Action', 'route_action');
-            $grid->add('query', 'Query', 'query');
-            $grid->add('data', 'Data', 'data');
-            $grid->add('created_at', 'Date', 'created_at');
 
             $grid->orderBy('created_at', 'desc');
             $grid->paginate(20);
@@ -124,5 +129,34 @@ class AuditsController extends Controller
         return \Redirect::route('admin.audits.index');
     }
 
+    public function show($id)
+    {
+        $data_view = "";
+
+        $audit = $this->audit->find($id);
+
+//        $data_parser = $audit->data_parser;
+//
+//        $isCallable = is_callable($data_parser, true, $callable_name);
+//        if ($isCallable) {
+//            $dataArray = call_user_func($data_parser, $id);
+//
+//            $data_view_name = $dataArray['show_partial'];
+//            if (($data_view_name) && (\View::exists($data_view_name))) {
+//                $data_view = \View::make($data_view_name, compact('dataArray'));
+//            }
+//        }
+//        else {
+//            $dataArray = json_decode($audit->data, true);
+//
+//            $data_view_name = "admin/audit/_audit_log_data_viewer_default";
+//            $data_view = \View::make($data_view_name, compact('dataArray'));
+//        }
+
+        $page_title = trans('admin/audits/general.page.show.title');
+        $page_description = trans('admin/audits/general.page.show.description', ['name' => $audit->name]); // "Displaying audit log entry";
+
+        return view('admin.audits.show', compact('audit', 'data_view', 'page_title', 'page_description'));
+    }
 
 }
