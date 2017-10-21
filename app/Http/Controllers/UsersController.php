@@ -342,12 +342,13 @@ class UsersController extends Controller
                 unset($attributes['selected_roles']);
                 unset($attributes['role']);
                 unset($attributes['perms']);
+            } else {
+                // Save role membership(s).
+                $this->saveRoles($user, $attributes);
+                // Save permission(s).
+                $this->savePermissions($user, $attributes);
             }
 
-            // Save role membership(s).
-            $this->saveRoles($user, $attributes);
-            // Save permission(s).
-            $this->savePermissions($user, $attributes);
             // Save settings.
             $this->saveSettings($user, $attributes);
 
