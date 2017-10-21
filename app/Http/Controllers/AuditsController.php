@@ -75,13 +75,15 @@ class AuditsController extends Controller
         } else {
 
             if (Auth::user()->hasPermission('core.p.audits.read')) {
-                $grid->add('{{ link_to_route(\'admin.audits.show\', $user->username, [$id], []) }}', 'User name', '$user->username');
+                $grid->add('{{ ($user)?link_to_route(\'admin.audits.show\', $user->username, [$id], []):"" }}', 'User name', '$user->username');
             } else {
                 $grid->add('user.username', 'User name', 'user.username');
             }
 
             $grid->add('method', 'Method', 'method');
             $grid->add('route_action', 'Action', 'route_action');
+            $grid->add('query', 'Query', 'query');
+            $grid->add('data', 'Data', 'data');
             $grid->add('created_at', 'Date', 'created_at');
 
             $grid->orderBy('created_at', 'desc');
