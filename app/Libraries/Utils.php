@@ -10,6 +10,8 @@ use App\Models\Role;
 use App\Models\Route;
 use App\Models\User;
 use Auth;
+use DateTime;
+use DateTimeZone;
 use Illuminate\Support\Arr;
 use Log;
 use Settings;
@@ -404,28 +406,34 @@ class Utils
      * @param $utcDate
      * @return string
      */
-////    public static function convertToLocalDateTime($utcDate)
-//    public static function userTimeZone($date)
-//    {
-//        $time_zone = Utils::getUserOrAppOrDefaultSetting('time_zone', 'app.time_zone', 'UTC');
-//        $time_format = Utils::getUserOrAppOrDefaultSetting('time_format', 'app.time_format', '24');
-//
-//        // Get the time zone abbreviation to display from the time zone identifier
-//        $dateTime = new DateTime();
-//        $dateTime->setTimeZone(new DateTimeZone($time_zone));
-//        $tzAbrev = $dateTime->format('T');
-//        // Convert system time to user's timezone
-//        $locDate = $date;
-//        $locDate->setTimeZone(new DateTimeZone($time_zone));
-//
-//        if ("12" == $time_format) {
-//            $finalSTR = $locDate->format('Y-m-d g:i A') . " " . $tzAbrev; // output: 2011-04-26 8:45 PM EST
-//        } else {
-//            $finalSTR = $locDate->format('Y-m-d H:i') . " " . $tzAbrev; // output: 2011-04-26 20:45 EST
-//        }
-//
-//        return $finalSTR;
-//    }
+//    public static function convertToLocalDateTime($utcDate)
+    public static function userTimeZone($date)
+    {
+        if (\Auth::check()) {
+            $user = \Auth::user();
+            $time_zone = $user->settings()->get('app.timezone', 'UTC');
+            $time_format = $user->settings()->get('app.time_format', '24');
+        } else {
+            $time_zone = Settings::get('app.time_zone', 'UTC');
+            $time_format = Settings::get('app.time_format', '24');
+        }
+
+        // Get the time zone abbreviation to display from the time zone identifier
+        $dateTime = new DateTime();
+        $dateTime->setTimeZone(new DateTimeZone($time_zone));
+        $tzAbrev = $dateTime->format('T');
+        // Convert system time to user's timezone
+        $locDate = $date;
+        $locDate->setTimeZone(new DateTimeZone($time_zone));
+
+        if ("12" == $time_format) {
+            $finalSTR = $locDate->format('Y-m-d g:i A') . " " . $tzAbrev; // output: 2011-04-26 8:45 PM EST
+        } else {
+            $finalSTR = $locDate->format('Y-m-d H:i') . " " . $tzAbrev; // output: 2011-04-26 20:45 EST
+        }
+
+        return $finalSTR;
+    }
 
 
     /**

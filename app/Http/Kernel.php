@@ -35,9 +35,10 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \App\Http\Middleware\ThemeSelector::class,
+            \App\Http\Middleware\Audit::class,
             \App\Http\Middleware\WalledGarden::class,
             \App\Http\Middleware\AuthorizeRoute::class,
+            \App\Http\Middleware\ThemeSelector::class,
 
         ],
 

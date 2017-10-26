@@ -42,6 +42,7 @@ use Laratrust\Models\LaratrustPermission; // Laratrust 5
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission freesearch($value)
  */
 class Permission extends LaratrustPermission implements Transformable
 {

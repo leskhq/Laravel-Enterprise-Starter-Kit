@@ -55,6 +55,8 @@ use Settings;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUsername($value)
  * @mixin \Eloquent
  * @property-read string $full_name_and_username
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User freesearch($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User ofUsername($string)
  */
 class User extends Authenticatable implements Transformable
 {
@@ -116,6 +118,11 @@ class User extends Authenticatable implements Transformable
             $this->settings = new UserSetting(app(), $this);
         }
         return $this->settings;
+    }
+
+    public function audits ()
+    {
+        return $this->hasMany(Audit::class);
     }
 
     /**

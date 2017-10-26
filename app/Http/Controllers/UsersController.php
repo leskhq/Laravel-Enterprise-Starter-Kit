@@ -15,6 +15,7 @@ use App\Http\Requests\UserIndexRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Libraries\Arr;
 use App\Libraries\Str;
+use App\Models\Audit;
 use App\Models\User;
 use App\Repositories\Criteria\Permissions\PermissionsByDisplayNamesAscending;
 use App\Repositories\Criteria\Roles\RolesByDisplayNamesAscending;
@@ -342,12 +343,13 @@ class UsersController extends Controller
                 unset($attributes['selected_roles']);
                 unset($attributes['role']);
                 unset($attributes['perms']);
+            } else {
+                // Save role membership(s).
+                $this->saveRoles($user, $attributes);
+                // Save permission(s).
+                $this->savePermissions($user, $attributes);
             }
 
-            // Save role membership(s).
-            $this->saveRoles($user, $attributes);
-            // Save permission(s).
-            $this->savePermissions($user, $attributes);
             // Save settings.
             $this->saveSettings($user, $attributes);
 
@@ -613,5 +615,20 @@ class UsersController extends Controller
                                             <i class=\"fa fa-check-square-o\"></i>
                                         </a>";
         return $cell;
+    }
+
+    static public function updateAuditViewer(Audit $audit, array $dataArray)
+    {
+        $dataArray['show_partial'] =  "admin/users/_audit_log_data_viewer_update";
+
+        // Fix timezone
+        $tzIdent = $dataArray['settings']['app.timezone'];
+        $tzIdentifiers = \DateTimeZone::listIdentifiers();
+        $dataArray['settings']['app.timezone'] .= " => " . $tzIdentifiers[$tzIdent];
+
+        // Fix enabled
+        $dataArray['enabled'] = ($dataArray['enabled'])?"True":"False";
+
+        return $dataArray;
     }
 }
