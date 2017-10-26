@@ -134,24 +134,29 @@ class AuditsController extends Controller
         $data_view = "";
 
         $audit = $this->audit->find($id);
+        $atSymbolPos = strpos($audit->route_action, "@");
+        $data_parser = substr_replace($audit->route_action, "::auditViewer", $atSymbolPos);
 
-//        $data_parser = $audit->data_parser;
-//
-//        $isCallable = is_callable($data_parser, true, $callable_name);
-//        if ($isCallable) {
-//            $dataArray = call_user_func($data_parser, $id);
-//
-//            $data_view_name = $dataArray['show_partial'];
-//            if (($data_view_name) && (\View::exists($data_view_name))) {
-//                $data_view = \View::make($data_view_name, compact('dataArray'));
-//            }
-//        }
-//        else {
-//            $dataArray = json_decode($audit->data, true);
-//
-//            $data_view_name = "admin/audit/_audit_log_data_viewer_default";
-//            $data_view = \View::make($data_view_name, compact('dataArray'));
-//        }
+        $isCallable = is_callable($data_parser, false, $callable_name);
+        if ($isCallable) {
+            $dataArray = call_user_func($data_parser, $audit);
+
+            $data_view_name = "admin/audits/_audit_log_data_viewer_default";
+            if (array_key_exists('show_partial', $dataArray)){
+                $data_view_name = $dataArray['show_partial'];
+                $dataArray = array_except($dataArray, 'show_partial');
+            }
+
+            if (($data_view_name) && (\View::exists($data_view_name))) {
+                $data_view = \View::make($data_view_name, compact('dataArray'));
+            }
+        }
+        else {
+            $dataArray = json_decode($audit->data, true);
+
+            $data_view_name = "admin/audits/_audit_log_data_viewer_default";
+            $data_view = \View::make($data_view_name, compact('dataArray'));
+        }
 
         $page_title = trans('admin/audits/general.page.show.title');
         $page_description = trans('admin/audits/general.page.show.description', ['name' => $audit->name]); // "Displaying audit log entry";

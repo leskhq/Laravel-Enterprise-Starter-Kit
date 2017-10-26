@@ -15,6 +15,18 @@ return [
         'method'                 => 'Method',
         'route_action'           => 'Action',
         'date'                   => 'Date',
+        'data'                   => 'Data',
+        'route_name'             => 'Route name',
+        'user_agent'             => 'User agent',
+        'ip'                     => 'IP',
+        'device'                 => 'Device',
+        'platform'               => 'Platform',
+        'browser'                => 'Browser',
+        'is_desktop'             => 'Is desktop',
+        'is_mobile'              => 'Is mobile',
+        'is_phone'               => 'Is phone',
+        'is_tablet'              => 'Is tablet',
+
     ],
 
     'action'              => [
