@@ -264,6 +264,8 @@ return [
         Robbo\Presenter\PresenterServiceProvider::class,
         Zofe\Rapyd\RapydServiceProvider::class,
 
+        Tylercd100\LERN\LERNServiceProvider::class,
+
     ],
 
     /*
@@ -316,6 +318,9 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
 
         'Settings' => App\Facades\Settings::class,
+
+        'LERN' => Tylercd100\LERN\Facades\LERN::class,
+
 
     ],
 
