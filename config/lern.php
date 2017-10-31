@@ -2,6 +2,16 @@
 
 return [
 
+    /**
+     * Enables recording of exception.
+     */
+    'enable_record'   => env('lern.enable_record', false),
+
+    /**
+     * Enables notification of exception.
+     */
+    'enable_notify'   => env('lern.enable_notify', false),
+
 
     'record'=>[
         /**
@@ -9,15 +19,15 @@ return [
          */
         'class' => \Tylercd100\LERN\Components\Recorder::class,
 
-        'table'=>'vendor_tylercd100_lern_exceptions',
+        'table'=>'lern_exceptions',
         
         'collect'=>[
-            'method'=>false, //When true it will collect GET, POST, DELETE, PUT, etc...
-            'data'=>false, //When true it will collect Input data
-            'status_code'=>true,
-            'user_id'=>false,
-            'url'=>false,
-            'ip'=>false,
+            'method'      => true, //When true it will collect GET, POST, DELETE, PUT, etc...
+            'data'        => true, //When true it will collect Input data
+            'status_code' => true,
+            'user_id'     => true,
+            'url'         => true,
+            'ip'          => true,
         ],
 
         /**
@@ -42,7 +52,7 @@ return [
         /**
          * The default name of the monolog logger channel
          */
-        'channel'=>'Tylercd100\LERN',
+        'channel' => env('lern.channel', 'LESK'),
 
         /**
          * The log level to use when notifying
@@ -63,8 +73,8 @@ return [
          * Mail settings
          */
         'mail'=>[
-            'to'   => 'to@address.com',
-            'from' => 'from@address.com',
+            'to'   => env('lern.mail_recipient'),
+            'from' => env('mail.system_sender_address'),
             'smtp' => true,
         ],
 
