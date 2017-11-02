@@ -47,7 +47,8 @@ return [
         /**
          * The view file to use
          */
-        'view' => 'exceptions.default',
+//        'view' => 'exceptions.default',
+        'view' => '',
 
         /**
          * The default name of the monolog logger channel

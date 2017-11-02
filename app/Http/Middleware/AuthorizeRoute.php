@@ -2,9 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use App\Exceptions\Handler;
+use App\Exceptions\Handler as ExceptionHandler;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Container\Container;
 use Route as LaravelRoute;
 use App\Models\Route as AppRoute;
 use Log;
@@ -19,14 +20,22 @@ class AuthorizeRoute
     protected $auth;
 
     /**
+     * The container implementation.
+     *
+     * @var \Illuminate\Contracts\Container\Container
+     */
+    protected $container;
+
+    /**
      * Create a new filter instance.
      *
-     * @param  Guard  $auth
-     * @return void
+     * @param  Guard $auth
+     * @param Container $container
      */
-    public function __construct(Guard $auth)
+    public function __construct(Guard $auth, Container $container)
     {
         $this->auth = $auth;
+        $this->container = $container;
     }
 
     /**
@@ -162,20 +171,20 @@ class AuthorizeRoute
             if ( !$guest && isset($user) && (!$user->enabled) ) {
                 $msg = "User [" . $user->username . "] disabled, forcing logout.";
                 Log::error($msg); // To LOG
-//                (new Handler(Log::getMonolog()))->report(new \Exception($msg)); //To LERN
+                (new ExceptionHandler($this->container))->report(new \Exception($msg)); //To LERN
                 return redirect( route('logout') );
             }
             else {
                 $msg = "Aborting request with error code: " . $errorCode;
                 Log::error($msg); // To LOG
-//                (new Handler(Log::getMonolog()))->report(new \Exception($msg)); // To LERN
+                (new ExceptionHandler($this->container))->report(new \Exception($msg)); // To LERN
                 abort($errorCode, $msg);
             }
         // Lastly Fallback to error HTTP 500: Internal server error. We should not get to this!
         } else {
             $msg = "Server error while trying to authorize route, request path [" . $request->path() . "], method [" . $method . "] and action name [" . $actionName . "].";
             Log::error($msg); // To LOG
-//            (new Handler(Log::getMonolog()))->report(new \Exception($msg)); // To LERN
+            (new ExceptionHandler($this->container))->report(new \Exception($msg)); // To LERN
             abort(500, $msg);
         }
     }
