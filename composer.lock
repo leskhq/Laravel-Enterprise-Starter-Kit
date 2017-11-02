@@ -3749,16 +3749,16 @@
         },
         {
             "name": "tylercd100/lern",
-            "version": "4.2.0",
+            "version": "4.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tylercd100/lern.git",
-                "reference": "f93abbb932fbe379e0b8bc1542e641131265c603"
+                "reference": "31c8bb4eb5cb138bd7569e62012b860b4c498e5f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tylercd100/lern/zipball/f93abbb932fbe379e0b8bc1542e641131265c603",
-                "reference": "f93abbb932fbe379e0b8bc1542e641131265c603",
+                "url": "https://api.github.com/repos/tylercd100/lern/zipball/31c8bb4eb5cb138bd7569e62012b860b4c498e5f",
+                "reference": "31c8bb4eb5cb138bd7569e62012b860b4c498e5f",
                 "shasum": ""
             },
             "require": {
@@ -3774,11 +3774,13 @@
             },
             "type": "library",
             "extra": {
-                "providers": [
-                    "Tylercd100\\LERN\\LERNServiceProvider"
-                ],
-                "aliases": {
-                    "LERN": "Tylercd100\\LERN\\Facades\\LERN"
+                "laravel": {
+                    "providers": [
+                        "Tylercd100\\LERN\\LERNServiceProvider"
+                    ],
+                    "aliases": {
+                        "LERN": "Tylercd100\\LERN\\Facades\\LERN"
+                    }
                 }
             },
             "autoload": {
@@ -3807,7 +3809,7 @@
                 "slack",
                 "tylercd100"
             ],
-            "time": "2017-09-23T18:20:47+00:00"
+            "time": "2017-10-31T22:52:30+00:00"
         },
         {
             "name": "tylercd100/monolog-mailgun",
