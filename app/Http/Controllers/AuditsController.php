@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\AuditsPurged;
+use App\Events\AuditsPurging;
 use App\Http\Requests\AuditIndexRequest;
 use App\Models\Audit;
 use App\Repositories\AuditRepository;
@@ -122,9 +124,13 @@ class AuditsController extends Controller
         $purge_date = (new \DateTime())->modify("- $purge_retention day");
         $auditsToDelete = $this->audit->pushCriteria(new AuditsCreatedBefore($purge_date))->all();
 
+        event(new AuditsPurging($auditsToDelete));
+
         foreach( $auditsToDelete as $audit) {
             $this->audit->delete($audit->id);
         }
+
+        event(new AuditsPurged());
 
         return \Redirect::route('admin.audits.index');
     }
