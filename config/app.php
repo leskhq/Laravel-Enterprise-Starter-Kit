@@ -317,6 +317,7 @@ return [
 
         'Settings' => App\Facades\Settings::class,
 
+
     ],
 
 ];

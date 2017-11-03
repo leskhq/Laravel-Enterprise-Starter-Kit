@@ -6,6 +6,51 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Audit
+ *
+ * @property int $id
+ * @property int|null $user_id
+ * @property string|null $method
+ * @property string|null $path
+ * @property string|null $route_name
+ * @property string|null $route_action
+ * @property string|null $query
+ * @property string|null $data
+ * @property string|null $userAgent
+ * @property string|null $ip
+ * @property string|null $device
+ * @property string|null $platform
+ * @property string|null $browser
+ * @property int|null $isDesktop
+ * @property int|null $isMobile
+ * @property int|null $isPhone
+ * @property int|null $isTablet
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property-read \App\Models\User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Audit freesearch($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Audit whereBrowser($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Audit whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Audit whereData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Audit whereDevice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Audit whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Audit whereIp($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Audit whereIsDesktop($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Audit whereIsMobile($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Audit whereIsPhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Audit whereIsTablet($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Audit whereMethod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Audit wherePath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Audit wherePlatform($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Audit whereQuery($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Audit whereRouteAction($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Audit whereRouteName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Audit whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Audit whereUserAgent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Audit whereUserId($value)
+ * @mixin \Eloquent
+ */
 class Audit extends Model
 {
 

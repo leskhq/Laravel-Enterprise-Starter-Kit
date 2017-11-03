@@ -123,4 +123,11 @@ Route::prefix('admin')->group(function () {
     Route::get   ('audits',                   ['as' => 'admin.audits.index',         'uses' => 'AuditsController@index'  ]);
     Route::post  ('audits',                   ['as' => 'admin.audits.indexPost',     'uses' => 'AuditsController@index'  ]);
 
+    // Errors
+    Route::get   ('errors/confirm-purge',     ['as' => 'admin.errors.confirm-purge', 'uses' => 'ErrorsController@getModalPurge']);
+    Route::get   ('errors/purge',             ['as' => 'admin.errors.purge',         'uses' => 'ErrorsController@purge']);
+    Route::get   ('errors/{auditId}',         ['as' => 'admin.errors.show',          'uses' => 'ErrorsController@show'   ]);
+    Route::get   ('errors',                   ['as' => 'admin.errors.index',         'uses' => 'ErrorsController@index'  ]);
+    Route::post  ('errors',                   ['as' => 'admin.errors.indexPost',     'uses' => 'ErrorsController@index'  ]);
+
 });

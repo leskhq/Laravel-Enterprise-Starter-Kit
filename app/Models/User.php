@@ -57,6 +57,7 @@ use Settings;
  * @property-read string $full_name_and_username
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User freesearch($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User ofUsername($string)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Audit[] $audits
  */
 class User extends Authenticatable implements Transformable
 {

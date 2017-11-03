@@ -1,11 +1,11 @@
-# Settings file for the DEV environment.
+# Settings file for the development environment.
 
 app.url=http://localhost
 app.home_route=welcome
-app.long_name=<b>Laravel</b> ESK
-app.short_name=LESK
-app.tag_line=Anything you want
-app.copyright_line=<strong>Copyright &copy; 2017 <a href="#">Company</a>.</strong> All rights reserved.
+app.long_name='<b>Laravel</b> ESK 2'
+app.short_name=LESK2
+app.tag_line='Anything you want'
+app.copyright_line='<strong>Copyright &copy; 2017 <a href="#">Company</a>.</strong> All rights reserved.'
 app.allow_registration=true
 app.context_help_area=true
 app.notification_area=true
@@ -20,14 +20,6 @@ theme.default=default
 
 sql-logging.log=false
 sql-logging.log_request=true
-
-mail.system_sender_address=system.noreply@lesk.io
-mail.system_sender_label=LESK System
-
-lern.enable_record=true
-lern.enable_notify=true
-lern.channel=LESK-DEV
-lern.mail_recipient=admin@lesk.io
 
 theme.default=default
 
@@ -66,6 +58,9 @@ eloquent-ldap.user_filter=(&(objectcategory=person)(samaccountname=%username))
 
 audit.enabled=true
 audit.purge_retention=365
+
+lern.enable_record=true
+lern.enable_notify=true
 
 errors.purge_retention=30
 
