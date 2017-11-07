@@ -128,6 +128,14 @@ class Permission extends LaratrustPermission implements Transformable
     /**
      * @return bool
      */
+    public function getIsUsedByUserAttribute()
+    {
+        return ($this->users->count() > 0);
+    }
+
+    /**
+     * @return bool
+     */
     public function getIsUsedAttribute()
     {
         return ($this->is_used_by_role || $this->is_used_by_route || $this->is_used_by_user);
@@ -138,9 +146,10 @@ class Permission extends LaratrustPermission implements Transformable
      */
     public function isEditable()
     {
-        // Protect the guest-only and basic-authenticated permissions from edits.
-        if (('guest-only' == $this->name) ||
-            ('basic-authenticated' == $this->name)
+        // Protect the guest-only, basic-authenticated and open-to-all permissions from edits.
+        if (('core.p.guest-only' == $this->name) ||
+            ('core.p.basic-authenticated' == $this->name)||
+            ('core.p.open-to-all' == $this->name)
         ) {
             return false;
         }
@@ -154,10 +163,10 @@ class Permission extends LaratrustPermission implements Transformable
     public function isDeletable()
     {
         // Protect the guest-only, basic-authenticated and open-to-all permissions from deletion.
-        if (('guest-only' == $this->name) ||
-            ('basic-authenticated' == $this->name) ||
-            ('open-to-all' == $this->name) ||
-            ($this->is_used)
+        if (('core.p.guest-only' == $this->name) ||
+            ('core.p.basic-authenticated' == $this->name) ||
+            ('core.p.open-to-all' == $this->name) ||
+            ($this->is_used_by_route)
         ) {
             return false;
         }
