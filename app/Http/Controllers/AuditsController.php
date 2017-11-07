@@ -35,6 +35,36 @@ class AuditsController extends Controller
         $this->user  = $userRepository;
     }
 
+    static public function GetAuditCategory(Audit $audit)
+    {
+        return trans('admin/audits/general.audit-log.category');
+    }
+
+    static public function GetAuditMessage(Audit $audit)
+    {
+        $atSymbolPos = strpos($audit->route_action, "@");
+        $methodName = substr($audit->route_action, $atSymbolPos);
+
+        switch ($methodName) {
+            case "@index":
+                $message = trans('admin/audits/general.audit-log.msg-index');
+                break;
+            case "@getModalPurge":
+                $message = trans('admin/audits/general.audit-log.msg-get-modal-purge');
+                break;
+            case "@purge":
+                $message = trans('admin/audits/general.audit-log.msg-purge');
+                break;
+            case "@show":
+                $message = trans('admin/audits/general.audit-log.msg-show');
+                break;
+            default:
+                $message = "Unset action in controller";
+                break;
+        }
+        return $message;
+    }
+
     /**
      *
      */
@@ -55,6 +85,8 @@ class AuditsController extends Controller
         if ((array_has($attributes, 'export_to_csv')) && ("true" == $attributes['export_to_csv'])) {
             $grid->add('id', 'ID');
             $grid->add('user.username', 'User name');
+            $grid->add('category', 'Category');
+            $grid->add('message', 'Message');
             $grid->add('method', 'Method');
             $grid->add('path', 'Path');
             $grid->add('route_name', 'Route name');
@@ -78,17 +110,17 @@ class AuditsController extends Controller
 
             if (Auth::user()->hasPermission('core.p.audits.read')) {
                 $grid->add('{{ ($user)?link_to_route(\'admin.audits.show\', $user->username, [$id], []):"" }}', 'User name', '$user->username');
+                $grid->add('{{ ($category)?link_to_route(\'admin.audits.show\', $category, [$id], []):"" }}', 'Category', 'category');
+                $grid->add('{{ ($message)?link_to_route(\'admin.audits.show\', $message, [$id], []):"" }}', 'Message', 'message');
                 $grid->add('{{ ($method)?link_to_route(\'admin.audits.show\', $method, [$id], []):"" }}', 'Method', 'method');
                 $grid->add('{{ ($route_action)?link_to_route(\'admin.audits.show\', $route_action, [$id], []):"" }}', 'Action', 'route_action');
-                $grid->add('{{ ($query)?link_to_route(\'admin.audits.show\', $query, [$id], []):"" }}', 'Query', 'query');
-                $grid->add('{{ ($data)?link_to_route(\'admin.audits.show\', $data, [$id], []):"" }}', 'Data', 'data');
                 $grid->add('{{ ($created_at)?link_to_route(\'admin.audits.show\', $created_at, [$id], []):"" }}', 'Date', 'created_at');
             } else {
                 $grid->add('user.username', 'User name', 'user.username');
+                $grid->add('category', 'Category', 'category');
+                $grid->add('message', 'Message', 'message');
                 $grid->add('method', 'Method', 'method');
                 $grid->add('route_action', 'Action', 'route_action');
-                $grid->add('query', 'Query', 'query');
-                $grid->add('data', 'Data', 'data');
                 $grid->add('created_at', 'Date', 'created_at');
             }
 

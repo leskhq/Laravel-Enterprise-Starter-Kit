@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\ErrorsPurged;
 use App\Events\ErrorsPurging;
 use App\Http\Requests\ErrorIndexRequest;
+use App\Models\Audit;
 use App\Models\Error;
 use App\Repositories\Criteria\Errors\ErrorsCreatedBefore;
 use App\Repositories\ErrorRepository;
@@ -26,6 +27,36 @@ class ErrorsController extends Controller
     public function __construct(ErrorRepository $errorRepository)
     {
         $this->error         = $errorRepository;
+    }
+
+    static public function GetAuditCategory(Audit $audit)
+    {
+        return trans('admin/errors/general.audit-log.category');
+    }
+
+    static public function GetAuditMessage(Audit $audit)
+    {
+        $atSymbolPos = strpos($audit->route_action, "@");
+        $methodName = substr($audit->route_action, $atSymbolPos);
+
+        switch ($methodName) {
+            case "@index":
+                $message = trans('admin/errors/general.audit-log.msg-index');
+                break;
+            case "@getModalPurge":
+                $message = trans('admin/errors/general.audit-log.msg-get-modal-purge');
+                break;
+            case "@purge":
+                $message = trans('admin/errors/general.audit-log.msg-purge');
+                break;
+            case "@show":
+                $message = trans('admin/errors/general.audit-log.msg-show');
+                break;
+            default:
+                $message = "Unset action in controller";
+                break;
+        }
+        return $message;
     }
 
     /**

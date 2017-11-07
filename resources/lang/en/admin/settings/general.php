@@ -3,14 +3,18 @@
 return [
 
     'audit-log'           => [
-        'category'              => 'Settings',
-        'msg-index'             => 'Accessed list of settings.',
-        'msg-show'              => 'Accessed details of setting: :key.',
-        'msg-store'             => 'Created new setting: :key.',
-        'msg-edit'              => 'Initiated edit of setting: :key.',
-        'msg-update'            => 'Submitted edit of setting: :key.',
-        'msg-destroy'           => 'Deleted setting: :key.',
-        'msg-load'              => 'Triggered loading of settings based on \'.env\' file.',
+        'category'                       => 'Settings',
+        'msg-index'                      => 'Accessed list of Settings.',
+        'msg-show'                       => 'Accessed details of Setting.',
+        'msg-create'                     => 'Initiated creation of new Setting.',
+        'msg-store'                      => 'Created new Setting.',
+        'msg-edit'                       => 'Initiated edit of Setting.',
+        'msg-update'                     => 'Submitted edit of Setting.',
+        'msg-get-modal-delete'           => 'Request delete Setting confirmation.',
+        'msg-get-modal-delete-selected'  => 'Request delete confirmation for multiple selected Settings.',
+        'msg-destroy'                    => 'Deleted Setting.',
+        'msg-destroy-selected'           => 'Deleted multiple selected Settings.',
+        'msg-load'                       => 'Loaded Settings from file.',
     ],
 
     'status'              => [

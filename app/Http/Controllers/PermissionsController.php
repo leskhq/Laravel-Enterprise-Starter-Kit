@@ -10,6 +10,7 @@ use App\Events\PermissionUpdatingRoutes;
 use App\Events\PermissionUpdatingUsers;
 use App\Http\Requests\PermissionEditRequest;
 use App\Http\Requests\PermissionIndexRequest;
+use App\Models\Audit;
 use App\Models\Permission;
 use App\Repositories\Criteria\Roles\RolesByDisplayNamesAscending;
 use App\Repositories\Criteria\Routes\RoutesByIDAscending;
@@ -68,6 +69,60 @@ class PermissionsController extends Controller
         $this->permission   = $permissionRepository;
         $this->role         = $roleRepository;
         $this->route        = $routeRepository;
+    }
+
+    static public function GetAuditCategory(Audit $audit)
+    {
+        return trans('admin/permissions/general.audit-log.category');
+    }
+
+    static public function GetAuditMessage(Audit $audit)
+    {
+        $atSymbolPos = strpos($audit->route_action, "@");
+        $methodName = substr($audit->route_action, $atSymbolPos);
+
+        switch ($methodName) {
+            case "@index":
+                $message = trans('admin/permissions/general.audit-log.msg-index');
+                break;
+            case "@create":
+                $message = trans('admin/permissions/general.audit-log.msg-create');
+                break;
+            case "@store":
+                $message = trans('admin/permissions/general.audit-log.msg-store');
+                break;
+            case "@edit":
+                $message = trans('admin/permissions/general.audit-log.msg-edit');
+                break;
+            case "@update":
+                $message = trans('admin/permissions/general.audit-log.msg-update');
+                break;
+            case "@show":
+                $message = trans('admin/permissions/general.audit-log.msg-show');
+                break;
+            case "@getModalDelete":
+                $message = trans('admin/permissions/general.audit-log.msg-get-modal-delete');
+                break;
+            case "@destroy":
+                $message = trans('admin/permissions/general.audit-log.msg-destroy');
+                break;
+            case "@disable":
+                $message = trans('admin/permissions/general.audit-log.msg-disable');
+                break;
+            case "@enable":
+                $message = trans('admin/permissions/general.audit-log.msg-enable');
+                break;
+            case "@disableSelected":
+                $message = trans('admin/permissions/general.audit-log.msg-disabled-selected');
+                break;
+            case "@enableSelected":
+                $message = trans('admin/permissions/general.audit-log.msg-enabled-selected');
+                break;
+            default:
+                $message = "Unset action in controller";
+                break;
+        }
+        return $message;
     }
 
 

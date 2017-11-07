@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\FileNotFoundException;
 use App\Libraries\Arr;
 use App\Libraries\Utils;
+use App\Models\Audit;
 use Auth;
 use Flash;
 use Illuminate\Http\Request;
@@ -15,6 +16,58 @@ use Zofe\Rapyd\DataSet;
 
 class SettingsController extends Controller
 {
+
+    static public function GetAuditCategory(Audit $audit)
+    {
+        return trans('admin/settings/general.audit-log.category');
+    }
+
+    static public function GetAuditMessage(Audit $audit)
+    {
+        $atSymbolPos = strpos($audit->route_action, "@");
+        $methodName = substr($audit->route_action, $atSymbolPos);
+
+        switch ($methodName) {
+            case "@index":
+                $message = trans('admin/settings/general.audit-log.msg-index');
+                break;
+            case "@create":
+                $message = trans('admin/settings/general.audit-log.msg-create');
+                break;
+            case "@store":
+                $message = trans('admin/settings/general.audit-log.msg-store');
+                break;
+            case "@edit":
+                $message = trans('admin/settings/general.audit-log.msg-edit');
+                break;
+            case "@update":
+                $message = trans('admin/settings/general.audit-log.msg-update');
+                break;
+            case "@show":
+                $message = trans('admin/settings/general.audit-log.msg-show');
+                break;
+            case "@getModalDelete":
+                $message = trans('admin/settings/general.audit-log.msg-get-modal-delete');
+                break;
+            case "@getModalDeleteSelected":
+                $message = trans('admin/settings/general.audit-log.msg-get-modal-delete-selected');
+                break;
+            case "@destroy":
+                $message = trans('admin/settings/general.audit-log.msg-destroy');
+                break;
+            case "@destroySelected":
+                $message = trans('admin/settings/general.audit-log.msg-destroy-selected');
+                break;
+            case "@load":
+                $message = trans('admin/settings/general.audit-log.msg-load');
+                break;
+            default:
+                $message = "Unset action in controller";
+                break;
+        }
+        return $message;
+    }
+
     public function index()
     {
         $settings = Settings::all();

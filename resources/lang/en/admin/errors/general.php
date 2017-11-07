@@ -2,6 +2,14 @@
 
 return [
 
+    'audit-log'           => [
+        'category'            => 'Error log',
+        'msg-index'           => 'Access error log list.',
+        'msg-show'            => 'Accessed details of error log.',
+        'msg-purge'           => 'Purge old entries from error log.',
+        'msg-get-modal-purge' => 'Request error log purge confirmation.',
+    ],
+
     'status'              => [
         'purged'                   => 'Error successfully purged',
     ],

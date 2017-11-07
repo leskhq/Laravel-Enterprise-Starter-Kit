@@ -2,16 +2,27 @@
 
 return [
 
+    'audit-log'           => [
+        'category'            => 'Audit log',
+        'msg-index'           => 'Access audit log list.',
+        'msg-show'            => 'Accessed details of audit log.',
+        'msg-purge'           => 'Purge old entries from audit log.',
+        'msg-get-modal-purge' => 'Request audit log purge confirmation.',
+    ],
+
     'status'              => [
         'purged'                   => 'Audit successfully purged',
     ],
 
     'error'              => [
-        'no-data-viewer'            => 'No data viewer provided.',
+        'no-data-viewer'     => 'No data viewer provided.',
+        'no-data'            => 'No data to show.',
     ],
 
     'columns'              => [
         'username'               => 'User name',
+        'category'               => 'Category',
+        'message'                => 'Message',
         'method'                 => 'Method',
         'route_action'           => 'Action',
         'date'                   => 'Date',

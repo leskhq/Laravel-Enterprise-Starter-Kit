@@ -15,11 +15,10 @@ class Controller extends BaseController
     static public function auditViewer(Audit $audit)
     {
         $dataArray = json_decode($audit->data, true);
+        $dataArray['show_partial'] =  "admin/audits/_audit_log_data_viewer_default";
 
         $atSymbolPos = strpos($audit->route_action, "@");
         $data_parser = substr_replace($audit->route_action, "::", $atSymbolPos, 1) . "AuditViewer";
-
-        $dataArray['show_partial'] =  "admin/audits/_audit_log_data_viewer_default";
 
         $isCallable = is_callable($data_parser, false, $callable_name);
         if ($isCallable) {
@@ -30,4 +29,13 @@ class Controller extends BaseController
 
     }
 
+    static public function GetAuditCategory(Audit $audit)
+    {
+        return "Unset in controller";
+    }
+
+    static public function GetAuditMessage(Audit $audit)
+    {
+        return "Unset in controller";
+    }
 }

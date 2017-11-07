@@ -24,6 +24,14 @@
                                 {!! Form::text('username', ($audit->user) ? $audit->user->username : "-Unauthenticated user-", ['class' => 'form-control', 'readonly']) !!}
                             </div>
                             <div class="form-group">
+                                {!! Form::label('category', trans('admin/audits/general.columns.category')) !!}
+                                {!! Form::text('category', $audit->user->category, ['class' => 'form-control', 'readonly']) !!}
+                            </div>
+                            <div class="form-group">
+                                {!! Form::label('message', trans('admin/audits/general.columns.message')) !!}
+                                {!! Form::text('message', $audit->user->message, ['class' => 'form-control', 'readonly']) !!}
+                            </div>
+                            <div class="form-group">
                                 {!! Form::label('method', trans('admin/audits/general.columns.method')) !!}
                                 {!! Form::text('method', $audit->method, ['class' => 'form-control', 'readonly']) !!}
                             </div>
