@@ -15,6 +15,8 @@ class CreateAuditsTable extends Migration
     {
         Schema::create('audits', function (Blueprint $table) {
             $table->increments('id');
+            $table->string    ('category'     )->nullable()->default(null);
+            $table->string    ('message'      )->nullable()->default(null);
             $table->integer   ('user_id'      )->nullable()->default(null);
             $table->string    ('method'       )->nullable()->default(null);
             $table->string    ('path'         )->nullable()->default(null);
