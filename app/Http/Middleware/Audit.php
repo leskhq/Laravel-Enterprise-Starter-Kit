@@ -52,7 +52,7 @@ class Audit
 
             Log::debug("Audit: Login request for action: " . $routeAction);
 
-            Auditor::create([
+            $audit = Auditor::create([
                 'user_id' => $userid,
                 'method' => $request->getMethod(),
                 'path' => $request->getPathInfo(),
@@ -70,6 +70,26 @@ class Audit
                 'isPhone' => $agent->isPhone(),
                 'isTablet' => $agent->isTablet()
             ]);
+
+            $category = 'nil';
+            $message  = 'nil';
+            $atSymbolPos = strpos($routeAction, "@");
+            $funcGetCategory = substr_replace($routeAction, "::", $atSymbolPos) . "GetAuditCategory";
+            $funcGetMessage  = substr_replace($routeAction, "::", $atSymbolPos) . "GetAuditMessage";
+
+            $isCallable = is_callable($funcGetCategory, false, $callable_name);
+            if ($isCallable) {
+                $category = call_user_func($funcGetCategory, $audit);
+            }
+            $isCallable = is_callable($funcGetMessage, false, $callable_name);
+            if ($isCallable) {
+                $message = call_user_func($funcGetMessage, $audit);
+            }
+
+            $audit->category = $category;
+            $audit->message  = $message;
+            $audit->save();
+
         }
 
         return $next($request);
