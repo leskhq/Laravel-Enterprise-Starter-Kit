@@ -344,7 +344,7 @@ class Utils
                         $output .= '<i class="fa fa-trash-o text-muted" title="'. trans('admin/permissions/general.error.no-permission-to-delete-permissions') .'"></i>';
                     }
                 } else {
-                    $output .= '<i class="fa fa-trash-o text-muted" title="' . trans('admin/permissions/general.error.cant-be-deleted') . '"></i>';
+                    $output .= '<i class="fa fa-trash-o text-muted" title="' . trans('admin/permissions/general.error.cant-delete-this-permission') . '"></i>';
                 }
             }
         } catch (\Exception $ex) {
