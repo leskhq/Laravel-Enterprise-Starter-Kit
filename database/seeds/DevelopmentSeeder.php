@@ -80,57 +80,63 @@ class DevelopmentSeeder extends Seeder
 
         $this->command->warn('Creating and assigning unique role 1.');
         $role1 = $this->role->create([
-            "name"          => "uniquerolename1",
-            "display_name"  => "display name 1",
-            "description"   => "desc 1",
+            "name"          => "myrole01",
+            "display_name"  => "My Role  01",
+            "description"   => "Desc for my role 01",
             "enabled"       => true,
         ]);
-        $user01->attachRole($role1);
 
         $this->command->warn('Creating and assigning unique role 2.');
         $role2 = $this->role->create([
-            "name"          => "name 2",
-            "display_name"  => "uniqueroledisplayname2",
-            "description"   => "desc 2",
+            "name"          => "myrole02",
+            "display_name"  => "My Role 02",
+            "description"   => "Desc for my role 02",
             "enabled"       => true,
         ]);
-        $user02->attachRole($role2);
 
         $this->command->warn('Creating and assigning unique role 3.');
         $role3 = $this->role->create([
-            "name"          => "name 3",
-            "display_name"  => "display name 2",
-            "description"   => "uniqueroledesc3",
+            "name"          => "myrole03",
+            "display_name"  => "My Role 03",
+            "description"   => "Desc for my role 03",
             "enabled"       => true,
         ]);
-        $user03->attachRole($role3);
 
         $this->command->warn('Creating and assigning unique perm 1.');
         $perm1 = $this->permission->create([
-            'name'          => "uniquepermname1",
-            'display_name'  => "display name 1",
-            'description'   => "desc 1",
+            'name'          => "myperm01",
+            'display_name'  => "My Perm 01",
+            'description'   => "Desc for my perm 01",
             'enabled'       => true,
         ]);
-        $user01->attachPermission($perm1);
 
         $this->command->warn('Creating and assigning unique perm 2.');
         $perm2 = $this->permission->create([
-            'name'          => "name 2",
-            'display_name'  => "uniquepermdisplayname2",
-            'description'   => "desc 2",
+            'name'          => "myperm02",
+            'display_name'  => "My Perm 02",
+            'description'   => "Desc for my perm 02",
             'enabled'       => true,
         ]);
-        $user02->attachPermission($perm2);
 
         $this->command->warn('Creating and assigning unique perm 3.');
         $perm3 = $this->permission->create([
-            'name'          => "name 3",
-            'display_name'  => "display name 3",
-            'description'   => "uniquepermdesc3",
+            'name'          => "myperm03",
+            'display_name'  => "My Perm 03",
+            'description'   => "Desc for my perm 03",
             'enabled'       => true,
         ]);
-        $user03->attachPermission($perm3);
+
+        $user01->attachRole($role1);
+        $user02->attachRole($role2);
+        $user03->attachRole($role3);
+
+        $role1->attachPermission($perm1);
+        $role2->attachPermission($perm2);
+        $role3->attachPermission($perm3);
+
+        $user01->attachPermission($perm2);
+        $user02->attachPermission($perm3);
+        $user03->attachPermission($perm1);
 
     }
 }

@@ -64,8 +64,8 @@
                                             <tr>
                                                 <th>{!! trans('admin/permissions/general.columns.name')  !!}</th>
                                                 <th>{!! trans('admin/permissions/general.columns.description')  !!}</th>
-                                                <th>{!! trans('admin/permissions/general.columns.assigned')  !!}</th>
                                                 <th>{!! trans('admin/permissions/general.columns.enabled')  !!}</th>
+                                                <th>{!! trans('admin/permissions/general.columns.assigned')  !!}</th>
                                             </tr>
                                             @foreach($permissions as $perm)
 
@@ -81,14 +81,14 @@
                                                             <td>{!! link_to_route('admin.permissions.show', $perm->display_name, [$perm->id], []) !!}</td>
                                                             <td>{!! link_to_route('admin.permissions.show', $perm->description,  [$perm->id], []) !!}</td>
                                                             <td>
-                                                                @if($role->permissions->contains($perm->id))
+                                                                @if($perm->enabled)
                                                                     <i class="fa fa-check text-green"></i>
                                                                 @else
                                                                     <i class="fa fa-close text-red"></i>
                                                                 @endif
                                                             </td>
                                                             <td>
-                                                                @if($perm->enabled)
+                                                                @if($role->permissions->contains($perm->id))
                                                                     <i class="fa fa-check text-green"></i>
                                                                 @else
                                                                     <i class="fa fa-close text-red"></i>

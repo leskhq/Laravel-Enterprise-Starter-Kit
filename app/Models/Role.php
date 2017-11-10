@@ -12,7 +12,9 @@ use App\Events\RoleSaved;
 use App\Events\RoleSaving;
 use App\Events\RoleUpdated;
 use App\Events\RoleUpdating;
+use Config;
 use Illuminate\Database\Eloquent\Model;
+use Laratrust\Helper;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 //use Laratrust\LaratrustRole; // Laratrust 4
@@ -144,20 +146,62 @@ class Role extends LaratrustRole implements Transformable
         return false;
     }
 
-    // TODO: Is this needed??
-//    public function hasPerm(Permission $perm)
-//    {
-//        // perm 'basic-authenticated' is always checked.
-//        if ('basic-authenticated' == $perm->name) {
-//            return true;
-//        }
-//        // Return true if the role has is assigned the given permission.
-//        if ($this->perms()->where('id', $perm->id)->first()) {
-//            return true;
-//        }
-//        // Otherwise
-//        return false;
-//    }
+    /**
+     * Override LaratrustRoleTrait::hasPermission(...) with the one addition to,
+     * optionally, check if a role is enabled before returning true.
+     *
+     * @param  string|array  $permission     Permission name or array of permission names.
+     * @param  bool          $requireAll     All permissions in the array are required.
+     * @param  bool          $mustBeEnabled  Role must be enabled to count.
+     * @return bool
+     */
+    public function hasPermission($permission, $requireAll = false, $mustBeEnabled = true)
+    {
+        // If the $mustBeTrue option is enabled, this role must be enabled to continue.
+        if ( ($mustBeEnabled) && (!$this->enabled) ){
+            return false;
+        }
+
+        if (is_array($permission)) {
+            if (empty($permission)) {
+                return true;
+            }
+
+            foreach ($permission as $permissionName) {
+                $hasPermission = $this->hasPermission($permissionName);
+
+                if ($hasPermission && !$requireAll) {
+                    return true;
+                } elseif (!$hasPermission && $requireAll) {
+                    return false;
+                }
+            }
+
+            // If we've made it this far and $requireAll is FALSE, then NONE of the permissions were found.
+            // If we've made it this far and $requireAll is TRUE, then ALL of the permissions were found.
+            // Return the value of $requireAll.
+            return $requireAll;
+        }
+
+        foreach ($this->cachedPermissions() as $perm) {
+            $perm = Helper::hidrateModel(Config::get('laratrust.models.permission'), $perm);
+
+            if (str_is($permission, $perm->name)) {
+                // If the $mustBeTrue option is enabled, check if the permission is enabled.
+                if ( $mustBeEnabled ) {
+                    if ($perm->enabled) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 
     /**
      * Force the role to have the given permission.

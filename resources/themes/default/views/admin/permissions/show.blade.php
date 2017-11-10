@@ -58,8 +58,8 @@
                                                 <th>{!! trans('admin/routes/general.columns.method')  !!}</th>
                                                 <th>{!! trans('admin/routes/general.columns.path')  !!}</th>
                                                 <th>{!! trans('admin/routes/general.columns.action_name')  !!}</th>
-                                                <th>{!! trans('admin/routes/general.columns.assigned')  !!}</th>
                                                 <th>{!! trans('admin/routes/general.columns.enabled')  !!}</th>
+                                                <th>{!! trans('admin/routes/general.columns.assigned')  !!}</th>
                                             </tr>
                                             @foreach($routes as $route)
                                                 <tr>
@@ -68,14 +68,14 @@
                                                     <td>{!! link_to_route('admin.routes.show', $route->path, [$route->id], []) !!}</td>
                                                     <td>{!! link_to_route('admin.routes.show', \App\Libraries\Str::head_and_tail($route->action_name,30), [$route->id], []) !!}</td>
                                                     <td>
-                                                        @if($perm->routes->contains($route->id))
+                                                        @if($route->enabled)
                                                             <i class="fa fa-check text-green"></i>
                                                         @else
                                                             <i class="fa fa-close text-red"></i>
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        @if($route->enabled)
+                                                        @if($perm->routes->contains($route->id))
                                                             <i class="fa fa-check text-green"></i>
                                                         @else
                                                             <i class="fa fa-close text-red"></i>
@@ -98,22 +98,22 @@
                                             <tr>
                                                 <th>{!! trans('admin/users/general.columns.name')  !!}</th>
                                                 <th>{!! trans('admin/users/general.columns.description')  !!}</th>
-                                                <th>{!! trans('admin/users/general.columns.assigned')  !!}</th>
                                                 <th>{!! trans('admin/users/general.columns.enabled')  !!}</th>
+                                                <th>{!! trans('admin/users/general.columns.assigned')  !!}</th>
                                             </tr>
                                             @foreach($roles as $role)
                                                 <tr>
                                                     <td>{!! link_to_route('admin.roles.show', $role->display_name, [$role->id], []) !!}</td>
                                                     <td>{!! link_to_route('admin.roles.show', $role->description, [$role->id], []) !!}</td>
                                                     <td>
-                                                        @if($perm->roles->contains($role->id))
+                                                        @if($role->enabled)
                                                             <i class="fa fa-check text-green"></i>
                                                         @else
                                                             <i class="fa fa-close text-red"></i>
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        @if($role->enabled)
+                                                        @if($perm->roles->contains($role->id))
                                                             <i class="fa fa-check text-green"></i>
                                                         @else
                                                             <i class="fa fa-close text-red"></i>
@@ -148,14 +148,14 @@
                                                     <td>{!! link_to_route('admin.users.show', $user->last_name,  [$user->id], []) !!}</td>
                                                     <td>{!! link_to_route('admin.users.show', $user->email,      [$user->id], []) !!}</td>
                                                     <td>
-                                                        @if($perm->users->contains($user->id))
+                                                        @if($user->enabled)
                                                             <i class="fa fa-check text-green"></i>
                                                         @else
                                                             <i class="fa fa-close text-red"></i>
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        @if($user->enabled)
+                                                        @if($perm->users->contains($user->id))
                                                             <i class="fa fa-check text-green"></i>
                                                         @else
                                                             <i class="fa fa-close text-red"></i>

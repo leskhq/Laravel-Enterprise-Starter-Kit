@@ -14,8 +14,10 @@ use App\Events\UserUpdated;
 use App\Events\UserUpdating;
 use App\Libraries\Str;
 use Auth;
+use Config;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laratrust\Helper;
 use Laratrust\Traits\LaratrustUserTrait;
 use Log;
 use Prettus\Repository\Contracts\Transformable;
@@ -188,6 +190,134 @@ class User extends Authenticatable implements Transformable
         // Otherwise
         return true;
     }
+
+    /**
+     * Override LaratrustUserTrait::hasRole(...) with the one addition to,
+     * optionally, check if a role is enabled before returning true.
+     *
+     * @param  string|array  $name           Role name or array of role names.
+     * @param  string|bool   $team           Team name or requiredAll roles.
+     * @param  bool          $requireAll     All roles in the array are required.
+     * @param  bool          $mustBeEnabled  Role must be enabled to count.
+     * @return bool
+     */
+    public function hasRole($name, $team = null, $requireAll = false, $mustBeEnabled = true)
+    {
+        $name = Helper::standardize($name);
+        list($team, $requireAll) = Helper::assignRealValuesTo($team, $requireAll, 'is_bool');
+
+        if (is_array($name)) {
+            if (empty($name)) {
+                return true;
+            }
+
+            foreach ($name as $roleName) {
+                $hasRole = $this->hasRole($roleName, $team);
+
+                if ($hasRole && !$requireAll) {
+                    return true;
+                } elseif (!$hasRole && $requireAll) {
+                    return false;
+                }
+            }
+
+            // If we've made it this far and $requireAll is FALSE, then NONE of the roles were found.
+            // If we've made it this far and $requireAll is TRUE, then ALL of the roles were found.
+            // Return the value of $requireAll.
+            return $requireAll;
+        }
+
+        $team = Helper::fetchTeam($team);
+
+        foreach ($this->cachedRoles() as $role) {
+            $role = Helper::hidrateModel(Config::get('laratrust.models.role'), $role);
+
+            if ($role->name == $name && Helper::isInSameTeam($role, $team)) {
+                // If the $mustBeTrue option is enabled, check if the role is enabled.
+                if ( $mustBeEnabled ) {
+                    if ($role->enabled) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Override LaratrustUserTrait::hasPermission(...) with the one addition to,
+     * optionally, check if a role is enabled before returning true.
+     *
+     * @param  string|array  $permission     Permission string or array of permissions.
+     * @param  string|bool   $team           Team name or requiredAll roles.
+     * @param  bool          $requireAll     All roles in the array are required.
+     * @param  bool          $mustBeEnabled  Role must be enabled to count.
+     * @return bool
+     */
+    public function hasPermission($permission, $team = null, $requireAll = false, $mustBeEnabled = true)
+    {
+        $permission = Helper::standardize($permission);
+        list($team, $requireAll) = Helper::assignRealValuesTo($team, $requireAll, 'is_bool');
+
+        if (is_array($permission)) {
+            if (empty($permission)) {
+                return true;
+            }
+
+            foreach ($permission as $permissionName) {
+                $hasPermission = $this->hasPermission($permissionName, $team);
+
+                if ($hasPermission && !$requireAll) {
+                    return true;
+                } elseif (!$hasPermission && $requireAll) {
+                    return false;
+                }
+            }
+
+            // If we've made it this far and $requireAll is FALSE, then NONE of the perms were found.
+            // If we've made it this far and $requireAll is TRUE, then ALL of the perms were found.
+            // Return the value of $requireAll.
+            return $requireAll;
+        }
+
+        $team = Helper::fetchTeam($team);
+
+        foreach ($this->cachedPermissions() as $perm) {
+            $perm = Helper::hidrateModel(Config::get('laratrust.models.permission'), $perm);
+
+            if (Helper::isInSameTeam($perm, $team)
+                && str_is($permission, $perm->name)) {
+                // If the $mustBeTrue option is enabled, check if the permission is enabled.
+                if ( $mustBeEnabled ) {
+                    if ($perm->enabled) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return true;
+                }
+            }
+        }
+
+        foreach ($this->cachedRoles() as $role) {
+            $role = Helper::hidrateModel(Config::get('laratrust.models.role'), $role);
+
+            if (Helper::isInSameTeam($role, $team)
+                && $role->hasPermission($permission)
+            ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     /**
      *
