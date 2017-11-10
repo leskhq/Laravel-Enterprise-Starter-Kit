@@ -50,6 +50,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Audit whereUserAgent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Audit whereUserId($value)
  * @mixin \Eloquent
+ * @property string|null $category
+ * @property string|null $message
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Audit whereCategory($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Audit whereMessage($value)
  */
 class Audit extends Model
 {
