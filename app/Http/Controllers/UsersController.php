@@ -435,25 +435,35 @@ class UsersController extends Controller
 
         $user = $this->user->find($id);
 
-        if (!$user->isdeletable())
-        {
-            abort(403);
-        }
-
         $modal_title = trans('admin/users/dialog.delete-confirm.title');
 
-        if (Auth::user()->id !== $id) {
+        if (!$user->isdeletable())
+        {
+            $error = trans('admin/users/general.error.cant-be-deleted');
+            $modal_onclick = '';
+            $modal_href = route('admin.users.index');
+            $modal_body = '';
+
+            return view('modal_confirmation', compact('error', 'modal_href', 'modal_onclick', 'modal_title', 'modal_body'));
+        }
+
+        if (Auth::user()->id != $id) {
             $user = $this->user->find($id);
             $modal_onclick = '';
             $modal_href = route('admin.users.delete', array('id' => $user->id));
+            $modal_body = trans('admin/users/dialog.delete-confirm.body', ['id' => $user->id, 'full_name' => $user->full_name]);
 
             return view('modal_confirmation', compact('error', 'modal_href', 'modal_onclick', 'modal_title', 'modal_body'));
         }
         else
         {
             $error = trans('admin/users/general.error.cant-delete-yourself');
+            $modal_onclick = '';
+            $modal_href = route('admin.users.index');
+            $modal_body = '';
+
+            return view('modal_confirmation', compact('error', 'modal_href', 'modal_onclick', 'modal_title', 'modal_body'));
         }
-        return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
 
     }
 

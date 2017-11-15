@@ -22,4 +22,14 @@ class UserValidator extends LaravelValidator
             'last_name'         => 'required',
         ],
    ];
+
+    public function getCreateValidationRules()
+    {
+        return $this->rules[ValidatorInterface::RULE_CREATE];
+    }
+
+    public function getUpdateValidationRules()
+    {
+        return $this->rules[ValidatorInterface::RULE_UPDATE];
+    }
 }
