@@ -13,8 +13,11 @@ use App\Events\UserSaving;
 use App\Events\UserUpdated;
 use App\Events\UserUpdating;
 use App\Libraries\Str;
+use App\Repositories\UserRepositoryEloquent;
+use App\Validators\UserValidator;
 use Auth;
 use Config;
+use Illuminate\Container\Container as Application;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laratrust\Helper;
@@ -22,7 +25,9 @@ use Laratrust\Traits\LaratrustUserTrait;
 use Log;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
+use Prettus\Validator\Contracts\ValidatorInterface;
 use Settings;
+use Sroutier\EloquentLDAP\Contracts\EloquentLDAPUserInterface;
 
 /**
  * App\Models\User
@@ -61,7 +66,7 @@ use Settings;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User ofUsername($string)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Audit[] $audits
  */
-class User extends Authenticatable implements Transformable
+class User extends Authenticatable implements Transformable, EloquentLDAPUserInterface
 {
     use LaratrustUserTrait;
     use Notifiable;
@@ -427,5 +432,53 @@ class User extends Authenticatable implements Transformable
     {
         return $query->where('username', $string);
     }
+
+    /**
+     * Implements the 'isMemberOf(...)' as required by Eloquent-LDAP by using
+     * the hasRole method and ignoring the enable state of the role.
+     *
+     * @param $name
+     * @return bool
+     */
+    public function isMemberOf($name)
+    {
+        return $this->hasRole($name, null, false, false);
+    }
+
+    /**
+     * Implements the 'membershipList()' method as required by Eloquent-LDAP.
+     *
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function membershipList()
+    {
+        return $this->roles();
+    }
+
+    /**
+     * Returns the validation rules required to create a User.
+     *
+     * @return array
+     */
+    public static function getCreateValidationRules(Application $app)
+    {
+        $userRepo = new UserRepositoryEloquent($app);
+        $validator = $userRepo->makeValidator();
+        return $validator->getCreateValidationRules();
+    }
+
+    /**
+     * Returns the validation rules required to update a User.
+     *
+     * @return array
+     */
+    public static function getUpdateValidationRules(Application $app, $id)
+    {
+        $userRepo = new UserRepositoryEloquent($app);
+        $validator = $userRepo->makeValidator();
+        return $validator->getUpdateValidationRules();
+    }
+
 
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "47c10e11609e2536e0e554e824e4edf2",
+    "content-hash": "c63de0ea71fc818c95fb234bf86e651d",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -2889,16 +2889,16 @@
         },
         {
             "name": "sroutier/eloquent-ldap",
-            "version": "dev-l55",
+            "version": "2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sroutier/eloquent-ldap.git",
-                "reference": "16b5a20f8c171670163202a644ea04e4e8b492ec"
+                "reference": "90fa83fb31ea34f7517809d0d1c4b97cefa07153"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sroutier/eloquent-ldap/zipball/16b5a20f8c171670163202a644ea04e4e8b492ec",
-                "reference": "16b5a20f8c171670163202a644ea04e4e8b492ec",
+                "url": "https://api.github.com/repos/sroutier/eloquent-ldap/zipball/90fa83fb31ea34f7517809d0d1c4b97cefa07153",
+                "reference": "90fa83fb31ea34f7517809d0d1c4b97cefa07153",
                 "shasum": ""
             },
             "require": {
@@ -2907,8 +2907,7 @@
                 "php": ">=7.0.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.*",
-                "scrutinizer/ocular": "~1.1"
+                "phpunit/phpunit": "~6.0"
             },
             "type": "library",
             "extra": {
@@ -2948,7 +2947,7 @@
                 "ldap",
                 "ldap-eloquent"
             ],
-            "time": "2017-11-10T00:24:57+00:00"
+            "time": "2017-11-14T19:49:40+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -6030,7 +6029,6 @@
         "barryvdh/laravel-debugbar": 20,
         "prettus/l5-repository": 20,
         "santigarcor/laratrust": 20,
-        "sroutier/eloquent-ldap": 20,
         "yaap/theme": 20,
         "zofe/rapyd": 20
     },

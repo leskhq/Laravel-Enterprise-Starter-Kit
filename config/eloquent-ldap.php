@@ -23,7 +23,7 @@ return [
     |
     */
 
-    'debug' => env('eloquent-ldap.debug', 'false'),
+    'debug' => env('eloquent-ldap.debug', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -191,18 +191,18 @@ return [
 
     'password' => env('eloquent-ldap.password', "PaSsWoRd"),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Return real primary group
-    |--------------------------------------------------------------------------
-    |
-    | Fix Microsoft AD not following standards by not returning the real
-    | primary group, may incur extra processing.
-    |
-    */
-
-    'return_real_primary_group' => env('eloquent-ldap.return_real_primary_group', true),
-
+//    /*
+//    |--------------------------------------------------------------------------
+//    | Return real primary group
+//    |--------------------------------------------------------------------------
+//    |
+//    | Fix Microsoft AD not following standards by not returning the real
+//    | primary group, may incur extra processing.
+//    |
+//    */
+//
+//    'return_real_primary_group' => env('eloquent-ldap.return_real_primary_group', true),
+//
     /*
     |--------------------------------------------------------------------------
     | Enable encryption?
@@ -228,33 +228,33 @@ return [
 
     'secured_port' => env('eloquent-ldap.secured_port', 636),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Resolve all group membership?
-    |--------------------------------------------------------------------------
-    |
-    | Resolve group membership recursively. When disabled only groups that a
-    | given user is a direct member of will be returned. May incur extra
-    | processing.
-    |
-    */
-
-    'recursive_groups' => env('eloquent-ldap.recursive_groups', false),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Single sign-on
-    |--------------------------------------------------------------------------
-    |
-    | Enable single sign-on.
-    | NOTE: This feature is currently not supported
-    |
-    | TODO: Implement SSO!
-    |
-    */
-
-    'sso' => env('eloquent-ldap.sso', false),
-
+//    /*
+//    |--------------------------------------------------------------------------
+//    | Resolve all group membership?
+//    |--------------------------------------------------------------------------
+//    |
+//    | Resolve group membership recursively. When disabled only groups that a
+//    | given user is a direct member of will be returned. May incur extra
+//    | processing.
+//    |
+//    */
+//
+//    'recursive_groups' => env('eloquent-ldap.recursive_groups', false),
+//
+//    /*
+//    |--------------------------------------------------------------------------
+//    | Single sign-on
+//    |--------------------------------------------------------------------------
+//    |
+//    | Enable single sign-on.
+//    | NOTE: This feature is currently not supported
+//    |
+//    | TODO: Implement SSO!
+//    |
+//    */
+//
+//    'sso' => env('eloquent-ldap.sso', false),
+//
     /*
     |--------------------------------------------------------------------------
     | User name field
