@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c63de0ea71fc818c95fb234bf86e651d",
+    "content-hash": "b41789f7d95bd8acca174d7106926b74",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -257,6 +257,63 @@
                 "webprofiler"
             ],
             "time": "2017-09-18T13:32:46+00:00"
+        },
+        {
+            "name": "caffeinated/modules",
+            "version": "dev-l55",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sroutier/modules.git",
+                "reference": "808893ea178ae48dc481cb183f5da55424f98c40"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sroutier/modules/zipball/808893ea178ae48dc481cb183f5da55424f98c40",
+                "reference": "808893ea178ae48dc481cb183f5da55424f98c40",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "5.5.*",
+                "php": ">=5.6.4"
+            },
+            "suggest": {
+                "wikimedia/composer-merge-plugin": "Allows the ability to create and merge composer.json files for your individual modules for module-specific dependency management."
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Caffeinated\\Modules\\ModulesServiceProvider"
+                    ],
+                    "aliases": {
+                        "Module": "Caffeinated\\Modules\\Facades\\Module"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Caffeinated\\Modules\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Shea Lewis",
+                    "email": "shea.lewis89@gmail.com"
+                }
+            ],
+            "description": "Laravel 5.x Modules",
+            "keywords": [
+                "caffeinated",
+                "laravel",
+                "modules"
+            ],
+            "support": {
+                "source": "https://github.com/sroutier/modules/tree/l55"
+            },
+            "time": "2017-10-19T21:05:23+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -6027,6 +6084,7 @@
     "stability-flags": {
         "arcanedev/laravel-settings": 20,
         "barryvdh/laravel-debugbar": 20,
+        "caffeinated/modules": 20,
         "prettus/l5-repository": 20,
         "santigarcor/laratrust": 20,
         "yaap/theme": 20,

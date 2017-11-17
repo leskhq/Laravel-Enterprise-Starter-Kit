@@ -20,12 +20,17 @@
         {
             "type": "vcs",
             "url": "https://github.com/sroutier/rapyd-laravel.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/sroutier/modules"
         }
     ],
     "require": {
         "php": ">=7.0.0",
         "arcanedev/laravel-settings": "dev-l55",
         "barryvdh/laravel-debugbar": "dev-master",
+        "caffeinated/modules": "dev-l55",
         "doctrine/dbal": "^2.6",
         "fideloper/proxy": "~3.3",
         "filp/whoops": "^2.1.4",
