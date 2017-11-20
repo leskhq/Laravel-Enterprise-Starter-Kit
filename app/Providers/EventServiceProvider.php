@@ -25,6 +25,7 @@ class EventServiceProvider extends ServiceProvider
         'App\Listeners\PermissionEventSubscriber',
         'App\Listeners\RoleEventSubscriber',
         'App\Listeners\UserEventSubscriber',
+        'App\Listeners\DebugEventSubscriber',
     ];
 
     /**
