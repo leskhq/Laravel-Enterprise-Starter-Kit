@@ -14,6 +14,7 @@ use DateTime;
 use DateTimeZone;
 use Illuminate\Support\Arr;
 use Log;
+use Module;
 use Settings;
 
 class Utils
@@ -355,6 +356,10 @@ class Utils
     }
 
 
+    /**
+     * @param $id
+     * @return string
+     */
     public static function routeActionslinks($id): string
     {
         $output = 'nil';
@@ -393,6 +398,62 @@ class Utils
                 }
 
             }
+        } catch (\Exception $ex) {
+            Log::error("Exception: " . $ex->getMessage());
+            Log::error("Stack trace: " . $ex->getTraceAsString());
+        }
+        return $output;
+    }
+
+    /**
+     * @param $slug
+     * @return string
+     */
+    public static function modulesActionslinks($slug): string
+    {
+        $output = 'nil';
+
+        try {
+            if ( Module::isInitialized($slug) ) {
+                if ( Module::isEnabled($slug) ) {
+                    $output = '<i class="fa fa-thumbs-up text-muted" title="'. trans('admin/modules/general.error.cant-uninitialize-an-enabled-module') .'"></i>';
+                } else {
+                    if (Auth::user()->hasPermission('core.p.modules.uninitialize')) {
+                        $output = '<a href="' . route('admin.modules.confirm-uninitialize', $slug) . '" data-toggle="modal" data-target="#modal_dialog_danger" title="'. trans('admin/modules/general.button.uninitialize') .'"><i class="fa fa-thumbs-up enabled"></i></a>';
+                    } else {
+                        $output = '<i class="fa fa-thumbs-up text-muted" title="'. trans('admin/modules/general.error.cant-uninitialize-no-permission') .'"></i>';
+                    }
+                }
+            } else {
+                if (Auth::user()->hasPermission('core.p.modules.initialize')) {
+                    $output = '<a href="' . route('admin.modules.initialize', $slug) . '" title="'. trans('admin/modules/general.button.initialize') .'"><i class="fa fa-thumbs-down disabled"></i></a>';
+                } else {
+                    $output = '<i class="fa fa-thumbs-down disabled" title="'. trans('admin/modules/general.error.cant-initialize-no-permission') .'"></i>';
+                }
+            }
+
+            $output .= '&nbsp;';
+
+            if ( Module::isEnabled($slug) ) {
+                if (Auth::user()->hasPermission('core.p.modules.disable')) {
+                    //$output .= '<a href="' . route('admin.modules.disable', $slug) . '" title="'. trans('general.button.disable') .'"><i class="fa fa-check-circle-o enabled"></i></a>';
+                    $output .= '<a href="' . route('admin.modules.confirm-disable', $slug) . '" data-toggle="modal" data-target="#modal_dialog_warning" title="'. trans('admin/modules/general.button.disable') .'"><i class="fa fa-check-circle-o enabled"></i></a>';
+                } else {
+                    $output .= '<i class="fa fa-check-circle-o disabled" title="'. trans('admin/modules/general.error.cant-disable-no-permission') .'"></i>';
+                }
+            } else {
+                if ( Module::isInitialized($slug) ) {
+                    if (Auth::user()->hasPermission('core.p.modules.enable')) {
+                        $output .= '<a href="' . route('admin.modules.enable', $slug) . '" title="'. trans('general.button.enable') .'"><i class="fa fa-ban disabled"></i></a>';
+                    } else {
+                        $output .= '<i class="fa fa-ban text-muted" title="'. trans('admin/modules/general.error.cant-enable-no-permission') .'"></i>';
+                    }
+                } else {
+                    $output .= '<i class="fa fa-ban text-muted" title="'. trans('admin/modules/general.error.cant-enable-uninitialized-module') .'"></i>';
+                }
+
+            }
+
         } catch (\Exception $ex) {
             Log::error("Exception: " . $ex->getMessage());
             Log::error("Stack trace: " . $ex->getTraceAsString());

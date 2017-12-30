@@ -395,9 +395,8 @@ class PermissionsController extends Controller
 
         $modal_title = trans('admin/permissions/dialog.delete-confirm.title');
 
-        $role = $this->permission->find($id);
         $modal_onclick = '';
-        $modal_href = route('admin.permissions.delete', array('id' => $role->id));
+        $modal_href = route('admin.permissions.delete', array('id' => $perm->id));
 
         $modal_body = trans('admin/permissions/dialog.delete-confirm.body', ['id' => $perm->id, 'name' => $perm->name]);
 
