@@ -31,6 +31,7 @@ Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@ind
 ///////
 // Admin
 Route::prefix('admin')->group(function () {
+
     // Permissions
     Route::post  ('permissions/enableSelected',                ['as' => 'admin.permissions.enable-selected',  'uses' => 'PermissionsController@enableSelected']);
     Route::post  ('permissions/disableSelected',               ['as' => 'admin.permissions.disable-selected', 'uses' => 'PermissionsController@disableSelected']);
@@ -47,10 +48,10 @@ Route::prefix('admin')->group(function () {
     Route::post  ('permissions/store',                         ['as' => 'admin.permissions.store',            'uses' => 'PermissionsController@store'  ]);
     Route::get   ('permissions',                               ['as' => 'admin.permissions.index',            'uses' => 'PermissionsController@index'  ]);
     Route::post  ('permissions',                               ['as' => 'admin.permissions.indexPost',        'uses' => 'PermissionsController@index'  ]);
+
     // Roles
 //    Route::get(   'roles/search',      ['as' => 'admin.roles.search',   'uses' => 'RolesController@searchByName']);
 //    Route::post(  'roles/getInfo',     ['as' => 'admin.roles.get-info', 'uses' => 'RolesController@getInfo']);
-
     Route::post  ('roles/enableSelected',          ['as' => 'admin.roles.enable-selected',  'uses' => 'RolesController@enableSelected']);
     Route::post  ('roles/disableSelected',         ['as' => 'admin.roles.disable-selected', 'uses' => 'RolesController@disableSelected']);
     Route::get   ('roles/create',                  ['as' => 'admin.roles.create',           'uses' => 'RolesController@create' ]);
@@ -66,6 +67,7 @@ Route::prefix('admin')->group(function () {
     Route::post  ('roles/store',                   ['as' => 'admin.roles.store',            'uses' => 'RolesController@store'  ]);
     Route::get   ('roles',                         ['as' => 'admin.roles.index',            'uses' => 'RolesController@index'  ]);
     Route::post  ('roles',                         ['as' => 'admin.roles.indexPost',        'uses' => 'RolesController@index'  ]);
+
     // Routes
     Route::get   ('routes/load',                     ['as' => 'admin.routes.load',             'uses' => 'RoutesController@load']);
     Route::post  ('routes/enableSelected',           ['as' => 'admin.routes.enable-selected',  'uses' => 'RoutesController@enableSelected']);
@@ -84,6 +86,7 @@ Route::prefix('admin')->group(function () {
     Route::post  ('routes/store',                    ['as' => 'admin.routes.store',            'uses' => 'RoutesController@store'  ]);
     Route::get   ('routes',                          ['as' => 'admin.routes.index',            'uses' => 'RoutesController@index'  ]);
     Route::post  ('routes',                          ['as' => 'admin.routes.indexPost',        'uses' => 'RoutesController@index'  ]);
+
     // Users
     Route::post  ('users/enableSelected',          ['as' => 'admin.users.enable-selected',  'uses' => 'UsersController@enableSelected']);
     Route::post  ('users/disableSelected',         ['as' => 'admin.users.disable-selected', 'uses' => 'UsersController@disableSelected']);
@@ -129,5 +132,15 @@ Route::prefix('admin')->group(function () {
     Route::get   ('errors/{auditId}',         ['as' => 'admin.errors.show',          'uses' => 'ErrorsController@show'   ]);
     Route::get   ('errors',                   ['as' => 'admin.errors.index',         'uses' => 'ErrorsController@index'  ]);
     Route::post  ('errors',                   ['as' => 'admin.errors.indexPost',     'uses' => 'ErrorsController@index'  ]);
+
+    // Modules routes
+    Route::get(   'modules/{slug}/initialize',             ['as' => 'admin.modules.initialize',           'uses' => 'ModulesController@initialize']);
+    Route::get(   'modules/{slug}/confirm-uninitialize',   ['as' => 'admin.modules.confirm-uninitialize', 'uses' => 'ModulesController@getModalUninitialize']);
+    Route::get(   'modules/{slug}/uninitialize',           ['as' => 'admin.modules.uninitialize',         'uses' => 'ModulesController@uninitialize']);
+    Route::get(   'modules/{slug}/enable',                 ['as' => 'admin.modules.enable',               'uses' => 'ModulesController@enable']);
+    Route::get(   'modules/{slug}/confirm-disable',        ['as' => 'admin.modules.confirm-disable',      'uses' => 'ModulesController@getModalDisable']);
+    Route::get(   'modules/{slug}/disable',                ['as' => 'admin.modules.disable',              'uses' => 'ModulesController@disable']);
+    Route::get(   'modules/optimize',                      ['as' => 'admin.modules.optimize',             'uses' => 'ModulesController@optimize']);
+    Route::get(   'modules',                               ['as' => 'admin.modules.index',                'uses' => 'ModulesController@index']);
 
 });

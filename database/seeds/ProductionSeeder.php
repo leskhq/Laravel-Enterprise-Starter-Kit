@@ -153,6 +153,9 @@ class ProductionSeeder extends Seeder
                     'en' => 'enable',
                     'di' => 'disable',
                     'ap' => 'assign-perm',
+                    'in' => 'initialize',
+                    'un' => 'uninitialize',
+                    'o'  => 'optimize',
                 ],
                 // Defines the roles to create with their assigned permissions.
                 'roles_and_perms' => [
@@ -227,6 +230,16 @@ class ProductionSeeder extends Seeder
                     'core.r.errors.reviewer' => [
                         'core.p.errors' => [
                             'r', 'ls',
+                        ],
+                    ],
+                    'core.r.modules.manager' => [
+                        'core.p.modules' => [
+                            'ls', 'o', 'in', 'un', 'en', 'di',
+                        ],
+                    ],
+                    'core.r.modules.reviewer' => [
+                        'core.p.modules' => [
+                            'ls',
                         ],
                     ],
                 ],

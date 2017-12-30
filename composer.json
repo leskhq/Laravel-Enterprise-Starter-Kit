@@ -47,6 +47,7 @@
         "santigarcor/laratrust": "dev-master",
         "sroutier/eloquent-ldap": "~2.0",
         "tylercd100/lern": "^4.2",
+        "wikimedia/composer-merge-plugin": "^1.4",
         "yaap/theme": "dev-l55",
         "zofe/rapyd": "dev-l55"
     },
@@ -72,6 +73,11 @@
     "extra": {
         "laravel": {
             "dont-discover": [
+            ]
+        },
+        "merge-plugin": {
+            "include": [
+                "app/Modules/*/composer.json"
             ]
         }
     },
