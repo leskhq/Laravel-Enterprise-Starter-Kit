@@ -346,7 +346,7 @@ return [
         Laracasts\Flash\FlashServiceProvider::class,
         YAAP\Theme\ThemeServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
-//        Zofe\Rapyd\RapydServiceProvider::class,
+        Zofe\Rapyd\RapydServiceProvider::class,
         Baum\Providers\BaumServiceProvider::class,
         Sroutier\LESKModules\ModulesServiceProvider::class,
         Mgallegos\LaravelJqgrid\LaravelJqgridServiceProvider::class,

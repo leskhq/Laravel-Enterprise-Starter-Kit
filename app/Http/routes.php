@@ -159,7 +159,7 @@ Route::group(['middleware' => 'authorize'], function () {
     }); // End of ADMIN group
 
     // Uncomment to enable Rapyd datagrid.
-//    require __DIR__.'/rapyd.php';
+    require __DIR__.'/rapyd.php';
 
 }); // end of AUTHORIZE middleware group
 
