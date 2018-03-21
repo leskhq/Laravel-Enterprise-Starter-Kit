@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "84bb1fdf7ba0678a4de511c5775a8f2a",
+    "content-hash": "02030887cd8daec4f6554b29acac255c",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -2411,6 +2411,7 @@
                 "xls",
                 "xlsx"
             ],
+            "abandoned": "phpoffice/phpspreadsheet",
             "time": "2015-05-01T07:00:55+00:00"
         },
         {
@@ -4178,16 +4179,16 @@
         },
         {
             "name": "zofe/rapyd",
-            "version": "2.1.15",
+            "version": "2.1.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zofe/rapyd-laravel.git",
-                "reference": "51158043b3a9f9ee5e7548d37a7d3b9d986af5fb"
+                "reference": "1fa6d8a7f0895fc4573bc7d3cb25391060d27e68"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zofe/rapyd-laravel/zipball/51158043b3a9f9ee5e7548d37a7d3b9d986af5fb",
-                "reference": "51158043b3a9f9ee5e7548d37a7d3b9d986af5fb",
+                "url": "https://api.github.com/repos/zofe/rapyd-laravel/zipball/1fa6d8a7f0895fc4573bc7d3cb25391060d27e68",
+                "reference": "1fa6d8a7f0895fc4573bc7d3cb25391060d27e68",
                 "shasum": ""
             },
             "require": {
@@ -4228,7 +4229,7 @@
                 "form",
                 "laravel"
             ],
-            "time": "2016-06-24T12:41:48+00:00"
+            "time": "2017-01-24T17:26:09+00:00"
         }
     ],
     "packages-dev": [
