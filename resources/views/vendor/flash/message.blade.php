@@ -15,13 +15,15 @@
                 {{ ucwords(Session::get('flash_notification.level')) }}!</h4>
             {{ Session::get('flash_notification.message') }}
         </div>
-        <script>
-            $(document).ready (function(){
-                $('div.alert').not('.alert-important').delay(4000).slideUp(200, function() {
-                    $(this).alert('close');
+        @if (Setting::get('app.flash_notification_auto_hide_enabled', true))
+            <script>
+                $(document).ready (function(){
+                    $('div.alert').not('.alert-important').delay({{ Setting::get('app.flash_notification_auto_hide_delay', true) * 1000 }}).slideUp(200, function() {
+                        $(this).alert('close');
+                    });
                 });
-            });
-        </script>
+            </script>
+        @endif
     @endif
     {{ Session::forget('flash_notification') }}
 @endif
