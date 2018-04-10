@@ -298,6 +298,15 @@ class ProductionSeeder extends Seeder
             "enabled"       => true
         ]);
         $roleRoleManagers->perms()->attach($permManageRoles->id);
+        // Create role: permission-manager
+        // Assign permission: manage-permissions
+        $rolePermissionManagers = Role::create([
+            "name"          => "permission-managers",
+            "display_name"  => "Permission managers",
+            "description"   => "Permission managers are granted all permissions to the Admin|Permissions section.",
+            "enabled"       => true
+        ]);
+        $roleRoleManagers->perms()->attach($permManagePermissions->id);
         // Create role: audit-viewers
         // Assign permission: audit-log-view
         $roleAuditViewers = Role::create([
