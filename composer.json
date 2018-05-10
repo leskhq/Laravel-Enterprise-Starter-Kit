@@ -23,6 +23,10 @@
       {
         "type": "vcs",
         "url": "https://github.com/leskhq/laravel-enterprise-starter-kit"
+      },
+      {
+         "type": "vcs",
+         "url": "https://github.com/sroutier/rapyd-laravel.git"
       }
     ],
     "require": {
@@ -37,7 +41,7 @@
         "zizaco/entrust": "dev-laravel-5",
         "bosnadev/repositories": "0.*",
         "sroutier/eloquent-ldap": "^1.0@dev",
-        "zofe/rapyd": "~2.1.18",
+        "zofe/rapyd": "dev-2.2-sr",
         "baum/baum": "~1.1",
         "leskhq/lesk-modules": "^3.0",
         "mgallegos/laravel-jqgrid": "^1.2",
