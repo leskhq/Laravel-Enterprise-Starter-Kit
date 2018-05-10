@@ -4199,12 +4199,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sroutier/rapyd-laravel.git",
-                "reference": "a5f7309ecf4bf9daca57684e9a9378d0a6c0ff1b"
+                "reference": "f1ca609f74237e5000fb2ebe99288e7a03fe97b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sroutier/rapyd-laravel/zipball/a5f7309ecf4bf9daca57684e9a9378d0a6c0ff1b",
-                "reference": "a5f7309ecf4bf9daca57684e9a9378d0a6c0ff1b",
+                "url": "https://api.github.com/repos/sroutier/rapyd-laravel/zipball/f1ca609f74237e5000fb2ebe99288e7a03fe97b6",
+                "reference": "f1ca609f74237e5000fb2ebe99288e7a03fe97b6",
                 "shasum": ""
             },
             "require": {
@@ -4245,9 +4245,9 @@
                 "rapyd"
             ],
             "support": {
-                "source": "https://github.com/sroutier/rapyd-laravel/tree/2.1.18-sr"
+                "source": "https://github.com/sroutier/rapyd-laravel/tree/2.2-sr"
             },
-            "time": "2018-05-07 19:47:35"
+            "time": "2018-05-10 18:33:34"
         }
     ],
     "packages-dev": [
