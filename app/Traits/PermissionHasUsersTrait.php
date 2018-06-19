@@ -47,7 +47,7 @@ trait PermissionHasUsersTrait
     {
         return $this->whereHas('users', function($query) use ($userName) {
            $query->where('username', $userName); 
-        })->exists()
+        })->exists();
     }
 
     /**
@@ -55,7 +55,7 @@ trait PermissionHasUsersTrait
      */
     public function getIsUsedByUserAttribute()
     {
-        return ($this->users->count() > 0);
+        return $this->users()->exists();
     }
 
 
