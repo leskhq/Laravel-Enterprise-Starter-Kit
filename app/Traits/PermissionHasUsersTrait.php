@@ -39,20 +39,15 @@ trait PermissionHasUsersTrait
     }
 
     /**
-     * @param $userName
+     * @param  string $userName
      *
      * @return bool
      */
     public function hasUser($userName)
     {
-        foreach($this->users as $user)
-        {
-            if($user->username == $userName)
-            {
-                return true;
-            }
-        }
-        return false;
+        $this->whereHas('users', function($query) use ($userName) {
+           $query->where('username', $userName); 
+        })->exists()
     }
 
     /**
